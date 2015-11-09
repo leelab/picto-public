@@ -137,31 +137,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QString currTask_;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">bool</span> initialized_;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> masterRunStarting(QString taskName,QString runName);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> masterRunEnding();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> masterPropertyValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> masterPropertyInitValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">void</span> masterTransitionActivated(<span class="keywordtype">int</span> transId);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> masterPropertyValueChanged(qulonglong dataId, <span class="keywordtype">int</span> propId, QString value);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> masterPropertyInitValueChanged(qulonglong dataId, <span class="keywordtype">int</span> propId, QString value);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> masterTransitionActivated(qulonglong dataId, <span class="keywordtype">int</span> transId, <span class="keywordtype">bool</span> remoteRunSignal);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> masterFramePresented(<span class="keywordtype">double</span> time);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> masterRewardSupplied(<span class="keywordtype">double</span> time,<span class="keywordtype">int</span> duration,<span class="keywordtype">int</span> channel);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> masterSignalChanged(QString name,QStringList subChanNames,QVector&lt;float&gt; vals);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> disableRendering(<span class="keywordtype">bool</span> disable);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">void</span> handleEvents();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    qulonglong finalTransitionID_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> masterRunStarting(QString taskName,QString runName);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> masterRunEnding();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> masterPropertyValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">void</span> masterPropertyInitValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> masterTransitionActivated(<span class="keywordtype">int</span> transId);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> masterPropertyValueChanged(qulonglong dataId, <span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> masterPropertyInitValueChanged(qulonglong dataId, <span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> masterTransitionActivated(qulonglong dataId, <span class="keywordtype">int</span> transId, <span class="keywordtype">bool</span> remoteRunSignal);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> masterFramePresented(<span class="keywordtype">double</span> time);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> masterRewardSupplied(<span class="keywordtype">double</span> time,<span class="keywordtype">int</span> duration,<span class="keywordtype">int</span> channel);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> masterSignalChanged(QString name,QStringList subChanNames,QVector&lt;float&gt; vals);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> disableRendering(<span class="keywordtype">bool</span> disable);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">void</span> handleEvents();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_slave_experiment_driver_html_a9cbc67f0da62d3b98d895ee2a36aa274"><div class="ttname"><a href="class_picto_1_1_slave_experiment_driver.html#a9cbc67f0da62d3b98d895ee2a36aa274">Picto::SlaveExperimentDriver::paused_</a></div><div class="ttdeci">bool paused_</div><div class="ttdoc">This is how a remoteUpdater would pause the execution of Analysis Scripts. Replay works differently...</div><div class="ttdef"><b>Definition:</b> <a href="_slave_experiment_driver_8h_source.html#l00057">SlaveExperimentDriver.h:57</a></div></div>
 <div class="ttc" id="class_picto_1_1_slave_event_queue_html"><div class="ttname"><a href="class_picto_1_1_slave_event_queue.html">Picto::SlaveEventQueue</a></div><div class="ttdoc">A FIFO for storing ordered SlaveEvent objects. </div><div class="ttdef"><b>Definition:</b> <a href="_slave_event_queue_8h_source.html#l00019">SlaveEventQueue.h:19</a></div></div>

@@ -12,6 +12,7 @@
 							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", "DAQ function failure");\
 						 } }
 
+#define EVENT_CODE_PREP_TIME .000001  //1 microsecond
 #define EVENT_CODE_HOLD_TIME .000250  //250 microseconds
 
 /*! \brief The NiDaq channels to be used for Event code transfer.
@@ -72,17 +73,33 @@ double PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 	//data[6] = (eventCode & 0x40) ? 1 : 0 ;
 	//data[7] = 1;
 
-	uInt8 data[] = {eventCode | 0x80};
+	//First clear the Strobe bit
+	uInt8 data[] = {eventCode & 0x7F};
 	//set the event lines
-	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_,1,1,1.0,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
+	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_, 1, 1, 1.0, DAQmx_Val_GroupByChannel, data, &sampsPerChanWritten, NULL));
 
-	//wait 250 us
+	//wait 1 us
 	LARGE_INTEGER ticksPerSec;
 	LARGE_INTEGER tick, tock;
 	double elapsedTime;
-	double delayTime = EVENT_CODE_HOLD_TIME;
+	double delayTime = EVENT_CODE_PREP_TIME;
 
 	QueryPerformanceFrequency(&ticksPerSec);
+	QueryPerformanceCounter(&tick);
+	do
+	{
+		QueryPerformanceCounter(&tock);
+		elapsedTime = (double)(tock.LowPart - tick.LowPart) / (double)(ticksPerSec.LowPart);
+	} while (elapsedTime < delayTime);
+
+	//Now set te Strobe bit
+	data[0] = (eventCode | 0x80);
+	//set the event lines
+	DAQmxErrChk(DAQmxWriteDigitalU8(daqTaskHandle_, 1, 1, 1.0, DAQmx_Val_GroupByChannel, data, &sampsPerChanWritten, NULL));
+
+	//wait 250 us
+	delayTime = EVENT_CODE_HOLD_TIME;
+
 	QueryPerformanceCounter(&tick);
 	do
 	{

@@ -2,7 +2,6 @@
 #define _SAMPLING_BAR_BASE_PLOT_HANDLER_H_
 
 #include "../common.h"
-#include "DataViewSpecs.h"
 #include "BarBasePlotHandler.h"
 
 #include <QObject>
@@ -14,8 +13,7 @@ class QwtPlotIntervalCurve;
 
 namespace Picto {
 
-/*! \brief A base class for manufacturing Widgets.
- *	\note This exists because Qt requires widgets to be constructed in the UI thread.
+/*! \brief A handler for plots derived from the SamplingBarBase
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -31,13 +29,22 @@ public:
 	virtual ~SamplingBarBasePlotHandler(){};
 
 public slots:
-	void initializeSampling();
+	virtual void initializeSampling();
 
-	virtual void setErrorSamples(const QVector<QwtIntervalSample> &qvErrorSamples);
+	virtual void setErrorSamples(const QString &dataSet, const QVector<QwtIntervalSample> &qvErrorSamples);
 	virtual void setErrorBarsVisible(bool bVisible);
+
+	virtual void resetSlot();
+
 protected:
+	virtual void createErrorBars(const QString &dataSet);
+	virtual void updateColor(const QString &setName, const QColor &color);
+	virtual void clearPlotItems();
+
 	//! A pointer to the SamplingBarBase's IntervalCurve used to represent error bars
-	QwtPlotIntervalCurve *m_pErrorBars;
+	QHash<QString, QwtPlotIntervalCurve*> m_qhpErrorBars;
+	//! Cached color of Errorbars, indexed by data set name
+	QHash<QString, QColor> m_qhcErrorBarColor;
 };
 
 }; //namespace Picto

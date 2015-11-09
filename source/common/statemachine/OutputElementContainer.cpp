@@ -28,12 +28,6 @@
 #include "../stimuli/AnalogInput.h"
 #include "../statemachine/ScriptFunction.h"
 
-#include "../operator/DataViewElement.h"
-#include "../operator/BarPlot.h"
-#include "../operator/HistogramPlot.h"
-#include "../operator/SamplingBarPlot.h"
-#include "../operator/SamplingHistogramPlot.h"
-
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -46,8 +40,7 @@ OutputElementContainer::OutputElementContainer() :
 	audioElementFactory_(new AssetFactory(0,-1)),
 	outputSignalFactory_(new AssetFactory(0,-1)),
 	inputSignalFactory_(new AssetFactory(0,-1)),
-	scriptFunctionFactory_(new AssetFactory(0,-1)),
-	dataViewElementFactory_(new AssetFactory(0,-1))
+	scriptFunctionFactory_(new AssetFactory(0,-1))
 {
 	//Hmm... It may have made more sense to put ScriptFunction somewhere else, it isn't an OutputElement.
 	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);

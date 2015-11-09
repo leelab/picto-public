@@ -3,6 +3,7 @@ var searchData=
   ['d3dcompositingsurface',['D3DCompositingSurface',['../class_picto_1_1_d3_d_compositing_surface.html',1,'Picto']]],
   ['d3dvisualtarget',['D3DVisualTarget',['../class_picto_1_1_d3_d_visual_target.html',1,'Picto']]],
   ['dataheader',['DATAHeader',['../struct_picto_1_1_d_a_t_a_header.html',1,'Picto']]],
+  ['datalist',['DataList',['../struct_picto_1_1_p_s_t_h_plot_1_1_data_list.html',1,'Picto::PSTHPlot']]],
   ['datalist',['DataList',['../struct_neural_data_viewer_1_1_data_list.html',1,'NeuralDataViewer']]],
   ['datasourceinfo',['DataSourceInfo',['../class_picto_1_1_data_source_info.html',1,'Picto']]],
   ['datastate',['DataState',['../class_picto_1_1_data_state.html',1,'Picto']]],

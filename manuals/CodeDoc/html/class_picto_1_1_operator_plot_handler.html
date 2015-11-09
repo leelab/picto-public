@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A base class for manufacturing Widgets.  
+<p>A Handler for plots derived from all OperatorPlots.  
  <a href="class_picto_1_1_operator_plot_handler.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_operator_plot_handler_8h_source.html">OperatorPlotHandler.h</a>&gt;</code></p>
@@ -109,10 +109,11 @@ Inheritance diagram for Picto::OperatorPlotHandler:</div>
  <div class="center">
   <img src="class_picto_1_1_operator_plot_handler.png" usemap="#Picto::OperatorPlotHandler_map" alt=""/>
   <map id="Picto::OperatorPlotHandler_map" name="Picto::OperatorPlotHandler_map">
-<area href="class_picto_1_1_bar_base_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::BarBasePlotHandler" shape="rect" coords="110,112,321,136"/>
-<area href="class_picto_1_1_bar_plot_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::BarPlotPlotHandler" shape="rect" coords="0,168,211,192"/>
-<area href="class_picto_1_1_sampling_bar_base_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::SamplingBarBasePlotHandler" shape="rect" coords="221,168,432,192"/>
-<area href="class_picto_1_1_sampling_bar_plot_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::SamplingBarPlotPlotHandler" shape="rect" coords="221,224,432,248"/>
+<area href="class_picto_1_1_bar_base_plot_handler.html" title="A handler for plots derived from the BarBasePlot. " alt="Picto::BarBasePlotHandler" shape="rect" coords="110,112,321,136"/>
+<area href="class_picto_1_1_bar_plot_plot_handler.html" title="A Handler for BarPlots. " alt="Picto::BarPlotPlotHandler" shape="rect" coords="0,168,211,192"/>
+<area href="class_picto_1_1_sampling_bar_base_plot_handler.html" title="A handler for plots derived from the SamplingBarBase. " alt="Picto::SamplingBarBasePlotHandler" shape="rect" coords="221,168,432,192"/>
+<area href="class_picto_1_1_p_s_t_h_plot_handler.html" title="A handler for PSTH Plots. " alt="Picto::PSTHPlotHandler" shape="rect" coords="110,224,321,248"/>
+<area href="class_picto_1_1_sampling_bar_plot_plot_handler.html" title="A handler for the Sampling Bar Plot. " alt="Picto::SamplingBarPlotPlotHandler" shape="rect" coords="331,224,542,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -130,18 +131,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>connectToTaskConfig</
 <tr class="memitem:a37c87524c8f6281b5bedb524cd69101b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37c87524c8f6281b5bedb524cd69101b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>exportPlot</b> (int type, int size, const QString fileName)</td></tr>
 <tr class="separator:a37c87524c8f6281b5bedb524cd69101b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3866d2eea4c7ca2fd6a4a2658e30b42c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3866d2eea4c7ca2fd6a4a2658e30b42c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>requestExport</b> (<a class="el" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">ExportType::ExportType</a> type)</td></tr>
-<tr class="separator:a3866d2eea4c7ca2fd6a4a2658e30b42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aeadc6b4e8d07f1622159723367273742"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeadc6b4e8d07f1622159723367273742"></a>
-QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>getWidget</b> ()</td></tr>
-<tr class="separator:aeadc6b4e8d07f1622159723367273742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa687f0ff779d3b6eeb21f7798dd8b4a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa687f0ff779d3b6eeb21f7798dd8b4a0"></a>
+virtual QWidget *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot_handler.html#aa687f0ff779d3b6eeb21f7798dd8b4a0">plotOptionsWidget</a> ()</td></tr>
+<tr class="memdesc:aa687f0ff779d3b6eeb21f7798dd8b4a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a child-appropriate data-selection widget. <br /></td></tr>
+<tr class="separator:aa687f0ff779d3b6eeb21f7798dd8b4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf2bcba5018482181522519cdeed526"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbf2bcba5018482181522519cdeed526"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot_handler.html#acbf2bcba5018482181522519cdeed526">hideDataSelectionWidget</a> (bool)</td></tr>
+<tr class="memdesc:acbf2bcba5018482181522519cdeed526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual function to allow the toggling of the dataSelection part of the Plot Options widget. <br /></td></tr>
+<tr class="separator:acbf2bcba5018482181522519cdeed526"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:ac487a9beb4605a02b43bc48812ca5977"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac487a9beb4605a02b43bc48812ca5977"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>m_pDataViewWidget</b></td></tr>
+<tr class="separator:ac487a9beb4605a02b43bc48812ca5977"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6b29a72ed5ee5d7fdb3eeb7c85d9eb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6b29a72ed5ee5d7fdb3eeb7c85d9eb8"></a>
 QwtPlot *&#160;</td><td class="memItemRight" valign="bottom"><b>m_pPlot</b></td></tr>
 <tr class="separator:ab6b29a72ed5ee5d7fdb3eeb7c85d9eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,12 +159,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
 <tr class="separator:a7c939984e120a9b52fe24769d623db3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A base class for manufacturing Widgets. </p>
-<dl class="section note"><dt>Note</dt><dd>This exists because Qt requires widgets to be constructed in the UI thread. </dd></dl>
+<div class="textblock"><p>A Handler for plots derived from all OperatorPlots. </p>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_operator_plot_handler_8h_source.html#l00025">25</a> of file <a class="el" href="_operator_plot_handler_8h_source.html">OperatorPlotHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="_operator_plot_handler_8h_source.html#l00024">24</a> of file <a class="el" href="_operator_plot_handler_8h_source.html">OperatorPlotHandler.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/operator/<a class="el" href="_operator_plot_handler_8h_source.html">OperatorPlotHandler.h</a></li>
 <li>source/common/operator/<a class="el" href="_operator_plot_handler_8cpp_source.html">OperatorPlotHandler.cpp</a></li>

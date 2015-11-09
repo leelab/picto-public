@@ -51,8 +51,6 @@ protected:
 	QSharedPointer<AssetFactory> inputSignalFactory_;
 	//! A factory for new ScriptFunctions
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
-	//! A factory for new DataViewElements
-	QSharedPointer<AssetFactory> dataViewElementFactory_;
 
 private:
 	friend class OutputElementContainer;

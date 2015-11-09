@@ -383,7 +383,6 @@ void State::rebuildScene()
 		}
 		else if (output.dynamicCast<DataViewElement>())
 		{
-			output.staticCast<DataViewElement>()->reset();
 			scene_->addDataViewElement(output.staticCast<DataViewElement>());
 		}
 	}

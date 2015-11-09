@@ -31,7 +31,10 @@ QString SerialSessionData::takeSerializedData()
 void SerialSessionData::writeData(int, QVariantList data)
 {
 	Q_ASSERT(data.size() == 4);
-	serialData_.append(data[3].toString());
+	if (data.size() == 4)
+	{
+		serialData_.append(data[3].toString());
+	}
 }
 
 /*! \brief Implements SessionData::readDataTypes() to return an empty list because SerialSessionData can't be moved to another 

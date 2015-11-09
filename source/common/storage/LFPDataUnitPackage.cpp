@@ -150,13 +150,15 @@ void LFPDataUnitPackage::appendData(const float* adPotentialReadings, int numVal
 	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataUnitPackage::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
 }
 
-/*! \brief Appends the input value to the list of lfp readings.*/
+/*! \brief Appends the input value to the list of lfp readings.
+ */
 void LFPDataUnitPackage::appendData(float adPotentialReading)
 {
 	appendData(&adPotentialReading,1);
 }
-/*! \brief Returns the list of LFP potential readings as a byte array.*/
-QByteArray LFPDataUnitPackage::getPotentialsAsByteArray()
+/*! \brief Returns the list of LFP potential readings as a byte array.
+ */
+QByteArray LFPDataUnitPackage::getPotentialsAsByteArray() const
 {
 	float* pots = new float[potentials_.size()];
 	for(int i=0;i<potentials_.size();i++)
@@ -174,7 +176,7 @@ QByteArray LFPDataUnitPackage::getPotentialsAsByteArray()
  *	'xPos' is the timestamp (aligned with the behavioral time stream) and 'yPos' is the potential value.
  *	This is useful for plotting lfp data.
  */
-QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList()
+QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList() const
 {
 	QLinkedList<QPointF> returnVal;
 	double dTimestamp = getFittedTimestamp().toDouble();

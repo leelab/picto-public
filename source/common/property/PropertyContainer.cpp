@@ -29,9 +29,8 @@ QSharedPointer<PropertyContainer> PropertyContainer::create(QString _containerNa
 }
 
 /*! \brief Copies all Properties from the input PropertyContainer to this one.
- *	\details This is a "deep-copy."  New Property objects are created and initialized
- *	with the data of the input PropertyContainer's Properties.  We are not copying
- *	pointers.
+ *	\details This is a "deep-copy."  New Property objects are created and initialized with the data of the input
+ *	PropertyContainer's Properties.  We are not copying pointers.
  */
 void PropertyContainer::copyProperties(QSharedPointer<PropertyContainer> container2)
 {
@@ -71,8 +70,8 @@ QString PropertyContainer::getContainerName()
 }
 
 /*! \brief Returns the type Id to be used when creating EnumProperty objects with addProperty().
- *	\details This is needed specifically for the EnumProperty since the other Property objects Ids are
- *	based on the QVariant::type values.
+ *	\details This is needed specifically for the EnumProperty since the other Property objects Ids are based on the
+ *	QVariant::type values.
  */
 int PropertyContainer::enumTypeId()
 {
@@ -82,8 +81,8 @@ int PropertyContainer::enumTypeId()
 
 
 /*! \brief Returns the type Id to be used when creating EnumProperty objects with addProperty().
- *	\details This is needed specifically for the EnumProperty since the other Property objects Ids are
- *	based on the QVariant::type values.
+ *	\details This is needed specifically for the EnumProperty since the other Property objects Ids are based on the
+ *	QVariant::type values.
  */
 int PropertyContainer::viewPropertyTypeId()
 {
@@ -91,7 +90,8 @@ int PropertyContainer::viewPropertyTypeId()
 }
 
 
-/*! \brief Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the input _value, then returns it.
+/*! \brief Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the input
+ *	_value, then returns it.
  */
 QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value)
 {
@@ -152,7 +152,8 @@ QStringList PropertyContainer::getPropertyList()
 	return list;
 }
 
-/*! \brief Returns a list of the Property objects that have been set as RuntimeProperties (ie. Their initValues will be settable during runtime)
+/*! \brief Returns a list of the Property objects that have been set as RuntimeProperties (ie. Their initValues will be
+ *	settable during runtime)
  *	\sa Property::setRuntimeEditable()
  */
 QList<QSharedPointer<Property>> PropertyContainer::getRuntimeProperties()
@@ -183,8 +184,8 @@ QSharedPointer<Property> PropertyContainer::getProperty(QString _identifier,int 
 	return properties_[_identifier][index];
 }
 
-/*! \brief Sets all contained Property objects as Associate Properties for the purpose of runtime checking for Analysis Scripts
- *	setting Experimental Property values.
+/*! \brief Sets all contained Property objects as Associate Properties for the purpose of runtime checking for Analysis
+ *	Scripts setting Experimental Property values.
  *	\sa Property::setAssociateProperty()
  */
 void PropertyContainer::setPropertiesAsAssociates(bool toAssociate)
@@ -223,8 +224,8 @@ QVariant PropertyContainer::getPropertyValue(QString _identifier, int index)
 	}
 }
 
-/*! \brief This is left over from an old version of this class when a Property identifier and name weren't necessarily the same thing.
- *	It doesn't appear to be used and should probably be removed.
+/*! \brief This is left over from an old version of this class when a Property identifier and name weren't necessarily the
+ *	same thing.  It doesn't appear to be used and should probably be removed.
  */
 QString PropertyContainer::getPropertyName(QString _identifier, int index)
 {

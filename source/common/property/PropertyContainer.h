@@ -62,7 +62,8 @@ public:
 	void setPropertiesAsAssociates(bool toAssociate);
 	void clear();
 signals:
-	/*! \brief Emitted whenever the input Property's runValue changes.  The QVariant value is the value to which the Property's runValue changed.
+	/*! \brief Emitted whenever the input Property's runValue changes.  The QVariant value is the value to which the
+	 *	Property's runValue changed.
 	 *	\note This is emitted for all Properties contained in this PropertyContainer.
 	 */
 	void propertyValueChanged(Property* prop,QVariant);

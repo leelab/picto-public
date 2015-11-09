@@ -2,6 +2,7 @@ var searchData=
 [
   ['_5fadjustvalue',['_adjustValue',['../class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43',1,'Picto::BarBase']]],
   ['_5fcreatebin',['_createBin',['../class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2',1,'Picto::BarBase::_createBin()'],['../class_picto_1_1_sampling_bar_base.html#ae458094ec7f346a60a56636820143a03',1,'Picto::SamplingBarBase::_createBin()']]],
+  ['_5fcreateset',['_createSet',['../class_picto_1_1_bar_base.html#a055fd937a0b9ea0bbacb211951eedcd5',1,'Picto::BarBase::_createSet()'],['../class_picto_1_1_sampling_bar_base.html#a30e6f7bdcc1037b228a4c8d4cd5a4084',1,'Picto::SamplingBarBase::_createSet()']]],
   ['_5fdestroybin',['_destroyBin',['../class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b',1,'Picto::BarBase::_destroyBin()'],['../class_picto_1_1_sampling_bar_base.html#a090f85ead9dce10c4c93e403d249e358',1,'Picto::SamplingBarBase::_destroyBin()']]],
   ['_5fdropbin',['_dropBin',['../class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40',1,'Picto::BarBase']]],
   ['_5fgetdisplayerrbar',['_getDisplayErrBar',['../class_picto_1_1_sampling_bar_base.html#a0d87a55879ee3bc014ff2b723c8dbe08',1,'Picto::SamplingBarBase']]],

@@ -2,7 +2,6 @@
 #define _BAR_PLOT_PLOT_HANDLER_H_
 
 #include "../common.h"
-#include "DataViewSpecs.h"
 #include "BarBasePlotHandler.h"
 
 #include <QObject>
@@ -14,8 +13,7 @@ namespace Picto {
 
 class BarAxisHandler;
 
-/*! \brief A base class for manufacturing Widgets.
- *	\note This exists because Qt requires widgets to be constructed in the UI thread.
+/*! \brief A Handler for BarPlots.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

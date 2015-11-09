@@ -710,6 +710,7 @@ void ViewSelectionFrame::clearPlotHandlers()
 	cachedHandlers_.clear();
 }
 
+//! Returns the index of the TaskConfig's cached ViewProperties, or creates one if it doesn't exist already.
 int ViewSelectionFrame::configIndex(QWeakPointer<TaskConfig> referenceConfig)
 {
 	if (!cachedConfigList_.contains(referenceConfig))

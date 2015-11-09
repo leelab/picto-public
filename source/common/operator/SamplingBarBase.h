@@ -12,7 +12,6 @@ namespace Picto {
 /*!	\brief A plot populated in realtime during experiments or analysis.
  *
  *	The plot is meant for display in the Operator View.
- *	\note We need to be careful how this is serialized, as sending actual plot data would be wildly redundant.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -52,6 +51,8 @@ protected:
 	virtual void _createBin(long bin);
 	virtual void _destroyBin(long bin);
 
+	virtual void _createSet(const QString &setName);
+
 	void _submitValue(long bin, double value);
 
 	void _setSamples(long bin, long samples);
@@ -66,10 +67,10 @@ protected:
 	//! Returns the value of the DisplayStdErr property.
 	bool _getDisplayErrBar() const { return propertyContainer_->getPropertyValue("DisplayStdErr").toBool(); };
 
-	//!	The cumulative binwise-sum of the squares of submitted values.
-	QHash<long, double> m_qhdCumulValSq;
-	//!	The cumulative binwise-total of the number of submitted values.
-	QHash<long, long> m_qhlCumulNum;
+	//!	The cumulative binwise-sum of the squares of submitted values, indexed by dataset name.
+	QHash<QString, QHash<long, double>> m_qhCumulValSq;
+	//!	The cumulative binwise-total of the number of submitted values, indexed by dataset name..
+	QHash<QString, QHash<long, long>> m_qhCumulNum;
 
 	//!	Last status of ShowErrorBars, used for updating plot on change.
 	bool m_bLastErrorBarState;

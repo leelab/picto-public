@@ -271,7 +271,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a5aa9e4e4a20ae520bd86fb38630c6c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from <a class="el" href="class_remote_viewer.html#aede717175586803accac3876102409c2" title="This function is called once per state machine loop. ">runState()</a> to retrieve Neural data from the PictoServer and add it to the <a class="el" href="class_neural_data_viewer.html" title="A widget used to display live lfp and spike data in the Workstation&#39;s Remote Viewer during an experim...">NeuralDataViewer</a>. <br /></td></tr>
 <tr class="separator:a5aa9e4e4a20ae520bd86fb38630c6c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed4c13541a7d3976729e430e928f43cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed4c13541a7d3976729e430e928f43cf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>notifyAnalysisSelection</b> (const QString &amp;, bool, bool)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#aed4c13541a7d3976729e430e928f43cf">notifyAnalysisSelection</a> (const QString &amp;, bool, bool)</td></tr>
+<tr class="memdesc:aed4c13541a7d3976729e430e928f43cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot to change the current status when the current analyses are changed. <br /></td></tr>
 <tr class="separator:aed4c13541a7d3976729e430e928f43cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31dbba1b7b610efe6a4bdc2e48a005c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31dbba1b7b610efe6a4bdc2e48a005c3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a31dbba1b7b610efe6a4bdc2e48a005c3">taskListIndexChanged</a> (int index)</td></tr>
@@ -717,7 +718,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02310">2310</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02315">2315</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -745,7 +746,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Assures that the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> channels are connected. Returns false, sets the status accordingly and attempts to reconnect if the connection is lost. </p>
 <p>This function is called for each <a class="el" href="class_remote_viewer.html#aede717175586803accac3876102409c2" title="This function is called once per state machine loop. ">runState()</a> call. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02223">2223</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02230">2230</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -774,7 +775,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the running Task on the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> changes. Updates the currently selected Task in the combobox accordingly (which results in updating the left hand <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>. </p>
 <dl class="section note"><dt>Note</dt><dd>This is necessary since another Workstation might be controlling the same Session that this one is connected to. </dd></dl>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02258">2258</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02265">2265</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -830,7 +831,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Disjoins a currently running session. </p>
 <p>This is the opposite of the join function. This detaches us from a running session (but it doesn't actually end the session). </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02034">2034</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02041">2041</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -858,7 +859,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Ends a currently running session. </p>
 <p>This is the opposite of <a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282" title="Starts a new session. ">startSession()</a>. Again note that this function has no real effect on our local workstation instance. See the comments on <a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282" title="Starts a new session. ">startSession()</a> for a more detailed explanation. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01859">1859</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01866">1866</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -942,7 +943,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Returns a list of Directors and their properties. </p>
 <p>This sends out a DIRECTORLIST command, and then parses the response into a QList of ComponentInstances (really just a struct with a couple of strings). If something goes wrong, or no director instances are found, an empty list is returned. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01598">1598</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01605">1605</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -970,7 +971,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Returns a list of Proxy components and their addresses. </p>
 <p>This sends out a PROXYLIST command, and then parses the response into a QList of ComponentInstances (really just a struct with a few strings). If something goes wrong, or no Proxy instances are found, an empty list is returned. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01667">1667</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01674">1674</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1027,7 +1028,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Joining to a Session is the act of connecting this Workstation to an already running Session. This is what allows us to see the Session on the Workstation screen.</p>
 <dl class="section note"><dt>Note</dt><dd>We always keep the latest active Experiment in memory so that this function will go quickly if we rejoin to a Session that we were previously connected too. </dd></dl>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01907">1907</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01914">1914</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1180,7 +1181,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Takes care of sending an input cmd ProtocolCommand to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> and returning the received response. </p>
 <p>If the response times out, this function returns an empty pointer. If nonDefaultTimeoutMs is not set, an adaptiveTimeout is used that is adjusted based on historical timeouts and reply times. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02065">2065</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02072">2072</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1218,7 +1219,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Sends a Task command with the given target. Returns true if execution was successful.</p>
 <p>TASK commands are responsible for most of the commands that change the Experimental state. They handle things like play, stop, pause, resume, reward, etc. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02158">2158</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02165">2165</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1291,7 +1292,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Gets feedback from the operator as whether they would like to end the current session. </p>
 <dl class="section note"><dt>Note</dt><dd>If the user is not authorized on the current Session, this will always return false. </dd></dl>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02045">2045</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02052">2052</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1321,7 +1322,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <dl class="section note"><dt>Note</dt><dd>Starting the session is really just a remote command and has no effect on the local workstation. If we want to actually watch the session, we'll then need to join the session (<a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345" title="Joins to a currently running session. In order to observe or control it. ">joinSession()</a>).</dd></dl>
 <p>The order of function calls that would occur for a single user running an experiment will look like this: <a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282" title="Starts a new session. ">startSession()</a> <a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345" title="Joins to a currently running session. In order to observe or control it. ">joinSession()</a> <a class="el" href="class_remote_viewer.html#ab0009a239edbed400229fb4ee3d31688" title="Disjoins a currently running session. ">disjoinSession()</a> <a class="el" href="class_remote_viewer.html#a1a9f240aa21b60bcba8ce05e04e4917c" title="Ends a currently running session. ">endSession()</a> If a user simply wants to observe a session that someone else started, it would look like this: <a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345" title="Joins to a currently running session. In order to observe or control it. ">joinSession()</a> <a class="el" href="class_remote_viewer.html#ab0009a239edbed400229fb4ee3d31688" title="Disjoins a currently running session. ">disjoinSession()</a> </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01786">1786</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01793">1793</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1374,7 +1375,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 
 <p>Causes the engine to stop the currently running experiment before the next time <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> runs. </p>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02023">2023</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02030">2030</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1437,7 +1438,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01724">1724</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01731">1731</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>

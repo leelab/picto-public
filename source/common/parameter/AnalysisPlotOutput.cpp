@@ -23,7 +23,7 @@ AnalysisPlotOutput::AnalysisPlotOutput()
 {
 	AddDefinableProperty("OperatorPlot", "");
 
-	exportTypeList_ << "PDF" << "PostScript" << "PNG" << "BMP";
+	exportTypeList_ << "PDF" << "PNG" << "BMP";
 	AddDefinableProperty(PropertyContainer::enumTypeId(), "FileType", 2, "enumNames", exportTypeList_);
 
 	exportSizeList_ << "Small" << "Medium" << "Large" << "Huge";
@@ -99,9 +99,6 @@ void AnalysisPlotOutput::setupFile()
 		break;
 	case ExportType::EXPORT_BMP:
 		fileName += ".bmp";
-		break;
-	case ExportType::EXPORT_POSTSCRIPT:
-		fileName += ".ps";
 		break;
 	default:
 		qDebug() << "Unexpected Export Type";

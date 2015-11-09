@@ -12,7 +12,6 @@ class OperatorPlotHandler;
 /*!	\brief A plot populated in realtime during experiments or analysis.
  *
  *	The plot is meant for display in the Operator View.
- *	\note We need to be careful how this is serialized, as sending actual plot data would be wildly redundant.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -80,6 +79,7 @@ protected:
 	//! Flag used to identify when the InitializationScript has run for a given Asset
 	bool initialized_;
 
+	//! SharedPointer to the current PlotHandler
 	QSharedPointer<OperatorPlotHandler> m_pPlotHandler;
 };
 

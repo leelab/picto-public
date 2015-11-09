@@ -33,6 +33,8 @@ namespace ColumnType {
 		COLUMN_FLAT_COLUMN,		//!< Flat Bar Plot Symbols
 		COLUMN_RAISED_COLUMN,	//!< 3D Bar Plot Symbols
 		COLUMN_LINES,			//!< Simple lines at the specified values
+		COLUMN_CURVE,			//!< A curve of the values
+		COLUMN_FILLED_CURVE,	//!< A filled curve of the values
 		COLUMN_MAX				//!< An invalid value
 	};
 }; //namespace ColumnType
@@ -55,14 +57,12 @@ namespace ExportType{
 	enum ExportType : int
 	{
 		EXPORT_PDF = 0,			//!< Export to PDF
-		EXPORT_POSTSCRIPT,		//!< Export to PostScript
 		EXPORT_PNG,				//!< Export to PNG
 		EXPORT_BMP,				//!< Export to BMP
 		EXPORT_MAX				//!< An invalid value
 	};
 
 }; //namespace ExportType
-
 //!	A struct to keep track of the location of widgets within the viewer.
 struct WidgetCoords
 {

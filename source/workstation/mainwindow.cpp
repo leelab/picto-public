@@ -467,6 +467,8 @@ void MainWindow::aboutPicto()
 	releaseNoteList.append("Added the ability to run analysis scripts in Remote Views.");
 	releaseNoteList.append("Modified how users navigate between and add tasks to experiments.");
 
+	releaseNoteList.append("Fixed a PictoServer crash.");
+
 	//Format release notes:
 	QString releaseNotes;
 	if(releaseNoteList.size())

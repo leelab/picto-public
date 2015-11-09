@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QThread>
+#include <QVBoxLayout>
 
 #include "../storage/TaskConfig.h"
 #include "OperatorPlotHandler.h"
@@ -15,7 +16,7 @@ using namespace Picto;
 
 
 OperatorPlotHandler::OperatorPlotHandler()
-	: m_pPlot(nullptr), m_tmpTitle("")
+	: m_pDataViewWidget(nullptr), m_pPlot(nullptr), m_tmpTitle("")
 {
 	static int count = 0;
 	index = count++;
@@ -26,6 +27,13 @@ OperatorPlotHandler::~OperatorPlotHandler()
 	if (m_pPlot && !m_pPlot->parent())
 	{
 		m_pPlot->deleteLater();
+		m_pPlot = nullptr;
+	}
+	else if (m_pDataViewWidget && !m_pDataViewWidget->parent())
+	{
+		m_pDataViewWidget->deleteLater();
+		m_pDataViewWidget = nullptr;
+		m_pPlot = nullptr;
 	}
 }
 
@@ -51,7 +59,23 @@ void OperatorPlotHandler::initializePlot(const QString &xTitle, const QString &y
 void OperatorPlotHandler::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig)
 {
 	DataViewElement *pSender = (DataViewElement*)QObject::sender();
-	pTaskConfig->addObserverWidget(pSender, m_pPlot);
+
+	if (plotOptionsWidget())
+	{
+		m_pDataViewWidget = new QWidget();
+		QVBoxLayout *layout = new QVBoxLayout(m_pDataViewWidget);
+		m_pDataViewWidget->setLayout(layout);
+		layout->addWidget(plotOptionsWidget(), 0);
+		layout->setContentsMargins(0, 0, 0, 0);
+		hideDataSelectionWidget(true);
+		layout->addWidget(m_pPlot, 1);
+	}
+	else
+	{
+		m_pDataViewWidget = m_pPlot;
+	}
+
+	pTaskConfig->addObserverWidget(pSender, m_pDataViewWidget);
 }
 
 void OperatorPlotHandler::setTitle(const QString &title)
@@ -85,9 +109,6 @@ void OperatorPlotHandler::exportPlot(int type, int size, const QString fileName)
 		case ExportType::EXPORT_BMP:
 			typeName = "bmp";
 			break;
-		case ExportType::EXPORT_POSTSCRIPT:
-			typeName = "ps";
-			break;
 		default:
 			qDebug() << "Unexpected Export Type";
 			return;
@@ -118,35 +139,5 @@ void OperatorPlotHandler::exportPlot(int type, int size, const QString fileName)
 
 		QwtPlotRenderer renderer;
 		renderer.renderDocument(m_pPlot, fileName, typeName, renderSize);
-	}
-}
-
-void OperatorPlotHandler::requestExport(ExportType::ExportType type)
-{
-	if (m_pPlot)
-	{
-		QString filename = m_tmpTitle;
-		switch (type)
-		{
-		case ExportType::EXPORT_PDF:
-			filename += ".pdf";
-			break;
-		case ExportType::EXPORT_PNG:
-			filename += ".png";
-			break;
-		case ExportType::EXPORT_BMP:
-			filename += ".bmp";
-			break;
-		case ExportType::EXPORT_POSTSCRIPT:
-			filename += ".ps";
-			break;
-		default:
-			qDebug() << "Unexpected Export Type";
-			return;
-		}
-
-
-		QwtPlotRenderer renderer;
-		renderer.exportTo(m_pPlot, filename);
 	}
 }

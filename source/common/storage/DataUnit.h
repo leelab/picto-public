@@ -39,7 +39,7 @@ public:
 	virtual bool serializeDataID(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeDataID(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	qulonglong getDataID();
+	qulonglong getDataID() const;
 	/*! \brief Provides a mean to manually set a data ID if the automatically generated one is not sufficient.
 	 */
 	void setDataID(qulonglong dataid){dataID_ = dataid;};

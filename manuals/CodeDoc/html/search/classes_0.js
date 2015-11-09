@@ -1,6 +1,7 @@
 var searchData=
 [
   ['aboutelementbox',['AboutElementBox',['../class_about_element_box.html',1,'']]],
+  ['activescan',['ActiveScan',['../struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html',1,'Picto::PSTHPlot']]],
   ['alignmentdataunit',['AlignmentDataUnit',['../class_picto_1_1_alignment_data_unit.html',1,'Picto']]],
   ['alignmentevent',['AlignmentEvent',['../struct_alignment_tool_1_1_alignment_event.html',1,'AlignmentTool']]],
   ['alignmentinfo',['AlignmentInfo',['../class_picto_1_1_alignment_info.html',1,'Picto']]],

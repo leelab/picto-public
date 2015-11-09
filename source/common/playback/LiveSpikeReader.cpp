@@ -22,18 +22,18 @@ LiveSpikeReader::LiveSpikeReader(int maxChan,int maxUnit,int waveformSize)
 		units_.append(i);
 	}
 }
+
 /*! \brief Called when a new Run Starts to let this object know that it should clear out its spike list and start again.
-*/
+ */
 void LiveSpikeReader::setRunStart()
 {
 	spikeData_.clear();
 }
 
 /*! \brief Called to add a new spike to the list of spikes with the input time.
-*	\details The actual spike data is fake.  The spike channel is randomly selected from the channel range
-*	entered in the constructor as is the spike unit.  The waveform is simply a sine wave with some random
-*	noise.
-*/
+ *	\details The actual spike data is fake.  The spike channel is randomly selected from the channel range entered in the
+ *	constructor as is the spike unit.  The waveform is simply a sine wave with some random noise.
+ */
 void LiveSpikeReader::createVirtualSpike(double time)
 {
 	int chan = rand()%maxChans_;
@@ -47,7 +47,7 @@ void LiveSpikeReader::createVirtualSpike(double time)
 }
 
 /*! \brief Called when a Run ends to let this object know that it can clear out its spike list.
-*/
+ */
 void LiveSpikeReader::setRunEnd()
 {
 	spikeData_.clear();
@@ -74,40 +74,48 @@ double LiveSpikeReader::getLatestTime()
 		return 0;
 	return spikeData_[spikeData_.size()-1].time_;
 }
+
 int LiveSpikeReader::getLatestChannel()
 {
 	if(!spikeData_.size())
 		return 0;
 	return spikeData_[spikeData_.size()-1].channel_;
 }
+
 int LiveSpikeReader::getLatestUnit()
 {
 	if(!spikeData_.size())
 		return 0;
 	return spikeData_[spikeData_.size()-1].unit_;
 }
+
 QVariantList LiveSpikeReader::getLatestWaveform()
 {
 	if(!spikeData_.size())
 		return QVariantList();
 	return spikeData_[spikeData_.size()-1].waveform_;
 }
+
 double LiveSpikeReader::getNextTime()
 {
 	return -1;
 }
+
 int LiveSpikeReader::getNextChannel()
 {
 	return -1;
 }
+
 int LiveSpikeReader::getNextUnit()
 {
 	return -1;
 }
+
 QVariantList LiveSpikeReader::getNextWaveform()
 {
 	return QVariantList();
 }
+
 QVariantList LiveSpikeReader::getTimesSince(double time)
 {
 	if(!spikeData_.size())
@@ -130,6 +138,7 @@ QVariantList LiveSpikeReader::getTimesUntil(double)
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
 }
+
 QVariantList LiveSpikeReader::getChannelsSince(double time)
 {
 	if(!spikeData_.size())
@@ -146,11 +155,13 @@ QVariantList LiveSpikeReader::getChannelsSince(double time)
 	}
 	return returnVal;
 }
+
 QVariantList LiveSpikeReader::getChannelsUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
 }
+
 QVariantList LiveSpikeReader::getUnitsSince(double time)
 {
 	if(!spikeData_.size())
@@ -167,11 +178,13 @@ QVariantList LiveSpikeReader::getUnitsSince(double time)
 	}
 	return returnVal;	
 }
+
 QVariantList LiveSpikeReader::getUnitsUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
 }
+
 QVariantList LiveSpikeReader::getWaveformsSince(double time)
 {
 	if(!spikeData_.size())
@@ -188,6 +201,7 @@ QVariantList LiveSpikeReader::getWaveformsSince(double time)
 	}
 	return returnVal;	
 }
+
 QVariantList LiveSpikeReader::getWaveformsUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.

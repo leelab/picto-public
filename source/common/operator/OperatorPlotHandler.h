@@ -14,8 +14,7 @@ namespace Picto {
 
 class TaskConfig;
 
-/*! \brief A base class for manufacturing Widgets.
- *	\note This exists because Qt requires widgets to be constructed in the UI thread.
+/*! \brief A Handler for plots derived from all OperatorPlots
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -30,16 +29,20 @@ public:
 	OperatorPlotHandler();
 	virtual ~OperatorPlotHandler();
 
-	QWidget *getWidget() { return m_pPlot; };
+	//! Returns a child-appropriate data-selection widget
+	virtual QWidget *plotOptionsWidget() { return nullptr; };
+	//! Virtual function to allow the toggling of the dataSelection part of the Plot Options widget
+	virtual void hideDataSelectionWidget(bool) {};
+
 public slots:
 	void initializePlot(const QString &xTitle, const QString &yTitle);
 	void setTitle(const QString &title);
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 
 	void exportPlot(int type, int size, const QString fileName);
-	void requestExport(ExportType::ExportType type);
 
 protected:
+	QWidget *m_pDataViewWidget;
 	QwtPlot *m_pPlot;
 	QString m_tmpTitle;
 	int index;

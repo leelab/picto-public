@@ -68,5 +68,7 @@ var searchData=
   ['proxyresumeresponsehandler',['ProxyResumeResponseHandler',['../struct_proxy_resume_response_handler.html',1,'']]],
   ['proxystatusmanager',['ProxyStatusManager',['../class_proxy_status_manager.html',1,'']]],
   ['pseudorandomintparameter',['PseudorandomIntParameter',['../class_picto_1_1_pseudorandom_int_parameter.html',1,'Picto']]],
+  ['psthplot',['PSTHPlot',['../class_picto_1_1_p_s_t_h_plot.html',1,'Picto']]],
+  ['psthplothandler',['PSTHPlotHandler',['../class_picto_1_1_p_s_t_h_plot_handler.html',1,'Picto']]],
   ['putdatacommandhandler',['PutDataCommandHandler',['../struct_put_data_command_handler.html',1,'']]]
 ];

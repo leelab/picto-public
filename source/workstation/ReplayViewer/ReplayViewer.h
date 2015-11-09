@@ -27,22 +27,19 @@ class QLCDNumber;
 
 /*!	\brief  Defines the UI for the ReplayViewer.
  *
- *	\details The ReplayViewer includes a number of components.  It has a main display area
- *	where Session playback is viewed.  There is a timing bar underneath the main area that shows
- *	the current playback position within a Session Run and allows the user to move around within
- *	the Session to different times.  A speed slider is provided alongside the main area to define
- *	the playback speed.  Sessions are loaded by pressing a button in the toolbar.  A single or 
- *	multiple Sessions may be loaded from the dialog that pops up.  A RunSelectorWidget is used 
- *	to select which Runs will be played back / analyzed.  Multiple Runs can be selected in this 
- *	Viewer from the multiple Sessions loaded to define a batch analysis.  An AnalysisSelectorWidget is 
- *	used to define which Analyses to run during Run playback, be they local Analyses, built into the 
- *	Session's Design, or imported Analyses that are added to the Design at playback time.  Finally, an 
- *	OutputWidgetHolderis used to hold the AnalysisOutputWidgets that contain the output from the analyses.  
- *	This widget allows the user to save the output to a file path.  Alternatively, the user can use a "run to 
- *	end" button when running a Session run.  When they do this, a message box will give the user the option
- *	to save the Analysis Output automatically at the end of the Run, and they can set up the save file
- *	path there.  This is particularly useful when analyzing a batch of Runs, in which case all Runs' 
- *	outputs are saved to the same parent directory.
+ *	\details The ReplayViewer includes a number of components.  It has a main display area where Session playback is viewed.
+ *	There is a timing bar underneath the main area that shows the current playback position within a Session Run and allows
+ *	the user to move around within the Session to different times.  A speed slider is provided alongside the main area to
+ *	define the playback speed.  Sessions are loaded by pressing a button in the toolbar.  A single or multiple Sessions may
+ *	be loaded from the dialog that pops up.  A RunSelectorWidget is used to select which Runs will be played back or
+ *	analyzed.  Multiple Runs can be selected in this Viewer from the multiple Sessions loaded to define a batch analysis.
+ *	An AnalysisSelectorWidget is used to define which Analyses to run during Run playback, be they local Analyses, built
+ *	into the Session's Design, or imported Analyses that are added to the Design at playback time.  Finally, an
+ *	OutputWidgetHolder is used to hold the AnalysisOutputWidgets that contain the output from the analyses.  This widget
+ *	allows the user to save the output to a file path.  Alternatively, the user can use a "run to end" button when running a
+ *	Session run.  When they do this, a message box will give the user the option to save the Analysis Output automatically
+ *	at the end of the Run, and they can set up the save file path there.  This is particularly useful when analyzing a batch
+ *	of Runs, in which case all Runs' outputs are saved to the same parent directory.
  *
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
@@ -56,8 +53,10 @@ public:
 	QString type() { return "Test"; };
 
 public slots:
-	void init();  //Called just before displaying the viewer
-	void deinit();	//Called just after the user switches out of the viewer
+	//Called just before displaying the viewer
+	void init();
+	//Called just after the user switches out of the viewer
+	void deinit();
 	bool aboutToQuit();
 
 	void runNormal();
@@ -111,7 +110,9 @@ private:
 	RunSelectorWidget* runs_;
 	QComboBox *userType_;
 	QComboBox *lfpRequirements_;
-	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
+	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work
+	//correctly, so its disabled here for now.
+	//QSlider *zoomSlider_;	
 	
 	QAction *toggleRecord_;
 	QLCDNumber *recordTime_;
@@ -124,7 +125,8 @@ private:
 	Picto::AnalysisSelectorWidget* analysisSelector_;
 	OutputWidgetHolder* outputWidgetHolder_;
 
-	bool pausedFromJump_;	//If playback is not yet paused, system should pause playback while a jump location is being selected.
+	//If playback is not yet paused, system should pause playback while a jump location is being selected.
+	bool pausedFromJump_;
 	bool jumpDownRequested_;
 	bool recordModeOn_;
 	bool calledPlayNotPause_;

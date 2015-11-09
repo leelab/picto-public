@@ -575,7 +575,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -607,7 +607,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabEnabled(2,false);
 		mainTabbedFrame_->setTabIcon(2,QIcon());
@@ -639,7 +639,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -670,7 +670,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -787,7 +787,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -1116,7 +1116,7 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_->addTab(stimulusWidget,"Behavioral");
 	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
 	mainTabbedFrame_->addTab(currentRunViewer_,"Run Info");
-	mainTabbedFrame_->setTabEnabled(0,false);
+	//mainTabbedFrame_->setTabEnabled(0,false);
 	mainTabbedFrame_->setTabEnabled(1,false);
 	mainTabbedFrame_->layout()->setContentsMargins(0, 0, 0, 0);
 
@@ -1521,6 +1521,13 @@ void RemoteViewer::updateNeuralData()
 			NeuralDataUnit unit;
 			unit.fromXml(xmlReader);
 			neuralDataViewer_->addSpikeData(unit);
+
+			QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
+			if (task && task->getTaskConfig())
+			{
+				task->getTaskConfig()->notifyNeuralDataListeners(unit);
+			}
+
 			hadData = true;
 		}
 		xmlReader->readNext();
@@ -2210,7 +2217,7 @@ void RemoteViewer::taskListIndexChanged(int)
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
-	//viewSelectionFrame_->clear();
+
 	viewSelectionFrame_->connectToTaskConfig(task->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
@@ -2268,11 +2275,9 @@ void RemoteViewer::currTaskChanged(QString task)
 		}
 	}
 
-	//viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 }
-
 
 //! Creates names for potentially imported Analyses so that the TaskConfig can idenfify them before they are first run.
 QStringList RemoteViewer::precacheAnalysisNames(QSharedPointer<DesignRoot> import)
@@ -2475,7 +2480,8 @@ QStringList RemoteViewer::getAnalyses(bool bSkipLocal)
 	return resultList;
 }
 
-
+/*! \brief Slot to change the current status when the current analyses are changed.
+ */
 void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 {
 	QStringList analysesToBeActivated = analysisSelector_->getSelectedAnalysisNames();
@@ -2492,8 +2498,6 @@ void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 		awaitingRejoin_ = RejoinStatus::None;
 	}
 }
-
-
 
 /*! \brief Called when the run with the input runId starts.  Calls OutputWidgetHolder::newRunStarted().
  */

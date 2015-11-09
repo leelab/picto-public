@@ -1,4 +1,5 @@
 #include <QXmlStreamWriter>
+
 #include "virtualdeviceplugin.h"
 #include "simplespikesource.h"
 #include "simplemarksource.h"
@@ -58,15 +59,22 @@ void VirtualDevicePlugin::CreateEventSources()
 	//-----------------------------------------------------------------------------------------------
 
 	//Heavy Standard Recording--------------------------------------------------------------------
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001,1,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001,1,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.06, 0.001,3,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.08, 0.001,4,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,4)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,5)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001,1,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001,1,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.06, 0.001,3,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.08, 0.001,4,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,4)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,5)));
+	//--------------------------------------------------------------------------------------------
+
+	//Standard Recording--------------------------------------------------------------------
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001, 1, 0)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001, 1, 1)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001, 2, 0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001, 1)));
 	//--------------------------------------------------------------------------------------------
 }
 
@@ -82,7 +90,11 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 {
 	double currTime = timeStamper_->stampSec();
 	lastEvent_ = QSharedPointer<VirtualEvent>();
-	CreateEventSources();
+	if (sources_.isEmpty())
+	{
+		CreateEventSources();
+	}
+
 	latestEvents_.clear();
 	bool deviceStarted = true;
 	foreach(QSharedPointer<VirtualEventSource> source,sources_)
@@ -117,6 +129,8 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::stopDevice()
 	{
 		source->stop();
 	}
+	sources_.clear();
+
 	status_ = notStarted;
 	return status_;
 }
@@ -168,6 +182,7 @@ QList<QSharedPointer<Picto::DataUnit>> VirtualDevicePlugin::dumpData()
 {
 	dataList_.clear();
 	updateData();
+
 	return dataList_;
 }
 

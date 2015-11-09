@@ -142,14 +142,14 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b><
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_picto_1_1_event_code_generator.html" title="A base class for hardware specific classes that send event codes to Neural recording devices...">EventCodeGenerator</a> specific to PictoBox when it is running WindowsXP. </p>
 <p>The <a class="el" href="class_picto_1_1_event_code_generator.html" title="A base class for hardware specific classes that send event codes to Neural recording devices...">EventCodeGenerator</a> for PictoBox running Windows 7 makes the following assumptions about the hardware:</p><ul>
-<li>A single NI PCI-6221 DAQ is installed as Dev 1</li>
+<li>A single NI PCI-6321 DAQ is installed as Dev 1</li>
 <li>There is an 8-bit line attached to digital out port1 for the event codes (see PINs below)</li>
 <li>The event codes are destined for a Plexon device (although with some minor adjustments to the connector, this will also talk to a TDT box).</li>
 </ul>
 <p>PIN CONNECTIONS EventCode bit Port1 bit Pin on PCI-6221 eventCode[0] P1.0 11 eventCode[1] P1.1 10 eventCode[2] P1.2 43 eventCode[3] P1.3 42 eventCode[4] P1.4 41 eventCode[5] P1.5 6 eventCode[6] P1.6 5 event stobe P1.7 38 When <a class="el" href="class_picto_1_1_picto_box_x_p_event_code_generator.html#ab55544f42ba7b59f6efb95fdb204e355" title="Implements EventCodeGenerator::sendEvent() to add an 8th &quot;write bit&quot; to the input data...">sendEvent()</a> is called data goes to bits 0:6 and bit 7 is sent high as an event strobe. The digital output lines remain at these levels for 250us and are then lowered back down. This is sufficient to provide the event code data to the Plexon system. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html#l00034">34</a> of file <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html">PictoBoxXPEventCodeGenerator.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html#l00032">32</a> of file <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html">PictoBoxXPEventCodeGenerator.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af6ee975918e32c1a02154dc035e7a764"></a>
 <div class="memitem">
@@ -167,7 +167,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b><
 <p>Constructs a <a class="el" href="class_picto_1_1_picto_box_x_p_event_code_generator.html" title="EventCodeGenerator specific to PictoBox when it is running WindowsXP. ">PictoBoxXPEventCodeGenerator</a> object. </p>
 <p>Creates an "EventTask" DAQmxTask that will be used to write event codes out over the digital output lines. </p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_event_code_generator_8cpp_source.html#l00031">31</a> of file <a class="el" href="_picto_box_x_p_event_code_generator_8cpp_source.html">PictoBoxXPEventCodeGenerator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_event_code_generator_8cpp_source.html#l00032">32</a> of file <a class="el" href="_picto_box_x_p_event_code_generator_8cpp_source.html">PictoBoxXPEventCodeGenerator.cpp</a>.</p>
 
 </div>
 </div>
@@ -198,7 +198,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b><
 
 <p>Implements <a class="el" href="class_picto_1_1_event_code_generator.html#aa7c20e4bd4c1b3f403ea555e1a2de422">Picto::EventCodeGenerator</a>.</p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html#l00041">41</a> of file <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html">PictoBoxXPEventCodeGenerator.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html#l00039">39</a> of file <a class="el" href="_picto_box_x_p_event_code_generator_8h_source.html">PictoBoxXPEventCodeGenerator.h</a>.</p>
 
 </div>
 </div>

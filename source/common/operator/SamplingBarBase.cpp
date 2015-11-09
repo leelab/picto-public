@@ -27,9 +27,15 @@ void SamplingBarBase::draw()
 	BarBase::draw();
 }
 
+//! Returns the the average of submitted samples for the indicated bin.
 double SamplingBarBase::_getSampleValue(long bin) const
 {
-	return m_qhdCumulValue[bin] / double(m_qhlCumulNum[bin]);
+	if (m_qhCumulValue.contains(currentSetName_) && m_qhCumulValue[currentSetName_].contains(bin))
+	{
+		return m_qhCumulValue[currentSetName_][bin] / double(m_qhCumulNum[currentSetName_][bin]);
+	}
+
+	return 0.0;
 }
 
 /*! \brief Calculates the standard error of each bin and pushes the value into the vector.
@@ -39,9 +45,11 @@ void SamplingBarBase::_handleErrorValue(long bin, double &rdRangeMax, QVector<Qw
 {
 	if (m_bLastErrorBarState)
 	{
-		const double dAvg = m_qhdCumulValue[bin] / double(m_qhlCumulNum[bin]);
-		const double dValue = bin * getBinSize();
-		const double stdErr = (sqrt(m_qhdCumulValSq[bin] - dAvg*m_qhdCumulValue[bin])) / double(m_qhlCumulNum[bin]);
+		const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
+
+		const double dAvg = m_qhCumulValue[currentSetName_][bin] / double(m_qhCumulNum[currentSetName_][bin]);
+		const double dValue = m_bBinOffset ? (bin + dBinWidth) * getBinSize() : bin * getBinSize();
+		const double stdErr = (sqrt(m_qhCumulValSq[currentSetName_][bin] - dAvg*m_qhCumulValue[currentSetName_][bin])) / double(m_qhCumulNum[currentSetName_][bin]);
 		const double dMax = dAvg + stdErr;
 
 		qvError.push_back(std::move(QwtIntervalSample(dValue, dAvg - stdErr, dMax)));
@@ -62,7 +70,7 @@ void SamplingBarBase::_handleErrorValue(long bin, double &rdRangeMax, QVector<Qw
  */
 void SamplingBarBase::_handleErrorFinal(QVector<QwtIntervalSample> &qvError)
 {
-	emit setErrorSamplesSig(qvError);
+	emit setErrorSamplesSig(currentSetName_, qvError);
 }
 
 
@@ -89,11 +97,13 @@ void SamplingBarBase::initView()
  */
 void SamplingBarBase::reset()
 {
-	m_qhdCumulValue.clear();
-	m_qhdCumulValSq.clear();
-	m_qhlCumulNum.clear();
+	BarBase::reset();
 
-	m_bDataChanged = true;
+	foreach(QString setName, m_qhCumulValue.keys())
+	{
+		m_qhCumulValSq[setName].clear();
+		m_qhCumulNum[setName].clear();
+	}
 }
 
 /*!	\brief Sets the value of the square of the indicated bin's submissions.
@@ -101,22 +111,28 @@ void SamplingBarBase::reset()
 void SamplingBarBase::_setValueSquared(long bin, double value)
 {
 	m_bDataChanged = true;
+	m_qhDataChanged[currentSetName_] = true;
 
-	if (!m_qhdCumulValSq.contains(bin))
+	if (!m_qhCumulValSq.contains(currentSetName_))
+	{
+		_createSet(currentSetName_);
+	}
+
+	if (!m_qhCumulValSq[currentSetName_].contains(bin))
 	{
 		_createBin(bin);
 	}
 
-	m_qhdCumulValSq[bin] = value;
+	m_qhCumulValSq[currentSetName_][bin] = value;
 }
 
 /*!	\brief Returns the square of the values of the indicated bin's submissions.
  */
 double SamplingBarBase::_getValueSquared(long bin) const
 {
-	if (m_qhdCumulValSq.contains(bin))
+	if (m_qhCumulValSq.contains(currentSetName_) && m_qhCumulValSq[currentSetName_].contains(bin))
 	{
-		return m_qhdCumulValSq[bin];
+		return m_qhCumulValSq[currentSetName_][bin];
 	}
 
 	return 0.0;
@@ -127,22 +143,28 @@ double SamplingBarBase::_getValueSquared(long bin) const
 void SamplingBarBase::_setSamples(long bin, long samples)
 {
 	m_bDataChanged = true;
+	m_qhDataChanged[currentSetName_] = true;
 
-	if (!m_qhlCumulNum.contains(bin))
+	if (!m_qhCumulValue.contains(currentSetName_))
+	{
+		_createSet(currentSetName_);
+	}
+
+	if (!m_qhCumulValue[currentSetName_].contains(bin))
 	{
 		_createBin(bin);
 	}
 
-	m_qhlCumulNum[bin] = samples;
+	m_qhCumulNum[currentSetName_][bin] = samples;
 }
 
 /*!	\brief Returns the number of Samples taken for the indicated bin.
  */
 long SamplingBarBase::_getSamples(long bin) const
 {
-	if (m_qhlCumulNum.contains(bin))
+	if (m_qhCumulNum.contains(currentSetName_) && m_qhCumulNum[currentSetName_].contains(bin))
 	{
-		return m_qhlCumulNum[bin];
+		return m_qhCumulNum[currentSetName_][bin];
 	}
 
 	return 0L;
@@ -153,38 +175,53 @@ long SamplingBarBase::_getSamples(long bin) const
 void SamplingBarBase::_submitValue(long bin, double value)
 {
 	m_bDataChanged = true;
+	m_qhDataChanged[currentSetName_] = true;
 
-	if (!m_qhdCumulValue.contains(bin))
+	if (!m_qhCumulValue.contains(currentSetName_))
+	{
+		_createSet(currentSetName_);
+	}
+
+	if (!m_qhCumulValue[currentSetName_].contains(bin))
 	{
 		_createBin(bin);
 	}
 
-	m_qhdCumulValue[bin] += value;
-	m_qhdCumulValSq[bin] += value*value;
-	++m_qhlCumulNum[bin];
+	m_qhCumulValue[currentSetName_][bin] += value;
+	m_qhCumulValSq[currentSetName_][bin] += value*value;
+	++m_qhCumulNum[currentSetName_][bin];
 
 }
 
-/*!	\brief Virtual function to define behavior when a new bin needs to be created.
+/*!	Function to define behavior when a new bin needs to be created.
  */
 void SamplingBarBase::_createBin(long bin)
 {
-	m_qhlCumulNum[bin] = 0;
-	m_qhdCumulValue[bin] = 0;
-	m_qhdCumulValSq[bin] = 0;
+	BarBase::_createBin(bin);
 
-	m_bBinsModified = true;
+	m_qhCumulNum[currentSetName_][bin] = 0;
+	m_qhCumulValSq[currentSetName_][bin] = 0;
+}
+
+/*! Function to define behavior when a new set needs to be created.
+*/
+void SamplingBarBase::_createSet(const QString &setName)
+{
+	BarBase::_createSet(setName);
+
+	m_qhCumulNum[currentSetName_] = QHash<long, long>();
+	m_qhCumulValue[currentSetName_] = QHash<long, double>();
+
 }
 
 /*!	\brief Virtual function to define behavior when a bin needs to be destroyed.
  */
 void SamplingBarBase::_destroyBin(long bin)
 {
-	m_qhdCumulValue.remove(bin);
-	m_qhlCumulNum.remove(bin);
-	m_qhdCumulValSq.remove(bin);
+	BarBase::_destroyBin(bin);
 
-	m_bBinsModified = true;
+	m_qhCumulNum[currentSetName_].remove(bin);
+	m_qhCumulValSq[currentSetName_].remove(bin);
 }
 
 QSharedPointer<OperatorPlotHandler> SamplingBarBase::getNewHandler()

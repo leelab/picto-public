@@ -595,7 +595,7 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 	if(!dataSourceInfoMap_.contains("spikes"))
 	{
 		QSharedPointer<Picto::DataSourceInfo> srcInfo(new Picto::DataSourceInfo("spikes","spikes",data->getResolution()));
-		//Add the lfp data source info to the session database and our dataSourceInfoMap_ map
+		//Add the spikes data source info to the session database and our dataSourceInfoMap_ map
 		storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList() << ++sessionInfoDataId_ << "DataSource" << srcInfo->toXml());
 		dataSourceInfoMap_["spikes"] = srcInfo;
 	}

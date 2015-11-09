@@ -23,5 +23,6 @@ var searchData=
   ['conman_5f',['conMan_',['../class_connection_manager.html#ace292afdeb91489451efcf3405c839c9',1,'ConnectionManager']]],
   ['coordsmap',['coordsMap',['../class_view_position_widget.html#a3fbf6cb7437418402576ac82a786867c',1,'ViewPositionWidget::coordsMap()'],['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame::coordsMap()']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
+  ['currentsetname_5f',['currentSetName_',['../class_picto_1_1_bar_base.html#a499bc27bcdff6a66df36413e1273090e',1,'Picto::BarBase']]],
   ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_frame.html#abd6bb55e0fe1faca33336ffccca2ad42',1,'ViewSelectionFrame']]]
 ];

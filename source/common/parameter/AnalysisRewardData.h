@@ -35,6 +35,7 @@ public:
 
 public slots:
 	void zeroLatestFrame();
+	double getZeroTime() const;
 	double getLatestTime();
 	double getNextTime();
 	int getLatestDuration();

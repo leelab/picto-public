@@ -127,8 +127,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 &#160;
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>m_bBinsModified
-: <a class="el" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">Picto::BarBase</a>
+<li>m_bBinOffset
+: <a class="el" href="class_picto_1_1_bar_base.html#a5842268b0cc909b0678bfcfa6b5f08ac">Picto::BarBase</a>
 </li>
 <li>m_bDataChanged
 : <a class="el" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">Picto::OperatorPlot</a>
@@ -136,8 +136,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>m_bLastErrorBarState
 : <a class="el" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">Picto::SamplingBarBase</a>
 </li>
-<li>m_bUpdateBrush
-: <a class="el" href="class_picto_1_1_bar_base.html#a81b5c712d2b609585c2ebd0b3a4e312c">Picto::BarBase</a>
+<li>m_bTotalBinRecalc
+: <a class="el" href="class_picto_1_1_bar_base.html#a2ff05b84ebcaa1a90c75a53f989cb834">Picto::BarBase</a>
+</li>
+<li>m_cUnasignedNum
+: <a class="el" href="class_picto_1_1_bar_base.html#aba894a549e95d5e4988bbf87de9a62be">Picto::BarBase</a>
+</li>
+<li>m_lCachedXMax
+: <a class="el" href="class_picto_1_1_bar_base.html#a1e99a5c6e2067f5da1917e771a2d82e3">Picto::BarBase</a>
+</li>
+<li>m_lCachedXMin
+: <a class="el" href="class_picto_1_1_bar_base.html#a9d4f24bdd234f157703cfd71798ec28a">Picto::BarBase</a>
 </li>
 <li>m_pAxisHandler
 : <a class="el" href="class_picto_1_1_bar_plot.html#a4f316d5a456dfe47f169a650a3e6e251">Picto::BarPlot</a>
@@ -145,20 +154,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_sampling_bar_plot.html#adc66d4e275efb818b83f16dc9d431904">Picto::SamplingBarPlot</a>
 , <a class="el" href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">Picto::SamplingBarPlotPlotHandler</a>
 </li>
-<li>m_pErrorBars
-: <a class="el" href="class_picto_1_1_sampling_bar_base_plot_handler.html#a44a59124393bf6f1446340a8ec2d7837">Picto::SamplingBarBasePlotHandler</a>
+<li>m_pEventMarker
+: <a class="el" href="class_picto_1_1_p_s_t_h_plot_handler.html#a708cc9a01d674991061a004238018785">Picto::PSTHPlotHandler</a>
 </li>
-<li>m_qhdCumulValSq
-: <a class="el" href="class_picto_1_1_sampling_bar_base.html#addb16fe891f61d6312118cc77fe92659">Picto::SamplingBarBase</a>
+<li>m_pPlotHandler
+: <a class="el" href="class_picto_1_1_operator_plot.html#ad8c48a33f6f80244cf76bb619d22b286">Picto::OperatorPlot</a>
 </li>
-<li>m_qhdCumulValue
-: <a class="el" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">Picto::BarBase</a>
+<li>m_qhbHistoPlotVisibility
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">Picto::BarBasePlotHandler</a>
 </li>
-<li>m_qhlCumulNum
-: <a class="el" href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">Picto::SamplingBarBase</a>
+<li>m_qhBinsModified
+: <a class="el" href="class_picto_1_1_bar_base.html#af7a7bc5a82463361378e023b6cdcf7b7">Picto::BarBase</a>
+</li>
+<li>m_qhcErrorBarColor
+: <a class="el" href="class_picto_1_1_sampling_bar_base_plot_handler.html#a9940e0d3c1a0af9030f5ae3f0a14812a">Picto::SamplingBarBasePlotHandler</a>
+</li>
+<li>m_qhcHistoPlotColor
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">Picto::BarBasePlotHandler</a>
+</li>
+<li>m_qhColor
+: <a class="el" href="class_picto_1_1_bar_base.html#a7ee6f9b4008c5140919afb661263e02a">Picto::BarBase</a>
+</li>
+<li>m_qhCumulNum
+: <a class="el" href="class_picto_1_1_sampling_bar_base.html#abfecc9e937c598eb4deecb3b5acb5241">Picto::SamplingBarBase</a>
+</li>
+<li>m_qhCumulValSq
+: <a class="el" href="class_picto_1_1_sampling_bar_base.html#ae48e823ba84f50e9fc8ed919c550341f">Picto::SamplingBarBase</a>
+</li>
+<li>m_qhCumulValue
+: <a class="el" href="class_picto_1_1_bar_base.html#a5a17e4702d6118c594ec8cf94ce114ef">Picto::BarBase</a>
+</li>
+<li>m_qhDataChanged
+: <a class="el" href="class_picto_1_1_bar_base.html#a19a37040b99d81bd0ff63ba3de296f38">Picto::BarBase</a>
+</li>
+<li>m_qhpErrorBars
+: <a class="el" href="class_picto_1_1_sampling_bar_base_plot_handler.html#af3b559e72853d30df2d3ad7d57706fbb">Picto::SamplingBarBasePlotHandler</a>
+</li>
+<li>m_qhpPlotItems
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">Picto::BarBasePlotHandler</a>
 </li>
 <li>m_qhsLabels
 : <a class="el" href="class_picto_1_1_bar_axis_handler.html#aa87f3e94baddab57f212db8c440144b1">Picto::BarAxisHandler</a>
+</li>
+<li>m_qhUpdateBrush
+: <a class="el" href="class_picto_1_1_bar_base.html#a628c34bb23a1ef4999e3c41793263194">Picto::BarBase</a>
 </li>
 <li>m_title
 : <a class="el" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">Picto::OperatorPlot</a>

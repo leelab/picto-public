@@ -1,6 +1,7 @@
 #include <QtDebug>
 
 #include "TaskConfig.h"
+#include "../operator/NeuralDataListener.h"
 #include "../operator/DataViewElement.h"
 #include "../operator/OperatorPlot.h"
 
@@ -267,7 +268,7 @@ void TaskConfig::setUpdateSignalEnabled(bool bEnabled)
 
 
 /*! \brief Returns a QList of the current View Widgets.
-*/
+ */
 const QList<QWidget *> TaskConfig::getWidgets() const
 {
 	QList<QWidget*> activeWidgets;
@@ -283,13 +284,15 @@ const QList<QWidget *> TaskConfig::getWidgets() const
 	return activeWidgets;
 }
 
-/*! \brief Returns a QList of the names of the current View Widgets.
-*/
+/*!	Returns a QList of the names of the current View Widgets.
+ */
 const QList<QString> TaskConfig::getNames() const
 {
 	return widgetNameMap.values();
 }
 
+/*!	Returns the stored name for the passsed-in widget pointer.
+ */
 const QString TaskConfig::getName(QWidget *pWidget) const
 {
 	if (widgetNameMap.contains(pWidget))
@@ -300,6 +303,9 @@ const QString TaskConfig::getName(QWidget *pWidget) const
 	return QString("");
 }
 
+
+/*!	Returns the cached ViewProperties associated with the passed-in displayWidget
+ */
 const ViewProperties TaskConfig::getDisplayWidgetProperties(QWidget *widget) const
 {
 	if (displayProperties.contains(widget))
@@ -308,6 +314,50 @@ const ViewProperties TaskConfig::getDisplayWidgetProperties(QWidget *widget) con
 	}
 
 	return ViewProperties();
+}
+
+/*!	Registers a NeuralDataListener to receive live NeuralData updates.
+ */
+void TaskConfig::addNeuralDataListener(QWeakPointer<NeuralDataListener> listener)
+{
+	if (!neuralDataListeners_.contains(listener) && !listener.isNull())
+	{
+		neuralDataListeners_.push_back(listener);
+	}
+}
+
+/*!	Distributes neuralData to registered listeners
+ */
+void TaskConfig::notifyNeuralDataListeners(const NeuralDataUnit &neuralData)
+{
+	bool bCleanupRequired = false;
+	foreach(QWeakPointer<NeuralDataListener> listener, neuralDataListeners_)
+	{
+		if (listener.isNull())
+		{
+			bCleanupRequired = true;
+		}
+		else
+		{
+			listener.data()->addSpikeData(neuralData);
+		}
+	}
+
+	if (bCleanupRequired)
+	{
+		QList<QWeakPointer<NeuralDataListener>>::iterator it = neuralDataListeners_.begin();
+		while (it != neuralDataListeners_.end())
+		{
+			if (it->isNull())
+			{
+				it = neuralDataListeners_.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
 }
 
 }

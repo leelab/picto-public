@@ -112,5 +112,4 @@ void SlaveEventQueue::prepareEvents()
 
 	//Reset FrozenQueue
 	frozenEndLoc_ = 0;
-
 }

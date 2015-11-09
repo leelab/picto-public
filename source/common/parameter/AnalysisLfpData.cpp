@@ -9,7 +9,9 @@ AnalysisLfpData::AnalysisLfpData()
 {
 	zeroTime_ = 0;
 }
-/*! \brief Creates a new AnalysisLfpData object and returns a shared Asset pointer to it.*/
+
+/*! \brief Creates a new AnalysisLfpData object and returns a shared Asset pointer to it.
+ */
 QSharedPointer<Asset> AnalysisLfpData::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisLfpData());
@@ -23,7 +25,7 @@ void AnalysisLfpData::enteredScope()
 }
 
 /*! \brief Sets the time of the latest frame to zero.  LFP times will be returned with respect to this latest frame time.
-*/
+ */
 void AnalysisLfpData::zeroLatestFrame()
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -33,8 +35,14 @@ void AnalysisLfpData::zeroLatestFrame()
 	zeroTime_ = latestTime;
 }
 
+//! Returns the zero time of this element, represented in global behavioral time
+double AnalysisLfpData::getZeroTime() const
+{
+	return zeroTime_;
+}
+
 /*! \brief Returns a list of the channels on which lfp data was captured during this run.
-*/
+ */
 QVariantList AnalysisLfpData::getChannels()
 {
 	if(!lfpReader_)
@@ -43,7 +51,7 @@ QVariantList AnalysisLfpData::getChannels()
 }
 
 /*! \brief Returns the sample period for lfp data capture.
-*/
+ */
 double AnalysisLfpData::getSamplePeriod()
 {
 	if(!lfpReader_)
@@ -52,7 +60,7 @@ double AnalysisLfpData::getSamplePeriod()
 }
 
 /*! \brief Returns the time of the latest lfp data sample.
-*/
+ */
 double AnalysisLfpData::getLatestTime()
 {
 	if(!lfpReader_)
@@ -62,7 +70,7 @@ double AnalysisLfpData::getLatestTime()
 }
 
 /*! \brief Returns the latest lfp value on the channel.
-*/
+ */
 double AnalysisLfpData::getLatestValue(int channel)
 {
 	if(!lfpReader_)
@@ -71,7 +79,7 @@ double AnalysisLfpData::getLatestValue(int channel)
 }
 
 /*! \brief Returns an list of the latest values ordered according to the channel order returned from getChannels().
-*/
+ */
 QVariantList AnalysisLfpData::getLatestValue()
 {
 	if(!lfpReader_)
@@ -122,8 +130,9 @@ QVariantList AnalysisLfpData::getNextValue()
 	return result;
 }
 
-/*! \brief Returns a list of lfp sample times that occured with times > the input # sec before the latest frame and <= the latest frame time.
-*/
+/*! \brief Returns a list of lfp sample times that occured with times > the input # sec before the latest frame and <= the
+ *	latest frame time.
+ */
 QVariantList AnalysisLfpData::getPrevTimes(double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -142,7 +151,8 @@ QVariantList AnalysisLfpData::getPrevTimes(double secsPreceding)
 	return returnVal;
 }
 
-/*! \brief Returns a list of lfp sample times that will occur with times > the latest frame time and <= the input # sec after the latest frame.
+/*! \brief Returns a list of lfp sample times that will occur with times > the latest frame time and <= the input # sec
+ *	after the latest frame.
  *	\note In a live test, this will not return valid values.
  */
 QVariantList AnalysisLfpData::getNextTimes(double secsFollowing)
@@ -162,16 +172,20 @@ QVariantList AnalysisLfpData::getNextTimes(double secsFollowing)
 	}
 	return returnVal;
 }
-/*! \brief Functions like getPrevTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
-*/
+
+/*! \brief Functions like getPrevTimes() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
+ */
 QVariantList AnalysisLfpData::getTimesSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevTimes(offsetTime);
 }
-/*! \brief Functions like getNextTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
-*/
+
+/*! \brief Functions like getNextTimes() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
+ */
 QVariantList AnalysisLfpData::getTimesUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -179,8 +193,9 @@ QVariantList AnalysisLfpData::getTimesUntil(double upToTime)
 	return getNextTimes(offsetTime);
 }
 
-/*! \brief Returns a list of lfp values for the input channel that occured with times > the input # sec before the latest frame and <= the latest frame time.
-*/
+/*! \brief Returns a list of lfp values for the input channel that occured with times > the input # sec before the latest
+ *	frame and <= the latest frame time.
+ */
 QVariantList AnalysisLfpData::getPrevValues(int channel,double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -193,8 +208,10 @@ QVariantList AnalysisLfpData::getPrevValues(int channel,double secsPreceding)
 	QVariantList returnVal = lfpReader_->getValuesSince(channel,minRunTime);
 	return returnVal;
 }
-/*! \brief Returns a list of lfp values for the input channel that will occur with times > the latest frame time and <= the input # sec after the latest frame and <= the latest frame time.
-*/
+
+/*! \brief Returns a list of lfp values for the input channel that will occur with times > the latest frame time
+ *	and <= the input # sec after the latest frame and <= the latest frame time.
+ */
 QVariantList AnalysisLfpData::getNextValues(int channel,double secsFollowing)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -207,32 +224,40 @@ QVariantList AnalysisLfpData::getNextValues(int channel,double secsFollowing)
 	QVariantList returnVal = lfpReader_->getValuesUntil(channel,maxRunTime);
 	return returnVal;
 }
-/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
-*/
+
+/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
+ */
 QVariantList AnalysisLfpData::getValuesSince(int channel,double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevValues(channel,offsetTime);
 }
-/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
-*/
+
+/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
+ */
 QVariantList AnalysisLfpData::getValuesUntil(int channel,double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
 	double offsetTime = globalTime - getLatestRunTime();
 	return getNextValues(channel,offsetTime);
 }
-/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
-*/
+
+/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
+ */
 QVariantList AnalysisLfpData::getValuesSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevValues(offsetTime);
 }
-/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
-*/
+
+/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
+ */
 QVariantList AnalysisLfpData::getValuesUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -240,10 +265,9 @@ QVariantList AnalysisLfpData::getValuesUntil(double upToTime)
 	return getNextValues(offsetTime);
 }
 
-/*! \brief Returns a list of lfp value lists (where sub lists are ordered like the result of getChannels())
- *	that will occur with times > the input # sec before the latest frame time and <= the latest 
- *	frame time. Times should be incremented by one getSamplePeriod() for every 
- *	new entry in the outer list.
+/*! \brief Returns a list of lfp value lists (where sub lists are ordered like the result of getChannels()) that will
+ *	occur with times > the input # sec before the latest frame time and <= the latest frame time. Times should be
+ *	incremented by one getSamplePeriod() for every new entry in the outer list.
  */
 QVariantList AnalysisLfpData::getPrevValues(double secsPreceding)
 {
@@ -280,10 +304,10 @@ QVariantList AnalysisLfpData::getPrevValues(double secsPreceding)
 	}
 	return result;
 }
-/*! \brief Returns a list of lfp value lists (where sub lists are ordered like the result of getChannels())
- *	that will occur with times > the latest frame time and <= the input # sec after the latest frame 
- *	and > the latest frame time. Times should be incremented by one getSamplePeriod() for every 
- *	new entry in the outer list.
+
+/*! \brief Returns a list of lfp value lists (where sub lists are ordered like the result of getChannels()) that will
+ *	occur with times > the latest frame time and <= the input # sec after the latest frame and > the latest frame time.
+ *	Times should be incremented by one getSamplePeriod() for every new entry in the outer list.
  */
 QVariantList AnalysisLfpData::getNextValues(double secsFollowing)
 {
@@ -334,7 +358,7 @@ bool AnalysisLfpData::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 }
 
 /*! \brief Returns the latest frame time with respect to the beginning of the run.
-*/
+ */
 double AnalysisLfpData::getLatestRunTime()
 {
 	double latestTime = getDesignConfig()->getFrameReader()->getLatestTime();

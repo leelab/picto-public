@@ -95,46 +95,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _SAMPLING_BAR_PLOT_PLOT_HANDLER_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../common.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;DataViewSpecs.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;SamplingBarBasePlotHandler.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;QObject&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QSharedPointer&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QColor&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;QVector&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">class </span>BarAxisHandler;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> SamplingBarPlotPlotHandler : <span class="keyword">public</span> SamplingBarBasePlotHandler</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">   25</a></span>&#160;class <a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">SamplingBarPlotPlotHandler</a> : <span class="keyword">public</span> <a class="code" href="class_picto_1_1_sampling_bar_base_plot_handler.html">SamplingBarBasePlotHandler</a></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">SamplingBarPlotPlotHandler</a>();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">SamplingBarPlotPlotHandler</a>(){};</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> initializeSamplingBarPlot(<a class="code" href="class_picto_1_1_bar_axis_handler.html">BarAxisHandler</a> *pHandler);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handleXLabels(<span class="keywordtype">long</span> lLowerBound, <span class="keywordtype">long</span> lUpperBound);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">   39</a></span>&#160;    <a class="code" href="class_picto_1_1_bar_axis_handler.html">BarAxisHandler</a> *<a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">m_pAxisHandler</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;SamplingBarBasePlotHandler.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;QObject&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;QSharedPointer&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QColor&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QVector&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">class </span>BarAxisHandler;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> SamplingBarPlotPlotHandler : <span class="keyword">public</span> SamplingBarBasePlotHandler</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">   23</a></span>&#160;class <a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">SamplingBarPlotPlotHandler</a> : <span class="keyword">public</span> <a class="code" href="class_picto_1_1_sampling_bar_base_plot_handler.html">SamplingBarBasePlotHandler</a></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">SamplingBarPlotPlotHandler</a>();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html">SamplingBarPlotPlotHandler</a>(){};</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> initializeSamplingBarPlot(<a class="code" href="class_picto_1_1_bar_axis_handler.html">BarAxisHandler</a> *pHandler);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handleXLabels(<span class="keywordtype">long</span> lLowerBound, <span class="keywordtype">long</span> lUpperBound);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">   37</a></span>&#160;    <a class="code" href="class_picto_1_1_bar_axis_handler.html">BarAxisHandler</a> *<a class="code" href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">m_pAxisHandler</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;};</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_bar_axis_handler_html"><div class="ttname"><a href="class_picto_1_1_bar_axis_handler.html">Picto::BarAxisHandler</a></div><div class="ttdoc">Encapsulation of BarPlot labeling and scaling functionality. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_axis_handler_8h_source.html#l00021">BarAxisHandler.h:21</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_plot_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_sampling_bar_plot_plot_handler.html">Picto::SamplingBarPlotPlotHandler</a></div><div class="ttdoc">A base class for manufacturing Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_plot_plot_handler_8h_source.html#l00025">SamplingBarPlotPlotHandler.h:25</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_base_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base_plot_handler.html">Picto::SamplingBarBasePlotHandler</a></div><div class="ttdoc">A base class for manufacturing Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_plot_handler_8h_source.html#l00025">SamplingBarBasePlotHandler.h:25</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_plot_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_sampling_bar_plot_plot_handler.html">Picto::SamplingBarPlotPlotHandler</a></div><div class="ttdoc">A handler for the Sampling Bar Plot. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_plot_plot_handler_8h_source.html#l00023">SamplingBarPlotPlotHandler.h:23</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_base_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base_plot_handler.html">Picto::SamplingBarBasePlotHandler</a></div><div class="ttdoc">A handler for plots derived from the SamplingBarBase. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_plot_handler_8h_source.html#l00023">SamplingBarBasePlotHandler.h:23</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_plot_plot_handler_html_a558065509ecfa1a5715e626735443a83"><div class="ttname"><a href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">Picto::SamplingBarPlotPlotHandler::m_pAxisHandler</a></div><div class="ttdeci">BarAxisHandler * m_pAxisHandler</div><div class="ttdoc">Manages the storing and rendering of axis names. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_plot_plot_handler_8h_source.html#l00039">SamplingBarPlotPlotHandler.h:39</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_plot_plot_handler_html_a558065509ecfa1a5715e626735443a83"><div class="ttname"><a href="class_picto_1_1_sampling_bar_plot_plot_handler.html#a558065509ecfa1a5715e626735443a83">Picto::SamplingBarPlotPlotHandler::m_pAxisHandler</a></div><div class="ttdeci">BarAxisHandler * m_pAxisHandler</div><div class="ttdoc">Manages the storing and rendering of axis names. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_plot_plot_handler_8h_source.html#l00037">SamplingBarPlotPlotHandler.h:37</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

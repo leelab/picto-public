@@ -72,7 +72,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 	}
 
 	//Collect the data from the Plexon Server
-	PL_WaveLong*     pServerEventBuffer;
+	PL_WaveLong *pServerEventBuffer;
 	double timestampSec;
 	double samplePeriodSec = PL_GetTimeStampTick()/1000000.0;  //clock period in seconds
 	PL_GetSlowInfo(&freq, channels, lfpGains);

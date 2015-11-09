@@ -10,7 +10,7 @@ using namespace Picto;
  *	from the updater is sent into the exp Experiment and rendered on screen.
  */
 SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp, QSharedPointer<StateUpdater> updater)
-	: paused_(false), initialized_(false)
+	: paused_(false), initialized_(false), finalTransitionID_(0)
 {
 	experiment_ = exp;
 	updater_ = updater;
@@ -103,7 +103,7 @@ void SlaveExperimentDriver::renderFrame()
 void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 {
 	//These conditions should only fulfilled when joining an experiment mid-session
-	if (!initialized_ && !(event.id < 0 && event.type == SlaveEvent::TRANS_ACTIVATED))
+	if (!initialized_ && !(event.id < 0 && event.type == SlaveEvent::TRANS_ACTIVATED) && event.dataId > finalTransitionID_)
 	{
 		QSharedPointer<Asset> asset = designConfig_->getAsset(event.id);
 		while (asset && !asset->inherits("Picto::Task"))
@@ -141,14 +141,14 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 				Q_ASSERT(!asset);
 				if (!event.value.isEmpty())
 				{
+					finalTransitionID_ = event.dataId;
 					remoteRunEnding();
 				}
 				return;
 			}
 
-
 			QSharedPointer<Transition> trans = asset.staticCast<Transition>();
-	
+
 			//As soon as a transition comes in and it has a source result, we set that transition's source's latest
 			//	result to the transition's source result.  Then, if the source is a state machine element, we call its
 			//	AnalysisExitScripts
@@ -260,6 +260,8 @@ void SlaveExperimentDriver::remoteRunStarting(QString taskName)
 	QDateTime dateTime = QDateTime::currentDateTime();
 	designConfig_->markRunStart(taskName + "_" + dateTime.toString("yyyy_MM_dd__hh_mm_ss"));
 
+	experiment_->getDesignConfig()->getFrameReader().objectCast<LiveFrameReader>()->setRunStart();
+
 	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
 	Q_ASSERT(top);
 	//Reset Analysis elements to initial states on Top
@@ -280,6 +282,9 @@ void SlaveExperimentDriver::remoteRunEnding()
 	//Run AnalysisExitScripts on Top
 	top->runAnalysisExitScripts();
 	designConfig_->markRunEnd();
+
+	experiment_->getDesignConfig()->getFrameReader().objectCast<LiveFrameReader>()->setRunEnd();
+
 	paused_ = false;
 	initialized_ = false;
 }
@@ -333,6 +338,12 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 {
 	//Report the time of the frame following all the property and transition updates that are about to occur.
 	experiment_->getDesignConfig()->getFrameTimerFactory()->setNextFrameTime(time);
+
+	if (experiment_->getDesignConfig()->getFrameReader().objectCast<LiveFrameReader>())
+	{
+		experiment_->getDesignConfig()->getFrameReader().objectCast<LiveFrameReader>()->setLatestFrameTime(time);
+	}
+
 	//Perform all queued events that occured up to this frame since the last one 
 	//	(We do this after setting next frame time so that when reading absolute time values during the course of state
 	//	machine execution, we will read the absolute time value of the frame that follows the current position in the
@@ -343,7 +354,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 	handleEvents();
 	//Render frame
 	renderFrame();
-	
+
 	//Tell all timers that work on single frame resolution what the latest frame time is
 	experiment_->getDesignConfig()->getFrameTimerFactory()->setLastFrameTime(time);
 

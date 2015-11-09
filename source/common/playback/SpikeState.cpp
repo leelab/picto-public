@@ -139,24 +139,29 @@ void SpikeState::moveToIndex(PlaybackIndex index)
 		nextIndex = getNextIndex();
 	}
 }
+
 QVariantList SpikeState::getChannels()
 {
 	return channels_;
 }
+
 QVariantList SpikeState::getUnits(int channel)
 {
 	if(!unitsLookup_.contains(channel))
 		return QVariantList();
 	return unitsLookup_.value(channel);
 }
+
 double SpikeState::getSamplePeriod()
 {
 	return sampPeriod_;
 }
+
 double SpikeState::getLatestTime()
 {
 	return getCurrentIndex().time();
 }
+
 int SpikeState::getLatestChannel()
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -164,6 +169,7 @@ int SpikeState::getLatestChannel()
 		return -1;
 	return data_[curr_].channel_;
 }
+
 int SpikeState::getLatestUnit()
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -171,6 +177,7 @@ int SpikeState::getLatestUnit()
 		return -1;
 	return data_[curr_].unit_;
 }
+
 QVariantList SpikeState::getLatestWaveform()
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -183,10 +190,12 @@ QVariantList SpikeState::getLatestWaveform()
 	}
 	return returnVal;
 }
+
 double SpikeState::getNextTime()
 {
 	return getNextIndex().time();
 }
+
 int SpikeState::getNextChannel()
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -194,6 +203,7 @@ int SpikeState::getNextChannel()
 		return -1;
 	return data_[curr_+1].channel_;
 }
+
 int SpikeState::getNextUnit()
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -201,6 +211,7 @@ int SpikeState::getNextUnit()
 		return -1;
 	return data_[curr_+1].unit_;
 }
+
 QVariantList SpikeState::getNextWaveform()
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -213,11 +224,13 @@ QVariantList SpikeState::getNextWaveform()
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getTimesSince(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
 	double afterTime = time;
-	if(afterTime >= getLatestTime())
+	const double latestTime = getLatestTime();
+	if (afterTime >= latestTime)
 		return QVariantList();
 	PlaybackIndex beyondIndex = PlaybackIndex::maxForTime(afterTime+runStart_);
 	QList<PlaybackSpikeData>::iterator iter = qUpperBound<QList<PlaybackSpikeData>::iterator,PlaybackSpikeData>(data_.begin(),curr_>=0?data_.begin()+curr_:data_.begin(),PlaybackSpikeData(beyondIndex.time(),0,0,QVector<float>()));
@@ -228,6 +241,7 @@ QVariantList SpikeState::getTimesSince(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getTimesUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -243,6 +257,7 @@ QVariantList SpikeState::getTimesUntil(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getChannelsSince(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -258,6 +273,7 @@ QVariantList SpikeState::getChannelsSince(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getChannelsUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -273,6 +289,7 @@ QVariantList SpikeState::getChannelsUntil(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getUnitsSince(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -288,6 +305,7 @@ QVariantList SpikeState::getUnitsSince(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getUnitsUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -303,6 +321,7 @@ QVariantList SpikeState::getUnitsUntil(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getWaveformsSince(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -324,6 +343,7 @@ QVariantList SpikeState::getWaveformsSince(double time)
 	}
 	return returnVal;
 }
+
 QVariantList SpikeState::getWaveformsUntil(double time)
 {
 	Q_ASSERT(runStart_ >= 0);
@@ -345,6 +365,7 @@ QVariantList SpikeState::getWaveformsUntil(double time)
 	}
 	return returnVal;
 }
+
 PlaybackIndex SpikeState::getNextIndex()
 {
 	Q_ASSERT(runStart_ >= 0);

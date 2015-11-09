@@ -22,6 +22,7 @@
 #include "../operator/HistogramPlot.h"
 #include "../operator/SamplingBarPlot.h"
 #include "../operator/SamplingHistogramPlot.h"
+#include "../operator/PSTHPlot.h"
 
 
 #include "../memleakdetect.h"
@@ -91,6 +92,8 @@ Analysis::Analysis()
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(HistogramPlot::Create))));
 	dataViewElementFactory_->addAssetType(SamplingHistogramPlot::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingHistogramPlot::Create))));
+	dataViewElementFactory_->addAssetType(PSTHPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(PSTHPlot::Create))));
 
 	//A copy paste error led to all data sources being saved with the AnalysisScriptContainer tag before Picto version 1.0.30 and syntax version 0.0.2
 	//For this reason we changed the AnalysisScriptContainer name to AnalysisScriptHolder and in the upgradeVersion function we are recreating all 

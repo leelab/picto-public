@@ -155,9 +155,9 @@ void PictoEngine::markTaskRunStart(QString name)
 	taskRunName_ = name;
 	taskRunUnit_ = QSharedPointer<TaskRunDataUnit>();
 	taskRunStarting_ = true;
-	
+
 	//If there's are data readers, tell them that we're starting a new run
-	if(frameReader_)
+	if (lfpReader_)
 	{
 		frameReader_->setRunStart();
 		lfpReader_->setRunStart();
@@ -178,7 +178,7 @@ void PictoEngine::markTaskRunStop()
 	taskRunEnding_ = true;
 
 	//If there's are data readers, tell them that the run is over
-	if(frameReader_)
+	if (lfpReader_)
 	{
 		frameReader_->setRunEnd();
 		lfpReader_->setRunEnd();
@@ -473,9 +473,9 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 		//Tell all timers that work on single frame resolution what the latest frame time is
 		frameTimerFactory_->setLastFrameTime(frameTime);
 	}
-	
-	//If there's an active frameReader_ (ie. We're using the TestViewer with Analysis)
-	if(frameReader_)
+
+	//If there's an active lfpReader_ (ie. We're using the TestViewer with Analysis)
+	if (lfpReader_)
 	{
 		//Set the latest frame time to the frameReader_
 		frameReader_->setLatestFrameTime(frameTime);

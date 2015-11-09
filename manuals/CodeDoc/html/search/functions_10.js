@@ -42,6 +42,7 @@ var searchData=
   ['plexonplugin',['PlexonPlugin',['../class_plexon_plugin.html#a0bd4a49facbf56e4dadeac63ff529031',1,'PlexonPlugin']]],
   ['plotchannelchanged',['plotChannelChanged',['../class_neural_data_viewer.html#ab45cc2341a23cdb35cff6fc3d8a73b6e',1,'NeuralDataViewer']]],
   ['plothandlerrequested',['plotHandlerRequested',['../class_picto_1_1_task_config.html#a6809e70e0472060ad0230d473c4fe65b',1,'Picto::TaskConfig::plotHandlerRequested()'],['../class_view_selection_frame.html#a820f621e6058ba222e0385042ca13d95',1,'ViewSelectionFrame::plotHandlerRequested()']]],
+  ['plotoptionswidget',['plotOptionsWidget',['../class_picto_1_1_bar_base_plot_handler.html#a36cb1f56dd0423cad53f63a27763c078',1,'Picto::BarBasePlotHandler::plotOptionsWidget()'],['../class_picto_1_1_operator_plot_handler.html#aa687f0ff779d3b6eeb21f7798dd8b4a0',1,'Picto::OperatorPlotHandler::plotOptionsWidget()']]],
   ['plotunitchanged',['plotUnitChanged',['../class_neural_data_viewer.html#ad486c730a3f854e8431b109e48b80197',1,'NeuralDataViewer']]],
   ['plotviewwidget',['PlotViewWidget',['../class_plot_view_widget.html#af9a1d8f0e78a4960eef4739e8ecc78b4',1,'PlotViewWidget']]],
   ['pluginindexchanged',['pluginIndexChanged',['../class_proxy_main_window.html#aee8554b4f91811182faacabecf2ace0c',1,'ProxyMainWindow']]],
