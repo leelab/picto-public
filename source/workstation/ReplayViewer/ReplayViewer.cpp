@@ -69,6 +69,7 @@ void ReplayViewer::init()
 void ReplayViewer::deinit()
 {
 	stop();
+	viewSelectionFrame_->clearPlotHandlers();
 	emit deinitComplete();
 }
 
