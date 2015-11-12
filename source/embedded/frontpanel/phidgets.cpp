@@ -102,8 +102,9 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
  */
 Phidgets::~Phidgets()
 {
-	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, "");
-	CPhidgetTextLCD_setDisplayString(hTextLCD, 1, "");
+	char empty[1] = "";
+	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, empty);
+	CPhidgetTextLCD_setDisplayString(hTextLCD, 1, empty);
 
 	CPhidget_close((CPhidgetHandle) hEncoder);
 	CPhidget_delete((CPhidgetHandle) hEncoder);

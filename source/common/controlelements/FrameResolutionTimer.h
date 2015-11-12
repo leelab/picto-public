@@ -2,6 +2,7 @@
 #define _FRAMERESOLUTIONTIMER_H_
 #include <QDateTime>
 #include <QHash>
+#include <QSharedPointer>
 
 #include "FrameTracker.h"
 #include "../common.h"
