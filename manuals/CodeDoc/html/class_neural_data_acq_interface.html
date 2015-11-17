@@ -217,7 +217,7 @@ virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Causes the interface to throw out all data collected before now. </p>
 <p>No data gathered before this point should be returned by <a class="el" href="class_neural_data_acq_interface.html#a5726ef21daaedd9947640b146e554c97" title="Returns a list of DataUnits read from the Neural data device since the last call to this function...">dumpData()</a>. This function returns true if the data before this point was successfully thrown out, false otherwise. </p>
 
-<p>Implemented in <a class="el" href="class_virtual_device_plugin.html#af7891e45e88097d17e3de1cb71cbbf0c">VirtualDevicePlugin</a>, <a class="el" href="class_tdt_plugin.html#abd4555dee2a147e85cc47493bf038a0d">TdtPlugin</a>, and <a class="el" href="class_plexon_plugin.html#ad1a9a2a999a14125f17016ca64a6f197">PlexonPlugin</a>.</p>
+<p>Implemented in <a class="el" href="class_virtual_device_plugin.html#af7891e45e88097d17e3de1cb71cbbf0c">VirtualDevicePlugin</a>, <a class="el" href="class_plexon_plugin.html#ad1a9a2a999a14125f17016ca64a6f197">PlexonPlugin</a>, and <a class="el" href="class_tdt_plugin.html#abd4555dee2a147e85cc47493bf038a0d">TdtPlugin</a>.</p>
 
 </div>
 </div>
@@ -245,7 +245,7 @@ virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Returns a list of DataUnits read from the Neural data device since the last call to this function. </p>
 <p>The returned list includes NeuralDataUnit, AlignmentDataUnit, and LFPDataUnitPackage objects. The NeuralDataUnit and AlignmentDataUnit objects represent individual spikes and alignment events, but the LFPDataUnitPackage represents a list of LFP readings for a particular channel. To keep the load on the server low but balance that with fresh data on the workstation, the typical LFPDataUnitPackage should include about a half second's worth of data. </p>
 
-<p>Implemented in <a class="el" href="class_virtual_device_plugin.html#af350fb193b7948691aa36b32d1e9a4ef">VirtualDevicePlugin</a>, <a class="el" href="class_tdt_plugin.html#a4491478b3dc7498e73967896a38244c2">TdtPlugin</a>, and <a class="el" href="class_plexon_plugin.html#a4fd861a9a63521256a2cd5a97511853f">PlexonPlugin</a>.</p>
+<p>Implemented in <a class="el" href="class_virtual_device_plugin.html#af350fb193b7948691aa36b32d1e9a4ef">VirtualDevicePlugin</a>, <a class="el" href="class_plexon_plugin.html#a4fd861a9a63521256a2cd5a97511853f">PlexonPlugin</a>, and <a class="el" href="class_tdt_plugin.html#a4491478b3dc7498e73967896a38244c2">TdtPlugin</a>.</p>
 
 </div>
 </div>
@@ -273,7 +273,7 @@ virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Starts interfacing with the device and gathering data. Returns the deviceStatus after the function was called. </p>
 <dl class="section note"><dt>Note</dt><dd>The returned deviceStatus should be at least Started unless there was some error. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_virtual_device_plugin.html#a7d6176c8c4b58857c33dbc309a99478d">VirtualDevicePlugin</a>, <a class="el" href="class_tdt_plugin.html#a67319b997851288c25ee517e8c2eaad4">TdtPlugin</a>, and <a class="el" href="class_plexon_plugin.html#afa5c5fe29b60abd12760537baf972746">PlexonPlugin</a>.</p>
+<p>Implemented in <a class="el" href="class_virtual_device_plugin.html#a7d6176c8c4b58857c33dbc309a99478d">VirtualDevicePlugin</a>, <a class="el" href="class_plexon_plugin.html#afa5c5fe29b60abd12760537baf972746">PlexonPlugin</a>, and <a class="el" href="class_tdt_plugin.html#a67319b997851288c25ee517e8c2eaad4">TdtPlugin</a>.</p>
 
 </div>
 </div>

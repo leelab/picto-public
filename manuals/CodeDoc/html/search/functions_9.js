@@ -13,6 +13,7 @@ var searchData=
   ['incomingresponseswaiting',['incomingResponsesWaiting',['../class_picto_1_1_command_channel.html#a2178a704ecbacc3cc4b68af6949326d9',1,'Picto::CommandChannel']]],
   ['init',['init',['../class_remote_viewer.html#ae7ff2f824481f7a8b1078b556c7322ae',1,'RemoteViewer::init()'],['../class_replay_viewer.html#a21fb4a93700c1728e7b3b43143fa83c9',1,'ReplayViewer::init()'],['../class_state_edit_viewer.html#a3f91d6f48c8765b50663ee0f99edc602',1,'StateEditViewer::init()'],['../class_test_viewer.html#a33fb46c0d10ef281c24697687f3b3ea3',1,'TestViewer::init()'],['../class_viewer.html#a78e0e1af1e09f32032b95546a0c74d3e',1,'Viewer::init()']]],
   ['initautosavedir',['initAutoSaveDir',['../class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594',1,'Picto::AutoSaver']]],
+  ['initclientex3',['InitClientEx3',['../class_plexon_plugin.html#ab08aacd802ad3ce110c194f3d646723a',1,'PlexonPlugin']]],
   ['initfornewsession',['initForNewSession',['../class_picto_1_1_remote_state_updater.html#a425e1dd79379c413e0b3584e1a13ae7e',1,'Picto::RemoteStateUpdater']]],
   ['initialize',['initialize',['../class_neural_data_viewer.html#ad7a50c38547be5f6bbe9ef68b1622c30',1,'NeuralDataViewer']]],
   ['initialized3ddevice',['initializeD3DDevice',['../class_picto_1_1_d3_d_visual_target.html#a2cd1c21032c8abf0c96cc01d07253de6',1,'Picto::D3DVisualTarget']]],

@@ -17,7 +17,7 @@
 @IF "%PICTO_MACHINE_TYPE%" == "X64" (
   @SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win64
   @SET DEPENDENCY_FIX_DIR=vcSlnDependencies\x64\bin
-  @SET PICTO_SOLUTION_NAME=Picto_x64.sln
+  @SET PICTO_SOLUTION_NAME=Picto.sln
 )
 
 
@@ -31,7 +31,7 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 
 
 @echo Generating Visual Studio Solution
-@qmake -recursive -tp vc
+@qmake -recursive -tp vc Picto.pro
 
 
 @REM No special instructions for X86
@@ -41,7 +41,7 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 @REM We rename the solution for 64-bit 
 @IF NOT %PICTO_SOLUTION_NAME%=="Picto.sln" (
   @del "Picto.sln"
-  @qmake -tp vc -o %PICTO_SOLUTION_NAME%
+  @qmake -tp vc -o %PICTO_SOLUTION_NAME% Picto.pro
 )
 
 

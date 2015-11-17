@@ -1,13 +1,132 @@
 #include <QXmlStreamWriter>
+#include <QProcess>
+#include <QBuffer>
+#include <QDataStream>
 #include <windows.h>
 #include "plexon.h"
 #include "plexonplugin.h"
+#include "../../plexonwrapper/PlexonWrapperDefs.h"
+
 #include "../../common/memleakdetect.h"
+
+//! Semaphore for coordinating wrapper calls
+HANDLE ghSemaphoreCall;
+//! Semaphore for coordinating wrapper calls
+HANDLE ghSemaphoreDone;
+
+#define OPEN_WRITE(call) \
+	QBuffer writeBuffer;\
+	QDataStream writeStream(&writeBuffer);\
+	writeBuffer.open(QBuffer::ReadWrite);\
+	writeStream << CALL << call;
+
+#define CLOSE_WRITE() \
+	qDebug("Locking Shared Memory.");\
+	m_sharedMemory.lock();\
+	int size = writeBuffer.size();\
+	char *to = (char*)m_sharedMemory.data();\
+	const char *from = writeBuffer.data().data();\
+	memcpy(to, from, qMin(m_sharedMemory.size(), size));\
+	m_sharedMemory.unlock();\
+	writeBuffer.close();\
+	qDebug("Making Request.");
+
+
+#define WAIT_AND_READ(call,returnVar) \
+	if (!ReleaseSemaphore(ghSemaphoreCall, 1, NULL))\
+		{\
+		qDebug("ReleaseSemaphore error: %d", GetLastError());\
+		return returnVar;\
+		}\
+	DWORD dwWaitResult = WaitForSingleObject(ghSemaphoreDone, INFINITE);\
+	switch (dwWaitResult)\
+	{\
+	case WAIT_OBJECT_0:\
+	{\
+		qDebug("Response Recieved.");\
+		QBuffer buffer;\
+		QDataStream stream(&buffer);\
+		int eCallType;\
+		int eCall;\
+		m_sharedMemory.lock();\
+		buffer.setData((char*)m_sharedMemory.constData(), m_sharedMemory.size());\
+		buffer.open(QBuffer::ReadOnly);\
+		stream >> eCallType >> eCall;\
+		if (eCallType != RESPONSE || call != eCall)\
+		{\
+			qDebug("Error.  Call Type: %d\tCall: %d", eCall, eCallType);\
+			buffer.close();\
+			m_sharedMemory.unlock();\
+			return returnVar;\
+		}
+
+#define CLOSE_READ()\
+		buffer.close();\
+		m_sharedMemory.unlock();\
+		break;\
+	}\
+	case WAIT_ABANDONED:\
+	{\
+		qDebug("Wait timed out.");\
+		break;\
+	}\
+	}
+
 
 /*! \brief Constructs a PlexonPlugin object.*/
 PlexonPlugin::PlexonPlugin()
+	: m_sharedMemory("PlexonWrapper")
 {
 	deviceStatus_ = notStarted;
+
+	m_sharedMemory.create(sizeof(PL_WaveLong)*MAX_MAP_EVENTS_PER_READ + 5 * sizeof(int));
+
+	SECURITY_DESCRIPTOR sd;
+	if (InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION) == NULL ||
+		SetSecurityDescriptorDacl(&sd, TRUE, (PACL)0, FALSE) == NULL )
+	{
+		qDebug("Failed to create security descriptor.");
+	}
+	else
+	{
+		SECURITY_ATTRIBUTES sa;
+		sa.nLength = sizeof(sa);
+		sa.lpSecurityDescriptor = &sd;
+		sa.bInheritHandle = FALSE;
+
+		ghSemaphoreCall = CreateSemaphore(&sa, 0, 1, L"Global\\PlexonFunctionCall");
+		if (ghSemaphoreCall == NULL)
+		{
+			qDebug("CreateSemaphore error: %d", GetLastError());
+		}
+
+		ghSemaphoreDone = CreateSemaphore(&sa, 0, 1, L"Global\\PlexonFunctionDone");
+		if (ghSemaphoreDone == NULL)
+		{
+			qDebug("CreateSemaphore error: %d", GetLastError());
+		}
+	}
+
+	QString program = "wrapper\\PlexonWrapper";
+#ifndef NDEBUG
+	program += "_debug";
+#endif
+	program += ".exe";
+
+	QStringList arguments;
+
+	myProcess = new QProcess(this);
+	myProcess->startDetached(program, arguments);
+}
+
+PlexonPlugin::~PlexonPlugin()
+{
+	CommandQuit();
+	
+	CloseHandle(ghSemaphoreCall);
+	CloseHandle(ghSemaphoreDone);
+
+	m_sharedMemory.detach();
 }
 
 QString PlexonPlugin::device() const
@@ -18,16 +137,17 @@ QString PlexonPlugin::device() const
 
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::startDevice()
 {
+
 	lfpData_.clear();
-	PL_CloseClient();
-	PL_InitClientEx3(0, NULL, NULL);	//! \todo Check if the return value indicates success!
+	CloseClient();
+	InitClientEx3(0);	//! \todo Check if the return value indicates success!
 	deviceStatus_ = started;
 	return deviceStatus_;
 }
 
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::stopDevice()
 {
-	PL_CloseClient();
+	CloseClient();
 	deviceStatus_ = notStarted;
 	lfpData_.clear();
 	return deviceStatus_;
@@ -37,7 +157,7 @@ NeuralDataAcqInterface::deviceStatus PlexonPlugin::getDeviceStatus()
 {
 	if(deviceStatus_ > notStarted)
 	{
-		if(!PL_IsSortClientRunning())
+		if(!IsSortClientRunning())
 		{
 			deviceStatus_ = noData;
 		}
@@ -52,10 +172,10 @@ NeuralDataAcqInterface::deviceStatus PlexonPlugin::getDeviceStatus()
 
 float PlexonPlugin::samplingRate()
 {
-	if(!PL_IsSortClientRunning())
+	if(!IsSortClientRunning())
 		return 0;
 
-	int tick = PL_GetTimeStampTick();  //clock period in us
+	int tick = GetTimeStampTick();  //clock period in us
 	return 1/(tick*1E-6);
 }
 
@@ -66,7 +186,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 	QSharedPointer<Picto::AlignmentDataUnit> alignData;
 	QSharedPointer<Picto::LFPDataUnitPackage> lfpData;
 
-	if(!PL_IsSortClientRunning())
+	if(!IsSortClientRunning())
 	{
 		return returnList;
 	}
@@ -74,9 +194,9 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 	//Collect the data from the Plexon Server
 	PL_WaveLong *pServerEventBuffer;
 	double timestampSec;
-	double samplePeriodSec = PL_GetTimeStampTick()/1000000.0;  //clock period in seconds
-	PL_GetSlowInfo(&freq, channels, lfpGains);
-	PL_GetGain(spikeGains);
+	double samplePeriodSec = GetTimeStampTick()/1000000.0;  //clock period in seconds
+	GetSlowInfo(&freq, channels, lfpGains);
+	GetGain(spikeGains);
 	double lfpPeriodSec = 1.0/freq;
 
 	pServerEventBuffer = (PL_WaveLong*)malloc(sizeof(PL_WaveLong)*MAX_MAP_EVENTS_PER_READ);
@@ -88,7 +208,7 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 		int serverDropped,mmfDropped;
 		//Joey, before we were using PL_GetWaveFormStructures but the lfp waveforms
 		//could be longer than the regular PL_WaveLong's allowed.  Now were using the longWaveForm structure.
-		PL_GetLongWaveFormStructures(&NumMAPEvents, pServerEventBuffer,&serverDropped,&mmfDropped);
+		GetLongWaveFormStructures(&NumMAPEvents, pServerEventBuffer,&serverDropped,&mmfDropped);
 		lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 
 		for(int MAPEvent=0; MAPEvent<NumMAPEvents; MAPEvent++)
@@ -226,11 +346,136 @@ bool PlexonPlugin::acqDataAfterNow()
 	while(NumMAPEvents == MAX_MAP_EVENTS_PER_READ)
 	{
 		NumMAPEvents = MAX_MAP_EVENTS_PER_READ;
-		PL_GetTimeStampStructures(&NumMAPEvents,pServerSkipDataBuffer);
+		GetTimeStampStructures(&NumMAPEvents,pServerSkipDataBuffer);
 	}
 	free(pServerSkipDataBuffer);
 
 	return true;
 }
+
+
+void PlexonPlugin::CloseClient()
+{
+	OPEN_WRITE(CLOSE_CLIENT);
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(CLOSE_CLIENT,);
+	CLOSE_READ();
+}
+
+/*! InitClientEx3 Only supports passing in NULL, NULL as the handle arguments due to the x86 wrapper.
+ */
+int PlexonPlugin::InitClientEx3(int type)
+{
+	int result = -1;
+
+	OPEN_WRITE(INIT_CLIENT_EX3);
+	writeStream << type;
+	CLOSE_WRITE();
+
+
+	WAIT_AND_READ(INIT_CLIENT_EX3, result);
+	stream >> result;
+	CLOSE_READ();
+
+	return result;
+}
+
+int PlexonPlugin::IsSortClientRunning()
+{
+	int result = -1;
+
+	OPEN_WRITE(IS_SORT_CLIENT_RUNNING);
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(IS_SORT_CLIENT_RUNNING, result);
+	stream >> result;
+	CLOSE_READ();
+
+	return result;
+}
+
+int PlexonPlugin::GetTimeStampTick()
+{
+	int result = -1;
+
+	OPEN_WRITE(GET_TIME_STAMP_TICK);
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(GET_TIME_STAMP_TICK, result);
+	stream >> result;
+	CLOSE_READ();
+
+	return result;
+}
+
+void PlexonPlugin::GetSlowInfo(int* freq, int* channels, int* gains)
+{
+	OPEN_WRITE(GET_SLOW_INFO);
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(GET_SLOW_INFO,);
+	stream >> *freq;
+
+	for (int i = 0; i < 128; i++)
+	{
+		stream >> channels[i];
+	}
+
+	for (int i = 0; i < 128; i++)
+	{
+		stream >> gains[i];
+	}
+	CLOSE_READ();
+}
+
+void PlexonPlugin::GetGain(int* gain)
+{
+	OPEN_WRITE(GET_GAIN);
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(GET_GAIN,);
+	for (int i = 0; i < 128; i++)
+	{
+		stream >> gain[i];
+	}
+	CLOSE_READ();
+}
+
+void PlexonPlugin::GetLongWaveFormStructures(int* pnmax, PL_WaveLong* waves, int* serverdropped, int* mmfdropped)
+{
+	OPEN_WRITE(GET_LONG_WAVE_FORM_STRUCTURES);
+	writeStream << *pnmax;
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(GET_LONG_WAVE_FORM_STRUCTURES,);
+	stream >> *pnmax;
+	stream.readRawData((char*)waves, sizeof(PL_WaveLong)*MAX_MAP_EVENTS_PER_READ);
+	stream >> *serverdropped;
+	stream >> *mmfdropped;
+	CLOSE_READ();
+}
+
+void PlexonPlugin::GetTimeStampStructures(int* pnmax, PL_Event* events)
+{
+	OPEN_WRITE(GET_TIME_STAMP_STRUCTURES);
+	writeStream << *pnmax;
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(GET_TIME_STAMP_STRUCTURES,);
+	stream >> *pnmax;
+	stream.readRawData((char*)events, sizeof(PL_Event)*MAX_MAP_EVENTS_PER_READ);
+	CLOSE_READ();
+}
+
+void PlexonPlugin::CommandQuit()
+{
+	OPEN_WRITE(QUIT);
+	CLOSE_WRITE();
+
+	WAIT_AND_READ(QUIT,);
+	CLOSE_READ();
+}
+
 
 //Q_EXPORT_PLUGIN2(ProxyPluginPlexon, PlexonPlugin)

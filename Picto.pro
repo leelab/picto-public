@@ -22,27 +22,22 @@ defineTest(addSubdirs) {
     export (SUBDIRS)
 }
 
-addSubdirs(source/common, source/common/unittests)
+addSubdirs(source/common)
 addSubdirs(source/director)
-addSubdirs(source/server, source/server/unittests)
+addSubdirs(source/server)
 addSubdirs(source/proxyserver)
 addSubdirs(source/config)
 addSubdirs(source/workstation)
 addSubdirs(source/embedded)
 
-#The PlexonPlugin can currently only be built for X86
-contains(MACHINE_TYPE,X86) {
-	addSubdirs(source/proxyplugins/plexonplugin)
-}
-
-
+addSubdirs(source/proxyplugins/plexonplugin)
 addSubdirs(source/proxyplugins/tdtplugin)
 addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
-#SUBDIRS = source/common				source/common/unittests
+#SUBDIRS = source/common
 #SUBDIRS += source/director
 #!wince* {
-#  SUBDIRS += source/server          source/server/unittests
+#  SUBDIRS += source/server
 #  SUBDIRS += source/proxyserver
 #  SUBDIRS += source/config
 #  SUBDIRS += source/workstation
@@ -66,7 +61,6 @@ addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
 # Dependencies
 
-#unittests.depends = common
 #director.depends = common
 #server.depends = common
 #proxyserver.depends = common
@@ -201,142 +195,9 @@ INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT
 
 
 
-
-
-TESTS.extra = copy $$(PICTO_TREE)/output/bin/release/*.dll $$(PICTO_TREE)/output/tests/bin/release
-TESTS.files = $$[QT_INSTALL_PREFIX]/lib/QtTest4.dll
-TESTS.path = $$(PICTO_TREE)/output/tests/bin/release
-INSTALLS += TESTS
-
 PICTOLIB_DEBUG.files += $$(PICTO_TREE)/intermediates/lib/debug/libPicto_debug.ilk
 PICTOLIB_DEBUG.files += $$(PICTO_TREE)/intermediates/lib/debug/libPicto_debug.pdb
 PICTOLIB_DEBUG.path += $$(PICTO_TREE)/output/bin/debug
 INSTALLS += PICTOLIB_DEBUG
 
-!wince* {
-    contains(MACHINE_TYPE,X86) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/release/Microsoft.VC90.CRT
-    }
-    contains(MACHINE_TYPE,X64) {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/release/Microsoft.VC90.CRT
-    }
 }
-wince* {
-    CRUNTIMETESTSPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??.dll\" $$(PICTO_TREE)/output/bin/release
-}
-CRUNTIMETESTSPRIVATEASSEMBLY.path = $$(PICTO_TREE)/output/tests/bin/release
-INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY
-
-# As noted above, we are copying C runtime assemblies that aren't licensed for redistribution.  
-# Don't redistribute the debug builds.
-!wince* {
-    contains(MACHINE_TYPE,X86) {
-    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/x86/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.DebugCRT
-    CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.CRT
-    }
-    contains(MACHINE_TYPE,X64) {
-    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/amd64/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.DebugCRT
-     CRUNTIMETESTPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/tests/bin/debug/Microsoft.VC90.CRT
-   }
-}
-wince* {
-    CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??d.dll\" $$(PICTO_TREE)/output/bin/debug
-}
-CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug/
-INSTALLS += CRUNTIMETESTSPRIVATEASSEMBLY_DEBUG
-
-TESTS_DEBUG.extra = copy $$(PICTO_TREE)/output/bin/debug/*.dll $$(PICTO_TREE)/output/tests/bin/debug
-TESTS_DEBUG.files = $$[QT_INSTALL_PREFIX]/lib/QtTestd4.dll
-TESTS_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug
-INSTALLS += TESTS_DEBUG
-
-
-#Files for running the ProxyServer with the various nerual acquisition devices
-
-#The PlexClient.dll only exists for x86 releases.
-contains(MACHINE_TYPE,X86) {
-	NEURALACQ_DLLS.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
-}
-NEURALACQ_DLLS.path = $$(PICTO_TREE)/output/bin/release
-INSTALLS += NEURALACQ_DLLS
-
-#The PlexClient.dll only exists for x86 releases.
-contains(MACHINE_TYPE,X86) {
-	NEURALACQ_DLLS_DEBUG.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
-}
-NEURALACQ_DLLS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
-INSTALLS += NEURALACQ_DLLS_DEBUG
-
-}
-
-unix:!macx {
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqgif.so
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqico.so
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqjpeg.so
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqmng.so
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqsvg.so
-IMAGEFORMATPLUGINS.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqtiff.so
-IMAGEFORMATPLUGINS.path = $$(PICTO_TREE)/output/bin/release/imageformats
-INSTALLS += IMAGEFORMATPLUGINS
-
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqgif.so
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqico.so
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqjpeg.so
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqmng.so
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqsvg.so
-IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/libqtiff.so
-IMAGEFORMATPLUGINS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/imageformats
-INSTALLS += IMAGEFORMATPLUGINS_DEBUG
-
-QTLIBS.extra  =   cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtCore.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtGui.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtNetwork.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libphonon.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtScript.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtScriptTools.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtSql.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtXml.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtWebKit.so* $$(PICTO_TREE)/output/bin/release/shared
-QTLIBS.path = $$(PICTO_TREE)/output/bin/release/shared
-INSTALLS += QTLIBS
-
-QTLIBS_DEBUG.extra  =   cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtCore.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtGui.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtNetwork.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libphonon.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtScript.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtScriptTools.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtSql.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtXml.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtWebKit.so* $$(PICTO_TREE)/output/bin/debug/shared
-QTLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/shared
-INSTALLS += QTLIBS_DEBUG
-
-QTSOLUTIONS_IOCOMPRESSOR.extra = cp -dp $$QTIOCOMPRESSOR_LIBDIR/* $$(PICTO_TREE)/output/bin/release/shared
-QTSOLUTIONS_IOCOMPRESSOR.path = $$(PICTO_TREE)/output/bin/release/shared
-INSTALLS += QTSOLUTIONS_IOCOMPRESSOR
-
-QTSOLUTIONS_IOCOMPRESSOR_DEBUG.extra = cp -dp $$QTIOCOMPRESSOR_LIBDIR/* $$(PICTO_TREE)/output/bin/debug/shared
-QTSOLUTIONS_IOCOMPRESSOR_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/shared
-INSTALLS += QTSOLUTIONS_IOCOMPRESSOR_DEBUG
-
-#QTSOLUTIONS_PROPERTYBROWSER.extra = cp -dp $$QTPROPERTYBROWSER_LIBDIR/* $$(PICTO_TREE)/output/bin/release/shared
-#QTSOLUTIONS_PROPERTYBROWSER.path = $$(PICTO_TREE)/output/bin/release/shared
-#INSTALLS += QTSOLUTIONS_PROPERTYBROWSER
-
-#QTSOLUTIONS_PROPERTYBROWSER_DEBUG.extra = cp -dp $$QTPROPERTYBROWSER_LIBDIR/* $$(PICTO_TREE)/output/bin/debug/shared
-#QTSOLUTIONS_PROPERTYBROWSER_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/shared
-#INSTALLS += QTSOLUTIONS_PROPERTYBROWSER_DEBUG
-
-TESTS.extra  =   cp -dp $$(PICTO_TREE)/output/bin/release/shared/* $$(PICTO_TREE)/output/tests/bin/release/shared
-TESTS.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtTest.so* $$(PICTO_TREE)/output/tests/bin/release/shared
-TESTS.path = $$(PICTO_TREE)/output/tests/bin/release/shared/
-INSTALLS += TESTS
-
-TESTS_DEBUG.extra  =   cp -dp $$(PICTO_TREE)/output/bin/debug/shared/* $$(PICTO_TREE)/output/tests/bin/debug/shared
-TESTS_DEBUG.extra += ; cp -dp $$[QT_INSTALL_PREFIX]/lib/libQtTest.so* $$(PICTO_TREE)/output/tests/bin/debug/shared
-TESTS_DEBUG.path = $$(PICTO_TREE)/output/tests/bin/debug/shared/
-INSTALLS += TESTS_DEBUG
-
-}
-

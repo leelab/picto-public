@@ -1,9 +1,16 @@
 #ifndef PLEXONPLUGIN_H
 #define PLEXONPLUGIN_H
 
-
 #include <QObject>
 #include <QStringList>
+#include <QSharedMemory>
+
+struct PL_WaveLong;
+struct PL_Event;
+
+QT_BEGIN_NAMESPACE
+class QProcess;
+QT_END_NAMESPACE
 
 #include "../../proxyserver/NeuralDataAcqInterface.h"
 
@@ -28,6 +35,7 @@ class PlexonPlugin : public QObject, public NeuralDataAcqInterface
 
 public:
 	PlexonPlugin();
+	virtual ~PlexonPlugin();
     QString device() const;
 	NeuralDataAcqInterface::deviceStatus startDevice();
 	NeuralDataAcqInterface::deviceStatus stopDevice();
@@ -42,6 +50,20 @@ private:
 	int channels[128];
 	int lfpGains[128];
 	int spikeGains[128];
+
+protected:
+	void CloseClient();
+	int InitClientEx3(int type);
+	int IsSortClientRunning();
+	int GetTimeStampTick();
+	void GetSlowInfo(int* freq, int* channels, int* gains);
+	void GetGain(int* gain);
+	void GetLongWaveFormStructures(int* pnmax, PL_WaveLong* waves, int* serverdropped, int* mmfdropped);
+	void GetTimeStampStructures(int* pnmax, PL_Event* events);
+	void CommandQuit();
+
+	QSharedMemory m_sharedMemory;
+	QProcess *myProcess;
 };
 
 
