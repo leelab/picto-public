@@ -11,13 +11,11 @@
 @IF "%PICTO_MACHINE_TYPE%" == "X86" (
   @SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win32
   @SET DEPENDENCY_FIX_DIR=vcSlnDependencies\x86\bin
-  @SET PICTO_SOLUTION_NAME=Picto.sln
 )
 
 @IF "%PICTO_MACHINE_TYPE%" == "X64" (
   @SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win64
   @SET DEPENDENCY_FIX_DIR=vcSlnDependencies\x64\bin
-  @SET PICTO_SOLUTION_NAME=Picto.sln
 )
 
 
@@ -34,17 +32,6 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 @qmake -recursive -tp vc Picto.pro
 
 
-@REM No special instructions for X86
-@REM IF "%PICTO_MACHINE_TYPE%" == "X86" (
-@REM )
-
-@REM We rename the solution for 64-bit 
-@IF NOT %PICTO_SOLUTION_NAME%=="Picto.sln" (
-  @del "Picto.sln"
-  @qmake -tp vc -o %PICTO_SOLUTION_NAME% Picto.pro
-)
-
-
 @REM We used the vcprojFilters application below in Visual Studio 2008 and before to setup the visual studio directory structure.  
 @REM This broke in VS2010, but we now use "CONFIG -= flat" in the Picto.pro file, which takes care of giving
 @REM us a fairly clean structure
@@ -53,7 +40,7 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 
 @echo Setting Dependencies in Visual Studio Solution
   
-%PICTO_TREE%\tools\win.common\%DEPENDENCY_FIX_DIR%\vcSlnDependencies %PICTO_SOLUTION_NAME% libPicto
+%PICTO_TREE%\tools\win.common\%DEPENDENCY_FIX_DIR%\vcSlnDependencies Picto.sln libPicto
 
 popd
 @ENDLOCAL

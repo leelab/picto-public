@@ -60,7 +60,8 @@ INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG
 CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.path = $$(PICTO_TREE)/output/bin/debug/wrapper
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT
 
-
+# Resources
+RESOURCES += $$(PICTO_TREE)/source/common/common.qrc
 
 #Files for running the ProxyServer with the various nerual acquisition devices
 
