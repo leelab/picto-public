@@ -12,17 +12,14 @@ pushd %PICTO_TREE%
 
 @IF "%PICTO_MACHINE_TYPE%" == "X86" (
   echo Getting Qt libraries
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release\wrapper Qt?Core.dll libGLESv2.dll libEGL.dll /NFL /NDL /NJH /NJS
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug\wrapper Qt?Cored.dll libGLESv2d.dll libEGLd.dll Qt?Cored.pdb libGLESv2d.pdb libEGLd.pdb /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release\wrapper Qt?Core.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug\wrapper Qt?Cored.dll Qt?Cored.pdb /NFL /NDL /NJH /NJS
   
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release\wrapper icuin*.dll icuuc*.dll icudt*.dll /NFL /NDL /NJH /NJS
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug\wrapper icuin*.dll icuuc*.dll icudt*.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\release\wrapper PlexClient.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\debug\wrapper PlexClient.dll /NFL /NDL /NJH /NJS
   
-  ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\release\wrapper\platforms qwindows.dll /NFL /NDL /NJH /NJS
-  ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\debug\wrapper\platforms qwindowsd.dll /NFL /NDL /NJH /NJS
-  
-  ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\release\wrapper\plugins PlexClient.dll /NFL /NDL /NJH /NJS
-  ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\debug\wrapper\plugins PlexClient.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\release\wrapper qwindows.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\debug\wrapper qwindowsd.dll /NFL /NDL /NJH /NJS
 )
 
 @IF "%PICTO_MACHINE_TYPE%" == "X64" (

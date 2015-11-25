@@ -56,6 +56,8 @@ Task::~Task()
 
 void Task::run()
 {
+	printf("Plexon library wrapper program.\n\nDo not close.\n\n");
+
 	ghSemaphoreCall = OpenSemaphore(SYNCHRONIZE|SEMAPHORE_MODIFY_STATE, 0, L"Global\\PlexonFunctionCall");
 	if (ghSemaphoreCall == NULL)
 	{
@@ -94,7 +96,9 @@ void Task::run()
 			{
 			case CALL:
 			{
+#ifndef NDEBUG
 				printf("Call Received.\n");
+#endif
 				//Correct Call Type
 				break;
 			}
