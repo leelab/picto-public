@@ -37,6 +37,7 @@ public:
 	PlexonPlugin();
 	virtual ~PlexonPlugin();
     QString device() const;
+	void deviceSelected();
 	NeuralDataAcqInterface::deviceStatus startDevice();
 	NeuralDataAcqInterface::deviceStatus stopDevice();
 	NeuralDataAcqInterface::deviceStatus getDeviceStatus();
@@ -52,6 +53,8 @@ private:
 	int spikeGains[128];
 
 protected:
+	void CheckAndOpenWrapper();
+
 	void CloseClient();
 	int InitClientEx3(int type);
 	int IsSortClientRunning();
@@ -64,6 +67,7 @@ protected:
 
 	QSharedMemory m_sharedMemory;
 	QProcess *myProcess;
+	bool m_bWrapperRunning;
 };
 
 

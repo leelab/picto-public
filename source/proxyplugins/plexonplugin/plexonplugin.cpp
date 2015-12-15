@@ -34,11 +34,11 @@ HANDLE ghSemaphoreDone;
 
 #define WAIT_AND_READ(call,returnVar) \
 	if (!ReleaseSemaphore(ghSemaphoreCall, 1, NULL))\
-		{\
+	{\
 		qDebug("ReleaseSemaphore error: %d", GetLastError());\
 		return returnVar;\
-		}\
-	DWORD dwWaitResult = WaitForSingleObject(ghSemaphoreDone, INFINITE);\
+	}\
+	DWORD dwWaitResult = WaitForSingleObject(ghSemaphoreDone, 3000);\
 	switch (dwWaitResult)\
 	{\
 	case WAIT_OBJECT_0:\
@@ -65,9 +65,16 @@ HANDLE ghSemaphoreDone;
 		m_sharedMemory.unlock();\
 		break;\
 	}\
-	case WAIT_ABANDONED:\
+	case WAIT_TIMEOUT:\
 	{\
 		qDebug("Wait timed out.");\
+		WaitForSingleObject(ghSemaphoreCall, 0);\
+		m_bWrapperRunning = false;\
+		break;\
+	}\
+	case WAIT_ABANDONED:\
+	{\
+		qDebug("Wait failed.");\
 		break;\
 	}\
 	}
@@ -75,7 +82,7 @@ HANDLE ghSemaphoreDone;
 
 /*! \brief Constructs a PlexonPlugin object.*/
 PlexonPlugin::PlexonPlugin()
-	: m_sharedMemory("PlexonWrapper")
+	: m_sharedMemory("PlexonWrapper"), m_bWrapperRunning(false)
 {
 	deviceStatus_ = notStarted;
 
@@ -106,17 +113,6 @@ PlexonPlugin::PlexonPlugin()
 			qDebug("CreateSemaphore error: %d", GetLastError());
 		}
 	}
-
-	QString program = "wrapper\\PlexonWrapper";
-#ifndef NDEBUG
-	program += "_debug";
-#endif
-	program += ".exe";
-
-	QStringList arguments;
-
-	myProcess = new QProcess(this);
-	myProcess->startDetached(program, arguments);
 }
 
 PlexonPlugin::~PlexonPlugin()
@@ -135,8 +131,14 @@ QString PlexonPlugin::device() const
 }
 
 
+void PlexonPlugin::deviceSelected()
+{
+	CheckAndOpenWrapper();
+}
+
 NeuralDataAcqInterface::deviceStatus PlexonPlugin::startDevice()
 {
+	CheckAndOpenWrapper();
 
 	lfpData_.clear();
 	CloseClient();
@@ -150,6 +152,9 @@ NeuralDataAcqInterface::deviceStatus PlexonPlugin::stopDevice()
 	CloseClient();
 	deviceStatus_ = notStarted;
 	lfpData_.clear();
+
+	CommandQuit();
+
 	return deviceStatus_;
 }
 
@@ -356,11 +361,14 @@ bool PlexonPlugin::acqDataAfterNow()
 
 void PlexonPlugin::CloseClient()
 {
-	OPEN_WRITE(CLOSE_CLIENT);
-	CLOSE_WRITE();
+	if (m_bWrapperRunning)
+	{
+		OPEN_WRITE(CLOSE_CLIENT);
+		CLOSE_WRITE();
 
-	WAIT_AND_READ(CLOSE_CLIENT,);
-	CLOSE_READ();
+		WAIT_AND_READ(CLOSE_CLIENT, );
+		CLOSE_READ();
+	}
 }
 
 /*! InitClientEx3 Only supports passing in NULL, NULL as the handle arguments due to the x86 wrapper.
@@ -468,13 +476,37 @@ void PlexonPlugin::GetTimeStampStructures(int* pnmax, PL_Event* events)
 	CLOSE_READ();
 }
 
+void PlexonPlugin::CheckAndOpenWrapper()
+{
+	if (!m_bWrapperRunning)
+	{
+		QString program = "wrapper\\PlexonWrapper";
+#ifndef NDEBUG
+		program += "_debug";
+#endif
+		program += ".exe";
+
+		QStringList arguments;
+
+		myProcess = new QProcess(this);
+		myProcess->startDetached(program, arguments);
+
+		m_bWrapperRunning = true;
+	}
+}
+
 void PlexonPlugin::CommandQuit()
 {
-	OPEN_WRITE(QUIT);
-	CLOSE_WRITE();
+	if (m_bWrapperRunning)
+	{
+		OPEN_WRITE(QUIT);
+		CLOSE_WRITE();
 
-	WAIT_AND_READ(QUIT,);
-	CLOSE_READ();
+		WAIT_AND_READ(QUIT, );
+		CLOSE_READ();
+
+		m_bWrapperRunning = false;
+	}
 }
 
 
