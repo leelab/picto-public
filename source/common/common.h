@@ -99,7 +99,7 @@
  *	for researchers to build and run their own experiments fully within the Picto system without
  *	help from a Picto software developer.
  */
-#define PICTOVERSION "2.4.0"
+#define PICTOVERSION "2.5.0"
 /*! \brief This is the current version of the Picto design syntax.  It is saved along with every Picto design
  *	so that it will be clear on deserialization whether some syntax needs to be upgraded and how.
  */
