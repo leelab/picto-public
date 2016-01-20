@@ -216,67 +216,74 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 	if(rewardController_.isNull())
 		return;
 
-	//Rewards are added to the reward controller when this function is called.  They are actually performed just
-	//after the following firstPhosphor time.
-	rewardController_->addReward(channel,quantity,minRewardPeriod);
-	
-	//If this is the master and we're stopped, we need to make sure the reward gets sent (usually this happens on
-	//new frames being displayed, but here the system just sticks with the splash screen).
-	if(dataCommandChannel_.isNull())
-		return;
+	//Abort flush if it is currently ongoing
+	if (rewardController_->isFlushing(channel))
+	{
+		rewardController_->abortFlush(channel);
+	}
+	else
+	{
+		//Rewards are added to the reward controller when this function is called.  They are actually performed just
+		//after the following firstPhosphor time.
+		rewardController_->addReward(channel, quantity, minRewardPeriod);
 
-	if(slave_)
-		return;
-
-	QString status;
-	int engCmd = getEngineCommand();
-	if(engCmd != PlayEngine)
-	{	//The experiment is not currently running.  We are responsible for
-		//sending reward updates.
-		switch(engCmd)
-		{
-		case Engine::PictoEngine::PlayEngine:
+		//If this is the master and we're stopped, we need to make sure the reward gets sent (usually this happens on
+		//new frames being displayed, but here the system just sticks with the splash screen).
+		if (dataCommandChannel_.isNull())
 			return;
-		case Engine::PictoEngine::PauseEngine:
-			status = "paused";
-			break;
-		case Engine::PictoEngine::StopEngine:
-			status = "stopped";
-			break;
-		default:
+
+		if (slave_)
 			return;
-		}
-		//If we got here, we're not running.  Wait for all rewards to be given, sending them to the server as they go out.
-		while(rewardController_->hasPendingRewards())
-		{	
-			rewardController_->triggerRewards(!sessionId_.isNull());
-			if(!sessionId_.isNull())
-			{	//Only send data to the server if we're in a session
-				QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
-				QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
 
-				QByteArray dataXml;
-				QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
-
-				xmlWriter->writeStartElement("Data");
-				QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
-				foreach(QSharedPointer<RewardDataUnit> reward,rewards)
-				{
-					reward->toXml(xmlWriter);
-				}
-				xmlWriter->writeEndElement();
-
-				dataCommand->setContent(dataXml);
-				dataCommand->setFieldValue("Content-Length",QString::number(dataXml.length()));
-				QUuid commandUuid = QUuid::createUuid();
-
-				dataCommandChannel_->sendRegisteredCommand(dataCommand);
-				dataCommandChannel_->processResponses(0);
+		QString status;
+		int engCmd = getEngineCommand();
+		if (engCmd != PlayEngine)
+		{	//The experiment is not currently running.  We are responsible for
+			//sending reward updates.
+			switch (engCmd)
+			{
+			case Engine::PictoEngine::PlayEngine:
+				return;
+			case Engine::PictoEngine::PauseEngine:
+				status = "paused";
+				break;
+			case Engine::PictoEngine::StopEngine:
+				status = "stopped";
+				break;
+			default:
+				return;
 			}
-			QCoreApplication::processEvents();
+			//If we got here, we're not running.  Wait for all rewards to be given, sending them to the server as they go out.
+			while (rewardController_->hasPendingRewards())
+			{
+				rewardController_->triggerRewards(!sessionId_.isNull());
+				if (!sessionId_.isNull())
+				{	//Only send data to the server if we're in a session
+					QString dataCommandStr = "PUTDATA " + getName() + ":" + status + " PICTO/1.0";
+					QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
+
+					QByteArray dataXml;
+					QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&dataXml));
+
+					xmlWriter->writeStartElement("Data");
+					QList<QSharedPointer<RewardDataUnit>> rewards = getDeliveredRewards();
+					foreach(QSharedPointer<RewardDataUnit> reward, rewards)
+					{
+						reward->toXml(xmlWriter);
+					}
+					xmlWriter->writeEndElement();
+
+					dataCommand->setContent(dataXml);
+					dataCommand->setFieldValue("Content-Length", QString::number(dataXml.length()));
+					QUuid commandUuid = QUuid::createUuid();
+
+					dataCommandChannel_->sendRegisteredCommand(dataCommand);
+					dataCommandChannel_->processResponses(0);
+				}
+				QCoreApplication::processEvents();
+			}
 		}
 	}
-
 
 }
 /*! \brief Returns a list of all rewards supplied since the last time this function was called.
@@ -748,7 +755,7 @@ void PictoEngine::flushRequest(int channel)
 		return;
 	if(rewardController_.isNull())
 		return;
-	rewardController_->flush(channel,flushDurations_[channel]);
+
 	if(rewardController_->isFlushing(channel))
 	{
 		rewardController_->abortFlush(channel);
