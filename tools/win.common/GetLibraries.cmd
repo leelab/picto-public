@@ -28,9 +28,9 @@ pushd %PICTO_TREE%
   
   ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug Qt*Cored.dll Qt*Guid.dll Qt*Scriptd.dll Qt*Xmld.dll Qt*Networkd.dll Qt*Sqld.dll Qt*Svgd.dll Qt*ScriptToolsd.dll Qt*Widgetsd.dll Qt*Multimediad.dll Qt*OpenGld.dll Qt*PrintSupportd.dll Qt*Testd.dll Qt*WinExtrasd.dll libGLESv2d.dll libEGLd.dll Qt*Cored.pdb Qt*Guid.pdb Qt*Scriptd.pdb Qt*Xmld.pdb Qt*Networkd.pdb Qt*Sqld.pdb Qt*Svgd.pdb Qt*ScriptToolsd.pdb Qt*Widgetsd.pdb Qt*Multimediad.pdb Qt*OpenGld.pdb Qt*PrintSupportd.pdb Qt*Testd.pdb Qt*WinExtrasd.pdb libGLESv2d.pdb libEGLd.pdb /NFL /NDL /NJH /NJS
   
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_*.dll /NFL /NDL /NJH /NJS
   
-  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_*.dll /NFL /NDL /NJH /NJS
   
   ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\release\platforms qwindows.dll /NFL /NDL /NJH /NJS
   
@@ -43,6 +43,11 @@ pushd %PICTO_TREE%
   ROBOCOPY %QTDIR%\plugins\imageformats %PICTO_TREE%\output\bin\release\imageformats qico.dll qsvg.dll /NFL /NDL /NJH /NJS
   
   ROBOCOPY %QTDIR%\plugins\imageformats %PICTO_TREE%\output\bin\debug\imageformats qicod.dll qsvgd.dll /NFL /NDL /NJH /NJS
+  
+  ROBOCOPY %QTDIR%\plugins\audio %PICTO_TREE%\output\bin\release\audio qtaudio_windows.dll /NFL /NDL /NJH /NJS
+  
+  ROBOCOPY %QTDIR%\plugins\audio %PICTO_TREE%\output\bin\debug\audio qtaudio_windowsd.dll qtaudio_windowsd.pdb /NFL /NDL /NJH /NJS
+  
   
   
   echo Getting Qwt Libraries
