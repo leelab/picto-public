@@ -46,7 +46,6 @@ win32:LIBS += libPicto_debug.lib
 unix:LIBS += -lPicto_debug
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/debug/
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
-win32:LIBS += PlexClient.lib
 }
 
 build_pass:CONFIG(release, debug|release) {
@@ -57,7 +56,6 @@ win32:LIBS += libPicto.lib
 unix:LIBS += -lPicto
 macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
-win32:LIBS += PlexClient.lib
 }
 
 win32:!wince*:LIBS += advapi32.lib user32.lib psapi.lib

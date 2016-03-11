@@ -87,6 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_plexon_plugin-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -145,6 +147,44 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:aef94eca149e9cf0c1102aa071cfd7f07 inherit pub_methods_class_neural_data_acq_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when this device is first selected by the Proxy application. <br /></td></tr>
 <tr class="separator:aef94eca149e9cf0c1102aa071cfd7f07 inherit pub_methods_class_neural_data_acq_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ac7ef321dc8d5c27d488552e80b85677e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7ef321dc8d5c27d488552e80b85677e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CloseClient</b> ()</td></tr>
+<tr class="separator:ac7ef321dc8d5c27d488552e80b85677e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab08aacd802ad3ce110c194f3d646723a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plexon_plugin.html#ab08aacd802ad3ce110c194f3d646723a">InitClientEx3</a> (int type)</td></tr>
+<tr class="separator:ab08aacd802ad3ce110c194f3d646723a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a173a0d0005c5a82fdbee209c09b402ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a173a0d0005c5a82fdbee209c09b402ad"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>IsSortClientRunning</b> ()</td></tr>
+<tr class="separator:a173a0d0005c5a82fdbee209c09b402ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4411a00546efa7dc62e395a61b4f919"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4411a00546efa7dc62e395a61b4f919"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetTimeStampTick</b> ()</td></tr>
+<tr class="separator:aa4411a00546efa7dc62e395a61b4f919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad36f146a715e6180e415d4d8c056dd76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad36f146a715e6180e415d4d8c056dd76"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetSlowInfo</b> (int *freq, int *channels, int *gains)</td></tr>
+<tr class="separator:ad36f146a715e6180e415d4d8c056dd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53be64b164e81b84fbc5b96cb13c9137"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53be64b164e81b84fbc5b96cb13c9137"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetGain</b> (int *gain)</td></tr>
+<tr class="separator:a53be64b164e81b84fbc5b96cb13c9137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa48f5e77af453cded6fad57fb410c0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa48f5e77af453cded6fad57fb410c0d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetLongWaveFormStructures</b> (int *pnmax, PL_WaveLong *waves, int *serverdropped, int *mmfdropped)</td></tr>
+<tr class="separator:aaa48f5e77af453cded6fad57fb410c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b77cc85c1fb30a1fab85f21e25be60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02b77cc85c1fb30a1fab85f21e25be60"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetTimeStampStructures</b> (int *pnmax, PL_Event *events)</td></tr>
+<tr class="separator:a02b77cc85c1fb30a1fab85f21e25be60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addca03b189c2d6c7cb1e40363ab5d015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addca03b189c2d6c7cb1e40363ab5d015"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CommandQuit</b> ()</td></tr>
+<tr class="separator:addca03b189c2d6c7cb1e40363ab5d015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a2843a1fca3a7b4be51fad1da49ee34a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2843a1fca3a7b4be51fad1da49ee34a9"></a>
+QSharedMemory&#160;</td><td class="memItemRight" valign="bottom"><b>m_sharedMemory</b></td></tr>
+<tr class="separator:a2843a1fca3a7b4be51fad1da49ee34a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1b158e18d3aee880657134f31e1e47f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1b158e18d3aee880657134f31e1e47f"></a>
+QProcess *&#160;</td><td class="memItemRight" valign="bottom"><b>myProcess</b></td></tr>
+<tr class="separator:aa1b158e18d3aee880657134f31e1e47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a419a6575ea8043d62bf050f2efd20b49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a419a6575ea8043d62bf050f2efd20b49"></a>
@@ -183,7 +223,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="plexonplugin_8h_source.html#l00023">23</a> of file <a class="el" href="plexonplugin_8h_source.html">plexonplugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plexonplugin_8h_source.html#l00030">30</a> of file <a class="el" href="plexonplugin_8h_source.html">plexonplugin.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad1a9a2a999a14125f17016ca64a6f197"></a>
 <div class="memitem">
@@ -211,7 +251,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="class_neural_data_acq_interface.html#ae2a18728d2a56fe1a65a66e10a33282f">NeuralDataAcqInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00219">219</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00339">339</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
 
 </div>
 </div>
@@ -241,7 +281,34 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="class_neural_data_acq_interface.html#a5726ef21daaedd9947640b146e554c97">NeuralDataAcqInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00062">62</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00182">182</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab08aacd802ad3ce110c194f3d646723a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int PlexonPlugin::InitClientEx3 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>InitClientEx3 Only supports passing in NULL, NULL as the handle arguments due to the x86 wrapper. </p>
+
+<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00368">368</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +338,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="class_neural_data_acq_interface.html#afaece5bd061753aa9a4b1e05c0d1e61d">NeuralDataAcqInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00019">19</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
+<p>Definition at line <a class="el" href="plexonplugin_8cpp_source.html#l00138">138</a> of file <a class="el" href="plexonplugin_8cpp_source.html">plexonplugin.cpp</a>.</p>
 
 </div>
 </div>

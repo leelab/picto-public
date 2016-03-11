@@ -70,6 +70,7 @@ void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 		acqPlugin_ = acqPluginList_[index];
 		iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
 		iNDAcq->deviceSelected();
+		qDebug() << "Starting device index: " << index;
 	}
 	if(statusManager_)
 		statusManager_.staticCast<ProxyStatusManager>()->setPlugin(acqPlugin_);

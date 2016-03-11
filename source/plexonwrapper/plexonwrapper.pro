@@ -1,66 +1,45 @@
-TEMPLATE = lib
-TARGET = ProxyPluginTDT
-QT = core gui xml widgets
+TEMPLATE = app
+TARGET = PlexonWrapper
+QT = core
 CONFIG += qt warn_on debug_and_release
-CONFIG += plugin
 CONFIG -= flat
 CONFIG += c++11
-
+CONFIG += console
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 
-MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
+MACHINE_TYPE = X86
 
 # Input
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/tdtplugin.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/tdtplugin.h
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/dialog.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/dialog.h
-
-
-include($$(PICTO_TREE)/source/common/common.pri)
-
-# Resources
-RESOURCES += $$(PICTO_TREE)/source/proxyplugins/tdtplugin/tdtplugin.qrc
+SOURCES += $$(PICTO_TREE)/source/plexonwrapper/main.cpp
+HEADERS += $$(PICTO_TREE)/source/plexonwrapper/Task.h
+SOURCES += $$(PICTO_TREE)/source/plexonwrapper/Task.cpp
+HEADERS += $$(PICTO_TREE)/source/plexonwrapper/PlexonWrapperDefs.h
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/debug/plugins
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/tdtplugins/debug
+  DESTDIR = $$(PICTO_TREE)/output/bin/debug/wrapper
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/plexonwrapper/debug
 }
 build_pass:CONFIG(release, debug|release) {
-  DESTDIR = $$(PICTO_TREE)/output/bin/release/plugins
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/tdtplugins/release
+  DESTDIR = $$(PICTO_TREE)/output/bin/release/wrapper
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/plexonwrapper/release
 }
-RCC_DIR = $$(PICTO_TREE)/intermediates/resources/tdtplugins
-UI_DIR = $$(PICTO_TREE)/intermediates/ui/tdtplugins
-MOC_DIR = $$(PICTO_TREE)/intermediates/moc/tdtplugins
-
-
+RCC_DIR = $$(PICTO_TREE)/intermediates/resources/plexonwrapper
+UI_DIR = $$(PICTO_TREE)/intermediates/ui/plexonwrapper
+MOC_DIR = $$(PICTO_TREE)/intermediates/moc/plexonwrapper
 
 # Libraries
 build_pass:CONFIG(debug, debug|release) {
-win32:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/debug
-unix:!macx:QMAKE_LIBDIR += $$(PICTO_TREE)/output/bin/debug/shared
-macx:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/debug
-win32:LIBS += libPicto_debug.lib
-unix:LIBS += -lPicto_debug
-macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/debug/
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
+win32:LIBS += PlexClient.lib
 }
 
 build_pass:CONFIG(release, debug|release) {
-win32:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/release
-unix:!macx:QMAKE_LIBDIR += $$(PICTO_TREE)/output/bin/release/shared
-macx:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/release
-win32:LIBS += libPicto.lib
-unix:LIBS += -lPicto
-macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/3rdparty/lib
+win32:LIBS += PlexClient.lib
 }
-
-win32:!wince*:LIBS += advapi32.lib user32.lib psapi.lib
 
 # Platform Specific Configuration
 
@@ -92,12 +71,6 @@ for(compilerDefine, QMAKE_COMPILER_DEFINES) {
             #Note: This switch has been moved to a custom mkspecs
             #file for win32-msvc2008
             #QMAKE_CXXFLAGS+=/MP
-            		
-            #So, actually, we can't compile this with the /MP switch, since there
-            #is a #import (which apparently doesn't work with /MP).
-            #So we need to undo the work of the mkspecs file
-            QMAKE_CXXFLAGS-=-MP
-
             visualStudioProject = $$find(TEMPLATE, "vc")
             build_pass:CONFIG(release, debug|release):!isEmpty(visualStudioProject) {
                 message(Warnings regarding Compiler option: -MP can safely be ignored)
@@ -112,18 +85,6 @@ build_pass:CONFIG(debug, debug|release) {
 }
 }
 win32:!wince*:CONFIG += embed_manifest_exe
-
-unix {
-DEFINES += BUILD_UNIX
-}
-unix:!macx:QMAKE_LFLAGS += -Wl,-rpath,\'\$\$ORIGIN/shared\'
-
-macx{
-CONFIG += x86 ppc
-PRIVATE_LIBRARIES.path = Contents/Libraries/picto
-QMAKE_BUNDLE_DATA += PRIVATE_LIBRARIES
-QMAKE_MAC_SDK = /Developer/SDKs/MacOSX10.4u.sdk
-}
 
 # Machine Type
 

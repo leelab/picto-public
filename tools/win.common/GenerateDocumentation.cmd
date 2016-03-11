@@ -23,15 +23,6 @@ pushd %PICTO_TREE%
 )
 %DOXYGEN_DIR%\doxygen tools\doxygen\PictoMainDoxyConfig 2>DocBuildErr.txt
 
-@IF NOT EXIST output\documentation (
-  mkdir output\documentation
-)
-@echo Generating Unit Tests Documentation
-@IF NOT EXIST output\documentation\unittests (
-  mkdir output\documentation\unittests
-)
-%DOXYGEN_DIR%\doxygen tools\doxygen\PictoUnitTestsDoxyConfig 2>output\documentation\unittests\DocBuildErr.txt
-
 @echo.
 @echo.
 @echo NOTE:

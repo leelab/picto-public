@@ -46,3 +46,6 @@
 /source/workstation/Makefile*
 /source/workstation/PictoWorkstation.vcxproj*
 /source/workstation/*.pro.user
+/source/plexonwrapper/PlexonWrapper.vcxproj*
+/source/plexonwrapper/Makefile*
+/source/plexonwrapper/*.pro.user

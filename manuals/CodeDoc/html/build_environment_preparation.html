@@ -99,7 +99,8 @@ Get and Install Binary Distributions</h2>
 <ol type="1">
 <li>Install Visual Studio 2013.</li>
 <li>Install the latest version of Tortoise Git. This is currently available at <a href="https://code.google.com/p/tortoisegit/">https://code.google.com/p/tortoisegit/</a>.</li>
-<li>Install Qt 5.3.2 for Windows 32-bit (VS 2013 561 MB). This is currently available at <a href="http://qt-project.org/downloads">http://qt-project.org/downloads</a>. When asked, specify that Qt 5.3.2 be installed at c:\Qt\Qt5.3.2. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting).</li>
+<li>Install Qt 5.5.1 for Windows 32-bit (VS 2013, 804 MB). This is currently available at <a href="https://www.qt.io/download-open-source/#section-2">https://www.qt.io/download-open-source/#section-2</a>. When asked, specify that Qt 5.5.1 be installed at c:\Qt\Qt5.5.1. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting). The 32-bit package is required for the Plexon library wrapper.</li>
+<li>Install Qt 5.5.1 for Windows 64-bit (VS 2013, 823 MB). This is currently available at <a href="https://www.qt.io/download-open-source/#section-2">https://www.qt.io/download-open-source/#section-2</a>. When asked, specify that Qt 5.5.1 be installed at c:\Qt64\Qt5.5.1. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting). The 64-bit package is required for Picto itself.</li>
 <li>Install the Ni-Daq 9.1 API. The Picto director uses a National Instruments card and the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> needs to link to this card's libraries. The Ni-Daq 9.1 installer is currently available at: <a href="http://joule.ni.com/nidu/cds/view/p/id/1614/lang/en">http://joule.ni.com/nidu/cds/view/p/id/1614/lang/en</a>. Even as of this writing, this is not the newest version. You are welcome to (encouraged) to install the newest version of the API; however, be warned that this may require some upgrade of the Picto code if their have been changes in the Ni-Daq API. This installation takes a while. Something like an hour.</li>
 <li>Install the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> libraries. These are the libraries used by the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to control the Pictobox's LCD display and input dial.<ol type="a">
 <li>Get the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> library zip. It is available at: <a href="http://www.phidgets.com/docs/OS_-_Windows#Quick_Downloads">http://www.phidgets.com/docs/OS_-_Windows#Quick_Downloads</a> under the name "Phidget21 Libraries" as of this writing.</li>
@@ -120,8 +121,8 @@ Get OpenSSL</h2>
 <li>Rename the "openssl-Version" directory that you just copied to "openssl".</li>
 </ol>
 <h2><a class="anchor" id="get_qwt"></a>
-Get QWT</h2>
-<p>At the time of this writing, QWT 6.1.2 was the latest version and it offered support for QT 5. It is important to remember that QWT is updated after QT such that it is possible that the latest stable version may not support the latest version of QT. Make sure to check for this when you are selecting QT and QWT versions. Information on the latest version of QWT is available at <a href="http://qwt.sourceforge.net/index.html">http://qwt.sourceforge.net/index.html</a>.</p>
+Get Qwt</h2>
+<p>At the time of this writing, Qwt 6.1.2 was the latest version and it offered support for Qt 5. It is important to remember that QWT is updated after Qt such that it is possible that the latest stable version may not support the latest version of Qt. Make sure to check for this when you are selecting Qt and Qwt versions. Information on the latest version of Qwt is available at <a href="http://qwt.sourceforge.net/index.html">http://qwt.sourceforge.net/index.html</a>.</p>
 <ol type="1">
 <li>Download qwt-6.1.2 (or the latest available version)<ol type="a">
 <li>Go to <a href="http://sourceforge.net/projects/qwt/files/qwt/">http://sourceforge.net/projects/qwt/files/qwt/</a> and drill down in the directory tree of the latest version to the level where a zipped archive of the code is available. At the time of this writing, this was qwt-6.1.2.zip available at <a href="http://sourceforge.net/projects/qwt/files/qwt/6.1.2/">http://sourceforge.net/projects/qwt/files/qwt/6.1.2/</a>.</li>
@@ -158,9 +159,9 @@ Get Picto Source</h2>
 </ol>
 <h2><a class="anchor" id="get_prop_browser"></a>
 Get Qt Property Browser</h2>
-<p>The QtPropertyBrowser library is actually included with the QT 5.3.2 installation, but in source form only. We use this library in our code for our Property view/update widgets. In the Qt 5.3.2 installation this library does not include any file specifying build configuration so we created one that should be manually copied in.</p>
+<p>The QtPropertyBrowser library is actually included with the Qt 5.5.1 installation, but in source form only. We use this library in our code for our Property view/update widgets. In the Qt 5.5.1 installation this library does not include any file specifying build configuration so we created one that should be manually copied in.</p>
 <ol type="1">
-<li>Copy c:\Projects\Picto\3rdparty\qtpropertybrowser.pro to the c:\Qt\Qt5.3.2\5.3.2\Src\qttools\src\shared\qtpropertybrowser\ directory.</li>
+<li>Copy c:\Projects\Picto\3rdparty\qtpropertybrowser.pro to the c:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser\ directory.</li>
 </ol>
 <h2><a class="anchor" id="build_src_dist"></a>
 Build Source Distributions</h2>
@@ -177,21 +178,21 @@ Build OpenSSL</h2>
 <li>Check that there is a out32dll folder and that it contains a bunch of OpenSSL dlls, exe's, etc.</li>
 </ol>
 <h2><a class="anchor" id="qt_upgrade"></a>
-In Case of QT Upgrade</h2>
+In Case of Qt Upgrade</h2>
 <ol type="1">
-<li>If you are using a version of QT that is not Qt 5.3.2, you will need to change the path variable that we use to tell everything where to find the Qt binaries.<ol type="a">
+<li>If you are using a version of Qt that is not Qt 5.5.1, you will need to change the path variable that we use to tell everything where to find the Qt binaries.<ol type="a">
 <li>Open c:\Projects\Picto\tools\qt.config\mypaths.cmd in a text editor.</li>
-<li>Find the line that says: set QTTOP=... and change the path to point to the current version of Qt. In the latest upgrade for example, we changed "set QTTOP=%PICTO_THIRD_PARTY%\Qt\Qt5.1.1\5.1.1" to "set QTTOP=%PICTO_THIRD_PARTY%\Qt\Qt5.3.2\5.3.2".</li>
+<li>Find the line that says: set QTTOP=... and change the path to point to the current version of Qt. In the latest upgrade for example, we changed "set QTTOP=%PICTO_THIRD_PARTY%\%PICTO_QT_INSTALL_TOP_DIR%\Qt5.3.2\5.3.2" to "set QTTOP=%PICTO_THIRD_PARTY%\%PICTO_QT_INSTALL_TOP_DIR%\Qt5.5.1\5.5".</li>
 <li>Save your changes</li>
 </ol>
 </li>
 </ol>
 <h2><a class="anchor" id="build_qwt"></a>
-Build QWT</h2>
+Build Qwt</h2>
 <ol type="1">
-<li>In a Visual Studio 2013 command prompt type the following:<ol type="a">
+<li>In a Visual Studio 2013 x64 Native Tools Command Prompt type the following:<ol type="a">
 <li>cd c:\qwt</li>
-<li>c:\Projects\Picto\ConfigureWindowsX86.cmd</li>
+<li>c:\Projects\Picto\ConfigureWindowsX64.cmd</li>
 <li>c:\Projects\Picto\tools\qt.config\mypaths.cmd</li>
 <li>qmake</li>
 <li>nmake install</li>
@@ -200,11 +201,11 @@ Build QWT</h2>
 </ol>
 <h2><a class="anchor" id="build_qt_prop_browser"></a>
 Build Qt Property Browser</h2>
-<p>The QtPropertyBrowser library is included with the QT 5.3.2 installation in source form only. We use this library in our code for our Property view/update widgets.</p>
+<p>The QtPropertyBrowser library is included with the Qt 5.5.1 installation in source form only. We use this library in our code for our Property view/update widgets.</p>
 <ol type="1">
-<li>In a Visual Studio 2013 command prompt type the following:<ol type="a">
-<li>cd c:\Qt\Qt5.3.2\5.3.2\Src\qttools\src\shared\qtpropertybrowser</li>
-<li>c:\Projects\Picto\ConfigureWindowsX86.cmd</li>
+<li>In a Visual Studio 2013 x64 Native Tools Command Prompt type the following:<ol type="a">
+<li>cd c:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser</li>
+<li>c:\Projects\Picto\ConfigureWindowsX64.cmd</li>
 <li>c:\Projects\Picto\tools\qt.config\mypaths.cmd</li>
 <li>qmake</li>
 <li>nmake all</li>
@@ -213,16 +214,16 @@ Build Qt Property Browser</h2>
 </ol>
 <h2><a class="anchor" id="build_picto"></a>
 Build Picto</h2>
-<p>While Picto is theoretically multiplatform (except for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> due to DirectX), we have only ever built Picto for Windows x86. To do this we first use qmake to create a visual studio solution where developement takes place. We can then build Picto either from that solution or from the command line.</p>
+<p>While the foundation for Picto was built with multiplatform deployment in mind (except for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> due to DirectX), we have only ever built Picto for Windows x86 and x64. To do this we first use qmake to create a visual studio solution where developement takes place. We can then build Picto either from that solution or from the command line.</p>
 <ol type="1">
-<li>In a Visual Studio 2013 command prompt type the following:<ol type="a">
+<li>In a Visual Studio 2013 x64 Native Tools Command Prompt type the following:<ol type="a">
 <li>cd c:\Projects\Picto</li>
-<li>ConfigureWindowsX86.cmd</li>
+<li>ConfigureWindowsX64.cmd</li>
 <li>tools\qt.config\mypaths.cmd</li>
-<li>tools\win.common\generatebuildfiles.cmd</li>
+<li>tools\win.common\GenerateBuildFiles.cmd</li>
 </ol>
 </li>
-<li>You should now have a Picto.sln file in the \Picto\trunk directory.<ol type="a">
+<li>You should now have a Picto.sln file in the c:\Projects\Picto directory.<ol type="a">
 <li>To build from the command line, run "nmake all". Otherwise, open and build the c:\Projects\Picto\Picto.sln solution that was just created and build it from within visual studio.</li>
 </ol>
 </li>
@@ -231,13 +232,26 @@ Build Picto</h2>
 Copy Third Party DLLs to Run Directories</h2>
 <p>There are a number of third party dlls used by Picto that come from the libraries installed above. At this point, we simply copy them into our run directories to allow the Picto applications to start correctly. Assuming that you copied everything to the locations described above and that version names and directory structures haven't changed, you can run a getlibraries.bat file that will take care of this process for you. If the names of the libraries have changed too significantly, it may be necessary to update the getlibraries.bat file to copy them correctly.</p>
 <ol type="1">
-<li>In a Visual Studio 2013 command prompt type the following:<ol type="a">
+<li>In a Visual Studio 2013 x64 Native Tools Command Prompt type the following:<ol type="a">
+<li>cd c:\Projects\Picto</li>
+<li>ConfigureWindowsX64.cmd</li>
+<li>tools\qt.config\mypaths.cmd</li>
+<li>tools\win.common\GetLibraries.cmd</li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="build_plexon_wrapper"></a>
+Build Plexon Wrapper</h2>
+<p>While Picto is now built as an x64 application, the Plexon library is exclusively available as x86 binaries. To support Plexon systems, we need to use an x86 wrapper that communicates with our ProxyServer.</p>
+<ol type="1">
+<li>In a Visual Studio 2013 x86 Native Tools Command Prompt type the following:</li>
 <li>cd c:\Projects\Picto</li>
 <li>ConfigureWindowsX86.cmd</li>
 <li>tools\qt.config\mypaths.cmd</li>
-<li>tools\win.common\getlibraries.cmd</li>
-</ol>
-</li>
+<li>tools\win.common\GenerateWrapperBuildFiles.cmd</li>
+<li>tools\win.common\GetLibraries.cmd</li>
+<li>You should now have a PlexonWrapper.sln file in the c:\Projects\Picto directory.</li>
+<li>To build from the command line, run "nmake all". Otherwise, open and build the c:\Projects\Picto\Picto.sln solution that was just created and build it from within visual studio.</li>
 </ol>
 <h2><a class="anchor" id="install_qt_plugin"></a>
 Install Qt Plugin for Visual Studio</h2>
