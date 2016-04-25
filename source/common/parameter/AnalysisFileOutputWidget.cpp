@@ -146,6 +146,9 @@ void AnalysisFileOutputWidget::patchQtTextStreamBug()
  *	\details If new data is available in the underlying file, it will show up in the text edit.
  *	If the forward or back buttons were pressed, the widget will show the next or previous page
  *	of data if it exists.
+ *  Things can slow down pretty drastically in the GUI if there are no line breaks in the
+ *  file. Replacing QTextStream::readLine with QIODevice::readLine fixes this issue.
+ *  In theory, this should also fix the issue fixed by patchQtTextStreamBug() but leaving it there, just in case.
  */
 void AnalysisFileOutputWidget::loadCurrPage()
 {
@@ -244,9 +247,7 @@ void AnalysisFileOutputWidget::loadCurrPage()
 	{
 		//Things can slow down pretty drastically in the GUI if there are no line breaks in the
 		//file. Using QIODevice::readLine instead of QTextStream::readLine fixes this issue.
-		//newLine = outputFileStream_->readLine();		
-		//newLine = file_->readLine();
-		//Using QIODevice::readLine on the file_ instead of QTextStream::readLine 
+		//newLine = outputFileStream_->readLine();			
 		char buf[150];
 		qint64 lineLength = file_->readLine(buf, sizeof(buf));
 		if (lineLength != -1) {
