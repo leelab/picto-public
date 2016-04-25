@@ -58,11 +58,14 @@ void AnalysisFileOutput::writeText(QString text)
 	}
 	charsWritten_ += text.size();
 	(*outputFileStream_).writeRawData(text.toLatin1().constData(),text.size());
-	if(charsWritten_ > CHARS_BEFORE_FLUSH)
-	{
+	//	Even though Analysis data are already written to the AnalysisFileOutput object, pressing save
+	//	only works if the file buffer has been flushed to disk. Otherwise, it just copies the still empty
+	//	temporary file to the path selected by the user.
+	//if(charsWritten_ > CHARS_BEFORE_FLUSH)
+	//{
 		file_->flush();
 		charsWritten_ = 0;
-	}
+	//}
 }
 /*! \brief Writes data out to the underlying file as binary values (ie. short, int, double)
  *  @param csvData a comma separated series of values (ie. "2.4,1,5.65,2.0")
@@ -112,11 +115,14 @@ void AnalysisFileOutput::writeBinary(QString csvData,QString csvTypes)
 		}
 	}
 
-	if(charsWritten_ > CHARS_BEFORE_FLUSH)
-	{
+	//	Even though Analysis data are already written to the AnalysisFileOutput object, pressing save
+	//	only works if the file buffer has been flushed to disk. Otherwise, it just copies the still empty
+	//	temporary file to the path selected by the user.
+	//if(charsWritten_ > CHARS_BEFORE_FLUSH)
+	//{
 		file_->flush();
 		charsWritten_ = 0;
-	}
+	//}
 }
 
 void AnalysisFileOutput::postDeserialize()
