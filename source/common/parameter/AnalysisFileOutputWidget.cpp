@@ -78,8 +78,7 @@ bool AnalysisFileOutputWidget::setFile(QString filename)
 
 /*! \brief Moves the currently displayed page backwards to the previous page.
  *	\details Pages are defined by numbers of lines (linesPerPage input into the constructor).
- *	\note Things can slow down pretty drastically in the GUI if there are no line breaks in the
- *	file.  We should probably do something about this.
+
  */
 void AnalysisFileOutputWidget::prevPage()
 {
@@ -92,8 +91,7 @@ void AnalysisFileOutputWidget::prevPage()
 
 /*! \brief Moves the currently displayed page forwards to the next page.
  *	\details Pages are defined by numbers of lines (linesPerPage input into the constructor).
- *	\note Things can slow down pretty drastically in the GUI if there are no line breaks in the
- *	file.  We should probably do something about this.
+
  */
 
 void AnalysisFileOutputWidget::nextPage()
@@ -155,19 +153,20 @@ void AnalysisFileOutputWidget::loadCurrPage()
 	prev_->setEnabled(false);
 	next_->setEnabled(false);
 
-	if(currPage_ < 0)
+	if (currPage_ < 0)
 		currPage_ = 0;
 
 	int lastPageEnd = 0;
 	int newPageEnd = -1;
-	
+
 	//If we don't yet have all the page limits defined up the current page selected by the user
-	while(currPage_ >= pages_.size() && !outputFileStream_->atEnd())
+	//while (currPage_ >= pages_.size() && !outputFileStream_->atEnd())
+	while (currPage_ >= pages_.size() && !file_->atEnd())
 	{	//Expand pages_ definitions until we reach the desired page
 		bool finishingOldPage = false;
-		if(pages_.size())
+		if (pages_.size())
 		{
-			if(pages_.last().completePage)
+			if (pages_.last().completePage)
 			{
 				lastPageEnd = pages_.last().endPos;
 			}
@@ -178,29 +177,41 @@ void AnalysisFileOutputWidget::loadCurrPage()
 			}
 		}
 		patchQtTextStreamBug();
-		if(!outputFileStream_->seek(lastPageEnd)
-			|| outputFileStream_->atEnd())
+
+		//if (!outputFileStream_->seek(lastPageEnd)
+		//	|| outputFileStream_->atEnd())
+		//	break;
+		if (!file_->seek(lastPageEnd)
+			|| file_->atEnd())
 			break;
+
 		bool pageComplete = true;
-		for(int i=0;i<linesPerPage_;i++)
+		for (int i = 0; i<linesPerPage_; i++)
 		{
-			outputFileStream_->readLine();
-			if(outputFileStream_->atEnd())
+			//outputFileStream_->readLine();			
+			//if (outputFileStream_->atEnd())
+			//{
+			//	break;
+			//}
+			file_->readLine();
+			if (file_->atEnd())
 			{
 				break;
-			}	
+			}
 		}
-		int currPos = outputFileStream_->pos();	//Note: putting pos() inside the above loop makes things really slow!!
-		if(currPos < 0 || outputFileStream_->atEnd())
+		//int currPos = outputFileStream_->pos();	//Note: putting pos() inside the above loop makes things really slow!!
+		int currPos = file_->pos();	//Note: putting pos() inside the above loop makes things really slow!!
+		//if (currPos < 0 || outputFileStream_->atEnd())
+		if (currPos < 0 || file_->atEnd())
 			pageComplete = false;
 		newPageEnd = currPos;
-		if(finishingOldPage)
-			pages_[pages_.size()-1] = PageDef(lastPageEnd,newPageEnd,pageComplete);
+		if (finishingOldPage)
+			pages_[pages_.size() - 1] = PageDef(lastPageEnd, newPageEnd, pageComplete);
 		else
-			pages_.append(PageDef(lastPageEnd,newPageEnd,pageComplete));
+			pages_.append(PageDef(lastPageEnd, newPageEnd, pageComplete));
 	}
 	//If pages_ still isn't big enough, we must have hit the end of the file.  Correct currPage_
-	if(currPage_ >= pages_.size())
+	if (currPage_ >= pages_.size())
 	{	//We must have run out of data.  Show the last page with data.
 		currPage_ = pages_.size() - 1;
 	}
@@ -208,7 +219,8 @@ void AnalysisFileOutputWidget::loadCurrPage()
 	patchQtTextStreamBug();
 	//If there is no data in the file or we cant seek the beginning of the current page.  
 	//Clear output and go back to the beginning of the file.
-	if(pages_.empty() || !outputFileStream_->seek(pages_[currPage_].startPos))
+	//if (pages_.empty() || !outputFileStream_->seek(pages_[currPage_].startPos))
+	if (pages_.empty() || !file_->seek(pages_[currPage_].startPos))
 	{
 		//Something went wrong.  Start from the beginning.
 		lastPage_ = -1;
@@ -225,39 +237,50 @@ void AnalysisFileOutputWidget::loadCurrPage()
 	//of lines read on the last page.  It also isn't clear if there are other characters that aren't
 	//counted by read() as well (whitespace for example).  By simply reading in linesPerPage_ lines, we 
 	//are assured that we will come out with our expected result.
-	QString newLine;
+	//QString newLine;
 	QString outputText;
 	bool hasNextPage = true;
-	for(int i=0;i<linesPerPage_;i++)
+	for (int i = 0; i<linesPerPage_; i++)
 	{
-		newLine = outputFileStream_->readLine();
-		outputText.append(newLine).append("\n");
-		if(outputFileStream_->atEnd())
+		//Things can slow down pretty drastically in the GUI if there are no line breaks in the
+		//file. Using QIODevice::readLine instead of QTextStream::readLine fixes this issue.
+		//newLine = outputFileStream_->readLine();		
+		//newLine = file_->readLine();
+		//Using QIODevice::readLine on the file_ instead of QTextStream::readLine 
+		char buf[150];
+		qint64 lineLength = file_->readLine(buf, sizeof(buf));
+		if (lineLength != -1) {
+			// the line is available in buf		
+			outputText.append(buf).append("\n");
+		}
+
+		//if (outputFileStream_->atEnd())
+		if (file_->atEnd())
 		{
 			hasNextPage = false;
 			break;
 		}
 	}
-	if(!outputText.isEmpty())
-		outputText.resize(outputText.size()-1);	//Remove final "\n"
+	if (!outputText.isEmpty())
+		outputText.resize(outputText.size() - 1);	//Remove final "\n"
 
-	if(textEdit_->toPlainText() != outputText)
+	if (textEdit_->toPlainText() != outputText)
 	{
-		bool isNewPage = (currPage_  != lastPage_);
+		bool isNewPage = (currPage_ != lastPage_);
 		QTextCursor cursor(textEdit_->textCursor());
 		textEdit_->setPlainText(outputText);
-		if(!isNewPage)
+		if (!isNewPage)
 			textEdit_->setTextCursor(cursor);
 	}
 	lastPage_ = currPage_;
 
 	//Enable appropriate prev,next buttons
-	if(currPage_ <= 0)
+	if (currPage_ <= 0)
 		prev_->setEnabled(false);
 	else
 		prev_->setEnabled(true);
 
-	if(currPage_ < pages_.size()-1 || hasNextPage)
+	if (currPage_ < pages_.size() - 1 || hasNextPage)
 		next_->setEnabled(true);
 	else
 	{
@@ -270,3 +293,5 @@ void AnalysisFileOutputWidget::loadCurrPage()
 		next_->setEnabled(false);
 	}
 }
+
+
