@@ -50,7 +50,7 @@ class ReplayViewer : public Viewer
 public:
 	ReplayViewer(QWidget *parent=0);
 	virtual ~ReplayViewer(){};
-	QString type() { return "Test"; };
+	QString type() { return "Replay"; };
 
 public slots:
 	//Called just before displaying the viewer
