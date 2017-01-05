@@ -219,7 +219,7 @@ void Task::run()
 
 				OPEN_WRITE(GET_LONG_WAVE_FORM_STRUCTURES);
 				writeStream << pnmax;
-				writeStream.writeBytes((char*)pServerEventBuffer, sizeof(PL_WaveLong)*MAX_MAP_EVENTS_PER_READ);
+				writeStream.writeRawData((char*)pServerEventBuffer, sizeof(PL_WaveLong)*MAX_MAP_EVENTS_PER_READ);
 				writeStream << serverdropped << mmfdropped;
 				CLOSE_WRITE();
 
@@ -238,7 +238,7 @@ void Task::run()
 
 				OPEN_WRITE(GET_TIME_STAMP_STRUCTURES);
 				writeStream << pnmax;
-				writeStream.writeBytes((char*)pServerSkipDataBuffer, sizeof(PL_Event)*MAX_MAP_EVENTS_PER_READ);
+				writeStream.writeRawData((char*)pServerSkipDataBuffer, sizeof(PL_Event)*MAX_MAP_EVENTS_PER_READ);
 				CLOSE_WRITE();
 
 				free(pServerSkipDataBuffer);
@@ -323,7 +323,6 @@ void Task::GetGain(int* gain)
 {
 	PL_GetGain(gain);
 }
-
 void Task::GetLongWaveFormStructures(int* pnmax, PL_WaveLong* waves, int* serverdropped, int* mmfdropped)
 {
 	PL_GetLongWaveFormStructures(pnmax, waves, serverdropped, mmfdropped);

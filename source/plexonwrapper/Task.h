@@ -8,7 +8,7 @@
 
 /*!	\brief A Task to contain the IPC Event loop
  *
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\authors Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
 class Task : public QObject
