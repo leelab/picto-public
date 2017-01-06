@@ -26,7 +26,9 @@ namespace Picto {
  *	When sendEvent() is called data goes to bits 0:6 and bit 7 is sent high as an event strobe.  The digital output lines
  *	remain at these levels for 250us and are then lowered back down.  This is sufficient to provide the event code data to
  *	the Plexon system.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *  The Plexon system includes a DI sub board model DIO3-A(mode 5) or DIO3-B(mode 3) designed to receive a one 15-bits strobed word.
+ *  For the connector between Picto and the Plexon DI sub board to work properly, the jumpers configuration needs to be set to Mode 3 on the DI03-B sub board.
+ *	\authors Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
 class PictoBoxXPEventCodeGenerator : public EventCodeGenerator
