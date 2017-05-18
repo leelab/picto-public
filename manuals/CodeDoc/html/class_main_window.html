@@ -396,7 +396,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>recentFiles_</
 <p>Loads the DesignRoot from the XML or .sqlite file at the input filename path. </p>
 <p>This attemps to deserialize the file contents into a DesignRoot. If deserialization fails, an error message is displayed and false is returned. If the deserialization is successful with warnings, those warnings are shown to the user. Then the new DesignRoot is sent into the background AutoSaver system for safety's sake in the case of a crash and the current filename is updated for the purpose of <a class="el" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6" title="Called to save the Design to file. Redirects to saveFile() with the current file name in the default ...">saveExperiment()</a>. </p>
 
-<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00560">560</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00564">564</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -536,9 +536,9 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>recentFiles_</
 
 <p>Reads settings for the Workstation from disk. </p>
 <p>Settings for the Workstation app are stored on disk. The QSettings object does this for us in a platform independent manner. This uses the registry in Windows, XML preference files in OSX, and ini files in Unix.</p>
-<p>Currently, the only settings are the recently opened files. </p>
+<p>Currently, the only settings are the recently opened files. The list also contains information about the recent file corresponding viewer. </p>
 
-<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00744">744</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00781">781</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -623,7 +623,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>recentFiles_</
 <p>Saves the current DesignRoot to the input file. </p>
 <p>The DesignRoot's name is changed to match that of the input filename, <a class="el" href="class_viewer.html#ad2cf4211ec8bf80d953daab04b14038a" title="Called just before the DesignRoot is saved to file. Handles any actions that need to occur before tha...">Viewer::aboutToSave()</a> is called on the currentViewer, the DesignRoot is serialized using DesignRoot::getDesignRootText(), and that text is saved to the file. </p>
 
-<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00517">517</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00521">521</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -650,9 +650,9 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>recentFiles_</
 </div><div class="memdoc">
 
 <p>Called whenever the current file is changed. Updates various values accordingly. </p>
-<p>The currFile_ string used to find the file to use in <a class="el" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6" title="Called to save the Design to file. Redirects to saveFile() with the current file name in the default ...">saveExperiment()</a> is updated. The recent files list in the file dropdown is updated along with the window title. Then <a class="el" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932" title="Called when one of the Viewer actions is triggered. Redirects to changeMode() with a pointer to the V...">changeMode()</a> is called with the current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> in order to call <a class="el" href="class_viewer.html#a78e0e1af1e09f32032b95546a0c74d3e" title="Called just before displaying the viewer. Handles any setup that needs to occur before the viewer tak...">Viewer::init()</a> again. </p>
+<p>The currFile_ string used to find the file to use in <a class="el" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6" title="Called to save the Design to file. Redirects to saveFile() with the current file name in the default ...">saveExperiment()</a> is updated. The recent files list in the file dropdown is updated along with its correspoding recent viewer and the window title. Then <a class="el" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932" title="Called when one of the Viewer actions is triggered. Redirects to changeMode() with a pointer to the V...">changeMode()</a> is called with the current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> in order to call <a class="el" href="class_viewer.html#a78e0e1af1e09f32032b95546a0c74d3e" title="Called just before displaying the viewer. Handles any setup that needs to occur before the viewer tak...">Viewer::init()</a> again. </p>
 
-<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00659">659</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00663">663</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -681,7 +681,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>recentFiles_</
 <p>Settings for the Workstation app are stored on disk. The QSettings object does this for us in a platform independent manner. This uses the registry in Windows, XML preference files in OSX, and ini files in Unix.</p>
 <p>Currently, the only settings are the recently opened files. </p>
 
-<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00729">729</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00765">765</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
 
 </div>
 </div>

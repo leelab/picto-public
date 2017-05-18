@@ -63,6 +63,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("DiamondElement",":/icons/diamond.svg",50,75);
 		addIconDefinition("TokenTrayElement",":/icons/tokentray.svg",50,75);
 		addIconDefinition("TokenFactoryElement",":/icons/tokenfactory.svg",50,75);
+		addIconDefinition("LabelFactoryElement", ":/icons/labelfactory.svg", 50, 75);
 		addIconDefinition("GridElement",":/icons/grid.svg",50,75);
 		addIconDefinition("ShapeShifterElement",":/icons/shapeshifter.svg",50,75);
 		addIconDefinition("OperatorInfoElement",":/icons/operatorinfo.svg",50,75);

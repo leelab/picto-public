@@ -8,13 +8,18 @@
 
 namespace Picto {
 
-/*! \brief A simple Timer for use in an Analysis.
+/*! \brief A simple Timer for use in an Analysis. 
+ * !!! WARNING !!!! 
+ *                      THIS TIMER IS OFF BY ONE FRAME compared to the AnalysisSpikeData object:                      
+ *                      If using the AnaysisSpikeData, you should use the AnalysisFrameData 
+ *                      to obtain perfectly aligned behavioral and neural data.
+ * !!! WARNING  !!!!
  *	\details The timer works in frame presentation time units such that it is only ever incremented by the frame length of
  *	the latest frame.  The timer can be restarted and its value can be polled using the value property.  In many cases an
  *	AnalysisFrameData object could be used for the jobs that this timer does, but in some cases this simple single
  *	purposed object is more convenient.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisTimer : public AnalysisDataSource

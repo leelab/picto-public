@@ -258,9 +258,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>linesPerPage_</b></td>
 </div><div class="memdoc">
 
 <p>Loads the current page of text into the widget's read-only text edit. </p>
-<p>If new data is available in the underlying file, it will show up in the text edit. If the forward or back buttons were pressed, the widget will show the next or previous page of data if it exists. </p>
+<p>If new data is available in the underlying file, it will show up in the text edit. If the forward or back buttons were pressed, the widget will show the next or previous page of data if it exists. Things can slow down pretty drastically in the GUI if there are no line breaks in the file. Replacing QTextStream::readLine with QIODevice::readLine fixes this issue. In theory, this should also fix the issue fixed by <a class="el" href="class_picto_1_1_analysis_file_output_widget.html#ab74771bee2d09d3acb77c79abbe33b58" title="Patches a QTextStream bug. ">patchQtTextStreamBug()</a> but leaving it there, just in case. </p>
 
-<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00152">152</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00153">153</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -286,9 +286,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>linesPerPage_</b></td>
 </div><div class="memdoc">
 
 <p>Moves the currently displayed page forwards to the next page. </p>
-<p>Pages are defined by numbers of lines (linesPerPage input into the constructor). </p><dl class="section note"><dt>Note</dt><dd>Things can slow down pretty drastically in the GUI if there are no line breaks in the file. We should probably do something about this. </dd></dl>
+<p>Pages are defined by numbers of lines (linesPerPage input into the constructor). </p>
 
-<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00099">99</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00097">97</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -316,7 +316,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>linesPerPage_</b></td>
 <p>Patches a QTextStream bug. </p>
 <p>There is some kind of Qt bug that makes the text stream stop functioning intermittently, possibly due to the text pointer reaching the end of the file stream. In these cases, pos() returns -1. To fix the issue whenever this occurs, we recreate the QTextStream from scratch. </p>
 
-<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00141">141</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00139">139</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,9 +342,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>linesPerPage_</b></td>
 </div><div class="memdoc">
 
 <p>Moves the currently displayed page backwards to the previous page. </p>
-<p>Pages are defined by numbers of lines (linesPerPage input into the constructor). </p><dl class="section note"><dt>Note</dt><dd>Things can slow down pretty drastically in the GUI if there are no line breaks in the file. We should probably do something about this. </dd></dl>
+<p>Pages are defined by numbers of lines (linesPerPage input into the constructor). </p>
 
-<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00084">84</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00083">83</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -375,7 +375,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>linesPerPage_</b></td>
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_analysis_output_widget.html#a02b8a713faebd966c1a72565de9eb73d">Picto::AnalysisOutputWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00113">113</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00111">111</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
 
 </div>
 </div>

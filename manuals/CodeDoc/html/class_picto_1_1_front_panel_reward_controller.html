@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A reward controller for the PictoBox used when running Windows XP -&gt; Windows 7(8?)  
+<p>A reward controller for the PictoBox used when running Windows XP -&gt; Windows 7.  
  <a href="class_picto_1_1_front_panel_reward_controller.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_front_panel_reward_controller_8h_source.html">FrontPanelRewardController.h</a>&gt;</code></p>
@@ -143,7 +143,7 @@ QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_data_uni
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a64ca898fc2a7295e7ab23d8ac0ce8af2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a64ca898fc2a7295e7ab23d8ac0ce8af2">startReward</a> (unsigned int channel, int quantity)</td></tr>
-<tr class="memdesc:a64ca898fc2a7295e7ab23d8ac0ce8af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a reward an the input channel for the 'quantity' number of milliseconds.  <a href="#a64ca898fc2a7295e7ab23d8ac0ce8af2">More...</a><br /></td></tr>
+<tr class="memdesc:a64ca898fc2a7295e7ab23d8ac0ce8af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a reward an the input channel for the 'quantity' number of milliseconds  old Pictobox5/System10: Due to the limited capabilities of our current version of the NiDaq card, the way that rewards are precisely timed is that we start a clock with frequency equal to the input quantity. We then start a task that switches the A0.0 pin to 0V, then 5V, then 0V, etc, (remember, active low logic) each time the clock triggers. Since we make sure to call <a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a7ffec247d11a69a9fc0f7494aa954311" title="Returns true if the latest reward has been fully supplied, also turns off the reward task in this cas...">rewardWasSupplied()</a> once every 16ms, we can be sure that the reward task will be shut off after the A0.0 pin goes to 5V so long as the reward duration is longer than 16ms. Ideally we would set up the NiDaq task to simply bring the A0.0 pin to 0V, then back to 5V after quantity ms, but Nidaq doesn't support this, so we had to create a work around.  <a href="#a64ca898fc2a7295e7ab23d8ac0ce8af2">More...</a><br /></td></tr>
 <tr class="separator:a64ca898fc2a7295e7ab23d8ac0ce8af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ffec247d11a69a9fc0f7494aa954311"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a7ffec247d11a69a9fc0f7494aa954311">rewardWasSupplied</a> (unsigned int channel)</td></tr>
 <tr class="memdesc:a7ffec247d11a69a9fc0f7494aa954311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the latest reward has been fully supplied, also turns off the reward task in this case if it is still active.  <a href="#a7ffec247d11a69a9fc0f7494aa954311">More...</a><br /></td></tr>
@@ -152,7 +152,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:aa98123b2113054a5606a634066757e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a flush on the input channel.  <a href="#aa98123b2113054a5606a634066757e2a">More...</a><br /></td></tr>
 <tr class="separator:aa98123b2113054a5606a634066757e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa29df7541e45f4f01aaf2f8f7dd186c3">stopFlush</a> (unsigned int channel)</td></tr>
-<tr class="memdesc:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops an active flush by setting the reward signal line back to high and then clearing the NiDaq task.  <a href="#aa29df7541e45f4f01aaf2f8f7dd186c3">More...</a><br /></td></tr>
+<tr class="memdesc:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops an active flush by setting the A0.0 line back to high and then clearing the NiDaq task.  <a href="#aa29df7541e45f4f01aaf2f8f7dd186c3">More...</a><br /></td></tr>
 <tr class="separator:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -160,9 +160,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a8112a4ea804c18a57a11f561801192ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8112a4ea804c18a57a11f561801192ad"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasDevice_</b></td></tr>
 <tr class="separator:a8112a4ea804c18a57a11f561801192ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac5abd8e42bbeefd41a1ecec2a4a799e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac5abd8e42bbeefd41a1ecec2a4a799e"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandleDig_</b> [5]</td></tr>
-<tr class="separator:aac5abd8e42bbeefd41a1ecec2a4a799e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8951f68a22736828c3d0e944d06d64c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8951f68a22736828c3d0e944d06d64c"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>outputData</b> [2]</td></tr>
+<tr class="separator:ae8951f68a22736828c3d0e944d06d64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af135826ee9f0b34ef64f43b5aa0aa7c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af135826ee9f0b34ef64f43b5aa0aa7c4"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b> [5]</td></tr>
+<tr class="separator:af135826ee9f0b34ef64f43b5aa0aa7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac58c5be8338f5ee0167067373f01b559"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac58c5be8338f5ee0167067373f01b559"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>rewardLines_</b> [5]</td></tr>
 <tr class="separator:ac58c5be8338f5ee0167067373f01b559"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,15 +218,16 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 <tr class="separator:ad6f932bbc885d692776095ce1f907593 inherit pro_attribs_class_picto_1_1_reward_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A reward controller for the PictoBox used when running Windows XP -&gt; Windows 7(8?) </p>
-<p>PictoBox uses a National Instruments PCIe-6321 data acquisition board to deliver rewards (the same board is used for the 8 analog inputs, 8 digital outputs and event code outputs). As long as PictoBox is running Windows XP-&gt;Windows 7(8?), we can use the traditional NIDAQ MX drivers.</p>
-<p>The intention of the design is for the four free digital output pins tied to the corresponding clocks to control the four reward channels. Currently only one reward channel is connected. Dev/ctr0 outputs through PFI 12 on the card. The other pulse-capable pins are PFI 13, 14, and 15, all currently free.</p>
+<div class="textblock"><p>A reward controller for the PictoBox used when running Windows XP -&gt; Windows 7. </p>
+<p>PictoBox uses a National Instruments PCIe-6321 data acquisition board to deliver rewards (the same board is used for the 8 analog inputs, 8 digital outputs and event code outputs). As long as PictoBox is running Windows XP-&gt;Windows 7, we can use the traditional NIDAQ MX drivers.</p>
+<p>Old Pictobox5/System10 (series E DAQ): The original concept for handling reward controller connections was to simply use the first four lines of port 0 (ie. P0.0-P0.3) for to control the relays that handle the reward outputs. The problem with this was that we wanted to be able to use timers to turn off the pins for precise reward delivery timing. We are theoretically supposed to be able to configure the nidaq card so that digital lines can use clocks from other parts of the card, but I have not yet figured out how to do this correctly. Instead, currently we only support one reward controller where the reward trigger line is the analog output A0.0. We are using A0.1 as the line that enables the relays, so with the current setup we can't use more than one reward line. The reason for using A0.1 as a reward enable line is that if we simply connect reward enable to 5V, then when the Pictobox is restarted, 5V is on the reward enable line, but the A0.0 line defaults to 0V on startup. Since the Crouznet PB-4 Digital I/O board containing our realays uses active low logic to enable the relays, we would therefore end up basically flushing on the reward controller every time we restarted Picto, which would be a bad thing. If we ever need to support multiple reward lines, someone will either have to spend a lot more time than I had working through the NiDaq documentation and experimenting, or, more likely, we will need to purchase an updated NiDaq card that has individual clocks available for 4 output lines.</p>
+<p>Newer Pictoboxes (series M DAQ): The intention of the design is for the four free digital output pins tied to the corresponding clocks to control the four reward channels. Currently only one reward channel is connected. Dev/ctr0 outputs through PFI 12 on the card. The other pulse-capable pins are PFI 13, 14, and 15, all currently free.</p>
 <p>The digital output PFI 9 is the enable line for the relay board. The High-enable logic is to prevent free rewards from being dispensed when Picto boots up.</p>
 <dl class="section note"><dt>Note</dt><dd>The Crouzet PB-4 Digital I/O board uses active low logic to activate the reward relays. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<dl class="section author"><dt>Authors</dt><dd>Vered Zafrany, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8h_source.html#l00027">27</a> of file <a class="el" href="_front_panel_reward_controller_8h_source.html">FrontPanelRewardController.h</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8h_source.html#l00045">45</a> of file <a class="el" href="_front_panel_reward_controller_8h_source.html">FrontPanelRewardController.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a1513e93f9813613b861d38ef3f58e74b"></a>
 <div class="memitem">
@@ -239,9 +243,9 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </div><div class="memdoc">
 
 <p>Sets up the reward controller. </p>
-<p>Attempts to set the reward trigger and then reward enable lines high. This way to provide a reward we need only set the reward trigger line low for the input reward duration. </p><dl class="section note"><dt>Note</dt><dd>If the Nidaq reward tasks fail to start, this is not considered an error here. The reason for this is that the <a class="el" href="class_picto_1_1_front_panel_reward_controller.html" title="A reward controller for the PictoBox used when running Windows XP -> Windows 7(8?) ...">FrontPanelRewardController</a> is built to work along side the Legacy Orion application so that there is still the option to run old Orion tasks on PictoBox. If Orion is running, it will be taking control of the reward lines whenever it needs to provide a reward, in which case this reward controller might be locked out of using them temporarily. Either way, someone will be enabling the reward relays though, and so even when Orion is running Front Panel rewards can still be provided unless an Orion reward is already in progress (in which case we don't really care that the front panel reward won't work). </dd></dl>
+<p>Attempts to set the reward trigger and then reward enable lines high. This way to provide a reward we need only set the reward trigger line low for the input reward duration. </p><dl class="section note"><dt>Note</dt><dd>If the Nidaq reward tasks fail to start, this is not considered an error here. The reason for this is that the <a class="el" href="class_picto_1_1_front_panel_reward_controller.html" title="A reward controller for the PictoBox used when running Windows XP -> Windows 7. ">FrontPanelRewardController</a> is built to work along side the Legacy Orion application so that there is still the option to run old Orion tasks on PictoBox. If Orion is running, it will be taking control of the reward lines whenever it needs to provide a reward, in which case this reward controller might be locked out of using them temporarily. Either way, someone will be enabling the reward relays though, and so even when Orion is running Front Panel rewards can still be provided unless an Orion reward is already in progress (in which case we don't really care that the front panel reward won't work). </dd></dl>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00063">63</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00065">65</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -267,7 +271,7 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </div><div class="memdoc">
 <p>This desructor doesn't need to bring the reward enable line back to zero. Since it's an enable line, it will return to zero automatically as soon as things reset </p>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00113">113</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00159">159</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -295,12 +299,11 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </div><div class="memdoc">
 
 <p>Returns true if the latest reward has been fully supplied, also turns off the reward task in this case if it is still active. </p>
-<p>This function should be called at least once every 16ms. </p><dl class="section note"><dt>Note</dt><dd>This may not be necessary anymore, with the new implementation of the reward delivery. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a64ca898fc2a7295e7ab23d8ac0ce8af2" title="Starts a reward an the input channel for the &#39;quantity&#39; number of milliseconds. ">startReward()</a> </dd></dl>
+<p>This function should be called at least once every 16ms. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a64ca898fc2a7295e7ab23d8ac0ce8af2" title="Starts a reward an the input channel for the &#39;quantity&#39; number of milliseconds  old Pictobox5/System1...">startReward()</a> </dd></dl>
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a213ce91b8ef9019786e96e601d9641b9">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00153">153</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00232">232</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -327,11 +330,11 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </div><div class="memdoc">
 
 <p>Starts a flush on the input channel. </p>
-<p>Since flush timing doesn't need to be precise, we don't bother ourselves with creating a clock and using it to control the reward trigger line (as in <a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a64ca898fc2a7295e7ab23d8ac0ce8af2" title="Starts a reward an the input channel for the &#39;quantity&#39; number of milliseconds. ">startReward()</a>). Here we simply turn the flush on, and the let the call to <a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa29df7541e45f4f01aaf2f8f7dd186c3" title="Stops an active flush by setting the reward signal line back to high and then clearing the NiDaq task...">stopFlush()</a>, which the <a class="el" href="class_picto_1_1_reward_controller.html" title="This is the base class for classes that provide rewards to the subject of a Picto experiment...">RewardController</a> should handle, stop it. Since the reward controller should be checking this at least once every 16ms, the resolution is fine as far as the flush is concerned. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa29df7541e45f4f01aaf2f8f7dd186c3" title="Stops an active flush by setting the reward signal line back to high and then clearing the NiDaq task...">stopFlush()</a>, <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">RewardController::triggerRewards()</a> </dd></dl>
+<p>Since flush timing doesn't need to be precise, we don't bother ourselves with creating a clock and using it to control the reward trigger line (as in <a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a64ca898fc2a7295e7ab23d8ac0ce8af2" title="Starts a reward an the input channel for the &#39;quantity&#39; number of milliseconds  old Pictobox5/System1...">startReward()</a>). Here we simply turn the flush on, and the let the call to <a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa29df7541e45f4f01aaf2f8f7dd186c3" title="Stops an active flush by setting the A0.0 line back to high and then clearing the NiDaq task...">stopFlush()</a>, which the <a class="el" href="class_picto_1_1_reward_controller.html" title="This is the base class for classes that provide rewards to the subject of a Picto experiment...">RewardController</a> should handle, stop it. Since the reward controller should be checking this at least once every 16ms, the resolution is fine as far as the flush is concerned. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa29df7541e45f4f01aaf2f8f7dd186c3" title="Stops an active flush by setting the A0.0 line back to high and then clearing the NiDaq task...">stopFlush()</a>, <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">RewardController::triggerRewards()</a> </dd></dl>
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#aaf880507edaa44288cd5b17bdb71f079">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00177">177</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00260">260</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,12 +370,14 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </table>
 </div><div class="memdoc">
 
-<p>Starts a reward an the input channel for the 'quantity' number of milliseconds. </p>
+<p>Starts a reward an the input channel for the 'quantity' number of milliseconds  old Pictobox5/System10: Due to the limited capabilities of our current version of the NiDaq card, the way that rewards are precisely timed is that we start a clock with frequency equal to the input quantity. We then start a task that switches the A0.0 pin to 0V, then 5V, then 0V, etc, (remember, active low logic) each time the clock triggers. Since we make sure to call <a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a7ffec247d11a69a9fc0f7494aa954311" title="Returns true if the latest reward has been fully supplied, also turns off the reward task in this cas...">rewardWasSupplied()</a> once every 16ms, we can be sure that the reward task will be shut off after the A0.0 pin goes to 5V so long as the reward duration is longer than 16ms. Ideally we would set up the NiDaq task to simply bring the A0.0 pin to 0V, then back to 5V after quantity ms, but Nidaq doesn't support this, so we had to create a work around. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a7ffec247d11a69a9fc0f7494aa954311" title="Returns true if the latest reward has been fully supplied, also turns off the reward task in this cas...">rewardWasSupplied()</a></dd></dl>
+<p>All other Pictoboxes (not Pictobox5/System10): starts a reward an the input channel for the 'quantity' number of milliseconds</p>
 <p>Previous limitations due to the old implementation have been lifted, and now rewards can be given with any amount of pause between. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#a7ffec247d11a69a9fc0f7494aa954311" title="Returns true if the latest reward has been fully supplied, also turns off the reward task in this cas...">rewardWasSupplied()</a> </dd></dl>
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a3e09bdba141632e89472bef42dc1e132">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00126">126</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00183">183</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,12 +403,12 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </table>
 </div><div class="memdoc">
 
-<p>Stops an active flush by setting the reward signal line back to high and then clearing the NiDaq task. </p>
+<p>Stops an active flush by setting the A0.0 line back to high and then clearing the NiDaq task. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa98123b2113054a5606a634066757e2a" title="Starts a flush on the input channel. ">startFlush()</a> </dd></dl>
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a5a14b4f103def1711b485cc05f4c53bb">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00208">208</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_front_panel_reward_controller_8cpp_source.html#l00312">312</a> of file <a class="el" href="_front_panel_reward_controller_8cpp_source.html">FrontPanelRewardController.cpp</a>.</p>
 
 </div>
 </div>

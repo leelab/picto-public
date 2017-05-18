@@ -813,6 +813,37 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("getTokenOutlineWidth(index)","Gets the width in pixels of the outline that is used on the token at the input index if it is set to be drawn outline only.");
 	curr->addSFunc("getTokenShape(index)","Gets the shape of the token at the input index ('Ellipse','Rectangle','Diamond').");
 
+	curr = addDescription("LabelFactoryGraphic");
+	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("The Label Factory Graphic is a set of individual 'Label' graphics that have individual Contents, colors, sizes and positions that can be set during runtime by the designer.  This graphic is particularly useful if you have a widely variable number of graphics that will need to be used during experimentation.  It functions much like the Label Tray graphic with the main difference being that the Label positions are setable.  This graphic is quite robust and allows for a whole lot of different types of configurations.  In general, the design properties are used to set default values for the Labels and the various values of individual Labels are then be set and changed by scripts during the session run.  See the properties and functions for further details.");
+	curr->addProp("LabelContent", "The Content (Ellipse,Rectangle,Diamond) of the Labels in the tray.");
+	curr->addProp("LabelSize", "The size of the Labels in the tray.");
+	curr->addProp("LabelFontSize", "The font size of the text labels.");
+	curr->addProp("NumLabels", "The number of Labels in the tray.");
+	curr->addSProp("setLabelPos(index,x,y)", "Sets the position of the Label at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSProp("setLabelLocalPos(index,x,y)", "Sets the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
+	curr->addSProp("setLabelX(index,x)", "Sets the x component of the position of the Label at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSProp("setLabelY(index,y)", "Sets the y component of the position of the Label at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSProp("setLabelLocalX(index,x)", "Sets the x component of the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
+	curr->addSProp("setLabelLocalY(index,y)", "Sets the y component of the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
+	curr->addSFunc("setLabelSize(index,size)", "Scales the size of the Label at the input index by a factor of the input size, where size is a number between 0 and 1.");
+	curr->addSFunc("setLabelFontSize(index,fontsize)", "Scales the size of the Label at the input index by a factor of the input size, where size is a number between 0 and 1.");
+	curr->addSFunc("setLabelColor(index,r,g,b,a) or setLabelColor(index,r,g,b)", "Sets the color of the Label at the input index according to the red, green, blue and optional alpha inputs.");
+	curr->addSFunc("setLabelColor(index,color)", "Sets the color of the Label at the input index by using a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("setLabelContent(index,Content)", "Sets the Content of the Label at the input index according to the input Content ('Ellipse','Rectangle','Diamond').");
+	curr->addSFunc("getLabelX(index)", "Gets the x component of the position of the Label at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSFunc("getLabelY(index)", "Gets the y component of the position of the Label at the input index in global coordinates (ie. top left corner of screen is 0,0).");
+	curr->addSFunc("getLabelLocalX(index)", "Gets the x component of the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
+	curr->addSFunc("getLabelLocalY(index)", "Gets the y component of the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
+	curr->addSFunc("getLabelSize(index)", "Gets the scale factor from 0 to 1.0 of the Label at the input index.");
+	curr->addSFunc("getLabelRed(index)", "Gets the red component of the color of the Label at the input index.");
+	curr->addSFunc("getLabelGreen(index)", "Gets the green component of the color of the Label at the input index.");
+	curr->addSFunc("getLabelBlue(index)", "Gets the blue component of the color of the Label at the input index.");
+	curr->addSFunc("getLabelAlpha(index)", "Gets the alpha component of the color of the Label at the input index.");
+	curr->addSFunc("getLabelColor(index)", "Gets the color value of the Label at the input index as a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("getLabelContent(index)", "Gets the Content of the Label at the input index.");
+	curr->addSFunc("getLabelFontSize(index)", "Gets the FontSize of the text Label at the input index.");
+
 	//Analysis
 	curr = addDescription("AnalysisVariable");
 	curr->setInherits(getAssetDescription("Parameter"));

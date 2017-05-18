@@ -118,8 +118,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab2f7e7619d810f7e365beaedb1b01029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#ab2f7e7619d810f7e365beaedb1b01029">PictoBoxXPRewardController</a> ()</td></tr>
 <tr class="memdesc:ab2f7e7619d810f7e365beaedb1b01029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html" title="A reward controller for the PictoBox. ">PictoBoxXPRewardController</a> object.  <a href="#ab2f7e7619d810f7e365beaedb1b01029">More...</a><br /></td></tr>
 <tr class="separator:ab2f7e7619d810f7e365beaedb1b01029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4679cf9cf4f423d44e5142a5d639fb26"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a4679cf9cf4f423d44e5142a5d639fb26">~PictoBoxXPRewardController</a> ()</td></tr>
-<tr class="separator:a4679cf9cf4f423d44e5142a5d639fb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_reward_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_reward_controller')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_reward_controller.html">Picto::RewardController</a></td></tr>
 <tr class="memitem:a304c608453d6457840c8ef68d4772345 inherit pub_methods_class_picto_1_1_reward_controller"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a304c608453d6457840c8ef68d4772345"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>RewardController</b> (unsigned int channelCount)</td></tr>
@@ -160,9 +158,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a5ac4b77fd65f60794a9a814fbbc41944"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ac4b77fd65f60794a9a814fbbc41944"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasDevice_</b></td></tr>
 <tr class="separator:a5ac4b77fd65f60794a9a814fbbc41944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b1527b5dee162c5572a88c2bc40ad3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b1527b5dee162c5572a88c2bc40ad3e"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandleDig_</b> [5]</td></tr>
-<tr class="separator:a7b1527b5dee162c5572a88c2bc40ad3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a257ff198c6639671bb9b38d41433fc95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a257ff198c6639671bb9b38d41433fc95"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>outputData</b> [2]</td></tr>
+<tr class="separator:a257ff198c6639671bb9b38d41433fc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad97c5e60d236125b1c6147dd253a006b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad97c5e60d236125b1c6147dd253a006b"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b> [5]</td></tr>
+<tr class="separator:ad97c5e60d236125b1c6147dd253a006b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a328e17e440e35e23e2ddcfea246cdcdd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a328e17e440e35e23e2ddcfea246cdcdd"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>rewardLines_</b> [5]</td></tr>
 <tr class="separator:a328e17e440e35e23e2ddcfea246cdcdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,13 +218,13 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A reward controller for the PictoBox. </p>
 <p>PictoBox uses a National Instruments PCIe-6321 data acquisition board to deliver rewards (the same board is used for the 8 analog inputs, 8 digital outputs and event code outputs). As long as PictoBox is running Windows XP-&gt;Windows 7(8?), we can use the traditional NIDAQ MX drivers.</p>
-<p>The intention of the design is for the four free digital output pins tied to the corresponding clocks to control the four reward channels. Currently only one reward channel is connected. Dev/ctr0 outputs through PFI 12 on the card. The other pulse-capable pins are PFI 13, 14, and 15, all currently free.</p>
+<p>Pictobox5/System10 uses an older NIDAQ version E with reward delivered via analog output while the other Pictoboxes use the series M NIDAQ with reward delivered via digital output. The intention of the design is for the four free digital output pins tied to the corresponding clocks to control the four reward channels. Currently only one reward channel is connected. Dev/ctr0 outputs through PFI 12 on the card. The other pulse-capable pins are PFI 13, 14, and 15, all currently free.</p>
 <p>The digital output PFI 9 is the enable line for the relay board. The High-enable logic is to prevent free rewards from being dispensed when Picto boots up.</p>
 <dl class="section note"><dt>Note</dt><dd>The Crouzet PB-4 Digital I/O board uses active low logic to activate the reward relays. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section author"><dt>Authors</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8h_source.html#l00027">27</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8h_source.html">PictoBoxXPRewardController.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8h_source.html#l00029">29</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8h_source.html">PictoBoxXPRewardController.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab2f7e7619d810f7e365beaedb1b01029"></a>
 <div class="memitem">
@@ -241,33 +242,7 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 <p>Constructs a <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html" title="A reward controller for the PictoBox. ">PictoBoxXPRewardController</a> object. </p>
 <p>Creates a "RewardTask" and "RewardEnableTask" to set both the reward line and the reward enable line to high voltages when Picto starts. Since the <a class="el" href="class_picto_1_1_reward.html" title="A StateMachineElement that initiates reward feedback for the test subject. ">Reward</a> relay card uses active low logic, we need to start the reward line high. Incidentally, this is why we cant simply attach the relay card's enable line to 5 volts. Since all output lines start low when the Pictobox turns on, but the 5V line starts high if we connected the relay card's enable line to 5V, the reward solenoid would always be open after the computer restarted until Picto started. </p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00055">55</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4679cf9cf4f423d44e5142a5d639fb26"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Picto::PictoBoxXPRewardController::~PictoBoxXPRewardController </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This desructor doesn't need to bring the reward enable line back to zero. Since it's an enable line, it will return to zero automatically as soon as things reset </p>
-
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00105">105</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00060">60</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -295,12 +270,11 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a213ce91b8ef9019786e96e601d9641b9" title="Returns true if the latest reward is no longer being supplied on the input channel. ">RewardController::rewardWasSupplied()</a> to return true when the latest reward to have been started using <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a8490db56a1df896a33362aeea7c0cafc" title="Implements RewardController::startReward() to output a correctly timed reward signal on the output li...">startReward()</a> is complete. </p>
-<p>In the case of the <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html" title="A reward controller for the PictoBox. ">PictoBoxXPRewardController</a>, we piggyback onto this function and actually stop the reward task once the reward has been completely supplied. See <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a8490db56a1df896a33362aeea7c0cafc" title="Implements RewardController::startReward() to output a correctly timed reward signal on the output li...">startReward()</a> for more details. </p><dl class="section note"><dt>Note</dt><dd>This may not be necessary anymore, with the new implementation of the reward delivery. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a8490db56a1df896a33362aeea7c0cafc" title="Implements RewardController::startReward() to output a correctly timed reward signal on the output li...">startReward()</a> </dd></dl>
+<p>In the case of the <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html" title="A reward controller for the PictoBox. ">PictoBoxXPRewardController</a>, we piggyback onto this function and actually stop the reward task once the reward has been completely supplied. See <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a8490db56a1df896a33362aeea7c0cafc" title="Implements RewardController::startReward() to output a correctly timed reward signal on the output li...">startReward()</a> for more details. </p>
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a213ce91b8ef9019786e96e601d9641b9">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00150">150</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00221">221</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -331,7 +305,7 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#aaf880507edaa44288cd5b17bdb71f079">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00171">171</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00246">246</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,12 +342,12 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a3e09bdba141632e89472bef42dc1e132" title="Starts a reward without blocking during reward supply. ">RewardController::startReward()</a> to output a correctly timed reward signal on the output line. </p>
-<p>Previous limitations due to the old implementation have been lifted, and now rewards can be given with any amount of pause between. </p><dl class="section note"><dt>Note</dt><dd>The downside to this is that we can't provide rewards of under 16ms, in practice, rewards this small are very non-linear and not a good idea anyway. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a3f06b94221e0bec202b4e3236e20429b" title="Implements RewardController::rewardWasSupplied() to return true when the latest reward to have been s...">rewardWasSupplied()</a> </dd></dl>
+<p>As far as timing goes, the NiDaq card only supports periodic timing signals. We have not found a way to define a simple high-low pulse. For this reason, we set up a clock pulse that ticks once for each "quantity" milliseconds. We then attach this clock to a task that sends the output signal high, low, high, low, switching once per clock pulse. The reward signal then goes high for exactly as long as we want and then low. Since the reward system is updated once per frame, we are assured that <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a3f06b94221e0bec202b4e3236e20429b" title="Implements RewardController::rewardWasSupplied() to return true when the latest reward to have been s...">rewardWasSupplied()</a> will be called once per frame. <a class="el" href="class_picto_1_1_picto_box_x_p_reward_controller.html#a3f06b94221e0bec202b4e3236e20429b" title="Implements RewardController::rewardWasSupplied() to return true when the latest reward to have been s...">rewardWasSupplied()</a> stops the task once the required reward quantity has been supplied, so the second high pulse never happens.</p>
+<dl class="section note"><dt>Note</dt><dd>The downside to this is that we can't provide rewards of under 16ms, in practice, rewards this small are very non-linear and not a good idea anyway. </dd></dl>
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a3e09bdba141632e89472bef42dc1e132">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00120">120</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00170">170</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +378,7 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 
 <p>Implements <a class="el" href="class_picto_1_1_reward_controller.html#a5a14b4f103def1711b485cc05f4c53bb">Picto::RewardController</a>.</p>
 
-<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00203">203</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html#l00299">299</a> of file <a class="el" href="_picto_box_x_p_reward_controller_8cpp_source.html">PictoBoxXPRewardController.cpp</a>.</p>
 
 </div>
 </div>

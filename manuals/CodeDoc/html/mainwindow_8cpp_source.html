@@ -113,12 +113,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define DEFAULT_FILE &quot;:/BuiltInExperiments/EyeCalibration.xml&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;MainWindow::MainWindow()</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{   </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    designRoot_ = QSharedPointer&lt;DesignRoot&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_design_root.html">DesignRoot</a>());</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    currViewer_ = NULL;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    nextViewer_ = NULL;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    errorList_ = <span class="keyword">new</span> <a class="code" href="class_error_list.html">ErrorList</a>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="class_main_window.html#a613d818a5a471cbe170adf837a117b59">error</a>(QString, QString)), errorList_,SLOT(addError(QString, QString)));</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="class_main_window.html#a613d818a5a471cbe170adf837a117b59">error</a>(QString, QString)), errorList_, SLOT(addError(QString, QString)));</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_main_window.html#a62cd8712fb41a754298f6f60eead2cb0">createActions</a>();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="class_main_window.html#aa4907b0251d305659e403c62921ef331">createMenus</a>();</div>
@@ -132,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    isModified_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="comment">//Load a file from a commandline argument</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">bool</span> argFileFound = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; QCoreApplication::arguments().size(); i++)</div>
@@ -159,10 +159,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">/*****************************************************</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> *          SETUP FUNCTIONS</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment"> *****************************************************/</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">*           SETUP FUNCTIONS</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">*****************************************************/</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="class_main_window.html#a62cd8712fb41a754298f6f60eead2cb0">   76</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a62cd8712fb41a754298f6f60eead2cb0">MainWindow::createActions</a>()</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;{</div>
@@ -172,41 +172,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    newExperimentAction_-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/filenew.png&quot;</span>));</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    newExperimentAction_-&gt;setShortcut(QKeySequence::New);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    newExperimentAction_-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Create a new experiment&quot;</span>));</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    connect(newExperimentAction_,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">newExperiment</a>()));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    connect(newExperimentAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">newExperiment</a>()));</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    openExperimentAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Open Design&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    openExperimentAction_-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/fileopen.png&quot;</span>));</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    openExperimentAction_-&gt;setShortcut(QKeySequence::Open);</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    openExperimentAction_-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Open an experiment&quot;</span>));</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    connect(openExperimentAction_,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74">openExperiment</a>()));</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    connect(openExperimentAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74">openExperiment</a>()));</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    saveExperimentAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Save&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    saveExperimentAction_-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/filesave.png&quot;</span>));</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    saveExperimentAction_-&gt;setShortcut(QKeySequence::Save);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    saveExperimentAction_-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Save this experiment&quot;</span>));</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    connect(saveExperimentAction_,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">saveExperiment</a>()));</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    connect(saveExperimentAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">saveExperiment</a>()));</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    saveAsExperimentAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;Save &amp;As&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    saveAsExperimentAction_-&gt;setShortcut(QKeySequence::SaveAs);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    saveAsExperimentAction_-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Save this experiment with a different filename&quot;</span>));</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    connect(saveAsExperimentAction_,SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">saveAsExperiment</a>()));</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    connect(saveAsExperimentAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">saveAsExperiment</a>()));</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;MaxRecentFiles; i++)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;MaxRecentFiles; i++)</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    {</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        recentExperimentsActions_[i] = <span class="keyword">new</span> QAction(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        recentExperimentsActions_[i]-&gt;setVisible(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        connect(recentExperimentsActions_[i], SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a6a291c661bab41fb661b2a0e7b58cc7e">openRecentExperiment</a>()));</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    exitAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Quit&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    exitAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Quit&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    exitAction_-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+Q&quot;</span>));</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    exitAction_-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Exit&quot;</span>)+Picto::Names-&gt;workstationAppName);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    exitAction_-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Exit&quot;</span>) + Picto::Names-&gt;workstationAppName);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    connect(exitAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(close()));</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    setSystemNumberAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Change System Number&quot;</span>),<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    connect(setSystemNumberAction_,SIGNAL(triggered()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">changeSystemNumber</a>()));</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    setSystemNumberAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Change System Number&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    connect(setSystemNumberAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">changeSystemNumber</a>()));</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    aboutPictoAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;About Picto&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    aboutPictoAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;About Picto&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    connect(aboutPictoAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">aboutPicto</a>()));</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
@@ -220,7 +220,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    fileMenu_-&gt;addAction(saveAsExperimentAction_);</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    seperatorAction_ = fileMenu_-&gt;addSeparator();</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;MaxRecentFiles; i++)</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;MaxRecentFiles; i++)</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        fileMenu_-&gt;addAction(recentExperimentsActions_[i]);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    fileMenu_-&gt;addSeparator();</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    fileMenu_-&gt;addAction(exitAction_);</div>
@@ -241,11 +241,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    fileToolbar_-&gt;addSeparator();</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    fileToolbar_-&gt;addWidget(<span class="keyword">new</span> QLabel(QString(<span class="stringliteral">&quot;&lt;h3&gt;System Number: &lt;span style=\&quot;color:darkgreen\&quot;&gt;%1&lt;/span&gt;&lt;/h3&gt;&quot;</span>).arg(Picto::portNums-&gt;getSystemNumber())));</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    viewerToolbar_ = <span class="keyword">new</span> QToolBar(tr(<span class="stringliteral">&quot;&amp;Mode&quot;</span>),<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    addToolBar(Qt::LeftToolBarArea,viewerToolbar_);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    viewerToolbar_ = <span class="keyword">new</span> QToolBar(tr(<span class="stringliteral">&quot;&amp;Mode&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    addToolBar(Qt::LeftToolBarArea, viewerToolbar_);</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    viewerToolbar_-&gt;setMovable(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    viewerToolbar_-&gt;setToolButtonStyle(Qt::ToolButtonTextUnderIcon);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    viewerToolbar_-&gt;setIconSize(QSize(64,64));</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    viewerToolbar_-&gt;setIconSize(QSize(64, 64));</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    viewerToolbar_-&gt;setStyleSheet(<span class="stringliteral">&quot;QToolBar { background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 darkGreen stop: 0.5 white stop: 1 darkGreen);}&quot;</span>);</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;}</div>
@@ -255,32 +255,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    viewerStack_ = <span class="keyword">new</span> QStackedWidget(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    QAction* viewerAction;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <a class="code" href="class_viewer.html">Viewer</a>* viewer;</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="comment">//StateEditViewer</span></div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    viewer = <span class="keyword">new</span> <a class="code" href="class_state_edit_viewer.html">StateEditViewer</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    viewerNames_.append(viewer-&gt;<a class="code" href="class_viewer.html#aa27fe7a15dfe5ee65389b681fc5f57d9">type</a>());</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    viewerStack_-&gt;addWidget(viewer);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;State Machine Editor&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;State Machine Editor&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    viewerAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+2&quot;</span>));</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    viewerAction-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/statemachineeditmode.png&quot;</span>));</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    viewerAction-&gt;setData(viewerNames_.size()-1);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    viewerAction-&gt;setData(viewerNames_.size() - 1);</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    viewerToolbar_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    modeMenu_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    connect(viewerAction, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>()));</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    connect(viewer, SIGNAL(deinitComplete()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">startMode</a>()));</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    connect(static_cast&lt;StateEditViewer*&gt;(viewer),SIGNAL(loadDesignRoot(QSharedPointer&lt;DesignRoot&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_main_window.html#a253882925cf9b494645848b58519fbeb">openDesign</a>(QSharedPointer&lt;DesignRoot&gt;)));</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    connect(static_cast&lt;StateEditViewer*&gt;(viewer), SIGNAL(loadDesignRoot(QSharedPointer&lt;DesignRoot&gt;)), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a253882925cf9b494645848b58519fbeb">openDesign</a>(QSharedPointer&lt;DesignRoot&gt;)));</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    initViewerAction_ = viewerAction;</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="comment">//Test Viewer</span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    viewer = <span class="keyword">new</span> <a class="code" href="class_test_viewer.html">TestViewer</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    viewerNames_.append(viewer-&gt;<a class="code" href="class_viewer.html#aa27fe7a15dfe5ee65389b681fc5f57d9">type</a>());</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    viewerStack_-&gt;addWidget(viewer);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Test experiment&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Test experiment&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    viewerAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+3&quot;</span>));</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    viewerAction-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/testmode.png&quot;</span>));</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    viewerAction-&gt;setData(viewerNames_.size()-1);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    viewerAction-&gt;setData(viewerNames_.size() - 1);</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    viewerToolbar_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    modeMenu_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    connect(viewerAction, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>()));</div>
@@ -290,10 +290,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    viewer = <span class="keyword">new</span> <a class="code" href="class_remote_viewer.html">RemoteViewer</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    viewerNames_.append(viewer-&gt;<a class="code" href="class_viewer.html#aa27fe7a15dfe5ee65389b681fc5f57d9">type</a>());</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    viewerStack_-&gt;addWidget(viewer);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Run remote experiment&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Run remote experiment&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    viewerAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+4&quot;</span>));</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    viewerAction-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/remote.png&quot;</span>));</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    viewerAction-&gt;setData(viewerNames_.size()-1);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    viewerAction-&gt;setData(viewerNames_.size() - 1);</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    viewerToolbar_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    modeMenu_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    connect(viewerAction, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>()));</div>
@@ -303,42 +303,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    viewer = <span class="keyword">new</span> <a class="code" href="class_replay_viewer.html">ReplayViewer</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    viewerNames_.append(viewer-&gt;<a class="code" href="class_viewer.html#aa27fe7a15dfe5ee65389b681fc5f57d9">type</a>());</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    viewerStack_-&gt;addWidget(viewer);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Replay experiment&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    viewerAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Replay experiment&quot;</span>), <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    viewerAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+5&quot;</span>));</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    viewerAction-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/replay.png&quot;</span>));</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    viewerAction-&gt;setData(viewerNames_.size()-1);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    viewerAction-&gt;setData(viewerNames_.size() - 1);</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    viewerToolbar_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    modeMenu_-&gt;addAction(viewerAction);</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    connect(viewerAction, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>()));</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    connect(viewer, SIGNAL(deinitComplete()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">startMode</a>()));</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="comment">//If an application update fails, we want to go back to the statemachineeditor.</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    connect(<a class="code" href="class_update_downloader.html#aba23de83959a7e9aea32fd2d5bb7b72e">UpdateDownloader::getInstance</a>().data(),SIGNAL(updateFailed()),initViewerAction_,SLOT(trigger()));</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    connect(<a class="code" href="class_update_downloader.html#aba23de83959a7e9aea32fd2d5bb7b72e">UpdateDownloader::getInstance</a>().data(), SIGNAL(updateFailed()), initViewerAction_, SLOT(trigger()));</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="comment">/*****************************************************</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment"> *          SLOTS</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment"> *****************************************************/</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">*           SLOTS</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment">*****************************************************/</span></div>
 <div class="line"><a name="l00251"></a><span class="lineno"><a class="line" href="class_main_window.html#a4e20a4a065fbb0e4d3532a45a0a91425">  251</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a4e20a4a065fbb0e4d3532a45a0a91425">MainWindow::closeEvent</a>(QCloseEvent *event)</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="comment">//We&#39;re going to call the aboutToQuit slot on all of the viewer widgets</span></div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="comment">//WARNING: Iterating through the stack like this only works if widgets are</span></div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="comment">//inserted without leaving gaps in the indices.  This would seem to be a</span></div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="comment">//weakness in Qt.</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;viewerStack_-&gt;count(); i++)</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;viewerStack_-&gt;count(); i++)</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    {</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <a class="code" href="class_viewer.html">Viewer</a>* v = qobject_cast&lt;<a class="code" href="class_viewer.html">Viewer</a>*&gt;(viewerStack_-&gt;widget(i));</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="keywordflow">if</span>(v)</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            <span class="keywordflow">if</span>(!v-&gt;<a class="code" href="class_viewer.html#a36fd548283a09aeec9a56819287bf782">aboutToQuit</a>())</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="keywordflow">if</span> (v)</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            <span class="keywordflow">if</span> (!v-&gt;<a class="code" href="class_viewer.html#a36fd548283a09aeec9a56819287bf782">aboutToQuit</a>())</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            {</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                <span class="keyword">event</span>-&gt;ignore();</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            }</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    }</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    {</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <a class="code" href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">writeSettings</a>();</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keyword">event</span>-&gt;accept();</div>
@@ -351,7 +351,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
 <div class="line"><a name="l00284"></a><span class="lineno"><a class="line" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">  284</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">MainWindow::newExperiment</a>()</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;{</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    {</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <a class="code" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">loadFile</a>(DEFAULT_FILE);</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
@@ -361,48 +361,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
 <div class="line"><a name="l00299"></a><span class="lineno"><a class="line" href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74">  299</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74">MainWindow::openExperiment</a>()</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;{</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    {</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        QString filename = QFileDialog::getOpenFileName(<span class="keyword">this</span>,</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                tr(<span class="stringliteral">&quot;Open Experiment&quot;</span>),<span class="stringliteral">&quot;.&quot;</span>,<span class="stringliteral">&quot;Design or Session files (*.xml *.sqlite)&quot;</span>);</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">if</span>(!filename.isEmpty())</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            tr(<span class="stringliteral">&quot;Open Experiment&quot;</span>), <span class="stringliteral">&quot;.&quot;</span>, <span class="stringliteral">&quot;Design or Session files (*.xml *.sqlite)&quot;</span>);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">if</span> (!filename.isEmpty())</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            <a class="code" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">loadFile</a>(filename);</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    }</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;}</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
 <div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="class_main_window.html#a6a291c661bab41fb661b2a0e7b58cc7e">  316</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a6a291c661bab41fb661b2a0e7b58cc7e">MainWindow::openRecentExperiment</a>()</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;{</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    {</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        QAction *action = qobject_cast&lt;QAction*&gt;(sender());</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">if</span>(action)</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            <span class="keywordflow">if</span>(!<a class="code" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">loadFile</a>(action-&gt;data().toString()))</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">if</span> (action)</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">loadFile</a>(action-&gt;data().toString()))</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                <a class="code" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">newExperiment</a>();</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    }</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;}</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
 <div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="class_main_window.html#a253882925cf9b494645848b58519fbeb">  332</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a253882925cf9b494645848b58519fbeb">MainWindow::openDesign</a>(QSharedPointer&lt;DesignRoot&gt; designRoot)</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;{</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">if</span>(designRoot.isNull())</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">if</span> (designRoot.isNull())</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    designRoot_ = designRoot;</div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="comment">//Load the design root into the autosaver.  Auto save the initial version</span></div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="comment">//since we are opening it from a RAM object that isn&#39;t saved anywhere</span></div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    AutoSaver::getSingleton()-&gt;setDesignRoot(designRoot_,<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    AutoSaver::getSingleton()-&gt;setDesignRoot(designRoot_, <span class="keyword">true</span>);</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="comment">//When we save this file, we need to force a saveas, so we set the current</span></div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="comment">//file to be empty</span></div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    setWindowTitle(QString(<span class="stringliteral">&quot;%1[*] - %2&quot;</span>).arg(designRoot_-&gt;getDesignName())</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                                   .arg(Picto::Names-&gt;workstationAppName));</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        .arg(Picto::Names-&gt;workstationAppName));</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;}</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
 <div class="line"><a name="l00356"></a><span class="lineno"><a class="line" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">  356</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">MainWindow::saveExperiment</a>()</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;{</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">if</span>(currFile_.isEmpty() || currFile_.right(4).toLower() != <span class="stringliteral">&quot;.xml&quot;</span>)</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">if</span> (currFile_.isEmpty() || currFile_.right(4).toLower() != <span class="stringliteral">&quot;.xml&quot;</span>)</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">saveAsExperiment</a>();</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">saveFile</a>(currFile_);</div>
@@ -411,14 +411,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00369"></a><span class="lineno"><a class="line" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">  369</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">MainWindow::saveAsExperiment</a>()</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;{</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    QString filename = QFileDialog::getSaveFileName(<span class="keyword">this</span>,</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        tr(<span class="stringliteral">&quot;Save Experiment&quot;</span>),currFile_.isEmpty()?<span class="stringliteral">&quot;.&quot;</span>:currFile_,<span class="stringliteral">&quot;XML files (*.xml)&quot;</span>);</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">if</span>(filename.isEmpty())</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        tr(<span class="stringliteral">&quot;Save Experiment&quot;</span>), currFile_.isEmpty() ? <span class="stringliteral">&quot;.&quot;</span> : currFile_, <span class="stringliteral">&quot;XML files (*.xml)&quot;</span>);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">if</span> (filename.isEmpty())</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keywordflow">if</span>(filename.right(4).toLower() != <span class="stringliteral">&quot;.xml&quot;</span>)</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keywordflow">if</span> (filename.right(4).toLower() != <span class="stringliteral">&quot;.xml&quot;</span>)</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    {</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keywordflow">if</span>(filename.contains(<span class="stringliteral">&quot;.&quot;</span>))</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keywordflow">if</span> (filename.contains(<span class="stringliteral">&quot;.&quot;</span>))</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        {</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;            QMessageBox::warning(NULL,<span class="stringliteral">&quot;Invalid Extension&quot;</span>,<span class="stringliteral">&quot;Design files must be saved with a .xml extension.  Please try again.&quot;</span>);</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;            QMessageBox::warning(NULL, <span class="stringliteral">&quot;Invalid Extension&quot;</span>, <span class="stringliteral">&quot;Design files must be saved with a .xml extension.  Please try again.&quot;</span>);</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        }</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        filename = filename.append(<span class="stringliteral">&quot;.xml&quot;</span>);</div>
@@ -430,7 +430,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00391"></a><span class="lineno"><a class="line" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">  391</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">MainWindow::changeMode</a>()</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;{</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    QAction *action = qobject_cast&lt;QAction*&gt;(sender());</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keywordflow">if</span>(!action)</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keywordflow">if</span> (!action)</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    <span class="keywordtype">int</span> viewerIndex = action-&gt;data().toInt();</div>
@@ -443,315 +443,351 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00410"></a><span class="lineno"><a class="line" href="class_main_window.html#adb3eed8aaa959b413fb72a252eb0934a">  410</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">MainWindow::changeMode</a>(<a class="code" href="class_viewer.html">Viewer</a>* nextViewer)</div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;{</div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    nextViewer_ = nextViewer;</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="comment">//Deinitialize the current viewer</span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keywordflow">if</span>(currViewer_)</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    {</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        <a class="code" href="class_viewer.html">Viewer</a>* prevViewer = currViewer_;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        currViewer_ = NULL;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        prevViewer-&gt;<a class="code" href="class_viewer.html#ae36f82194449083e10825229a9e22fdf">deinit</a>();   <span class="comment">//The last viewer will tell us to start the next one when its ready</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    }</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;        <a class="code" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">startMode</a>();    <span class="comment">//Start the next viewer</span></div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;}</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;</div>
-<div class="line"><a name="l00427"></a><span class="lineno"><a class="line" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">  427</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">MainWindow::startMode</a>()</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;{</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keywordflow">if</span>(currViewer_ || !nextViewer_)</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    currViewer_ = nextViewer_;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="comment">//Set the latest experiment, experiment text, uidata, uidatatext to the viewer</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    currViewer_-&gt;<a class="code" href="class_viewer.html#a2006f795f8a96b722d21f0cc982ae111">setDesignRoot</a>(designRoot_);</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    currViewer_-&gt;init();</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    nextViewer_ = NULL;</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;}</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;</div>
-<div class="line"><a name="l00441"></a><span class="lineno"><a class="line" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">  441</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">MainWindow::changeSystemNumber</a>()</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;{</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <span class="keywordtype">int</span> continueWithChange = QMessageBox::Cancel;</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    continueWithChange = QMessageBox::warning(<span class="keyword">this</span>,<span class="stringliteral">&quot;Change System Number&quot;</span>,<span class="stringliteral">&quot;You are about to change your workstation&#39;s system number.  This action will cause your workstation to restart.  If your workstation connects to a server with a newer version of Picto and you update, you will not be able to connect to your current system until its version is updated as well.\n\nContinue?&quot;</span>,QMessageBox::Ok | QMessageBox::Cancel,QMessageBox::Cancel);</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    <span class="keywordflow">if</span>(continueWithChange != QMessageBox::Ok)</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="keywordtype">bool</span> result = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keywordtype">int</span> newSystemNum = QInputDialog::getInt(<span class="keyword">this</span>,<span class="stringliteral">&quot;Change System Number&quot;</span>,<span class="stringliteral">&quot;Select a new system number&quot;</span>,Picto::portNums-&gt;getSystemNumber(),1,10,1,&amp;result);</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <span class="keywordflow">if</span>(!result)</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="comment">//Update the recent files list with viewer info</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keywordflow">if</span> (!recentFiles_.isEmpty())</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        recentFiles_.removeFirst();</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    recentFiles_.prepend(currFile_ + <span class="stringliteral">&quot;;&quot;</span> + nextViewer_-&gt;<a class="code" href="class_viewer.html#aa27fe7a15dfe5ee65389b681fc5f57d9">type</a>());</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <span class="comment">//Deinitialize the current viewer</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keywordflow">if</span> (currViewer_)</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    {</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        <a class="code" href="class_viewer.html">Viewer</a>* prevViewer = currViewer_;</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;        currViewer_ = NULL;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        prevViewer-&gt;<a class="code" href="class_viewer.html#ae36f82194449083e10825229a9e22fdf">deinit</a>();   <span class="comment">//The last viewer will tell us to start the next one when its ready</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        <a class="code" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">startMode</a>();    <span class="comment">//Start the next viewer</span></div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;}</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;</div>
+<div class="line"><a name="l00431"></a><span class="lineno"><a class="line" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">  431</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">MainWindow::startMode</a>()</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;{</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keywordflow">if</span> (currViewer_ || !nextViewer_)</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    currViewer_ = nextViewer_;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    <span class="comment">//Set the latest experiment, experiment text, uidata, uidatatext to the viewer</span></div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    currViewer_-&gt;<a class="code" href="class_viewer.html#a2006f795f8a96b722d21f0cc982ae111">setDesignRoot</a>(designRoot_);</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    currViewer_-&gt;init();</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    nextViewer_ = NULL;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;}</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;</div>
+<div class="line"><a name="l00445"></a><span class="lineno"><a class="line" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">  445</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">MainWindow::changeSystemNumber</a>()</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;{</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    <span class="keywordtype">int</span> continueWithChange = QMessageBox::Cancel;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    continueWithChange = QMessageBox::warning(<span class="keyword">this</span>, <span class="stringliteral">&quot;Change System Number&quot;</span>, <span class="stringliteral">&quot;You are about to change your workstation&#39;s system number.  This action will cause your workstation to restart.  If your workstation connects to a server with a newer version of Picto and you update, you will not be able to connect to your current system until its version is updated as well.\n\nContinue?&quot;</span>, QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel);</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="keywordflow">if</span> (continueWithChange != QMessageBox::Ok)</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a>())</div>
 <div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    Picto::portNums-&gt;<a class="code" href="class_picto_1_1_port_nums.html#a31ecb0650e5eb7cf1c1d650180ddcf9b">setSystemNumber</a>(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),newSystemNum,<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;}</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;</div>
-<div class="line"><a name="l00459"></a><span class="lineno"><a class="line" href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">  459</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">MainWindow::aboutPicto</a>()</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;{</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    QStringList releaseNoteList;</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    <span class="comment">//List release notes</span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;First pass implementation of user-generated plots.&quot;</span>);</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    </div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Added scaling to the task viewer.&quot;</span>);</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Added cusomizable views in Remote Viewer, Test Viewer, and Replay Viewer.&quot;</span>);</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Added the ability to run analysis scripts in Remote Views.&quot;</span>);</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Modified how users navigate between and add tasks to experiments.&quot;</span>);</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Fixed a PictoServer crash.&quot;</span>);</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    <span class="comment">//Format release notes:</span></div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;    QString releaseNotes;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    <span class="keywordflow">if</span>(releaseNoteList.size())</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    {</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        releaseNotes.append(QString(<span class="stringliteral">&quot;&lt;h4 style=\&quot;color:black\&quot;&gt;Release Notes:&lt;/h4&gt;&lt;ul&gt;&quot;</span>));</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;        <span class="keywordflow">foreach</span>(QString note,releaseNoteList)</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        {</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            releaseNotes.append(QString(<span class="stringliteral">&quot;&lt;li&gt;&lt;span style=\&quot;color:black;\&quot;&gt;%2&lt;/span&gt;&lt;/li&gt;&quot;</span>).arg(note));</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        }</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        releaseNotes.append(<span class="stringliteral">&quot;&lt;/ul&gt;&quot;</span>);</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    }</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    QMessageBox::about(<span class="keyword">this</span>,<span class="stringliteral">&quot;Picto Workstation&quot;</span>,QString(<span class="stringliteral">&quot;&lt;h4 style=\&quot;color:black\&quot;&gt;You are using version %1 of the Picto Workstation.&lt;/h4&gt;%2&quot;</span>).arg(<a class="code" href="common_8h.html#af93651e1811be9f32daed2e5416d0729">PICTOVERSION</a>).arg(releaseNotes));</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;}</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="comment">/*****************************************************</span></div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="comment"> *          FILE HANDLING</span></div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment"> *****************************************************/</span></div>
-<div class="line"><a name="l00495"></a><span class="lineno"><a class="line" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">  495</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">MainWindow::okToContinue</a>()</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;{</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    <span class="keywordflow">if</span>(designRoot_-&gt;isModified())</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;    {</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        <span class="keywordtype">int</span> r = QMessageBox::warning(<span class="keyword">this</span>,Picto::Names-&gt;workstationAppName,</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;                    tr(<span class="stringliteral">&quot;The experiment has been modified.\n&quot;</span></div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;                       <span class="stringliteral">&quot;Do you want to save your changes?&quot;</span>),</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;                       QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        <span class="keywordflow">if</span>(r == QMessageBox::Yes)</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">saveExperiment</a>();</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(r == QMessageBox::Cancel)</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    }</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;}</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;</div>
-<div class="line"><a name="l00517"></a><span class="lineno"><a class="line" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">  517</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">MainWindow::saveFile</a>(<span class="keyword">const</span> QString filename)</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;{</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    <span class="keywordtype">int</span> success = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;    QFile file(filename);</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;    <span class="keywordflow">if</span>(file.open(QIODevice::WriteOnly))</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    {</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;        <span class="comment">//Make sure design name is the same as the filename</span></div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;        designRoot_-&gt;setDesignName(QFileInfo(file).baseName());</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;        <span class="keywordflow">if</span>(currViewer_)</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;            currViewer_-&gt;aboutToSave();</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <span class="keywordflow">if</span>(!file.write(designRoot_-&gt;getDesignRootText().toLatin1()))</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;            success = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;        file.close();</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    }</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        success = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    <span class="keywordflow">if</span>(!success)</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    {</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        QMessageBox::critical(<span class="keyword">this</span>,Picto::Names-&gt;workstationAppName, <span class="stringliteral">&quot;Experiment failed to save&quot;</span>);</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;    }</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    {</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        <span class="comment">//The file saved succesfully</span></div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;        <span class="comment">//Tell the autosaver that it can get rid of the autosaved file cause there is now</span></div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;        <span class="comment">//a saved version.</span></div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        AutoSaver::getSingleton()-&gt;removeFileUntilNextChange();</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;        </div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(filename);</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        <span class="comment">//changeMode(currViewer_);</span></div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        designRoot_-&gt;setUnmodified();</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    }</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;}</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;</div>
-<div class="line"><a name="l00560"></a><span class="lineno"><a class="line" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">  560</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">MainWindow::loadFile</a>(<span class="keyword">const</span> QString filename)</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;{</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;    QFile file(filename);</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;    QSqlDatabase newSession;</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;    QString designXML = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;    <span class="keywordtype">bool</span> isDesignFile = filename.right(4).toLower() == <span class="stringliteral">&quot;.xml&quot;</span>;</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;    <span class="keywordflow">if</span>(isDesignFile)</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    {   <span class="comment">//Its an xml design file</span></div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;        <span class="keywordflow">if</span>(!file.open(QIODevice::ReadOnly))</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;        {</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;            QMessageBox::critical(<span class="keyword">this</span>, Picto::Names-&gt;workstationAppName,</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;                <span class="stringliteral">&quot;Failed to open file: &quot;</span> + filename);</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;        }</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        designXML = file.readAll();</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        <span class="comment">//Adds the file to Windows&#39; list of recent documents</span></div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;        SHAddToRecentDocs(SHARD_PATHA, filename.toLocal8Bit());</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;        file.close();</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;    }</div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;    {   <span class="comment">//Its a sqlite session file</span></div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;        QString path = filename;</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;        path = path.replace(<span class="stringliteral">&quot;\\&quot;</span>,<span class="stringliteral">&quot;/&quot;</span>);</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;        Q_ASSERT(path.lastIndexOf(<span class="stringliteral">&quot;/&quot;</span>) &gt;=0);</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;        Q_ASSERT(path.lastIndexOf(<span class="stringliteral">&quot;.&quot;</span>) &gt;=0);</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;        QString connectionName = path.mid(path.lastIndexOf(<span class="stringliteral">&quot;/&quot;</span>)+1);</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;        connectionName = connectionName.left(connectionName.lastIndexOf(<span class="stringliteral">&quot;.&quot;</span>));</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;        newSession = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>,connectionName);</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;        newSession.setDatabaseName(path);</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;        newSession.open();</div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;        <span class="keywordflow">if</span>(!newSession.isOpen())</div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;        {</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;            QSqlError <a class="code" href="class_main_window.html#a613d818a5a471cbe170adf837a117b59">error</a> = newSession.lastError();</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;            QMessageBox::critical(0,<span class="stringliteral">&quot;Could not open session&quot;</span>,error.text());</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;        }</div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;        QSqlQuery query(newSession);</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;        <span class="comment">//Get runs list.</span></div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;        <span class="comment">//ExperimentXML name changed to DesignXML when we started putting UI Data and Analysis Data together</span></div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;        <span class="comment">//with it on server.  They never appeared at the same time so we can just look for either one.</span></div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;        query.prepare(<span class="stringliteral">&quot;SELECT value FROM sessioninfo WHERE key=&#39;ExperimentXML&#39; OR key=&#39;DesignXML&#39; LIMIT 1&quot;</span>);</div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;        <span class="keywordtype">bool</span> success = query.exec();</div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;        <span class="keywordflow">if</span>(!success || !query.next())</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;        {</div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;            QMessageBox::critical(0,<span class="stringliteral">&quot;Failed to select Design XML from Session&quot;</span>,success?<span class="stringliteral">&quot;&quot;</span>:query.lastError().text().toLatin1());</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;        }</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;        designXML = query.value(0).toString();</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;        <span class="comment">//Adds the file to Windows&#39; list of recent documents</span></div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;        SHAddToRecentDocs(SHARD_PATHA, filename.toLocal8Bit());</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;        newSession.close();</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    }</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    <span class="keywordflow">if</span>(designXML.isEmpty())</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;    {</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;        QMessageBox::critical(0,<span class="stringliteral">&quot;Experiment design was empty.&quot;</span>,<span class="stringliteral">&quot;Please try a different file&quot;</span>);</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    }</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    QSharedPointer&lt;DesignRoot&gt; newDesignRoot = QSharedPointer&lt;DesignRoot&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_design_root.html">DesignRoot</a>());</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;    <span class="keywordflow">if</span>(!newDesignRoot-&gt;resetDesignRoot(designXML))</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;    {</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;    </div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;        <a class="code" href="struct_picto_1_1_design_message.html">DesignMessage</a> errorMsg = newDesignRoot-&gt;getLastError();</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;        QMessageBox box;</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;        box.setTextFormat(Qt::RichText);</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;        box.setText(errorMsg.name);</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;        box.setDetailedText(errorMsg.details);</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;        box.setIconPixmap(QPixmap(<span class="stringliteral">&quot;:/icons/x.png&quot;</span>));</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;        box.exec();</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;    }</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;    <span class="keywordflow">if</span>(newDesignRoot-&gt;hasWarning())</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    {</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;        <a class="code" href="struct_picto_1_1_design_message.html">DesignMessage</a> warnMsg = newDesignRoot-&gt;getLastWarning();</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;        QMessageBox::warning(0,warnMsg.name,warnMsg.details);</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    }</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;    designRoot_ = newDesignRoot;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;    <span class="comment">//Load the design root into the autosaver.  Don&#39;t auto save the current version</span></div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;    <span class="comment">//because we just opened it from file, we already have a saved version.</span></div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;    AutoSaver::getSingleton()-&gt;setDesignRoot(designRoot_,<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    <span class="keywordflow">if</span>(filename == DEFAULT_FILE)</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(filename);</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;}</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;</div>
-<div class="line"><a name="l00659"></a><span class="lineno"><a class="line" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">  659</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">MainWindow::setCurrentFile</a>(<span class="keyword">const</span> QString &amp;filename)</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;{</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;    currFile_ = filename;</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;    isModified_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;    QString shownName = tr(<span class="stringliteral">&quot;Untitled&quot;</span>);</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;    <span class="keywordflow">if</span>(!currFile_.isEmpty())</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;    {</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;        shownName = QFileInfo(currFile_).fileName();</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;        recentFiles_.removeAll(currFile_);</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;        recentFiles_.prepend(currFile_);</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;        <a class="code" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">updateRecentFileActions</a>();</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    }</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;    setWindowTitle(QString(<span class="stringliteral">&quot;%1[*] - %2&quot;</span>).arg(shownName)</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;                                   .arg(Picto::Names-&gt;workstationAppName));</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    <span class="keywordflow">if</span>(currViewer_)</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;        <a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>(currViewer_);</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;        initViewerAction_-&gt;trigger();</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;}</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;</div>
-<div class="line"><a name="l00684"></a><span class="lineno"><a class="line" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">  684</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">MainWindow::updateRecentFileActions</a>()</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;{</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;    <span class="comment">//Clear out any non-existent files</span></div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    <span class="keywordflow">foreach</span>(QString filename, recentFiles_)</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;    {</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;        <span class="keywordflow">if</span>(!QFile::exists(filename))</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;            recentFiles_.removeAll(filename);</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;    }</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    <span class="comment">//truncate the list so that only the 5 most recent files are included</span></div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    recentFiles_ = recentFiles_.mid(0,5);</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;    <span class="comment">//Set up an action for each recent file</span></div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;    <span class="keywordtype">int</span> actionIdx = 0;</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;    <span class="keywordflow">foreach</span>(QString filename, recentFiles_)</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    {</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;        QString actionText = QString(<span class="stringliteral">&quot;%1 %2&quot;</span>).arg(actionIdx+1)</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;                                .arg(QFileInfo(filename).fileName());</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setText(actionText);</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setVisible(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setData(filename);</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;        actionIdx++;</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;    }</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    </div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    <span class="comment">//hide the leftover actions</span></div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    <span class="keywordflow">while</span>(actionIdx++&lt;MaxRecentFiles)</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setVisible(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;    <span class="comment">//Show/hide the seperator</span></div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    seperatorAction_-&gt;setVisible(!recentFiles_.isEmpty());</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;}</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="comment">/*****************************************************</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment"> *          PERSISTENT SETTINGS</span></div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="comment"> *****************************************************/</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno"><a class="line" href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">  729</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">MainWindow::writeSettings</a>()</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;{</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;    QSettings settings(<span class="stringliteral">&quot;Block Designs&quot;</span>, Picto::Names-&gt;workstationAppName);</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;    settings.setValue(<span class="stringliteral">&quot;recentFiles&quot;</span>,recentFiles_);</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;}</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;</div>
-<div class="line"><a name="l00744"></a><span class="lineno"><a class="line" href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">  744</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">MainWindow::readSettings</a>()</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;{</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    QSettings settings(<span class="stringliteral">&quot;Block Designs&quot;</span>, Picto::Names-&gt;workstationAppName);</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;    recentFiles_= settings.value(<span class="stringliteral">&quot;recentFiles&quot;</span>).toStringList();</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;    <a class="code" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">updateRecentFileActions</a>();</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;}</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="keywordtype">bool</span> result = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keywordtype">int</span> newSystemNum = QInputDialog::getInt(<span class="keyword">this</span>, <span class="stringliteral">&quot;Change System Number&quot;</span>, <span class="stringliteral">&quot;Select a new system number&quot;</span>, Picto::portNums-&gt;getSystemNumber(), 1, 10, 1, &amp;result);</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    <span class="keywordflow">if</span> (!result)</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    Picto::portNums-&gt;<a class="code" href="class_picto_1_1_port_nums.html#a31ecb0650e5eb7cf1c1d650180ddcf9b">setSystemNumber</a>(QCoreApplication::applicationFilePath(), QCoreApplication::arguments(), newSystemNum, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;}</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
+<div class="line"><a name="l00463"></a><span class="lineno"><a class="line" href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">  463</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">MainWindow::aboutPicto</a>()</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;{</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    QStringList releaseNoteList;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <span class="comment">//List release notes</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;First pass implementation of user-generated plots.&quot;</span>);</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Added scaling to the task viewer.&quot;</span>);</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Added cusomizable views in Remote Viewer, Test Viewer, and Replay Viewer.&quot;</span>);</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Added the ability to run analysis scripts in Remote Views.&quot;</span>);</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Modified how users navigate between and add tasks to experiments.&quot;</span>);</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    releaseNoteList.append(<span class="stringliteral">&quot;Fixed a PictoServer crash.&quot;</span>);</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    <span class="comment">//Format release notes:</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    QString releaseNotes;</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;    <span class="keywordflow">if</span> (releaseNoteList.size())</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;    {</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        releaseNotes.append(QString(<span class="stringliteral">&quot;&lt;h4 style=\&quot;color:black\&quot;&gt;Release Notes:&lt;/h4&gt;&lt;ul&gt;&quot;</span>));</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        <span class="keywordflow">foreach</span>(QString note, releaseNoteList)</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        {</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;            releaseNotes.append(QString(<span class="stringliteral">&quot;&lt;li&gt;&lt;span style=\&quot;color:black;\&quot;&gt;%2&lt;/span&gt;&lt;/li&gt;&quot;</span>).arg(note));</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;        }</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        releaseNotes.append(<span class="stringliteral">&quot;&lt;/ul&gt;&quot;</span>);</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    }</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    QMessageBox::about(<span class="keyword">this</span>, <span class="stringliteral">&quot;Picto Workstation&quot;</span>, QString(<span class="stringliteral">&quot;&lt;h4 style=\&quot;color:black\&quot;&gt;You are using version %1 of the Picto Workstation.&lt;/h4&gt;%2&quot;</span>).arg(<a class="code" href="common_8h.html#af93651e1811be9f32daed2e5416d0729">PICTOVERSION</a>).arg(releaseNotes));</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;}</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment">/*****************************************************</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">*           FILE HANDLING</span></div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<span class="comment">*****************************************************/</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno"><a class="line" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">  499</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">MainWindow::okToContinue</a>()</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;{</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <span class="keywordflow">if</span> (designRoot_-&gt;isModified())</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    {</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        <span class="keywordtype">int</span> r = QMessageBox::warning(<span class="keyword">this</span>, Picto::Names-&gt;workstationAppName,</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;            tr(<span class="stringliteral">&quot;The experiment has been modified.\n&quot;</span></div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;            <span class="stringliteral">&quot;Do you want to save your changes?&quot;</span>),</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;            QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;        <span class="keywordflow">if</span> (r == QMessageBox::Yes)</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">saveExperiment</a>();</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (r == QMessageBox::Cancel)</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    }</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;}</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;</div>
+<div class="line"><a name="l00521"></a><span class="lineno"><a class="line" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">  521</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">MainWindow::saveFile</a>(<span class="keyword">const</span> QString filename)</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;{</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    <span class="keywordtype">int</span> success = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    QFile file(filename);</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    <span class="keywordflow">if</span> (file.open(QIODevice::WriteOnly))</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    {</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <span class="comment">//Make sure design name is the same as the filename</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;        designRoot_-&gt;setDesignName(QFileInfo(file).baseName());</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;        <span class="keywordflow">if</span> (currViewer_)</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;            currViewer_-&gt;aboutToSave();</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        <span class="keywordflow">if</span> (!file.write(designRoot_-&gt;getDesignRootText().toLatin1()))</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;            success = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;        file.close();</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    }</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        success = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;    <span class="keywordflow">if</span> (!success)</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    {</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        QMessageBox::critical(<span class="keyword">this</span>, Picto::Names-&gt;workstationAppName, <span class="stringliteral">&quot;Experiment failed to save&quot;</span>);</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    }</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    {</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        <span class="comment">//The file saved succesfully</span></div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        <span class="comment">//Tell the autosaver that it can get rid of the autosaved file cause there is now</span></div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        <span class="comment">//a saved version.</span></div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        AutoSaver::getSingleton()-&gt;removeFileUntilNextChange();</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(filename);</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;        <span class="comment">//changeMode(currViewer_);</span></div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;        designRoot_-&gt;setUnmodified();</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;    }</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;}</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;</div>
+<div class="line"><a name="l00564"></a><span class="lineno"><a class="line" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">  564</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">MainWindow::loadFile</a>(<span class="keyword">const</span> QString filename)</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;{</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;    QFile file(filename);</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    QSqlDatabase newSession;</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;    QString designXML = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;    <span class="keywordtype">bool</span> isDesignFile = filename.right(4).toLower() == <span class="stringliteral">&quot;.xml&quot;</span>;</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;    <span class="keywordflow">if</span> (isDesignFile)</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;    {   <span class="comment">//Its an xml design file</span></div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;        <span class="keywordflow">if</span> (!file.open(QIODevice::ReadOnly))</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;        {</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;            QMessageBox::critical(<span class="keyword">this</span>, Picto::Names-&gt;workstationAppName,</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;                <span class="stringliteral">&quot;Failed to open file: &quot;</span> + filename);</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        }</div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        designXML = file.readAll();</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;        <span class="comment">//Adds the file to Windows&#39; list of recent documents</span></div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;        SHAddToRecentDocs(SHARD_PATHA, filename.toLocal8Bit());</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;        file.close();</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    }</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;    {   <span class="comment">//Its a sqlite session file</span></div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;        QString path = filename;</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;        path = path.replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;        Q_ASSERT(path.lastIndexOf(<span class="stringliteral">&quot;/&quot;</span>) &gt;= 0);</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;        Q_ASSERT(path.lastIndexOf(<span class="stringliteral">&quot;.&quot;</span>) &gt;= 0);</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;        QString connectionName = path.mid(path.lastIndexOf(<span class="stringliteral">&quot;/&quot;</span>) + 1);</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;        connectionName = connectionName.left(connectionName.lastIndexOf(<span class="stringliteral">&quot;.&quot;</span>));</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;        newSession = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>, connectionName);</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;        newSession.setDatabaseName(path);</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;        newSession.open();</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;        <span class="keywordflow">if</span> (!newSession.isOpen())</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;        {</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;            QSqlError <a class="code" href="class_main_window.html#a613d818a5a471cbe170adf837a117b59">error</a> = newSession.lastError();</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;            QMessageBox::critical(0, <span class="stringliteral">&quot;Could not open session&quot;</span>, error.text());</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;        }</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;        QSqlQuery query(newSession);</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;        <span class="comment">//Get runs list.</span></div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;        <span class="comment">//ExperimentXML name changed to DesignXML when we started putting UI Data and Analysis Data together</span></div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;        <span class="comment">//with it on server.  They never appeared at the same time so we can just look for either one.</span></div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;        query.prepare(<span class="stringliteral">&quot;SELECT value FROM sessioninfo WHERE key=&#39;ExperimentXML&#39; OR key=&#39;DesignXML&#39; LIMIT 1&quot;</span>);</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;        <span class="keywordtype">bool</span> success = query.exec();</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;        <span class="keywordflow">if</span> (!success || !query.next())</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;        {</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;            QMessageBox::critical(0, <span class="stringliteral">&quot;Failed to select Design XML from Session&quot;</span>, success ? <span class="stringliteral">&quot;&quot;</span> : query.lastError().text().toLatin1());</div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;        }</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;        designXML = query.value(0).toString();</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;        <span class="comment">//Adds the file to Windows&#39; list of recent documents</span></div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;        SHAddToRecentDocs(SHARD_PATHA, filename.toLocal8Bit());</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;        newSession.close();</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;    }</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    <span class="keywordflow">if</span> (designXML.isEmpty())</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    {</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;        QMessageBox::critical(0, <span class="stringliteral">&quot;Experiment design was empty.&quot;</span>, <span class="stringliteral">&quot;Please try a different file&quot;</span>);</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;    }</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;    QSharedPointer&lt;DesignRoot&gt; newDesignRoot = QSharedPointer&lt;DesignRoot&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_design_root.html">DesignRoot</a>());</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;    <span class="keywordflow">if</span> (!newDesignRoot-&gt;resetDesignRoot(designXML))</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;    {</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;        <a class="code" href="struct_picto_1_1_design_message.html">DesignMessage</a> errorMsg = newDesignRoot-&gt;getLastError();</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;        QMessageBox box;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;        box.setTextFormat(Qt::RichText);</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;        box.setText(errorMsg.name);</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;        box.setDetailedText(errorMsg.details);</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;        box.setIconPixmap(QPixmap(<span class="stringliteral">&quot;:/icons/x.png&quot;</span>));</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;        box.exec();</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;    }</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    <span class="keywordflow">if</span> (newDesignRoot-&gt;hasWarning())</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;    {</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;        <a class="code" href="struct_picto_1_1_design_message.html">DesignMessage</a> warnMsg = newDesignRoot-&gt;getLastWarning();</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;        QMessageBox::warning(0, warnMsg.name, warnMsg.details);</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;    }</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;    designRoot_ = newDesignRoot;</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    <span class="comment">//Load the design root into the autosaver.  Don&#39;t auto save the current version</span></div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    <span class="comment">//because we just opened it from file, we already have a saved version.</span></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    AutoSaver::getSingleton()-&gt;setDesignRoot(designRoot_, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;    <span class="keywordflow">if</span> (filename == DEFAULT_FILE)</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;        <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a>(filename);</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;}</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;</div>
+<div class="line"><a name="l00663"></a><span class="lineno"><a class="line" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">  663</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">MainWindow::setCurrentFile</a>(<span class="keyword">const</span> QString &amp;filename)</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;{</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;    currFile_ = filename;</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;    isModified_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    <span class="keywordtype">int</span> currentIndex = -1;</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;    QString shownName = tr(<span class="stringliteral">&quot;Untitled&quot;</span>);</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;    <span class="keywordflow">if</span> (!currFile_.isEmpty())</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    {</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;        shownName = QFileInfo(currFile_).fileName();</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;        <span class="keywordflow">foreach</span>(QString foundFile, recentFiles_)</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;        {</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;            QString fileName = QFileInfo(foundFile.section(<span class="charliteral">&#39;;&#39;</span>, 0, 0)).fileName();</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;            <span class="keywordflow">if</span> (fileName == shownName)</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;            {</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;                <span class="comment">//retrieve corresponding viewer and remove file from list</span></div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;                QString viewerName = tr(<span class="stringliteral">&quot;Untitled&quot;</span>);</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;                viewerName = foundFile.section(<span class="charliteral">&#39;;&#39;</span>, 1, 1);</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;                <span class="keywordflow">if</span> (viewerName == <span class="stringliteral">&quot;State Edit Viewer&quot;</span>)</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;                    currentIndex = 0;</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (viewerName == <span class="stringliteral">&quot;Test&quot;</span>)</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;                    currentIndex = 1;</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (viewerName == <span class="stringliteral">&quot;Remote&quot;</span>)</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;                    currentIndex = 2;</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (viewerName == <span class="stringliteral">&quot;Replay&quot;</span>)</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;                    currentIndex = 3;</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;                recentFiles_.removeAll(foundFile);</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;            }</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;        }</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        recentFiles_.prepend(currFile_);</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;        <a class="code" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">updateRecentFileActions</a>();</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;    }</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;    setWindowTitle(QString(<span class="stringliteral">&quot;%1[*] - %2&quot;</span>).arg(shownName)</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;        .arg(Picto::Names-&gt;workstationAppName));</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    <span class="keywordflow">if</span> (currentIndex &gt; -1)</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;    {</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;        <span class="comment">//recent files list is updated with viewer info in changeMode</span></div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;        viewerStack_-&gt;setCurrentIndex(currentIndex);</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        <a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>(qobject_cast&lt;Viewer*&gt;(viewerStack_-&gt;currentWidget()));</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;    }</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;    {</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;        <span class="keywordflow">if</span> (currViewer_)</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;            <a class="code" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a>(currViewer_);</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            initViewerAction_-&gt;trigger();</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;    }</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;}</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;</div>
+<div class="line"><a name="l00718"></a><span class="lineno"><a class="line" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">  718</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">MainWindow::updateRecentFileActions</a>()</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;{</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;    <span class="comment">//Clear out any non-existent files</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;    <span class="keywordflow">foreach</span>(QString foundFile, recentFiles_)</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;    {</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;        QString filename = foundFile.section(<span class="charliteral">&#39;;&#39;</span>, 0, 0);</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;        <span class="keywordflow">if</span> (!QFile::exists(filename))</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;            recentFiles_.removeAll(filename);</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;    }</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;    <span class="comment">//truncate the list so that only the 5 most recent files are included</span></div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;    recentFiles_ = recentFiles_.mid(0, 5);</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;    <span class="comment">//Set up an action for each recent file</span></div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;    <span class="keywordtype">int</span> actionIdx = 0;</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;    <span class="keywordflow">foreach</span>(QString foundFile, recentFiles_)</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;    {</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;        QString filename = foundFile.section(<span class="charliteral">&#39;;&#39;</span>, 0, 0);</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;        QString actionText = QString(<span class="stringliteral">&quot;%1 %2&quot;</span>).arg(actionIdx + 1)</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;            .arg(QFileInfo(filename).fileName());</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setText(actionText);</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setVisible(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setData(filename);</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;        actionIdx++;</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;    }</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;    <span class="comment">//hide the leftover actions</span></div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    <span class="keywordflow">while</span> (actionIdx++&lt;MaxRecentFiles)</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;        recentExperimentsActions_[actionIdx]-&gt;setVisible(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;    <span class="comment">//Show/hide the seperator</span></div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;    seperatorAction_-&gt;setVisible(!recentFiles_.isEmpty());</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;}</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;<span class="comment">/*****************************************************</span></div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="comment">*           PERSISTENT SETTINGS</span></div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;<span class="comment">*****************************************************/</span></div>
+<div class="line"><a name="l00765"></a><span class="lineno"><a class="line" href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">  765</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">MainWindow::writeSettings</a>()</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;{</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;    QSettings settings(<span class="stringliteral">&quot;Block Designs&quot;</span>, Picto::Names-&gt;workstationAppName);</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;    settings.setValue(<span class="stringliteral">&quot;recentFiles&quot;</span>, recentFiles_);</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;}</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;</div>
+<div class="line"><a name="l00781"></a><span class="lineno"><a class="line" href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">  781</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">MainWindow::readSettings</a>()</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;{</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;    QSettings settings(<span class="stringliteral">&quot;Block Designs&quot;</span>, Picto::Names-&gt;workstationAppName);</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;    recentFiles_ = settings.value(<span class="stringliteral">&quot;recentFiles&quot;</span>).toStringList();</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;    <a class="code" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">updateRecentFileActions</a>();</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_port_nums_html_a31ecb0650e5eb7cf1c1d650180ddcf9b"><div class="ttname"><a href="class_picto_1_1_port_nums.html#a31ecb0650e5eb7cf1c1d650180ddcf9b">Picto::PortNums::setSystemNumber</a></div><div class="ttdeci">void setSystemNumber(QString appExePath, QStringList appExeArgs, int systemNumber, bool restart)</div><div class="ttdoc">Sets the system number for this system internally and in the QSettings saved configuration. </div><div class="ttdef"><b>Definition:</b> <a href="portdefs_8cpp_source.html#l00031">portdefs.cpp:31</a></div></div>
 <div class="ttc" id="common_8h_html_af93651e1811be9f32daed2e5416d0729"><div class="ttname"><a href="common_8h.html#af93651e1811be9f32daed2e5416d0729">PICTOVERSION</a></div><div class="ttdeci">#define PICTOVERSION</div><div class="ttdoc">This is the current Version of the Picto Software according to MAJOR.MINOR.BUILD. ...</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00102">common.h:102</a></div></div>
-<div class="ttc" id="class_main_window_html_a49be45fc9b993fdc3afe55d4b6fa0650"><div class="ttname"><a href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">MainWindow::writeSettings</a></div><div class="ttdeci">void writeSettings()</div><div class="ttdoc">Stores settings from the Workstation to disk. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00729">mainwindow.cpp:729</a></div></div>
-<div class="ttc" id="class_main_window_html_a06476208b8466211f3bb0fcae787052b"><div class="ttname"><a href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">MainWindow::readSettings</a></div><div class="ttdeci">void readSettings()</div><div class="ttdoc">Reads settings for the Workstation from disk. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00744">mainwindow.cpp:744</a></div></div>
+<div class="ttc" id="class_main_window_html_a49be45fc9b993fdc3afe55d4b6fa0650"><div class="ttname"><a href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">MainWindow::writeSettings</a></div><div class="ttdeci">void writeSettings()</div><div class="ttdoc">Stores settings from the Workstation to disk. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00765">mainwindow.cpp:765</a></div></div>
+<div class="ttc" id="class_main_window_html_a06476208b8466211f3bb0fcae787052b"><div class="ttname"><a href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">MainWindow::readSettings</a></div><div class="ttdeci">void readSettings()</div><div class="ttdoc">Reads settings for the Workstation from disk. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00781">mainwindow.cpp:781</a></div></div>
 <div class="ttc" id="class_main_window_html_a613d818a5a471cbe170adf837a117b59"><div class="ttname"><a href="class_main_window.html#a613d818a5a471cbe170adf837a117b59">MainWindow::error</a></div><div class="ttdeci">void error(QString errorType, QString errorText)</div><div class="ttdoc">This does not appear to be used. </div></div>
 <div class="ttc" id="class_viewer_html_aa27fe7a15dfe5ee65389b681fc5f57d9"><div class="ttname"><a href="class_viewer.html#aa27fe7a15dfe5ee65389b681fc5f57d9">Viewer::type</a></div><div class="ttdeci">virtual QString type()=0</div><div class="ttdoc">Returns a string containing the type of this viewer (e.g "State Edit Viewer"). </div></div>
 <div class="ttc" id="class_replay_viewer_html"><div class="ttname"><a href="class_replay_viewer.html">ReplayViewer</a></div><div class="ttdoc">Defines the UI for the ReplayViewer. </div><div class="ttdef"><b>Definition:</b> <a href="_replay_viewer_8h_source.html#l00047">ReplayViewer.h:47</a></div></div>
-<div class="ttc" id="class_main_window_html_a4b845b94cf4047b2b558f902355f057d"><div class="ttname"><a href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">MainWindow::aboutPicto</a></div><div class="ttdeci">void aboutPicto()</div><div class="ttdoc">Called when the aboutPictoAction_ is triggered. Displays a QMessageBox containing the latest release ...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00459">mainwindow.cpp:459</a></div></div>
-<div class="ttc" id="class_main_window_html_affa76730fa370a3466b62a4caee721e3"><div class="ttname"><a href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">MainWindow::updateRecentFileActions</a></div><div class="ttdeci">void updateRecentFileActions()</div><div class="ttdoc">Updates the recent files portion of the File menu according to the latest recentFiles_ list and a che...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00684">mainwindow.cpp:684</a></div></div>
+<div class="ttc" id="class_main_window_html_a4b845b94cf4047b2b558f902355f057d"><div class="ttname"><a href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">MainWindow::aboutPicto</a></div><div class="ttdeci">void aboutPicto()</div><div class="ttdoc">Called when the aboutPictoAction_ is triggered. Displays a QMessageBox containing the latest release ...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00463">mainwindow.cpp:463</a></div></div>
+<div class="ttc" id="class_main_window_html_affa76730fa370a3466b62a4caee721e3"><div class="ttname"><a href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">MainWindow::updateRecentFileActions</a></div><div class="ttdeci">void updateRecentFileActions()</div><div class="ttdoc">Updates the recent files portion of the File menu according to the latest recentFiles_ list and a che...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00718">mainwindow.cpp:718</a></div></div>
 <div class="ttc" id="class_viewer_html_a2006f795f8a96b722d21f0cc982ae111"><div class="ttname"><a href="class_viewer.html#a2006f795f8a96b722d21f0cc982ae111">Viewer::setDesignRoot</a></div><div class="ttdeci">void setDesignRoot(QSharedPointer&lt; DesignRoot &gt; designRoot)</div><div class="ttdoc">Sets this Viewer&#39;s DesignRoot to the input. </div><div class="ttdef"><b>Definition:</b> <a href="viewer_8h_source.html#l00040">viewer.h:40</a></div></div>
-<div class="ttc" id="class_state_edit_viewer_html"><div class="ttname"><a href="class_state_edit_viewer.html">StateEditViewer</a></div><div class="ttdoc">The StateEditViewer is a container for the Designer widget which is a development environment for cre...</div><div class="ttdef"><b>Definition:</b> <a href="_state_edit_viewer_8h_source.html#l00017">StateEditViewer.h:17</a></div></div>
+<div class="ttc" id="class_state_edit_viewer_html"><div class="ttname"><a href="class_state_edit_viewer.html">StateEditViewer</a></div><div class="ttdoc">The StateEditViewer is a container for the Designer widget which is a development environment for cre...</div><div class="ttdef"><b>Definition:</b> <a href="stateeditviewer_8h_source.html#l00017">stateeditviewer.h:17</a></div></div>
 <div class="ttc" id="class_main_window_html_a62cd8712fb41a754298f6f60eead2cb0"><div class="ttname"><a href="class_main_window.html#a62cd8712fb41a754298f6f60eead2cb0">MainWindow::createActions</a></div><div class="ttdeci">void createActions()</div><div class="ttdoc">Creates all of the actions used by the MainWindow. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00076">mainwindow.cpp:76</a></div></div>
 <div class="ttc" id="class_main_window_html_a55c5e907c761e8714ab008113afc8a87"><div class="ttname"><a href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">MainWindow::newExperiment</a></div><div class="ttdeci">void newExperiment()</div><div class="ttdoc">Called when the newExperimentAction_ is triggered. If nothing objects to closing the current Design...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00284">mainwindow.cpp:284</a></div></div>
 <div class="ttc" id="class_main_window_html_a79b1cf240536f4401fababfe6e6ad89f"><div class="ttname"><a href="class_main_window.html#a79b1cf240536f4401fababfe6e6ad89f">MainWindow::createViewers</a></div><div class="ttdeci">void createViewers()</div><div class="ttdoc">Creates all of the different viewers. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00177">mainwindow.cpp:177</a></div></div>
 <div class="ttc" id="class_viewer_html_a36fd548283a09aeec9a56819287bf782"><div class="ttname"><a href="class_viewer.html#a36fd548283a09aeec9a56819287bf782">Viewer::aboutToQuit</a></div><div class="ttdeci">virtual bool aboutToQuit()</div><div class="ttdoc">This is called just before the application quits and is used to take-down anything that needs to be t...</div><div class="ttdef"><b>Definition:</b> <a href="viewer_8h_source.html#l00047">viewer.h:47</a></div></div>
-<div class="ttc" id="class_main_window_html_a3cca36370fb5c44b63c0a1065c63a0ea"><div class="ttname"><a href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">MainWindow::saveFile</a></div><div class="ttdeci">bool saveFile(const QString filename)</div><div class="ttdoc">Saves the current DesignRoot to the input file. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00517">mainwindow.cpp:517</a></div></div>
+<div class="ttc" id="class_main_window_html_a3cca36370fb5c44b63c0a1065c63a0ea"><div class="ttname"><a href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">MainWindow::saveFile</a></div><div class="ttdeci">bool saveFile(const QString filename)</div><div class="ttdoc">Saves the current DesignRoot to the input file. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00521">mainwindow.cpp:521</a></div></div>
 <div class="ttc" id="class_main_window_html_a5f5c6a176a8dfb06f0dc8c88979d9605"><div class="ttname"><a href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">MainWindow::saveAsExperiment</a></div><div class="ttdeci">bool saveAsExperiment()</div><div class="ttdoc">Called to save the Design to a new file. Allows the user to select a file in a QFileDialog. The file data is written to the selected file using saveFile() with that new filename. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00369">mainwindow.cpp:369</a></div></div>
 <div class="ttc" id="class_main_window_html_a4e20a4a065fbb0e4d3532a45a0a91425"><div class="ttname"><a href="class_main_window.html#a4e20a4a065fbb0e4d3532a45a0a91425">MainWindow::closeEvent</a></div><div class="ttdeci">void closeEvent(QCloseEvent *event)</div><div class="ttdoc">Called when the MainWindow is told to close. Calls aboutToQuit() on all of the viewers. If nothing objects, the latest settings are written to disk and the close can proceed. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00251">mainwindow.cpp:251</a></div></div>
 <div class="ttc" id="class_main_window_html_a2bb86fc5cd917093593fcf0b0009e018"><div class="ttname"><a href="class_main_window.html#a2bb86fc5cd917093593fcf0b0009e018">MainWindow::createToolbars</a></div><div class="ttdeci">void createToolbars()</div><div class="ttdoc">Creates all of the toolbars used by the MainWindow. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00148">mainwindow.cpp:148</a></div></div>
@@ -759,18 +795,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_main_window_html_a2f9981fc89ba371bdd26fdf626ebe4b6"><div class="ttname"><a href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">MainWindow::saveExperiment</a></div><div class="ttdeci">bool saveExperiment()</div><div class="ttdoc">Called to save the Design to file. Redirects to saveFile() with the current file name in the default ...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00356">mainwindow.cpp:356</a></div></div>
 <div class="ttc" id="class_test_viewer_html"><div class="ttname"><a href="class_test_viewer.html">TestViewer</a></div><div class="ttdoc">This allows designers to run the Experiment/Analysis that they are creating in a test environment for...</div><div class="ttdef"><b>Definition:</b> <a href="testviewer_8h_source.html#l00067">testviewer.h:67</a></div></div>
 <div class="ttc" id="class_main_window_html_a9aa060076be05d3c231cd4df0fc74932"><div class="ttname"><a href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">MainWindow::changeMode</a></div><div class="ttdeci">void changeMode()</div><div class="ttdoc">Called when one of the Viewer actions is triggered. Redirects to changeMode() with a pointer to the V...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00391">mainwindow.cpp:391</a></div></div>
-<div class="ttc" id="class_main_window_html_aa29287cd319fc301d4b49a07d13c0c3e"><div class="ttname"><a href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">MainWindow::okToContinue</a></div><div class="ttdeci">bool okToContinue()</div><div class="ttdoc">Checks to see if we have unsaved changes. If so, uses a QMessageBox to ask the user if the unsaved ch...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00495">mainwindow.cpp:495</a></div></div>
+<div class="ttc" id="class_main_window_html_aa29287cd319fc301d4b49a07d13c0c3e"><div class="ttname"><a href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">MainWindow::okToContinue</a></div><div class="ttdeci">bool okToContinue()</div><div class="ttdoc">Checks to see if we have unsaved changes. If so, uses a QMessageBox to ask the user if the unsaved ch...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00499">mainwindow.cpp:499</a></div></div>
 <div class="ttc" id="class_main_window_html_a90c8e95c73065a927c0d46a5ee3cda74"><div class="ttname"><a href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74">MainWindow::openExperiment</a></div><div class="ttdeci">void openExperiment()</div><div class="ttdoc">Called when the openExperimentAction_ is triggered. If nothing objects to closing the current Design...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00299">mainwindow.cpp:299</a></div></div>
-<div class="ttc" id="class_main_window_html_a5e6b98e681544f7790606a0dfe968696"><div class="ttname"><a href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">MainWindow::loadFile</a></div><div class="ttdeci">bool loadFile(const QString filename)</div><div class="ttdoc">Loads the DesignRoot from the XML or .sqlite file at the input filename path. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00560">mainwindow.cpp:560</a></div></div>
+<div class="ttc" id="class_main_window_html_a5e6b98e681544f7790606a0dfe968696"><div class="ttname"><a href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">MainWindow::loadFile</a></div><div class="ttdeci">bool loadFile(const QString filename)</div><div class="ttdoc">Loads the DesignRoot from the XML or .sqlite file at the input filename path. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00564">mainwindow.cpp:564</a></div></div>
 <div class="ttc" id="class_remote_viewer_html"><div class="ttname"><a href="class_remote_viewer.html">RemoteViewer</a></div><div class="ttdoc">This allows Operators to view and control a remotely running Experimental Session. </div><div class="ttdef"><b>Definition:</b> <a href="remoteviewer_8h_source.html#l00060">remoteviewer.h:60</a></div></div>
 <div class="ttc" id="struct_picto_1_1_design_message_html"><div class="ttname"><a href="struct_picto_1_1_design_message.html">Picto::DesignMessage</a></div><div class="ttdoc">A struct designed to hold error messages thrown by the DesignRoot. </div><div class="ttdef"><b>Definition:</b> <a href="_design_root_8h_source.html#l00011">DesignRoot.h:11</a></div></div>
 <div class="ttc" id="class_update_downloader_html_aba23de83959a7e9aea32fd2d5bb7b72e"><div class="ttname"><a href="class_update_downloader.html#aba23de83959a7e9aea32fd2d5bb7b72e">UpdateDownloader::getInstance</a></div><div class="ttdeci">static QSharedPointer&lt; UpdateDownloader &gt; getInstance()</div><div class="ttdoc">Returns a singleton instance of an UpdateDownloader. </div><div class="ttdef"><b>Definition:</b> <a href="_update_downloader_8cpp_source.html#l00032">UpdateDownloader.cpp:32</a></div></div>
-<div class="ttc" id="class_main_window_html_a873edcc181cd61bad99297dfb72c00be"><div class="ttname"><a href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">MainWindow::setCurrentFile</a></div><div class="ttdeci">void setCurrentFile(const QString &amp;filename)</div><div class="ttdoc">Called whenever the current file is changed. Updates various values accordingly. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00659">mainwindow.cpp:659</a></div></div>
-<div class="ttc" id="class_main_window_html_ade759e6c30539d7b534cb49e790509a5"><div class="ttname"><a href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">MainWindow::changeSystemNumber</a></div><div class="ttdeci">void changeSystemNumber()</div><div class="ttdoc">Called when the setSystemNumberAction_ is triggered. Allows the user to set the new system number and...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00441">mainwindow.cpp:441</a></div></div>
+<div class="ttc" id="class_main_window_html_a873edcc181cd61bad99297dfb72c00be"><div class="ttname"><a href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">MainWindow::setCurrentFile</a></div><div class="ttdeci">void setCurrentFile(const QString &amp;filename)</div><div class="ttdoc">Called whenever the current file is changed. Updates various values accordingly. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00663">mainwindow.cpp:663</a></div></div>
+<div class="ttc" id="class_main_window_html_ade759e6c30539d7b534cb49e790509a5"><div class="ttname"><a href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">MainWindow::changeSystemNumber</a></div><div class="ttdeci">void changeSystemNumber()</div><div class="ttdoc">Called when the setSystemNumberAction_ is triggered. Allows the user to set the new system number and...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00445">mainwindow.cpp:445</a></div></div>
 <div class="ttc" id="class_viewer_html"><div class="ttname"><a href="class_viewer.html">Viewer</a></div><div class="ttdoc">A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...</div><div class="ttdef"><b>Definition:</b> <a href="viewer_8h_source.html#l00032">viewer.h:32</a></div></div>
 <div class="ttc" id="class_picto_1_1_design_root_html"><div class="ttname"><a href="class_picto_1_1_design_root.html">Picto::DesignRoot</a></div><div class="ttdoc">The root of the Experiment/Analysis Design tree passed between different UI Viewers. </div><div class="ttdef"><b>Definition:</b> <a href="_design_root_8h_source.html#l00028">DesignRoot.h:28</a></div></div>
 <div class="ttc" id="class_error_list_html"><div class="ttname"><a href="class_error_list.html">ErrorList</a></div><div class="ttdoc">A simple list for holding error messages and their types. </div><div class="ttdef"><b>Definition:</b> <a href="error_list_8h_source.html#l00013">errorList.h:13</a></div></div>
-<div class="ttc" id="class_main_window_html_a17a62d145bff3497618b59595edef26c"><div class="ttname"><a href="class_main_window.html#a17a62d145bff3497618b59595edef26c">MainWindow::startMode</a></div><div class="ttdeci">void startMode()</div><div class="ttdoc">Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00427">mainwindow.cpp:427</a></div></div>
+<div class="ttc" id="class_main_window_html_a17a62d145bff3497618b59595edef26c"><div class="ttname"><a href="class_main_window.html#a17a62d145bff3497618b59595edef26c">MainWindow::startMode</a></div><div class="ttdeci">void startMode()</div><div class="ttdoc">Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00431">mainwindow.cpp:431</a></div></div>
 <div class="ttc" id="class_viewer_html_ae36f82194449083e10825229a9e22fdf"><div class="ttname"><a href="class_viewer.html#ae36f82194449083e10825229a9e22fdf">Viewer::deinit</a></div><div class="ttdeci">virtual void deinit()=0</div><div class="ttdoc">Called just before moving focus to a different viewer. Handles any take-down that needs to occur befo...</div></div>
 <div class="ttc" id="class_main_window_html_a253882925cf9b494645848b58519fbeb"><div class="ttname"><a href="class_main_window.html#a253882925cf9b494645848b58519fbeb">MainWindow::openDesign</a></div><div class="ttdeci">void openDesign(QSharedPointer&lt; DesignRoot &gt; designRoot)</div><div class="ttdoc">This is called when the StateEditViewer requests that the input DesignRoot be loaded. If nothing objects to closing the current Design, the input DesignRoot is loaded. </div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00332">mainwindow.cpp:332</a></div></div>
 <div class="ttc" id="class_main_window_html_a6a291c661bab41fb661b2a0e7b58cc7e"><div class="ttname"><a href="class_main_window.html#a6a291c661bab41fb661b2a0e7b58cc7e">MainWindow::openRecentExperiment</a></div><div class="ttdeci">void openRecentExperiment()</div><div class="ttdoc">Called when one of the recentExperimentActions_ is triggered. If nothing objects to closing the curre...</div><div class="ttdef"><b>Definition:</b> <a href="mainwindow_8cpp_source.html#l00316">mainwindow.cpp:316</a></div></div>
