@@ -41,8 +41,8 @@ class QLCDNumber;
  *	at the end of the Run, and they can set up the save file path there.  This is particularly useful when analyzing a batch
  *	of Runs, in which case all Runs' outputs are saved to the same parent directory.
  *
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+*	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+*	\date 2009-2017
  */
 class ReplayViewer : public Viewer
 {
@@ -65,8 +65,12 @@ public slots:
 	void pause();
 	void stop();
 
+	//neural data sonification: alerts the Visual target so it records reward/neural data sounds in the movie
+	void spikeAdded(int channel, int unit, double time);
+	void rewarded(int quantity);
 
 private:
+	void updateNeuralUI();
 	void setupUi();
 	void updateRecordingTarget();
 	QList<QUuid> getSelectedLocalAnalyses();
@@ -119,6 +123,15 @@ private:
 	QAction *restartRecord_;
 	QAction *saveRecording_;
 
+	QComboBox* channelBox_;
+	QComboBox* unitBox_;
+	QSharedPointer<TaskConfig> currentTaskConfig_;
+	QMap<int, QList<int>> ChannelsUnits_;
+	bool noCallBack_;
+
+	int selectedChannel_;
+	int selectedUnit_;
+
 	QToolBar* testToolbar_;
 	QToolBar* recordToolbar_;
 
@@ -137,7 +150,11 @@ private:
 	QString lastStatus_;
 
 	enum Status {Ending, Stopped, Running, Paused};
-private slots:
+
+	double currentTime_;
+	QTextStream* stream_;
+
+	private slots:
 
 	void playbackStatusChanged(int status);
 	void loadSession();
@@ -160,6 +177,8 @@ private slots:
 	void loadError(QString errorMsg);
 	void sessionPreloaded(PreloadedSessionData sessionData);
 	void taskChanged(QString newTask);
+	void selectedChannelChanged(int channel);
+	void selectedUnitChanged(int unit);
 
 };
 

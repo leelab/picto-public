@@ -477,6 +477,9 @@ void PlaybackController::setup()
 	rewardController->discardOverlapingRewards(true);
 	engine_->setRewardController(rewardController);
 
+	//add reward sound to Picto movies
+	connect(rewardController.data(), SIGNAL(rewarded(int)), this, SIGNAL(rewarded(int)));
+
 	numImportedAnalyses_ = 0;
 	data_.clearEnabledBuiltInAnalyses();
 	data_.clearEnabledImportedAnalyses();

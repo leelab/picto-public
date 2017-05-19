@@ -2,6 +2,7 @@
 #define _TASK_CONFIG_H_
 
 #include <QObject>
+#include <QtMultimedia/QSound>
 #include <QMap>
 #include <QList>
 #include <QMutex>
@@ -77,6 +78,7 @@ public:
 
 	void addNeuralDataListener(QWeakPointer<NeuralDataListener> plot);
 	void notifyNeuralDataListeners(const NeuralDataUnit &neuralData);
+	void setSelectedNeural(int channel, int unit);
 
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.
@@ -90,11 +92,18 @@ signals:
 	void requestCachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
 	//! A signal to the manager of the plotHandlers to clear cached plotHandlers
 	void requestClearPlotHandlers();
+	void spikeAdded(int channel, int unit, double time);
 
 public slots:
 	void receivePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
 	void managerConnectionEstablished(bool connected);
+	
 
+private:
+	    //neural data sonification
+		QSound NeuralTick_;
+		int selectedChannel_;
+		int selectedUnit_;
 protected:
 	//! A Map of widget pointers vs their names.  DANGEROUS?!?
 	QMap<QWidget*,QString> widgetNameMap;

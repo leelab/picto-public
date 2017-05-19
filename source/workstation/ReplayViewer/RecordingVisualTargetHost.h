@@ -7,7 +7,7 @@
 #include <QFile>
 #include <QTime>
 #include "../../common/compositor/VisualTargetHost.h"
-#include "QVideoEncoder.h"
+#include "../../common/compositor/MediaMuxer.h"
 
 namespace Picto {
 
@@ -19,40 +19,53 @@ namespace Picto {
  *	\note This class currently uses qtffmpegwrapper which is a wrapper for ffmpeg since there is no way yet to 
  *	save video files directly from Qt.  qtffmpegwrapper will undoubtedly need to be updated at some point.  It can
  *	be found in Picto\\3rdParty.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
- */
+	*	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+	*	\date 2009-2017
+	*/
 class RecordingVisualTargetHost : public VisualTargetHost
 {
 	Q_OBJECT
 public:
 	RecordingVisualTargetHost();
 	~RecordingVisualTargetHost();
+
+		bool isRecording();
+		bool saveRecordingAs(QString filePath);
+		QString getVideoFileType();
+		void setSelectedNeural(int channel, int unit);
+		
+		int getRecordingTime();
+		//neural data sonification:
+		void rewarded(int quantity);
+		void spikeAdded(double spikeTime);
+		
+	signals:
+		/*! \brief Emitted when the current recording time changes.  currTime is in seconds.*/
+		void updateRecordingTime(double currTime);
+		public slots:
+		void toggleRecording();
+		void restartRecording();
+		void updateFrameTime(double);
+		
+	protected:
+		virtual void paintEvent(QPaintEvent *e);
+
+
+	private:
+		bool initializeRecording();
+		void finishRecording();
+		void updateRecordingTime();
+		void setRecordingTime(int currMs);
+		QSharedPointer<MediaMuxer> encoder_;
+		bool recording_;
+		bool recordingInitialized_;
+		int currFrameMs_;
+		QTime frameTimer_;
+		QSharedPointer<QFile> videoFile_;
 	
-	bool isRecording();
-	bool saveRecordingAs(QString filePath);
-	QString getVideoFileType();
-signals:
-	/*! \brief Emitted when the current recording time changes.  currTime is in seconds.*/
-	void updateRecordingTime(double currTime);
-public slots:
-	void toggleRecording();
-	void restartRecording();
-protected:
-	virtual void paintEvent(QPaintEvent *e);
-private:
-	bool initializeRecording();
-	void finishRecording();
-	void updateRecordingTime();
-	int getRecordingTime();
-	void setRecordingTime(int currMs);
-	QSharedPointer<QVideoEncoder> encoder_;
-	bool recording_;
-	bool recordingInitialized_;
-	int currFrameMs_;
-	QTime frameTimer_;
-	QSharedPointer<QFile> videoFile_;
-};
+		int selectedChannel_;
+		int selectedUnit_;
+	};
 
 
 }; //namespace Picto

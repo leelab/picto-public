@@ -30,8 +30,8 @@ namespace Picto {
  *	folders of the source that actually uses them (e.g. Director).
  *
  *	\note Reward controllers are numbered from 1 to n.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardController : public QObject
@@ -50,6 +50,9 @@ public:
 	int getChannelCount() { return channelCount_; };
 	QList<QSharedPointer<RewardDataUnit>> getDeliveredRewards();
 
+signals:
+	//neural data sonification: records a sound in the Picto movies when a reward is delivered
+	void rewarded(int quantity);
 
 public slots:
 	void addReward(unsigned int channel,int quantity, int minRewardPeriod);

@@ -40,11 +40,11 @@
 
 
 ReplayViewer::ReplayViewer(QWidget *parent) :
-	Viewer(parent)
+Viewer(parent), selectedChannel_(0), selectedUnit_(0), noCallBack_(false), currentTime_(0)
 {
 	//Create the Playback Controller that handles all Experiment playback
 	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController());
-	connect(playbackController_.data(),SIGNAL(statusChanged(int)),this,SLOT(playbackStatusChanged(int)));
+	connect(playbackController_.data(), SIGNAL(statusChanged(int)), this, SLOT(playbackStatusChanged(int)));
 	connect(playbackController_.data(), SIGNAL(taskChanged(QString)), this, SLOT(taskChanged(QString)));
 
 	//Setup the user interface
@@ -58,7 +58,7 @@ void ReplayViewer::init()
 	jumpDownRequested_ = false;
 	QStringList importNames = playbackController_->precacheAnalysisNames(designRoot_);
 	analysisSelector_->setDesignRootForImport(designRoot_, importNames);
-	if(latestStatus_ == PlaybackControllerData::PreLoading || latestStatus_ == PlaybackControllerData::Stopped)
+	if (latestStatus_ == PlaybackControllerData::PreLoading || latestStatus_ == PlaybackControllerData::Stopped)
 		analysisSelector_->enableCheckboxes(true);
 	else
 		analysisSelector_->enableCheckboxes(false);
@@ -87,7 +87,7 @@ void ReplayViewer::setupUi()
 	//Load Session Actions
 	loadSessionAction_ = new QAction(tr("Open Session"),this);
 	loadSessionAction_->setIcon(QIcon(":/icons/sessionopen.png"));
-	connect(loadSessionAction_, SIGNAL(triggered()),this, SLOT(loadSession()));
+	connect(loadSessionAction_, SIGNAL(triggered()), this, SLOT(loadSession()));
 	loadSessionAction_->setEnabled(true);
 
 	runs_ = new RunSelectorWidget();
@@ -182,6 +182,20 @@ void ReplayViewer::setupUi()
 	connect(saveRecording_, SIGNAL(triggered()),this, SLOT(saveRecording()));
 	saveRecording_->setEnabled(false);
 
+	channelBox_ = new QComboBox();
+	channelBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	channelBox_->setToolTip("Select a Channel");
+	channelBox_->addItem("All Channels", 0);
+	channelBox_->setCurrentIndex(0);
+	connect(channelBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedChannelChanged(int)));
+
+	unitBox_ = new QComboBox(this);
+	unitBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	unitBox_->setToolTip("Select a Unit");
+	unitBox_->addItem("All Units", 0);
+	unitBox_->setCurrentIndex(0);
+	connect(unitBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedUnitChanged(int)));
+
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(loadSessionAction_);
 	testToolbar_->addSeparator();
@@ -197,6 +211,9 @@ void ReplayViewer::setupUi()
 	testToolbar_->addWidget(recordTime_);
 	testToolbar_->addAction(restartRecord_);
 	testToolbar_->addAction(saveRecording_);
+	testToolbar_->addSeparator();
+	testToolbar_->addWidget(channelBox_);
+	testToolbar_->addWidget(unitBox_);
 	testToolbar_->addSeparator();
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
@@ -214,7 +231,9 @@ void ReplayViewer::setupUi()
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
 
 	stimulusLayout->addWidget(dataViewOrganizer);
-	connect(visualTargetHost_,SIGNAL(updateRecordingTime(double)),this,SLOT(setRecordTime(double)));
+
+	//connect(playbackController_.data(), SIGNAL(framePresented(double)), visualTargetHost_, SLOT(updateFrameTime(double)));
+	connect(visualTargetHost_, SIGNAL(updateRecordingTime(double)), this, SLOT(setRecordTime(double)));
 
 	//Setup Output Signal Widgets
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont
@@ -295,7 +314,62 @@ void ReplayViewer::setupUi()
 	mainLayout->addWidget(operationLayout,1);
 	setLayout(mainLayout);
 }
+void ReplayViewer::selectedChannelChanged(int channel)
+{
+	if (noCallBack_)
+		return;
 
+	if (selectedChannel_ < 0)
+		selectedChannel_ = 0;
+
+	if (selectedUnit_ < 0)
+		selectedUnit_ = 0;
+
+	QString selectedStr = channelBox_->itemData(channelBox_->currentIndex()).toString(); //Channel 5
+	if (selectedStr.split(QRegExp("\\s")).last().toInt())
+		selectedChannel_ = selectedStr.split(QRegExp("\\s")).last().toInt(); //5
+
+	//selectedChannel_ = channelBox_->itemData(channelBox_->currentIndex()).toInt();
+
+	unitBox_->clear();
+	selectedUnit_ = 0;
+
+	if (currentTaskConfig_)
+		currentTaskConfig_->setSelectedNeural(selectedChannel_, selectedUnit_);
+
+	if (visualTargetHost_)
+		visualTargetHost_->setSelectedNeural(selectedChannel_, selectedUnit_);
+
+	QList<int> unitList = ChannelsUnits_.value(selectedChannel_);
+	unitBox_->addItem("All Units", 0);
+	foreach(int unit, unitList)
+	{
+		unitBox_->addItem(QString("Unit %1").arg(unit), unit);
+	}
+
+	//This will take care of resetting the spike plot for the case where channel changes but unit index doesn't change.
+	selectedUnitChanged(unitBox_->currentIndex());
+}
+void ReplayViewer::selectedUnitChanged(int unit)
+{
+	if (noCallBack_)
+		return;
+
+	if (selectedChannel_ < 0)
+		selectedChannel_ = 0;
+
+	if (selectedUnit_ < 0)
+		selectedUnit_ = 0;
+
+
+	//selectedUnit_ = unitBox_->itemData(unitBox_->currentIndex()).toInt();
+	QString selectedStr = unitBox_->itemData(unitBox_->currentIndex()).toString();
+	if (selectedStr.split(QRegExp("\\s")).last().toInt())
+		selectedUnit_ = selectedStr.split(QRegExp("\\s")).last().toInt();
+	
+	if (currentTaskConfig_)
+		currentTaskConfig_->setSelectedNeural(selectedChannel_, selectedUnit_);
+}
 /*! \brief Updates the Recording Visual Target Host to record or not depending on the current run and record mode states.
  */
 void ReplayViewer::updateRecordingTarget()
@@ -536,7 +610,7 @@ QList<ReplayViewer::PlayRunInfo> ReplayViewer::getSelectedPlayRunInfo()
 	return newRunQueue;
 }
 
-/*! \brief Called whenever the PlaybakController's State changes.  status is the new State.
+/*! \brief Called whenever the PlaybackController's State changes.  status is the new State.
  *	\details This function updates the ReplayViewer UI to reflect the current PlaybackController state.  We update the UI as
  *	a result of PlaybackController state changes rather than updatingit when actions are triggered in the ReplayViewer
  *	because the PlaybackController state machineruns in a separate thread, so there may be some lag between when a
@@ -1073,10 +1147,85 @@ void ReplayViewer::sessionPreloaded(PreloadedSessionData sessionData)
 	//Add the session's local analyses to the analysisSelector_ widget
 	analysisSelector_->setLocalDesignAnalyses(sessionData.fileName_,sessionData.analysisIds_,sessionData.analysisNames_);
 }
+void ReplayViewer::rewarded(int quantity)
+{
+	visualTargetHost_->rewarded(quantity);
+}
+void ReplayViewer::spikeAdded(int channel, int unit, double time)
+{
+	if (!ChannelsUnits_.contains(channel))
+	{
+		QList<int> unitList;
+		unitList.append(unit);
+		ChannelsUnits_.insert(channel, unitList);
+		updateNeuralUI();
+	}
+	else
+	{
+		QList<int> unitList = ChannelsUnits_.value(channel);
+		if (!unitList.contains(unit))
+		{
+			unitList.append(unit);
+			//Update the Combo box for channel/unit
+			updateNeuralUI();
+		}
+	}
 
+	//Tell the Visual Target Host to encode audio for the spike, when recording a Picto movie
+	visualTargetHost_->spikeAdded(time);
+
+}
+void ReplayViewer::updateNeuralUI()
+{
+	noCallBack_ = true;
+	int currCh = channelBox_->itemData(channelBox_->currentIndex()).toInt();
+	int currUnit = unitBox_->itemData(unitBox_->currentIndex()).toInt();
+	channelBox_->clear();
+	unitBox_->clear();
+
+	channelBox_->addItem("All Channels", 0);
+	foreach(int channel, ChannelsUnits_.keys())
+	{
+		channelBox_->addItem(QString("Channel %1").arg(channel), channel);
+	}
+	//Reset channel to what it was before
+	for (int i = 0; i<channelBox_->count(); i++)
+	{
+		if (channelBox_->itemData(i).toInt() == currCh)
+		{
+			channelBox_->setCurrentIndex(i);
+			break;
+		}
+	}
+
+	QList<int> unitList = ChannelsUnits_.value(selectedChannel_);
+	unitBox_->addItem("All Units", 0);
+	foreach(int unit, unitList)
+	{
+		unitBox_->addItem(QString("Unit %1").arg(unit), unit);
+	}
+
+	//Reset unit to what it was before
+	for (int i = 0; i<unitBox_->count(); i++)
+	{
+		if (unitBox_->itemData(i).toInt() == currUnit)
+		{
+			unitBox_->setCurrentIndex(i);
+			break;
+		}
+	}
+	noCallBack_ = false;
+}
 void ReplayViewer::taskChanged(QString newTask)
 {
 	//viewSelectionFrame_->clear();
+	currentTaskConfig_ = playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig();
+	connect(currentTaskConfig_.data(), SIGNAL(spikeAdded(int, int, double)), this, SLOT(spikeAdded(int, int, double)));
+	connect(playbackController_.data(), SIGNAL(rewarded(int)), this, SLOT(rewarded(int)));
+
+
 	viewSelectionFrame_->connectToTaskConfig(playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig());
 	viewSelectionFrame_->rebuild();
+
+	selectedChannelChanged(0);
 }

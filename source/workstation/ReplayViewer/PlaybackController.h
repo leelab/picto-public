@@ -220,6 +220,9 @@ signals:
 	//! Emitted when loading a new task.  Used to update plots.
 	void taskChanged(QString taskName);
 
+	////neural data sonification: adds reward sound to Picto movie
+	void rewarded(int quantity);
+
 private:
 	QString activateAnalyses(QStringList analysisData);
 	QTimer stateUpdateTimer_;

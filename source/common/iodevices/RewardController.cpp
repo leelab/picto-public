@@ -84,6 +84,7 @@ void RewardController::triggerRewards(bool appendToList)
 		if(!reward.isFlush)
 		{	//Start reward
 			startReward(it.key(),reward.quantity);
+			emit rewarded(reward.quantity);
 		}
 		else
 		{	//Start flush			

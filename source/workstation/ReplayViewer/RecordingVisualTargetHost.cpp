@@ -1,4 +1,7 @@
 #include <QFileInfo>
+#include <QPainter>
+#include <QProcess>
+
 #include "RecordingVisualTargetHost.h"
 #include "../../common/iodevices/BufferFileGenerator.h"
 #include "../../common/memleakdetect.h"
@@ -16,6 +19,10 @@ RecordingVisualTargetHost::RecordingVisualTargetHost()
 	recordingInitialized_ = false;
 	setRecordingTime(-1);
 	frameTimer_.start();
+	
+	selectedChannel_ = 0;
+	selectedUnit_ = 0;
+
 }
 
 RecordingVisualTargetHost::~RecordingVisualTargetHost()
@@ -41,9 +48,9 @@ bool RecordingVisualTargetHost::saveRecordingAs(QString filePath)
 
 	//Since QFile::Copy won't overwrite anything, remove the file at
 	//the filepath first
-	if(QFile::exists(filePath) && !QFile::remove(filePath))
+	if (QFile::exists(filePath) && !QFile::remove(filePath))
 		return false;
-	//Finish up the recording (current QVideoEncoder needs to be closed for the file to be valid)
+	//Finish up the recording (current MediaMuxer needs to be closed for the file to be valid)
 	finishRecording();
 
 	//Copy the temporary video file to the filepath
@@ -124,12 +131,39 @@ void RecordingVisualTargetHost::paintEvent(QPaintEvent* e)
 	//Write the frame image to the file at the updated recording time
 	encoder_->encodeImagePts(frame,getRecordingTime());
 }
+void RecordingVisualTargetHost::rewarded(int quantity)
+{
+	if (encoder_)
+	{
+		//Update the recording time
+		updateRecordingTime();
 
+		//for (int index = 0; index < quantity; index++)
+		{
+			//double newtime = getRecordingTime () - elapsedTime;
+			double time = 0.;
+			//unsigned pts = getRecordingTime();
+			encoder_->encodeAudioFrame(getRecordingTime(), time, true);
+		}
+	}
+}
+void RecordingVisualTargetHost::spikeAdded(double spikeTime)
+{
+	if (encoder_)
+	{
+		//Update the recording time
+		updateRecordingTime();
+
+		//double newtime = getRecordingTime () - elapsedTime;
+		double time = spikeTime * 1000.; //ms
+		encoder_->encodeAudioFrame(getRecordingTime(), time, false);		
+	}
+}
 /*! \brief Recording needs to be initialized once before any video files are recorded.  This function
  *	takes care of that.
- *	\details Essentially what we are doing here is setting up the QVideoEncoder from the 
- *	QTFFMpegWrapper package.
- */
+*	\details Essentially what we are doing here is setting up the MediaMuxer from the
+*	QTFFMpegWrapper package.
+*/
 bool RecordingVisualTargetHost::initializeRecording()
 {
 	//setup frame image
@@ -142,7 +176,7 @@ bool RecordingVisualTargetHost::initializeRecording()
 	setRecordingTime(-1);
 
 	//reinitialize encoder
-	encoder_ = QSharedPointer<QVideoEncoder>(new QVideoEncoder());
+	encoder_ = QSharedPointer<MediaMuxer>(new MediaMuxer());
 	if(!encoder_)
 		return false;
 
@@ -160,9 +194,14 @@ bool RecordingVisualTargetHost::initializeRecording()
 	//initialize encoder with the video file
 	if(!encoder_->createFile(QFileInfo(*(videoFile_.data())).absoluteFilePath(),targetRect.width(),targetRect.height(),BITRATE*(1000/FPS),GOP,1000))
 		return false;
+
 	return true;
 }
-
+void RecordingVisualTargetHost::setSelectedNeural(int channel, int unit)
+{
+	selectedChannel_ = channel;
+	selectedUnit_ = unit;
+}
 /*! \brief Finishes up recording and closes required resources.
  */
 void RecordingVisualTargetHost::finishRecording()
@@ -176,7 +215,7 @@ void RecordingVisualTargetHost::finishRecording()
 		//Delete the encoder and frame image
 		encoder_.clear();
 	}
-
+	
 	//Mark recording as uninitialized
 	recordingInitialized_ = false;
 }
@@ -208,6 +247,11 @@ void RecordingVisualTargetHost::updateRecordingTime()
 int RecordingVisualTargetHost::getRecordingTime()
 {
 	return currFrameMs_;
+}
+void RecordingVisualTargetHost::updateFrameTime(double time)
+{
+	int MsTime = (int)time;
+	setRecordingTime(MsTime);
 }
 
 

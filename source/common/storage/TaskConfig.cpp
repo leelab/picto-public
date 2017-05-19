@@ -11,7 +11,7 @@ namespace Picto
 {
 
 TaskConfig::TaskConfig()
-	: updateSignalEnabled_(true), managerConnectionStatus_(Unconnected)
+	: updateSignalEnabled_(true), managerConnectionStatus_(Unconnected), NeuralTick_("audio/tick.wav"), selectedChannel_(0), selectedUnit_(0)
 {
 	reset();
 }
@@ -330,6 +330,16 @@ void TaskConfig::addNeuralDataListener(QWeakPointer<NeuralDataListener> listener
  */
 void TaskConfig::notifyNeuralDataListeners(const NeuralDataUnit &neuralData)
 {
+		//Emit a sound for each spike detected
+		if ((selectedChannel_ == 0) || ((neuralData.getChannel() == selectedChannel_) && ((neuralData.getUnit() == selectedUnit_) || (selectedUnit_ == 0))))
+		{
+			//play sound
+			NeuralTick_.play();
+
+			//record
+			emit spikeAdded(neuralData.getChannel(), neuralData.getUnit(), neuralData.getFittedtime());
+		}
+
 	bool bCleanupRequired = false;
 	foreach(QWeakPointer<NeuralDataListener> listener, neuralDataListeners_)
 	{
@@ -359,5 +369,11 @@ void TaskConfig::notifyNeuralDataListeners(const NeuralDataUnit &neuralData)
 		}
 	}
 }
+
+void TaskConfig::setSelectedNeural(int channel, int unit)
+	{
+		selectedChannel_ = channel;
+		selectedUnit_ = unit;
+	}
 
 }

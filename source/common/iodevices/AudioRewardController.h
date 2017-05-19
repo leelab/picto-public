@@ -17,8 +17,8 @@ namespace Picto
  *	to generate an audible stimulus every time a reward is given.  The audio stimulus is a tick noise
  *	that is included in the Picto binaries.  It is currenly in the Workstation source under a sounds
  *	directory.  It should really be moved into the common directory.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 
 #if defined WIN32 || defined WINCE

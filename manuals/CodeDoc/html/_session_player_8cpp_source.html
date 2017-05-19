@@ -92,217 +92,259 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;SessionPlayer.h&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;../../common/storage/NeuralDataUnit.h&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a77e91caab8b8fdb0272d2dbe1c289c99">    8</a></span>&#160;<a class="code" href="class_picto_1_1_session_player.html#a77e91caab8b8fdb0272d2dbe1c289c99">SessionPlayer::SessionPlayer</a>(QSharedPointer&lt;SessionState&gt; sessState,QSharedPointer&lt;FileSessionLoader&gt; sessLoader)</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;:</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;sessionState_(sessState),</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;sessionLoader_(sessLoader),</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;processing_(false),</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;reachedEnd_(false),</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;loading_(false)</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    lastIndex_ = <a class="code" href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">PlaybackIndex::minForTime</a>(0);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    nextFrame_ = <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;SessionPlayer::~SessionPlayer()</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">   26</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">SessionPlayer::restart</a>()</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    sessionState_-&gt;restartRun();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    lastIndex_ = <a class="code" href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">PlaybackIndex::minForTime</a>(0);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    nextFrame_ = <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    reachedEnd_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c">   53</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c">SessionPlayer::stepToTime</a>(<span class="keywordtype">double</span> time)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">//qDebug(QString(&quot;Player: Step To Time called with input: %1&quot;).arg(time).toLatin1());</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span>(time &lt; 0)</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">if</span>(processing_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">if</span>(time &lt; lastIndex_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>())</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="comment">//If time goes down, restart from the beginning of the run and step back to it.</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">restart</a>();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(time == lastIndex_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>())</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span>(reachedEnd_)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">//Check if this is the beginning of a new run playback</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">if</span>(lastIndex_ == <a class="code" href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">PlaybackIndex::minForTime</a>(0))</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="comment">//Get the first transition in this run</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordtype">int</span> firstTransId = sessionState_-&gt;getTransitionState()-&gt;getFirstTransIdInRun();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">if</span>(firstTransId == 0)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        Q_ASSERT(sessionLoader_-&gt;getDesignRoot() &amp;&amp; sessionLoader_-&gt;getDesignRoot()-&gt;getExperiment());</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        QSharedPointer&lt;Asset&gt; trans = sessionLoader_-&gt;getDesignRoot()-&gt;getExperiment()-&gt;getDesignConfig()-&gt;getAsset(firstTransId);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">if</span>(trans.isNull())</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        QString taskName = trans-&gt;getPath().split(<span class="stringliteral">&quot;::&quot;</span>).first();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        QString runName = sessionLoader_-&gt;currRunName();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="comment">//Tell the world that we&#39;re staring a new run</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        emit <a class="code" href="class_picto_1_1_session_player.html#af6e2ed1e376e9d940c8f5554efbf753b">startingRun</a>(taskName,runName);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">//if(!sessionLoader_-&gt;setCurrentTime(time))</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="comment">//{</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">//  qDebug(QString(&quot;Player: Failed to set time to Loader&quot;).toLatin1());</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="comment">//  return false;</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">//}</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">//if(!sessionLoader_-&gt;dataIsReady(time))</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">//{</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="comment">//  markLoading(true);</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="comment">//  qDebug(QString(&quot;Player: Loader not ready for time:%1&quot;).arg(time).toLatin1());</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="comment">//  return false;</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="comment">//}</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment">//Step to the input time or the end of the run. Whichever comes first.</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">do</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">stepToNextFrame</a>(time))</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordflow">if</span>(time &gt;= sessionLoader_-&gt;currRunDuration())</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            reachedEnd_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            emit <a class="code" href="class_picto_1_1_session_player.html#a37f89e41b206df6d3e88611f9638a394">reachedEnd</a>();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }<span class="keywordflow">while</span>(time &gt; nextFrame_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>());</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">//sessionLoader_-&gt;setProcessedTime(getTime());</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="comment">//qDebug(QString(&quot;Player: Step To Time reached time: %1&quot;).arg(getTime()).toLatin1());</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a6051bc0f91563498f813aa749140e4c7">  127</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_session_player.html#a6051bc0f91563498f813aa749140e4c7">SessionPlayer::getTime</a>()</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordflow">return</span> lastIndex_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>();</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">  135</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">SessionPlayer::stepForward</a>(<span class="keywordtype">double</span> lookForward)</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordflow">if</span>(processing_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">step</a>(lookForward);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">  145</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">SessionPlayer::stepToNextFrame</a>(<span class="keywordtype">double</span> lookForward)</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;{</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordflow">if</span>(processing_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    nextFrame_ = sessionState_-&gt;getFrameState()-&gt;getNextIndex(lookForward);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span>(!nextFrame_.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>() || nextFrame_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>() &gt; lookForward)</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">while</span>(lastIndex_ &lt; nextFrame_)</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">stepForward</a>(lookForward);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">  176</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">SessionPlayer::step</a>(<span class="keywordtype">double</span> lookForward)</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;{</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    processing_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> currFrameId = sessionState_-&gt;getFrameState()-&gt;getCurrentIndex();</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> nextFrameId = sessionState_-&gt;getFrameState()-&gt;getNextIndex(lookForward);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    QSharedPointer&lt;DataState&gt; stateToTrigger = <a class="code" href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">getNextTriggerState</a>(lookForward);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">if</span>(stateToTrigger.isNull())</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    {</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        processing_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    }</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordflow">if</span>  (stateToTrigger-&gt;getNextIndex(nextFrameId.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>()) == nextFrameId)</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    {   <span class="comment">//If the next stateToTrigger is a frame, step to all time based data states first (ie. reward, signals, spike, lfp).</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> frameIndexForTime = nextFrameId;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordflow">if</span>(frameIndexForTime.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>())</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> timeIndex = <a class="code" href="struct_picto_1_1_playback_index.html#a87e6a7f297deaada4698add28d39476e">PlaybackIndex::maxForTime</a>(frameIndexForTime.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>());</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            QList&lt;QSharedPointer&lt;DataState&gt;&gt; timeIndexedStates = sessionState_-&gt;getStatesIndexedByTime();</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            <span class="keywordflow">foreach</span>(QSharedPointer&lt;DataState&gt; dataState,timeIndexedStates)</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                dataState-&gt;moveToIndex(timeIndex);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            }</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    }</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    stateToTrigger-&gt;moveToIndex(stateToTrigger-&gt;getNextIndex(nextFrameId.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>()));</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    lastIndex_ = stateToTrigger-&gt;getCurrentIndex();</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    processing_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;}</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">  209</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">SessionPlayer::markLoading</a>(<span class="keywordtype">bool</span> load)</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;{</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordflow">if</span>(loading_ != load)</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    {</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        loading_ = load;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        emit <a class="code" href="class_picto_1_1_session_player.html#a7419758edb2920b408443d2683d8d029">loading</a>(loading_);</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    }</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;}</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">  229</a></span>&#160;QSharedPointer&lt;DataState&gt; <a class="code" href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">SessionPlayer::getNextTriggerState</a>(<span class="keywordtype">double</span> lookForward)</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;{</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="comment">//Look for the next property, transition or frame</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="comment">//with lowest index. </span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    QList&lt;QSharedPointer&lt;DataState&gt;&gt; idIndexedStates = sessionState_-&gt;getStatesIndexedById();</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordtype">int</span> nBuffer;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> indexBuffer;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> iterationIndex;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordtype">double</span> boundaryTime = sessionState_-&gt;getFrameState()-&gt;getNextIndex(lookForward).time();</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="comment">//Intialize the nBuffer and indexBuffer with the first</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="comment">//valid entries available</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordtype">int</span> i=0;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordflow">do</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    {</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        nBuffer = i;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        indexBuffer = idIndexedStates[i++]-&gt;getNextIndex(boundaryTime);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    } <span class="keywordflow">while</span>(!indexBuffer.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>() &amp;&amp; i &lt; idIndexedStates.size());</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    </div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="comment">//Get the state with the lowest index</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">for</span>(;i&lt;idIndexedStates.size();i++)</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        iterationIndex = idIndexedStates[i]-&gt;getNextIndex(boundaryTime);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <span class="keywordflow">if</span>  (   iterationIndex.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>()</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                &amp;&amp;  (iterationIndex &lt; indexBuffer)</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            )</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        {</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            indexBuffer = iterationIndex;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            nBuffer = i;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        }</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        </div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordflow">if</span>(!indexBuffer.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>())</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;DataState&gt;();</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">return</span> idIndexedStates[nBuffer];</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
-<div class="ttc" id="class_picto_1_1_session_player_html_a8947540e0b52f41e586a47dd8169ff9a"><div class="ttname"><a href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">Picto::SessionPlayer::getNextTriggerState</a></div><div class="ttdeci">QSharedPointer&lt; DataState &gt; getNextTriggerState(double lookForward)</div><div class="ttdoc">Returns the SessionState&#39;s DataState which is DataId indexed and has the next lowest DataId so long a...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00229">SessionPlayer.cpp:229</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_af31b232e253624b31e51976b8fc58771"><div class="ttname"><a href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">Picto::SessionPlayer::stepForward</a></div><div class="ttdeci">bool stepForward(double lookForward)</div><div class="ttdoc">This function calls step() and doesn&#39;t appear to add any other functionality apart from reentrancy...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00135">SessionPlayer.cpp:135</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_a0bc7a956fd48c5f1654012ffd7c0fa6b"><div class="ttname"><a href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">Picto::SessionPlayer::markLoading</a></div><div class="ttdeci">void markLoading(bool load)</div><div class="ttdoc">Use this function to mark when loading starts and stops. Internally, it takes care of only emitting t...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00209">SessionPlayer.cpp:209</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_a77e91caab8b8fdb0272d2dbe1c289c99"><div class="ttname"><a href="class_picto_1_1_session_player.html#a77e91caab8b8fdb0272d2dbe1c289c99">Picto::SessionPlayer::SessionPlayer</a></div><div class="ttdeci">SessionPlayer(QSharedPointer&lt; SessionState &gt; sessState, QSharedPointer&lt; FileSessionLoader &gt; sessLoader)</div><div class="ttdoc">Constructs a new SessionPlayer. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00008">SessionPlayer.cpp:8</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_ab8096bcc250a2bc24c1b4509816f2da6"><div class="ttname"><a href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">Picto::SessionPlayer::restart</a></div><div class="ttdeci">void restart()</div><div class="ttdoc">Restarts the current run from the beginning. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00026">SessionPlayer.cpp:26</a></div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a77e91caab8b8fdb0272d2dbe1c289c99">   10</a></span>&#160;<a class="code" href="class_picto_1_1_session_player.html#a77e91caab8b8fdb0272d2dbe1c289c99">SessionPlayer::SessionPlayer</a>(QSharedPointer&lt;SessionState&gt; sessState, QSharedPointer&lt;FileSessionLoader&gt; sessLoader)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    :</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    sessionState_(sessState),</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    sessionLoader_(sessLoader),</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    processing_(false),</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    reachedEnd_(false),</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    loading_(false)</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    lastIndex_ = <a class="code" href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">PlaybackIndex::minForTime</a>(0);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    nextFrame_ = <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;SessionPlayer::~SessionPlayer()</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">SessionPlayer::restart</a>()</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    sessionState_-&gt;restartRun();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    lastIndex_ = <a class="code" href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">PlaybackIndex::minForTime</a>(0);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    nextFrame_ = <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    reachedEnd_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c">   55</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c">SessionPlayer::stepToTime</a>(<span class="keywordtype">double</span> time)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//qDebug(QString(&quot;Player: Step To Time called with input: %1&quot;).arg(time).toLatin1());</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">if</span> (time &lt; 0)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (processing_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span> (time &lt; lastIndex_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>())</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">//If time goes down, restart from the beginning of the run and step back to it.</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">restart</a>();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">if</span> (time == lastIndex_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>())</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span> (reachedEnd_)</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">//Check if this is the beginning of a new run playback</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">if</span> (lastIndex_ == <a class="code" href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">PlaybackIndex::minForTime</a>(0))</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">//Get the first transition in this run</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordtype">int</span> firstTransId = sessionState_-&gt;getTransitionState()-&gt;getFirstTransIdInRun();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">if</span> (firstTransId == 0)</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        Q_ASSERT(sessionLoader_-&gt;getDesignRoot() &amp;&amp; sessionLoader_-&gt;getDesignRoot()-&gt;getExperiment());</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        QSharedPointer&lt;Asset&gt; trans = sessionLoader_-&gt;getDesignRoot()-&gt;getExperiment()-&gt;getDesignConfig()-&gt;getAsset(firstTransId);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">if</span> (trans.isNull())</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        QString taskName = trans-&gt;getPath().split(<span class="stringliteral">&quot;::&quot;</span>).first();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        QString runName = sessionLoader_-&gt;currRunName();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="comment">//Tell the world that we&#39;re staring a new run</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        emit <a class="code" href="class_picto_1_1_session_player.html#af6e2ed1e376e9d940c8f5554efbf753b">startingRun</a>(taskName, runName);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">//if(!sessionLoader_-&gt;setCurrentTime(time))</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="comment">//{</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">//  qDebug(QString(&quot;Player: Failed to set time to Loader&quot;).toLatin1());</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">//  return false;</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">//}</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="comment">//if(!sessionLoader_-&gt;dataIsReady(time))</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="comment">//{</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="comment">//  markLoading(true);</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="comment">//  qDebug(QString(&quot;Player: Loader not ready for time:%1&quot;).arg(time).toLatin1());</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="comment">//  return false;</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment">//}</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="comment">//Step to the input time or the end of the run. Whichever comes first.</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">do</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">stepToNextFrame</a>(time))</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">if</span> (time &gt;= sessionLoader_-&gt;currRunDuration())</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            {</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                reachedEnd_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                emit <a class="code" href="class_picto_1_1_session_player.html#a37f89e41b206df6d3e88611f9638a394">reachedEnd</a>();</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    } <span class="keywordflow">while</span> (time &gt; nextFrame_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>());</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="comment">//sessionLoader_-&gt;setProcessedTime(getTime());</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="comment">//qDebug(QString(&quot;Player: Step To Time reached time: %1&quot;).arg(getTime()).toLatin1());</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">markLoading</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a6051bc0f91563498f813aa749140e4c7">  129</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_session_player.html#a6051bc0f91563498f813aa749140e4c7">SessionPlayer::getTime</a>()</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">return</span> lastIndex_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">  137</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">SessionPlayer::stepForward</a>(<span class="keywordtype">double</span> lookForward)</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;{</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">if</span> (processing_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">step</a>(lookForward);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;}</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">  147</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">SessionPlayer::stepToNextFrame</a>(<span class="keywordtype">double</span> lookForward)</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;{</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span> (processing_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    nextFrame_ = sessionState_-&gt;getFrameState()-&gt;getNextIndex(lookForward);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">if</span> (!nextFrame_.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>() || nextFrame_.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>() &gt; lookForward)</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">while</span> (lastIndex_ &lt; nextFrame_)</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">stepForward</a>(lookForward);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">  178</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">SessionPlayer::step</a>(<span class="keywordtype">double</span> lookForward)</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;{</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    processing_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> currFrameId = sessionState_-&gt;getFrameState()-&gt;getCurrentIndex();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> nextFrameId = sessionState_-&gt;getFrameState()-&gt;getNextIndex(lookForward);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    QSharedPointer&lt;DataState&gt; stateToTrigger = <a class="code" href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">getNextTriggerState</a>(lookForward);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span> (stateToTrigger.isNull())</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    {</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        processing_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordflow">if</span> (stateToTrigger-&gt;getNextIndex(nextFrameId.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>()) == nextFrameId)</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    {   <span class="comment">//If the next stateToTrigger is a frame, step to all time based data states first (ie. reward, signals, spike, lfp).</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> frameIndexForTime = nextFrameId;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordflow">if</span> (frameIndexForTime.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>())</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> prevSpikeInd = sessionState_-&gt;getSpikeState()-&gt;getCurrentIndex();</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> timeIndex = <a class="code" href="struct_picto_1_1_playback_index.html#a87e6a7f297deaada4698add28d39476e">PlaybackIndex::maxForTime</a>(frameIndexForTime.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>());</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            QList&lt;QSharedPointer&lt;DataState&gt;&gt; timeIndexedStates = sessionState_-&gt;getStatesIndexedByTime();</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            <span class="keywordflow">foreach</span>(QSharedPointer&lt;DataState&gt; dataState, timeIndexedStates)</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            {</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                dataState-&gt;moveToIndex(timeIndex);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            }</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            <span class="comment">// Tell the Neural Data Listeners</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> currSpikeInd = sessionState_-&gt;getSpikeState()-&gt;getCurrentIndex();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            <span class="keywordflow">if</span> (prevSpikeInd != currSpikeInd)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;            {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                <span class="comment">//alert NeuralDataListener</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                <span class="comment">//Get the first transition in this run</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                <span class="keywordtype">int</span> firstTransId = sessionState_-&gt;getTransitionState()-&gt;getFirstTransIdInRun();</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                <span class="keywordflow">if</span> (firstTransId != 0)</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                {</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                    QSharedPointer&lt;Experiment&gt; pExperiment = sessionLoader_-&gt;getDesignRoot()-&gt;getExperiment().objectCast&lt;<a class="code" href="class_picto_1_1_experiment.html">Experiment</a>&gt;();</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                    <span class="keywordflow">if</span> (pExperiment)</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                    {</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                        QSharedPointer&lt;Asset&gt; trans = pExperiment-&gt;<a class="code" href="class_picto_1_1_asset.html#a44b0ef3025e5bb5f0712fc176c769e5d">getDesignConfig</a>()-&gt;getAsset(firstTransId);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                        <span class="keywordflow">if</span> (trans)</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                        {</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                            QString taskName = trans-&gt;getPath().split(<span class="stringliteral">&quot;::&quot;</span>).first();</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                            <span class="keywordflow">if</span> (pExperiment-&gt;getTaskByName(taskName))</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                            {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                                QSharedPointer&lt;Picto::NeuralDataUnit&gt; neuralData = QSharedPointer&lt;Picto::NeuralDataUnit&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_neural_data_unit.html">Picto::NeuralDataUnit</a>());</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                                neuralData-&gt;setTimestamp(sessionState_-&gt;getSpikeState()-&gt;getLatestTime());</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                                neuralData-&gt;setChannel(sessionState_-&gt;getSpikeState()-&gt;getLatestChannel());</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                                neuralData-&gt;setUnit(sessionState_-&gt;getSpikeState()-&gt;getLatestUnit());</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                                <span class="comment">//QSharedPointer&lt;QVector&lt;float&gt;&gt; waveform(&amp;((QVector&lt;float&gt;)(sessionState_-&gt;getSpikeState()-&gt;getLatestWaveform())));</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                                <span class="comment">//neuralData-&gt;setWaveform(waveform);</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                                neuralData-&gt;setFittedtime(sessionState_-&gt;getSpikeState()-&gt;getLatestTime());</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                                pExperiment-&gt;getTaskByName(taskName)-&gt;getTaskConfig()-&gt;notifyNeuralDataListeners(*neuralData);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                            }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                        }</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                    }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                }</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            }</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            <span class="comment">//END NeuralDataListeners</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        }</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    }</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    stateToTrigger-&gt;moveToIndex(stateToTrigger-&gt;getNextIndex(nextFrameId.<a class="code" href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">time</a>()));</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    lastIndex_ = stateToTrigger-&gt;getCurrentIndex();</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    processing_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;}</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">  248</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">SessionPlayer::markLoading</a>(<span class="keywordtype">bool</span> load)</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;{</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keywordflow">if</span> (loading_ != load)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    {</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        loading_ = load;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        emit <a class="code" href="class_picto_1_1_session_player.html#a7419758edb2920b408443d2683d8d029">loading</a>(loading_);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    }</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;}</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">  268</a></span>&#160;QSharedPointer&lt;DataState&gt; <a class="code" href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">SessionPlayer::getNextTriggerState</a>(<span class="keywordtype">double</span> lookForward)</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;{</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="comment">//Look for the next property, transition or frame</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="comment">//with lowest index. </span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    QList&lt;QSharedPointer&lt;DataState&gt;&gt; idIndexedStates = sessionState_-&gt;getStatesIndexedById();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keywordtype">int</span> nBuffer;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> indexBuffer;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> iterationIndex;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordtype">double</span> boundaryTime = sessionState_-&gt;getFrameState()-&gt;getNextIndex(lookForward).time();</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="comment">//Intialize the nBuffer and indexBuffer with the first</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="comment">//valid entries available</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordtype">int</span> i = 0;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordflow">do</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    {</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        nBuffer = i;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        indexBuffer = idIndexedStates[i++]-&gt;getNextIndex(boundaryTime);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    } <span class="keywordflow">while</span> (!indexBuffer.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>() &amp;&amp; i &lt; idIndexedStates.size());</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="comment">//Get the state with the lowest index</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordflow">for</span> (; i&lt;idIndexedStates.size(); i++)</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    {</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        iterationIndex = idIndexedStates[i]-&gt;getNextIndex(boundaryTime);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="keywordflow">if</span> (iterationIndex.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>()</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            &amp;&amp; (iterationIndex &lt; indexBuffer)</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;            )</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        {</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;            indexBuffer = iterationIndex;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            nBuffer = i;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    }</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">if</span> (!indexBuffer.<a class="code" href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">isValid</a>())</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;DataState&gt;();</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordflow">return</span> idIndexedStates[nBuffer];</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
+<div class="ttc" id="class_picto_1_1_neural_data_unit_html"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html">Picto::NeuralDataUnit</a></div><div class="ttdoc">Stores Neural Spike data for transmission over a network. </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00024">NeuralDataUnit.h:24</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_a8947540e0b52f41e586a47dd8169ff9a"><div class="ttname"><a href="class_picto_1_1_session_player.html#a8947540e0b52f41e586a47dd8169ff9a">Picto::SessionPlayer::getNextTriggerState</a></div><div class="ttdeci">QSharedPointer&lt; DataState &gt; getNextTriggerState(double lookForward)</div><div class="ttdoc">Returns the SessionState&#39;s DataState which is DataId indexed and has the next lowest DataId so long a...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00268">SessionPlayer.cpp:268</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_af31b232e253624b31e51976b8fc58771"><div class="ttname"><a href="class_picto_1_1_session_player.html#af31b232e253624b31e51976b8fc58771">Picto::SessionPlayer::stepForward</a></div><div class="ttdeci">bool stepForward(double lookForward)</div><div class="ttdoc">This function calls step() and doesn&#39;t appear to add any other functionality apart from reentrancy...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00137">SessionPlayer.cpp:137</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_a0bc7a956fd48c5f1654012ffd7c0fa6b"><div class="ttname"><a href="class_picto_1_1_session_player.html#a0bc7a956fd48c5f1654012ffd7c0fa6b">Picto::SessionPlayer::markLoading</a></div><div class="ttdeci">void markLoading(bool load)</div><div class="ttdoc">Use this function to mark when loading starts and stops. Internally, it takes care of only emitting t...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00248">SessionPlayer.cpp:248</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_a77e91caab8b8fdb0272d2dbe1c289c99"><div class="ttname"><a href="class_picto_1_1_session_player.html#a77e91caab8b8fdb0272d2dbe1c289c99">Picto::SessionPlayer::SessionPlayer</a></div><div class="ttdeci">SessionPlayer(QSharedPointer&lt; SessionState &gt; sessState, QSharedPointer&lt; FileSessionLoader &gt; sessLoader)</div><div class="ttdoc">Constructs a new SessionPlayer. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00010">SessionPlayer.cpp:10</a></div></div>
+<div class="ttc" id="class_picto_1_1_asset_html_a44b0ef3025e5bb5f0712fc176c769e5d"><div class="ttname"><a href="class_picto_1_1_asset.html#a44b0ef3025e5bb5f0712fc176c769e5d">Picto::Asset::getDesignConfig</a></div><div class="ttdeci">QSharedPointer&lt; DesignConfig &gt; getDesignConfig()</div><div class="ttdoc">Returns a QSharedPointer to the DesignConfig managing this asset. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_8h_source.html#l00154">Asset.h:154</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_ab8096bcc250a2bc24c1b4509816f2da6"><div class="ttname"><a href="class_picto_1_1_session_player.html#ab8096bcc250a2bc24c1b4509816f2da6">Picto::SessionPlayer::restart</a></div><div class="ttdeci">void restart()</div><div class="ttdoc">Restarts the current run from the beginning. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00028">SessionPlayer.cpp:28</a></div></div>
 <div class="ttc" id="struct_picto_1_1_playback_index_html_a1771a73cc40e9fb0e0ae31e2080ff266"><div class="ttname"><a href="struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266">Picto::PlaybackIndex::isValid</a></div><div class="ttdeci">bool isValid()</div><div class="ttdoc">Returns true if this PlaybackIndex contains a valid value. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_index_8h_source.html#l00039">PlaybackIndex.h:39</a></div></div>
 <div class="ttc" id="class_picto_1_1_session_player_html_af6e2ed1e376e9d940c8f5554efbf753b"><div class="ttname"><a href="class_picto_1_1_session_player.html#af6e2ed1e376e9d940c8f5554efbf753b">Picto::SessionPlayer::startingRun</a></div><div class="ttdeci">void startingRun(QString taskName, QString runName)</div><div class="ttdoc">Emitted when playback of a Session Run starts or is restarted. taskName is the name of the task that ...</div></div>
 <div class="ttc" id="struct_picto_1_1_playback_index_html_acbf8f826cfd64d647a098ed165dd3999"><div class="ttname"><a href="struct_picto_1_1_playback_index.html#acbf8f826cfd64d647a098ed165dd3999">Picto::PlaybackIndex::time</a></div><div class="ttdeci">double &amp; time()</div><div class="ttdoc">Returns the time component of this PlaybackIndex. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_index_8h_source.html#l00041">PlaybackIndex.h:41</a></div></div>
 <div class="ttc" id="struct_picto_1_1_playback_index_html"><div class="ttname"><a href="struct_picto_1_1_playback_index.html">Picto::PlaybackIndex</a></div><div class="ttdoc">This class stores an index used to capture the ordering of different Session events for playback purp...</div><div class="ttdef"><b>Definition:</b> <a href="_playback_index_8h_source.html#l00028">PlaybackIndex.h:28</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_a6051bc0f91563498f813aa749140e4c7"><div class="ttname"><a href="class_picto_1_1_session_player.html#a6051bc0f91563498f813aa749140e4c7">Picto::SessionPlayer::getTime</a></div><div class="ttdeci">double getTime()</div><div class="ttdoc">Returns the current playback time. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00127">SessionPlayer.cpp:127</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_a6051bc0f91563498f813aa749140e4c7"><div class="ttname"><a href="class_picto_1_1_session_player.html#a6051bc0f91563498f813aa749140e4c7">Picto::SessionPlayer::getTime</a></div><div class="ttdeci">double getTime()</div><div class="ttdoc">Returns the current playback time. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00129">SessionPlayer.cpp:129</a></div></div>
 <div class="ttc" id="struct_picto_1_1_playback_index_html_a87e6a7f297deaada4698add28d39476e"><div class="ttname"><a href="struct_picto_1_1_playback_index.html#a87e6a7f297deaada4698add28d39476e">Picto::PlaybackIndex::maxForTime</a></div><div class="ttdeci">static PlaybackIndex maxForTime(double time)</div><div class="ttdoc">Returns the highest possible PlaybackIndex for the input time. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_index_8h_source.html#l00054">PlaybackIndex.h:54</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_aa23b015b74b7115294dcfabfbed7945b"><div class="ttname"><a href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">Picto::SessionPlayer::step</a></div><div class="ttdeci">bool step(double lookForward)</div><div class="ttdoc">Steps playback forward to the next Session event so long as that event occurs before the input lookFo...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00176">SessionPlayer.cpp:176</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_a6ac568dc380670485040937b9cc9e85c"><div class="ttname"><a href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c">Picto::SessionPlayer::stepToTime</a></div><div class="ttdeci">bool stepToTime(double time)</div><div class="ttdoc">Steps the Session time up to the input time. SessionState signals indicating that Session events occu...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00053">SessionPlayer.cpp:53</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_aa23b015b74b7115294dcfabfbed7945b"><div class="ttname"><a href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b">Picto::SessionPlayer::step</a></div><div class="ttdeci">bool step(double lookForward)</div><div class="ttdoc">Steps playback forward to the next Session event so long as that event occurs before the input lookFo...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00178">SessionPlayer.cpp:178</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_a6ac568dc380670485040937b9cc9e85c"><div class="ttname"><a href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c">Picto::SessionPlayer::stepToTime</a></div><div class="ttdeci">bool stepToTime(double time)</div><div class="ttdoc">Steps the Session time up to the input time. SessionState signals indicating that Session events occu...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00055">SessionPlayer.cpp:55</a></div></div>
+<div class="ttc" id="class_picto_1_1_experiment_html"><div class="ttname"><a href="class_picto_1_1_experiment.html">Picto::Experiment</a></div><div class="ttdoc">The Experiment object contains the complete definition of an Experiment for running in the Director...</div><div class="ttdef"><b>Definition:</b> <a href="_experiment_8h_source.html#l00050">Experiment.h:50</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_session_player_html_aedbfbf3c79e0543fcadfde66a160ac1c"><div class="ttname"><a href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">Picto::SessionPlayer::stepToNextFrame</a></div><div class="ttdeci">bool stepToNextFrame(double lookForward)</div><div class="ttdoc">Steps playback forward to the next Frame presentation so long as it occurs before the input lookForwa...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00145">SessionPlayer.cpp:145</a></div></div>
+<div class="ttc" id="class_picto_1_1_session_player_html_aedbfbf3c79e0543fcadfde66a160ac1c"><div class="ttname"><a href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c">Picto::SessionPlayer::stepToNextFrame</a></div><div class="ttdeci">bool stepToNextFrame(double lookForward)</div><div class="ttdoc">Steps playback forward to the next Frame presentation so long as it occurs before the input lookForwa...</div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8cpp_source.html#l00147">SessionPlayer.cpp:147</a></div></div>
 <div class="ttc" id="class_picto_1_1_session_player_html_a37f89e41b206df6d3e88611f9638a394"><div class="ttname"><a href="class_picto_1_1_session_player.html#a37f89e41b206df6d3e88611f9638a394">Picto::SessionPlayer::reachedEnd</a></div><div class="ttdeci">void reachedEnd()</div><div class="ttdoc">Emitted when playback of the current Run ends. </div></div>
 <div class="ttc" id="struct_picto_1_1_playback_index_html_a4e258793e5728ac68f0c58037955e4c3"><div class="ttname"><a href="struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3">Picto::PlaybackIndex::minForTime</a></div><div class="ttdeci">static PlaybackIndex minForTime(double time)</div><div class="ttdoc">Returns the lowest possible PlaybackIndex for the input time. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_index_8h_source.html#l00052">PlaybackIndex.h:52</a></div></div>
 <div class="ttc" id="class_picto_1_1_session_player_html_a7419758edb2920b408443d2683d8d029"><div class="ttname"><a href="class_picto_1_1_session_player.html#a7419758edb2920b408443d2683d8d029">Picto::SessionPlayer::loading</a></div><div class="ttdeci">void loading(bool startingLoad)</div><div class="ttdoc">Emitted when loading of Session data starts or finishes. startingLoad indicates if the event is a loa...</div></div>

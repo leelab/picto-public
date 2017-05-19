@@ -10,7 +10,7 @@ namespace Picto
 
 AudioRewardController::AudioRewardController() : 
 RewardController(1) ,
-tick_(":/sounds/tick.wav"),
+tick_("audio/drop.wav"),
 latestQuantity_(0),
 firstRewardSupplied_(false)
 {

@@ -149,6 +149,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#acddb44efaaf9a18ff309146ea526e29c">stop</a> ()</td></tr>
 <tr class="memdesc:acddb44efaaf9a18ff309146ea526e29c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops playback/analysis of the current Run and reinitializes everything for the next playback. <br /></td></tr>
 <tr class="separator:acddb44efaaf9a18ff309146ea526e29c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bedb30c2c8e0780f2503d3500ff686a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bedb30c2c8e0780f2503d3500ff686a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>spikeAdded</b> (int channel, int unit, double time)</td></tr>
+<tr class="separator:a7bedb30c2c8e0780f2503d3500ff686a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7be71e65b9c17594ee783e717023940"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7be71e65b9c17594ee783e717023940"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rewarded</b> (int quantity)</td></tr>
+<tr class="separator:ac7be71e65b9c17594ee783e717023940"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_viewer"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_viewer')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_viewer.html">Viewer</a></td></tr>
 <tr class="memitem:a78e0e1af1e09f32032b95546a0c74d3e inherit pub_slots_class_viewer"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78e0e1af1e09f32032b95546a0c74d3e"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a78e0e1af1e09f32032b95546a0c74d3e">init</a> ()=0</td></tr>
@@ -272,6 +278,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a4319d95bd337457af24adf626231362b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4319d95bd337457af24adf626231362b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>taskChanged</b> (QString newTask)</td></tr>
 <tr class="separator:a4319d95bd337457af24adf626231362b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed4fb35739b61f6d95aadc12256d36e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ed4fb35739b61f6d95aadc12256d36e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>selectedChannelChanged</b> (int channel)</td></tr>
+<tr class="separator:a7ed4fb35739b61f6d95aadc12256d36e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0708c56cf4b60cdd7ca17e2c68a114ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0708c56cf4b60cdd7ca17e2c68a114ea"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnitChanged</b> (int unit)</td></tr>
+<tr class="separator:a0708c56cf4b60cdd7ca17e2c68a114ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -293,6 +305,9 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr class="memitem:ad97f655356fcd454c0dfd19bcac3a89a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#ad97f655356fcd454c0dfd19bcac3a89a">popRunQueueFront</a> ()</td></tr>
 <tr class="memdesc:ad97f655356fcd454c0dfd19bcac3a89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the first Run in the Run queue that we are iterating through (to analyze all selected Runs).  <a href="#ad97f655356fcd454c0dfd19bcac3a89a">More...</a><br /></td></tr>
 <tr class="separator:ad97f655356fcd454c0dfd19bcac3a89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac055e552833b1de2430d29b0f8df799"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac055e552833b1de2430d29b0f8df799"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateNeuralUI</b> ()</td></tr>
+<tr class="separator:aac055e552833b1de2430d29b0f8df799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abde0061cf1fade4846336051ea5c58f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abde0061cf1fade4846336051ea5c58f9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#abde0061cf1fade4846336051ea5c58f9">setRunQueue</a> (QList&lt; <a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a> &gt; newRunQueue)</td></tr>
 <tr class="memdesc:abde0061cf1fade4846336051ea5c58f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the stored Run queue (used to playback/analyze batched Runs one after another) to the input value. <br /></td></tr>
@@ -385,6 +400,27 @@ QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>restartRecord_</
 <tr class="memitem:a506f27b70f0c8fb9af5b69e15e44766b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a506f27b70f0c8fb9af5b69e15e44766b"></a>
 QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>saveRecording_</b></td></tr>
 <tr class="separator:a506f27b70f0c8fb9af5b69e15e44766b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d2953256b7b2abf7c0532f6f025c371"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d2953256b7b2abf7c0532f6f025c371"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>channelBox_</b></td></tr>
+<tr class="separator:a8d2953256b7b2abf7c0532f6f025c371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e9b34559736fb5a647cf4e29aca23f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e9b34559736fb5a647cf4e29aca23f1"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>unitBox_</b></td></tr>
+<tr class="separator:a7e9b34559736fb5a647cf4e29aca23f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee008dba29ca2d7d42ba9855cfb6c48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ee008dba29ca2d7d42ba9855cfb6c48"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currentTaskConfig_</b></td></tr>
+<tr class="separator:a8ee008dba29ca2d7d42ba9855cfb6c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3732589c3a31c931e9756a4fd30a3ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3732589c3a31c931e9756a4fd30a3ff"></a>
+QMap&lt; int, QList&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ChannelsUnits_</b></td></tr>
+<tr class="separator:ab3732589c3a31c931e9756a4fd30a3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc274c354766d71c9f0123e7d1c61f9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc274c354766d71c9f0123e7d1c61f9f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>noCallBack_</b></td></tr>
+<tr class="separator:abc274c354766d71c9f0123e7d1c61f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8734330288dc5b277f4a4c4469711526"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8734330288dc5b277f4a4c4469711526"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedChannel_</b></td></tr>
+<tr class="separator:a8734330288dc5b277f4a4c4469711526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d17084c45fdaa99405ebbe9cbb540e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d17084c45fdaa99405ebbe9cbb540e3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td></tr>
+<tr class="separator:a9d17084c45fdaa99405ebbe9cbb540e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af300ab83a44a5fcee4a5000015fa17d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af300ab83a44a5fcee4a5000015fa17d1"></a>
 QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>testToolbar_</b></td></tr>
 <tr class="separator:af300ab83a44a5fcee4a5000015fa17d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -424,6 +460,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>latestStatus_</b></td>
 <tr class="memitem:a7b102d2bc5c428d936643ec0526480b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b102d2bc5c428d936643ec0526480b5"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastStatus_</b></td></tr>
 <tr class="separator:a7b102d2bc5c428d936643ec0526480b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b26d298451352bab617b4eef7667e93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b26d298451352bab617b4eef7667e93"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>currentTime_</b></td></tr>
+<tr class="separator:a7b26d298451352bab617b4eef7667e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a895c7dcb779ed680f15d8fd8af95a536"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a895c7dcb779ed680f15d8fd8af95a536"></a>
+QTextStream *&#160;</td><td class="memItemRight" valign="bottom"><b>stream_</b></td></tr>
+<tr class="separator:a895c7dcb779ed680f15d8fd8af95a536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -439,8 +481,8 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines the UI for the <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a>. </p>
 <p>The <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> includes a number of components. It has a main display area where Session playback is viewed. There is a timing bar underneath the main area that shows the current playback position within a Session Run and allows the user to move around within the Session to different times. A speed slider is provided alongside the main area to define the playback speed. Sessions are loaded by pressing a button in the toolbar. A single or multiple Sessions may be loaded from the dialog that pops up. A RunSelectorWidget is used to select which Runs will be played back or analyzed. Multiple Runs can be selected in this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> from the multiple Sessions loaded to define a batch analysis. An AnalysisSelectorWidget is used to define which Analyses to run during Run playback, be they local Analyses, built into the Session's Design, or imported Analyses that are added to the Design at playback time. Finally, an <a class="el" href="class_output_widget_holder.html" title="A widget that displays an OutputWidgetContainer with its contained AnalysisOutputWidget objects and p...">OutputWidgetHolder</a> is used to hold the AnalysisOutputWidgets that contain the output from the analyses. This widget allows the user to save the output to a file path. Alternatively, the user can use a "run to end" button when running a Session run. When they do this, a message box will give the user the option to save the Analysis Output automatically at the end of the Run, and they can set up the save file path there. This is particularly useful when analyzing a batch of Runs, in which case all Runs' outputs are saved to the same parent directory.</p>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="_replay_viewer_8h_source.html#l00047">47</a> of file <a class="el" href="_replay_viewer_8h_source.html">ReplayViewer.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -469,7 +511,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> reports a jump time being requested. Determines whether the jump is up or down for the purpose of handling slider updating (see <a class="el" href="class_replay_viewer.html#a62df61cab1e6d08d077f46249178b16d" title="Called when playback time changes in the PlaybackController. Updates the position of the ProgressWidg...">updateTime()</a>) and tells the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to enact the jump (<a class="el" href="class_playback_controller.html#a5c751dc9c22b95f6f601380f503f8f9c" title="Generates a new PlaybackCommand directing the PlaybackController to jump the playback time to the inp...">PlaybackController::jumpToTime()</a>). </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_replay_viewer.html#a6c4aa60a216e96a2154f3de0b8e82708" title="Called when the ProgressWidget reports a user starting or ending a jump choice. Pauses playback when ...">userChoosingJump()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00896">896</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00957">957</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -497,7 +539,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Pauses the current Run, or starts the selected Run in a paused state (at time zero). </p>
 <p>If the function causes a Run to start, and that Run's Session has not yet been loaded, this will cause the Session to load and then the "start by pausing" will be enacted. </p>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00498">498</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00558">558</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -526,7 +568,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called whenever the PlaybakController's State changes. status is the new State. </p>
 <p>This function updates the <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> UI to reflect the current <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> state. We update the UI as a result of <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> state changes rather than updatingit when actions are triggered in the <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> because the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> state machineruns in a separate thread, so there may be some lag between when a <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> action is triggered (ie. Play) and when the action actually takes affect (ie. <a class="el" href="class_playback_controller_data.html#a64757fd28c6f9ab34d438f6c778eaf90aaf128c5cf5b65d84d7263557dc32b5db" title="In this state, the session file is being played back. ">PlaybackControllerData::Running</a> state). </p><dl class="section note"><dt>Note</dt><dd>Since this object is set as running in the UI thread, signals from the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> thread don't actually take effect until the UI thread's event loop runs. That is how this how this function can be triggered by changes that occur in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> thread without being in the thread itself. </dd></dl>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00549">549</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00609">609</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -555,7 +597,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>If we end up emptying the Run queue and some of the Runs could not be properly analyzed, we ask the user if they would like to re-analyze the failed Runs. Otherwise we just tell the user that all Runs have been succesfully analyzed.</p>
 <p>Returns false if the runQueue ended up being emptied and reinitialized to contain all selected Runs. Whenever we finish the runQueue, if we don't change the selection to the runs that failed, we always reinitialize the runQueue to contain all selected runs so that the user can just push play to start Analysis again. </p>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00351">351</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00410">410</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -583,7 +625,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Causes playback/analysis to begin in a normal way. The user will be able to pause playback, fast forward, etc. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_replay_viewer.html#aa77ca895cb377625c43df1667d92179f" title="Causes playback/analysis to run completely from the beginning to the end of each selected run at maxi...">runToEnd()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00421">421</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00480">480</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -611,7 +653,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called whenever the selected Runs change in the RunSelectorWidget. Updates the Run queue for batch playback/analysis along with other parts of the UI. </p>
 <p>If the change causes Runs to be selected from more than one Session, local Analyses are disabled. For multiple Sessions, only imported Analyses are allowed. Other UI channges need to be made as well depending on things like whether the first run in the queue has changed, etc. </p>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00778">778</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00839">839</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -639,7 +681,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Causes playback/analysis to run completely from the beginning to the end of each selected run at maximum speed, no rendering, and without any opportunity for user interaction during the course of playback. </p>
 <p>This is meant to be used when only Analysis is needed, and it is not important to be able to watch the Session on screen. When this function is called and Analysis objects are active, this function asks if the user would like to automatically save Analysis outputs when each Run is complete. This is important because otherwise in batch analysis each new Run Analysis would overwrite previous Analysis outputs and the user would only be able to save Analysis output of the last Run in the batch. </p>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00437">437</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00496">496</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -697,7 +739,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly. </p>
 <dl class="section note"><dt>Note</dt><dd>The active user, Operator or Subject, determines which graphics are shown in the display depending on each graphics OperatorView/SubjectView Properties. </dd></dl>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00854">854</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00915">915</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -725,7 +767,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the user toggles the record button. </p>
 <p>Handles changes to the Icon, and the recording state. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_replay_viewer.html#afd325f0c063d0136ec7e63b2be997509" title="Updates the Recording Visual Target Host to record or not depending on the current run and record mod...">updateRecordingTarget()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00931">931</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00992">992</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -754,7 +796,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when playback time changes in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. Updates the position of the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> slider accordingly. </p>
 <p>This function includes a bunch of logic that deals with cases where the slider was used to change something in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. For example, if the slider was used to tell the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to fast forward to a time 100 seconds after its current position, we shouldn't move the slider back as soon as that command starts taking affect, instead, while the fast forward is taking affect, the slider remains stationary, only restarting once the fastforward reaches its time. Similar logic is in place if the slider is moved to a position below the current <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> time, in which case playback restarts from zero and fast forwards to the new slider time. </p>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00742">742</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00802">802</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
