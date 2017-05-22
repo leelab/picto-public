@@ -45,14 +45,15 @@ public:
 	/*! \brief Sets the height of this graphic in pixels.*/
 	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
 	QPoint getPositionOffset();
-	QString getShape();
-	void setShape(QString shape);
+	
 
 	virtual QString friendlyTypeName(){return "Shape Shift";};
 	virtual QString getUITemplate(){return "ShapeShifterElement";};
 public slots:
 	/*! \brief Set the dimensions (width, height) of this graphic.*/
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
+	QString getShape();
+	void setShape(QString shape);
 
 protected:
 	virtual void postDeserialize();
