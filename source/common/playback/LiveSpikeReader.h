@@ -13,8 +13,8 @@ namespace Picto {
  *	\note Since the functions here simply implement the SpikeReader class for live session data, there is not much to add
  *	in terms of documentation beyond what was described above, so we will not be adding additional function level
  *	documentation for many of the functions in this class.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveSpikeReader : public SpikeReader
@@ -50,6 +50,14 @@ public:
 	virtual QVariantList getUnitsUntil(double time);
 	virtual QVariantList getWaveformsSince(double time);
 	virtual QVariantList getWaveformsUntil(double time);
+
+signals:
+	/*! \brief Emitted whenever a PlaybackSpikeData object is traversed due to a call to moveToIndex().
+	*	\details time is the time at which the spike occured, channel is the electrode channel on which it occured, unit
+	*	is the neuron unit within that channel that spiked, and waveform is a vector of floats describing the spike
+	*	waveform, where the time between each float is getSamplePeriod().
+	*/
+	void spikeEvent(double time, int channel, int unit, QVariantList waveform);
 
 private:
 

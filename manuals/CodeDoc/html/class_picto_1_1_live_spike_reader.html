@@ -91,6 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_live_spike_reader-members.html">List of all members</a>  </div>
@@ -117,6 +118,12 @@ Inheritance diagram for Picto::LiveSpikeReader:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_live_spike_reader_1_1_spike_data.html">SpikeData</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:af35538e6b3dac520328cb729b190907a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_spike_reader.html#af35538e6b3dac520328cb729b190907a">spikeEvent</a> (double time, int channel, int unit, QVariantList waveform)</td></tr>
+<tr class="memdesc:af35538e6b3dac520328cb729b190907a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a <a class="el" href="struct_picto_1_1_playback_spike_data.html" title="A struct used to store data for a single Neural spike. ">PlaybackSpikeData</a> object is traversed due to a call to moveToIndex().  <a href="#af35538e6b3dac520328cb729b190907a">More...</a><br /></td></tr>
+<tr class="separator:af35538e6b3dac520328cb729b190907a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -296,6 +303,55 @@ QVariantList&#160;</td><td class="memItemRight" valign="bottom"><b>units_</b></t
 <p>The actual spike data is fake. The spike channel is randomly selected from the channel range entered in the constructor as is the spike unit. The waveform is simply a sine wave with some random noise. </p>
 
 <p>Definition at line <a class="el" href="_live_spike_reader_8cpp_source.html#l00037">37</a> of file <a class="el" href="_live_spike_reader_8cpp_source.html">LiveSpikeReader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af35538e6b3dac520328cb729b190907a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::LiveSpikeReader::spikeEvent </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>unit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QVariantList&#160;</td>
+          <td class="paramname"><em>waveform</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted whenever a <a class="el" href="struct_picto_1_1_playback_spike_data.html" title="A struct used to store data for a single Neural spike. ">PlaybackSpikeData</a> object is traversed due to a call to moveToIndex(). </p>
+<p>time is the time at which the spike occured, channel is the electrode channel on which it occured, unit is the neuron unit within that channel that spiked, and waveform is a vector of floats describing the spike waveform, where the time between each float is <a class="el" href="class_picto_1_1_live_spike_reader.html#aed20111458fc94c992d244922aed3490" title="Returns the sample period in seconds used by the spike data acquisition system. ">getSamplePeriod()</a>. </p>
 
 </div>
 </div>

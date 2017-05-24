@@ -233,15 +233,6 @@ QTime&#160;</td><td class="memItemRight" valign="bottom"><b>frameTimer_</b></td>
 <tr class="memitem:a95945ad86d7ba723fce8eeeb18f2027b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95945ad86d7ba723fce8eeeb18f2027b"></a>
 QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>videoFile_</b></td></tr>
 <tr class="separator:a95945ad86d7ba723fce8eeeb18f2027b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaf1f2fcb42c6c62672bec2c618ff29f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afaf1f2fcb42c6c62672bec2c618ff29f"></a>
-QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikesFile_</b></td></tr>
-<tr class="separator:afaf1f2fcb42c6c62672bec2c618ff29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa32d9cde043019cf897166c5bb08a8a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa32d9cde043019cf897166c5bb08a8a3"></a>
-QSharedPointer&lt; QTextStream &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputFileStream_</b></td></tr>
-<tr class="separator:aa32d9cde043019cf897166c5bb08a8a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1985502d7175fdbb15a8fd3300a5781"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1985502d7175fdbb15a8fd3300a5781"></a>
-QString&#160;</td><td class="memItemRight" valign="bottom"><b>audioFileName_</b></td></tr>
-<tr class="separator:ab1985502d7175fdbb15a8fd3300a5781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5250e4c1df0e0defc7575258ae477f36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5250e4c1df0e0defc7575258ae477f36"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedChannel_</b></td></tr>
 <tr class="separator:a5250e4c1df0e0defc7575258ae477f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,12 +242,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This adds video file recording functionality onto the regular <a class="el" href="class_picto_1_1_visual_target_host.html" title="A Widget that contains a Visual Target. ">VisualTargetHost</a> functionality. </p>
-<p>This class extends the <a class="el" href="class_picto_1_1_visual_target_host.html" title="A Widget that contains a Visual Target. ">VisualTargetHost</a> so that whenever a new frame is drawn to its <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> it is also writtent to a video file. Functions are provided for enabling/disabling the "copy frame to
+<p>This class extends the <a class="el" href="class_picto_1_1_visual_target_host.html" title="A Widget that contains a Visual Target. ">VisualTargetHost</a> so that whenever a new frame is drawn to its <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> it is also writtent to a video file. Functions are provided for enabling/disabling the "copy frame to 
 video file" functionality. <a class="el" href="class_picto_1_1_recording_visual_target_host.html#ae08f1371672e8d376865b8e9ba2f9d22" title="Saves the recorded file to the input file path. Overwrites anything already at that path...">saveRecordingAs()</a> can be used to save the recorded video file to a particular path on disk. </p><dl class="section note"><dt>Note</dt><dd>This class currently uses qtffmpegwrapper which is a wrapper for ffmpeg since there is no way yet to save video files directly from Qt. qtffmpegwrapper will undoubtedly need to be updated at some point. It can be found in Picto\3rdParty. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
-<p>Definition at line <a class="el" href="_recording_visual_target_host_8h_source.html#l00029">29</a> of file <a class="el" href="_recording_visual_target_host_8h_source.html">RecordingVisualTargetHost.h</a>.</p>
+<p>Definition at line <a class="el" href="_recording_visual_target_host_8h_source.html#l00025">25</a> of file <a class="el" href="_recording_visual_target_host_8h_source.html">RecordingVisualTargetHost.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a4376d5c56b8ff184a8497856dfd40806"></a>
 <div class="memitem">
@@ -280,9 +271,9 @@ video file" functionality. <a class="el" href="class_picto_1_1_recording_visual_
 </div><div class="memdoc">
 
 <p>Recording needs to be initialized once before any video files are recorded. This function takes care of that. </p>
-<p>Essentially what we are doing here is setting up the <a class="el" href="class_picto_1_1_media_muxer.html">MediaMuxer</a> from the QTFFMpegWrapper package. </p>
+<p>Essentially what we are doing here is setting up the <a class="el" href="class_picto_1_1_media_muxer.html" title="The MediaMuxer allows to programmatically encode interleaved Video and Audio Stream when recording a ...">MediaMuxer</a> from the QTFFMpegWrapper package. </p>
 
-<p>Definition at line <a class="el" href="_recording_visual_target_host_8cpp_source.html#l00184">184</a> of file <a class="el" href="_recording_visual_target_host_8cpp_source.html">RecordingVisualTargetHost.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_recording_visual_target_host_8cpp_source.html#l00167">167</a> of file <a class="el" href="_recording_visual_target_host_8cpp_source.html">RecordingVisualTargetHost.cpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +301,7 @@ video file" functionality. <a class="el" href="class_picto_1_1_recording_visual_
 <p>Toggles the recording state. </p>
 <p>When recording is on, each paint event causes a frame to be written to video. When recording is off frames can be displayed to the screen without going into the video file. </p>
 
-<p>Definition at line <a class="el" href="_recording_visual_target_host_8cpp_source.html#l00077">77</a> of file <a class="el" href="_recording_visual_target_host_8cpp_source.html">RecordingVisualTargetHost.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_recording_visual_target_host_8cpp_source.html#l00074">74</a> of file <a class="el" href="_recording_visual_target_host_8cpp_source.html">RecordingVisualTargetHost.cpp</a>.</p>
 
 </div>
 </div>
@@ -338,7 +329,7 @@ video file" functionality. <a class="el" href="class_picto_1_1_recording_visual_
 <p>Updates the current recording time to the current time. </p>
 <p>Prioer record state toggle events and initialization conditions are taken into account in the current time calculation. Time is actually set using <a class="el" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb" title="Sets the current recording time to a new value and tells any connected objects who care...">setRecordingTime()</a>. </p>
 
-<p>Definition at line <a class="el" href="_recording_visual_target_host_8cpp_source.html#l00331">331</a> of file <a class="el" href="_recording_visual_target_host_8cpp_source.html">RecordingVisualTargetHost.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_recording_visual_target_host_8cpp_source.html#l00227">227</a> of file <a class="el" href="_recording_visual_target_host_8cpp_source.html">RecordingVisualTargetHost.cpp</a>.</p>
 
 </div>
 </div>

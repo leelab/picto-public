@@ -51,7 +51,7 @@ var searchData=
   ['updateproperties',['updateProperties',['../class_picto_1_1_bar_base_plot_handler.html#afc1ee81ad5652c0b16dbe5054bbe59f6',1,'Picto::BarBasePlotHandler']]],
   ['updatepropertiesfromfile',['updatePropertiesFromFile',['../class_property_frame.html#a8daea01e3537d392421270edfe6d71f8',1,'PropertyFrame']]],
   ['updaterecentfileactions',['updateRecentFileActions',['../class_main_window.html#affa76730fa370a3466b62a4caee721e3',1,'MainWindow']]],
-  ['updaterecordingtarget',['updateRecordingTarget',['../class_replay_viewer.html#afd325f0c063d0136ec7e63b2be997509',1,'ReplayViewer']]],
+  ['updaterecordingtarget',['updateRecordingTarget',['../class_replay_viewer.html#afd325f0c063d0136ec7e63b2be997509',1,'ReplayViewer::updateRecordingTarget()'],['../class_test_viewer.html#a3545d63dfc752e03b02c082adf8e359d',1,'TestViewer::updateRecordingTarget()']]],
   ['updaterecordingtime',['updateRecordingTime',['../class_picto_1_1_recording_visual_target_host.html#a6741c9315f51e47d8a1adf08d57f3d41',1,'Picto::RecordingVisualTargetHost::updateRecordingTime()'],['../class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e',1,'Picto::RecordingVisualTargetHost::updateRecordingTime()']]],
   ['updatesavebuttonicon',['updateSaveButtonIcon',['../class_task_run_viewer.html#a21f3a0a1c5a500819de3be22a06ea1c1',1,'TaskRunViewer']]],
   ['updatescriptitemdimensions',['updateScriptItemDimensions',['../class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0',1,'ScriptItemManager']]],

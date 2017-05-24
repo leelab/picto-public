@@ -60,7 +60,6 @@ var searchData=
   ['maxacquisitiontime',['maxAcquisitionTime',['../class_picto_1_1_fixation_controller.html#a84774297e06673ca3aff283b89c64bed',1,'Picto::FixationController::maxAcquisitionTime()'],['../class_picto_1_1_target_controller.html#a46d2f73fe5b79a70c39a97976c9e38e6',1,'Picto::TargetController::maxAcquisitionTime()']]],
   ['maxfortime',['maxForTime',['../struct_picto_1_1_playback_index.html#a87e6a7f297deaada4698add28d39476e',1,'Picto::PlaybackIndex']]],
   ['maxreacquisitiontime',['maxReacquisitionTime',['../class_picto_1_1_fixation_controller.html#a3c2d6f21cb643158a202bb4181e1c607',1,'Picto::FixationController::maxReacquisitionTime()'],['../class_picto_1_1_target_controller.html#abedf5945d75df7b30414bfaf6dff6dc5',1,'Picto::TargetController::maxReacquisitionTime()']]],
-  ['mediamuxer',['MediaMuxer',['../class_picto_1_1_media_muxer.html#a06b2bf14d6ec8bba353355b787e217c8',1,'Picto::MediaMuxer']]],
   ['mediamuxer',['MediaMuxer',['../class_picto_1_1_media_muxer.html',1,'Picto']]],
   ['memleakdetect_2eh',['memleakdetect.h',['../memleakdetect_8h.html',1,'']]],
   ['menu',['Menu',['../class_menu.html',1,'Menu'],['../class_menu.html#aa515edd7f33010c5f9c42a693c79dcc6',1,'Menu::Menu()']]],

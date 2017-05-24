@@ -33,11 +33,14 @@
 
 #include "../../common/memleakdetect.h"
 
+#include "../../common/storage/NeuralDataUnit.h"
 
 TestViewer::TestViewer(QWidget *parent) :
 	Viewer(parent),
-	status_(Stopped)
-
+	status_(Stopped),
+	isRunning_(false),
+	NeuralTick_("audio/tick.wav"),
+	selectedChannel_(0), selectedUnit_(0), noCallBack_(false)
 {
 	setupEngine();
 	setupUi();
@@ -172,9 +175,11 @@ void TestViewer::setupEngine()
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
-	visualTargetHost_ = new Picto::VisualTargetHost();
+	visualTargetHost_ = new Picto::RecordingVisualTargetHost();
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
-	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
+	connect(visualTargetHost_, SIGNAL(clickDetected(QPoint)), this, SLOT(operatorClickDetected(QPoint)));
+	connect(visualTargetHost_, SIGNAL(updateRecordingTime(double)), this, SLOT(setRecordTime(double)));
+
 
 	//set up mouse signal channel
 	QSharedPointer<Picto::MouseInputPort> mousePort(new Picto::MouseInputPort(visualTargetHost_));
@@ -198,6 +203,7 @@ void TestViewer::setupEngine()
 	QSharedPointer<Picto::RewardController> rewardController;
 	rewardController = QSharedPointer<Picto::RewardController>(new Picto::AudioRewardController());
 	engine_->setRewardController(rewardController);
+	connect(rewardController.data(), SIGNAL(rewarded(int)), this, SLOT(rewarded(int)));
 
 	//display the splash screen
 	renderingTarget_->showSplash();
@@ -246,6 +252,44 @@ void TestViewer::setupUi()
 	taskListBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	taskListBox_->setToolTip("Select Task");
 
+	//recording tool
+	toggleRecord_ = new QAction(tr("&Toggle Record"), this);
+	toggleRecord_->setIcon(QIcon(":/icons/red_led_off.svg"));
+	connect(toggleRecord_, SIGNAL(triggered()), this, SLOT(toggleRecording()));
+	toggleRecord_->setEnabled(false);
+
+	//Indicates if the toggleRecord button is set for record mode or not
+	recordModeOn_ = false;
+
+	recordTime_ = new QLCDNumber(6);
+	recordTime_->setSegmentStyle(QLCDNumber::Flat);
+	setRecordTime(0);
+
+	restartRecord_ = new QAction(tr("&Restart Record"), this);
+	restartRecord_->setIcon(QIcon(":/icons/restart.svg"));
+	connect(restartRecord_, SIGNAL(triggered()), this, SLOT(restartRecording()));
+	restartRecord_->setEnabled(false);
+
+	saveRecording_ = new QAction(tr("&Save Recording"), this);
+	saveRecording_->setIcon(QIcon(":/icons/savevideo.svg"));
+	connect(saveRecording_, SIGNAL(triggered()), this, SLOT(saveRecording()));
+	saveRecording_->setEnabled(false);
+
+	channelBox_ = new QComboBox();
+	channelBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	channelBox_->setToolTip("Select a Channel");
+	channelBox_->addItem("All Channels", 0);
+	channelBox_->setCurrentIndex(0);
+	connect(channelBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedChannelChanged(int)));
+
+	unitBox_ = new QComboBox(this);
+	unitBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	unitBox_->setToolTip("Select a Unit");
+	unitBox_->addItem("All Units", 0);
+	unitBox_->setCurrentIndex(0);
+	connect(unitBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedUnitChanged(int)));
+	//end recording
+
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(playAction_);
 	testToolbar_->addAction(pauseAction_);
@@ -254,8 +298,17 @@ void TestViewer::setupUi()
 	testToolbar_->addSeparator();
 	testToolbar_->addAction(loadPropsAction_);
 	testToolbar_->addSeparator();
-	testToolbar_->addWidget(userType_);
-	
+	testToolbar_->addWidget(userType_); 
+	testToolbar_->addSeparator();
+	testToolbar_->addAction(toggleRecord_);
+	testToolbar_->addWidget(recordTime_);
+	testToolbar_->addAction(restartRecord_);
+	testToolbar_->addAction(saveRecording_);
+	testToolbar_->addSeparator();
+	testToolbar_->addWidget(channelBox_);
+	testToolbar_->addWidget(unitBox_);
+	testToolbar_->addSeparator();
+
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
@@ -400,6 +453,7 @@ void TestViewer::playTriggered()
 			engine_->setLfpReader(liveLfpReader_);
 			engine_->setRewardReader(liveRewardReader_);
 			engine_->setSpikeReader(liveSpikeReader_);
+			connect(liveSpikeReader_.data(), SIGNAL(spikeEvent(double, int, int, QVariantList)), this, SLOT(spikeEvent(double, int, int, QVariantList)));
 			foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
 			{
 				engine_->setSignalReader(signalReader->getName(),signalReader);
@@ -434,10 +488,13 @@ void TestViewer::playTriggered()
  */
 void TestViewer::running()
 {
+	isRunning_ = true;
+
 	taskListBox_->setEnabled(false);
 	pauseAction_->setEnabled(true);
 	stopAction_->setEnabled(true);
 	playAction_->setEnabled(false);
+	toggleRecord_->setEnabled(true);
 	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 	{
 		static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
@@ -453,6 +510,7 @@ void TestViewer::paused()
 	pauseAction_->setEnabled(false);
 	stopAction_->setEnabled(true);
 	playAction_->setEnabled(true);
+	toggleRecord_->setEnabled(false);
 }
 
 /*! \brief This is called when the TestPlaybackController reports that a Task is stopped.  It changes
@@ -466,6 +524,7 @@ void TestViewer::stopped()
 	pauseAction_->setEnabled(false);
 	stopAction_->setEnabled(false);
 	playAction_->setEnabled(true);
+	toggleRecord_->setEnabled(false);
 	foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 	{
 		static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -545,3 +604,203 @@ void TestViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);
 }
+void TestViewer::spikeEvent(double time, int channel, int unit, QVariantList waveform)
+{
+	//Emit a sound for each spike detected
+	if ((selectedChannel_ == 0) || ((channel == selectedChannel_) && ((unit == selectedUnit_) || (selectedUnit_ == 0))))
+	{
+		//play sound
+		NeuralTick_.play();
+
+		if (!ChannelsUnits_.contains(channel))
+		{
+			QList<int> unitList;
+			unitList.append(unit);
+			ChannelsUnits_.insert(channel, unitList);
+			updateNeuralUI();
+		}
+		else
+		{
+			QList<int> unitList = ChannelsUnits_.value(channel);
+			if (!unitList.contains(unit))
+			{
+				unitList.append(unit);
+				//Update the Combo box for channel/unit
+				updateNeuralUI();
+			}
+		}
+
+		//Tell the Visual Target Host to encode audio for the spike, when recording a Picto movie
+		visualTargetHost_->spikeAdded(time);
+	}
+}
+void TestViewer::rewarded(int quantity)
+{
+	visualTargetHost_->rewarded(quantity);
+}
+void TestViewer::updateNeuralUI()
+{
+	noCallBack_ = true;
+	int currCh = channelBox_->itemData(channelBox_->currentIndex()).toInt();
+	int currUnit = unitBox_->itemData(unitBox_->currentIndex()).toInt();
+	channelBox_->clear();
+	unitBox_->clear();
+
+	channelBox_->addItem("All Channels", 0);
+	foreach(int channel, ChannelsUnits_.keys())
+	{
+		channelBox_->addItem(QString("Channel %1").arg(channel), channel);
+	}
+	//Reset channel to what it was before
+	for (int i = 0; i<channelBox_->count(); i++)
+	{
+		if (channelBox_->itemData(i).toInt() == currCh)
+		{
+			channelBox_->setCurrentIndex(i);
+			break;
+		}
+	}
+
+	QList<int> unitList = ChannelsUnits_.value(selectedChannel_);
+	unitBox_->addItem("All Units", 0);
+	foreach(int unit, unitList)
+	{
+		unitBox_->addItem(QString("Unit %1").arg(unit), unit);
+	}
+
+	//Reset unit to what it was before
+	for (int i = 0; i<unitBox_->count(); i++)
+	{
+		if (unitBox_->itemData(i).toInt() == currUnit)
+		{
+			unitBox_->setCurrentIndex(i);
+			break;
+		}
+	}
+	noCallBack_ = false;
+}
+void TestViewer::selectedChannelChanged(int channel)
+{
+	if (noCallBack_)
+		return;
+
+	if (selectedChannel_ < 0)
+		selectedChannel_ = 0;
+
+	if (selectedUnit_ < 0)
+		selectedUnit_ = 0;
+
+	QString selectedStr = channelBox_->itemData(channelBox_->currentIndex()).toString(); //Channel 5
+	if (selectedStr.split(QRegExp("\\s")).last().toInt())
+		selectedChannel_ = selectedStr.split(QRegExp("\\s")).last().toInt(); //5
+
+	unitBox_->clear();
+	selectedUnit_ = 0;
+
+	QList<int> unitList = ChannelsUnits_.value(selectedChannel_);
+	unitBox_->addItem("All Units", 0);
+	foreach(int unit, unitList)
+	{
+		unitBox_->addItem(QString("Unit %1").arg(unit), unit);
+	}
+
+	//This will take care of resetting the spike plot for the case where channel changes but unit index doesn't change.
+	selectedUnitChanged(unitBox_->currentIndex());
+}
+void TestViewer::selectedUnitChanged(int unit)
+{
+	if (noCallBack_)
+		return;
+
+	if (selectedChannel_ < 0)
+		selectedChannel_ = 0;
+
+	if (selectedUnit_ < 0)
+		selectedUnit_ = 0;
+
+	QString selectedStr = unitBox_->itemData(unitBox_->currentIndex()).toString();
+	if (selectedStr.split(QRegExp("\\s")).last().toInt())
+		selectedUnit_ = selectedStr.split(QRegExp("\\s")).last().toInt();
+}
+
+//recording command added
+/*! \brief Updates the Recording Visual Target Host to record or not depending on the current run and record mode states.
+*/
+void TestViewer::updateRecordingTarget()
+{
+	if (recordModeOn_ && (isRunning_))
+	{
+		if (!visualTargetHost_->isRecording())
+			visualTargetHost_->toggleRecording();
+	}
+	else
+	{
+		if (visualTargetHost_->isRecording())
+			visualTargetHost_->toggleRecording();
+	}
+}
+/*! \brief Called when the user toggles the record button.
+*	\details Handles changes to the Icon, and the recording state.
+*	\sa updateRecordingTarget()
+*/
+void TestViewer::toggleRecording()
+{
+	if (!visualTargetHost_)
+		return;
+	//Toggle record mode
+	recordModeOn_ = !recordModeOn_;
+
+	//Update the recording LED according to the new recording state.
+	if (recordModeOn_)
+		toggleRecord_->setIcon(QIcon(":/icons/red_led_on.svg"));
+	else
+		toggleRecord_->setIcon(QIcon(":/icons/red_led_off.svg"));
+
+	updateRecordingTarget();
+}
+
+/*! \brief Called when the restart recording button is pressed.  Enacts the request.
+*/
+void TestViewer::restartRecording()
+{
+	if (!visualTargetHost_)
+		return;
+	visualTargetHost_->restartRecording();
+}
+
+/*! \brief Called when the save recording button is pressed. Shows a dialog box allowing the user to choose a save file
+*	path, saves the file at that path or shows a warning dialog if it doesn't work.
+*/
+void TestViewer::saveRecording()
+{
+	QString filename = QFileDialog::getSaveFileName(this,
+		tr("Save Video File"), ".", QString("Video (*.%1)").arg(visualTargetHost_->getVideoFileType()));
+	if (filename.isNull())
+		return;
+	if (!visualTargetHost_->saveRecordingAs(filename))
+	{
+		QMessageBox::warning(0, "Failed to Save Video", "The recorded video could not be saved at " + filename.toLatin1() + ".");
+	}
+}
+
+/*! \brief Updates the record time in the toolbar label to the latest value.  Also deals with UI changes as a function of
+*	whether the record time is positive or not.
+*/
+void TestViewer::setRecordTime(double time)
+{
+	if (recordTime_->value() == time)
+		return;
+	//If record time is positive, enable restart and saving, otherwise turn them off
+	if (recordTime_ > 0)
+	{
+		restartRecord_->setEnabled(true);
+		saveRecording_->setEnabled(true);
+	}
+	else
+	{
+		restartRecord_->setEnabled(false);
+		saveRecording_->setEnabled(false);
+	}
+	recordTime_->display(QString::number(time, 'f', 3));
+}
+//end recording

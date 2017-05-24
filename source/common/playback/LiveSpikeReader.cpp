@@ -44,6 +44,7 @@ void LiveSpikeReader::createVirtualSpike(double time)
 		waveform.append((10.0*sin(double(i)*6.28318530718/double(waveformSize_)))+(double(rand()%100)/20.0));
 	}
 	spikeData_.append(SpikeData(time,chan,unit,waveform));
+	emit spikeEvent(time, chan, unit, waveform);
 }
 
 /*! \brief Called when a Run ends to let this object know that it can clear out its spike list.

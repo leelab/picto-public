@@ -15,6 +15,7 @@
 #include "../../common/playback/LiveRunNotesReader.h"
 #include "../../common/playback/LiveSpikeReader.h"
 #include "../../common/playback/LiveSignalReader.h"
+#include "../ReplayViewer/RecordingVisualTargetHost.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -24,6 +25,7 @@ class QSlider;
 QT_END_NAMESPACE
 
 class ViewSelectionFrame;
+class QLCDNumber;
 
 /*!	\brief	This allows designers to run the Experiment/Analysis that they are creating in a test
  *	environment for debugging.
@@ -61,8 +63,8 @@ class ViewSelectionFrame;
  *	flow reaches the next PausePoint element.
  *	Suggestions for future features:
  *		- Add a step function for advancing frame by frame
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 class TestViewer : public Viewer
 {
@@ -79,11 +81,17 @@ public slots:
 
 	void LoadPropValsFromFile();
 
+	//Neural data sonification
+	void spikeEvent(double time, int channel, int unit, QVariantList waveform);
+	void rewarded(int quantity);
 
 private:
 	void setupEngine();
 	void setupUi();
 	void generateComboBox();
+
+	void updateNeuralUI();
+	void updateRecordingTarget();
 
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
@@ -93,7 +101,7 @@ private:
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	//! Holds and renders the Task view
-	Picto::VisualTargetHost *visualTargetHost_;
+	RecordingVisualTargetHost  *visualTargetHost_;
 	QWidget *propertyFrame_;
 	Picto::AnalysisSelectorWidget* analysisSelector_;
 	QVector<QWidget *> outputSignalsWidgets_;
@@ -122,6 +130,21 @@ private:
 	QSharedPointer<LiveRunNotesReader> liveRunNotesReader_;
 	QVector<QSharedPointer<LiveSignalReader>> signalReaders_;
 
+	QComboBox* channelBox_;
+	QComboBox* unitBox_;
+	QSharedPointer<TaskConfig> currentTaskConfig_;
+	QMap<int, QList<int>> ChannelsUnits_;
+	bool noCallBack_;
+	int selectedChannel_;
+	int selectedUnit_;
+	QSound NeuralTick_;
+	QAction *toggleRecord_;
+	QLCDNumber *recordTime_;
+	QAction *restartRecord_;
+	QAction *saveRecording_;
+	bool recordModeOn_;
+	bool isRunning_;
+
 private slots:
 	void playTriggered();
 	void running();
@@ -131,6 +154,13 @@ private slots:
 	void operatorClickDetected(QPoint pos);
 	void setUserType(int index);
 	void runStarted(QUuid runId);
+
+	void toggleRecording();
+	void restartRecording();
+	void saveRecording();
+	void setRecordTime(double time);
+	void selectedChannelChanged(int channel);
+	void selectedUnitChanged(int unit);
 
 };
 
