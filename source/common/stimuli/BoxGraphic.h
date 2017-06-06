@@ -50,18 +50,26 @@ public:
 	bool getOutline(){return propertyContainer_->getPropertyValue("Outline").toBool();};
 	/*! \brief Sets whether this graphic should display only its outline.*/
 	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
+	void setAngle(double angle){ propertyContainer_->setPropertyValue("Angle", angle); };
+	/*! \brief Returns whether this graphic is set to display only its outline.*/
+	double getAngle (){ return propertyContainer_->getPropertyValue("Angle").toDouble(); };
 
 	virtual QString friendlyTypeName(){return "Box";};
 	virtual QString getUITemplate(){return "BoxElement";};
 public slots:
 	/*! \brief Set the dimensions (width, height) of this graphic.*/
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
+	
+	/*! \brief Set the rotation angle used to rotate this graphic.*/
+	void setRotationAngle(double a){ setAngle(a); };
 
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
+	
 	QPoint posOffset_;
+
 private slots:
 	
 };

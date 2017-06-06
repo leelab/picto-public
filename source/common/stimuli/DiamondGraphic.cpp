@@ -18,6 +18,7 @@ DiamondGraphic::DiamondGraphic(QPoint position, QRect dimensions, QColor color)
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
 	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
+	AddDefinableProperty(QVariant::Double, "Angle", 0.);
 }
 
 /*! \brief Returns a QRect with the dimensions (width, height) of this graphic.
@@ -44,21 +45,40 @@ QPoint DiamondGraphic::getPositionOffset()
 
 void DiamondGraphic::draw()
 {
-	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
+	QRect dimensions = QRect(QPoint(), propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
+	double angle = propertyContainer_->getPropertyValue("Angle").toDouble();
 
-	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
+	int defaultWidth = dimensions.width();
+	int defaultHeight = dimensions.height();
+	int max = max(defaultWidth, defaultHeight);
+
+	QRect imageDimensions = QRect(QPoint(-1.0 * max, -1.0 * max), QPoint(2.0 * max, 2.0 * max));
+	QImage image(imageDimensions.width(), imageDimensions.height(), QImage::Format_ARGB32);
 	image.fill(0);
+	posOffset_ = QPoint(-1.0*imageDimensions.left(), -1.0*imageDimensions.top());
+
 	QPainter p(&image);
 	QPen pen(color);
 	p.setBrush(color);
-	if(propertyContainer_->getPropertyValue("Outline").toBool())
+	if (propertyContainer_->getPropertyValue("Outline").toBool())
 	{
-		p.setBrush(QColor(0,0,0,0));
+		p.setBrush(QColor(0, 0, 0, 0));
 		pen.setWidth(propertyContainer_->getPropertyValue("OutlineThickness").toInt());
 	}
 	p.setPen(pen);
 	p.setRenderHint(QPainter::Antialiasing, true);
+
+	qreal xc = defaultWidth * 0.5;
+	qreal yc = defaultHeight * 0.5;
+	QTransform transform;
+
+	transform.translate(max, max);
+	transform.rotate(angle);
+	transform.translate(-1.0*xc, -1.0*yc);
+	p.setTransform(transform);
+
+
 	QPolygon diamond;
 	int maxWPoint = dimensions.width()-1;
 	int maxHPoint = dimensions.height()-1;
@@ -70,7 +90,7 @@ void DiamondGraphic::draw()
 	p.drawPolygon(diamond);
 	p.end();
 	image_ = image;
-	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
+	//posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;

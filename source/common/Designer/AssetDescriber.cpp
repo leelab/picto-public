@@ -615,12 +615,15 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("This element is used to create a rectangular graphic on screen.  The center of the graphic will lie at the set 'Position'.");
 	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
 	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Angle", "Sets the rotation angle for this graphic.");
 	curr->addProp("Size","Sets the size of this graphic.");
 	curr->addSProp("width","Sets/Gets the width of this graphic.");
 	curr->addSProp("height","Sets/Gets the height of this graphic.");
 	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSProp("angle", "Sets the rotation angle for this graphic.");
 	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
-
+	curr->addSFunc("setRotationAngle(a)", "Sets the rotation angle.");
+	
 	curr = addDescription("CircleGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
 	curr->setOverview("This element is used to create a circular graphic on screen.  The center of the graphic will lie at the set 'Position'.");
@@ -636,21 +639,27 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
 	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
 	curr->addProp("Size","Sets the size of this graphic.");
+	curr->addProp("Angle", "Sets the rotation angle for this graphic.");
 	curr->addSProp("width","Sets/Gets the width of this graphic.");
 	curr->addSProp("height","Sets/Gets the height of this graphic.");
+	curr->addSProp("angle", "Sets the rotation angle for this graphic.");
 	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
 	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
+	curr->addSFunc("setRotationAngle(a)", "Sets the rotation angle.");
 
 	curr = addDescription("EllipseGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
 	curr->setOverview("This element is used to create an elliptical graphic on screen.  The center of the graphic will lie at the set 'Position'.");
 	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
 	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
-	curr->addProp("Size","Sets the size of this graphic.");
+	curr->addProp("Angle", "Sets the rotation angle for this graphic."); 
+	curr->addProp("Size", "Sets the size of this graphic.");
 	curr->addSProp("width","Sets/Gets the width of this graphic.");
 	curr->addSProp("height","Sets/Gets the height of this graphic.");
 	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSProp("angle", "Sets the rotation angle for this graphic.");
 	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
+	curr->addSFunc("setRotationAngle(a)", "Sets the rotation angle.");
 
 	curr = addDescription("GridGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
@@ -1041,6 +1050,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("AnalysisTimer");
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
+	curr->setWarning("This element has peculiar behavior.  AnalysisFrameData is preferred in order to obtain aligned behavioral and neural data. Read the documentation and use at your own risk.");
 	curr->setOverview("Used to track time.  The Analysis Timer can be reset using restart() or set to restart from a given time by simply setting that time to the timer using the 'value' script property.");
 	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the time values returned from this element.");
 	curr->addSProp("value","Gets the time of the first phosphor of the last frame that was displayed in units defined by 'TimeUnits'.  When used to set the value, this restarts the timer starting at the set time (Calls to value before the next frame will return the value that was set.  Calls after the next frame will return the value set plus a single frame period.)");
