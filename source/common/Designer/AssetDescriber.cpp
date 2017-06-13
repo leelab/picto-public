@@ -730,10 +730,13 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("This graphic is used to display text on screen.  Since monkeys can't read, it is mostly useful for operator feedback and debugging during experimental design.  Don't forget to set the size of the text graphic or you won't see anything when you use this.");
 	curr->addProp("Size","Sets the size of the text field in pixel units.");
 	curr->addProp("Text","The text to be displayed.");
+	curr->addProp("FontSize", "The font size of the text.");
 	curr->addSProp("width","Sets/Gets the width of the text field in pixel units.");
 	curr->addSProp("height","Sets/Gets the height of the text field in pixel units.");
 	curr->addSProp("text","Sets/Gets the displayed text.");
-	curr->addSFunc("setDimensions(w,h)","Sets the width and height of the text field in pixel units as a single function call.");
+	curr->addSProp("FontSize", "Sets/Gets the font size of the displayed text.");
+	curr->addSFunc("setDimensions(w,h)","Sets the width and height of the text field in pixel units as a single function call. If the font i");
+	curr->addSFunc("setFontSize(s)", "Sets the font size. Dimensions will automatically readjust based on the font size");
 
 	curr = addDescription("TokenTrayGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
@@ -835,7 +838,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSProp("setLabelY(index,y)", "Sets the y component of the position of the Label at the input index in global coordinates (ie. top left corner of screen is 0,0).");
 	curr->addSProp("setLabelLocalX(index,x)", "Sets the x component of the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
 	curr->addSProp("setLabelLocalY(index,y)", "Sets the y component of the position of the Label at the input index in local coordinates (ie. Label at (0,0) has the same position as the Label factory.  Label at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the Label factory.");
-	curr->addSFunc("setLabelSize(index,size)", "Scales the size of the Label at the input index by a factor of the input size, where size is a number between 0 and 1.");
+	curr->addSFunc("setLabelSize(index,size)", "Scales the size of the Label at the input index by a factor of the input size, where size is a number between 0 and 1 (optional). Font size is used to calculate the size of the text when this Size is not defined.");
 	curr->addSFunc("setLabelFontSize(index,fontsize)", "Scales the size of the Label at the input index by a factor of the input size, where size is a number between 0 and 1.");
 	curr->addSFunc("setLabelColor(index,r,g,b,a) or setLabelColor(index,r,g,b)", "Sets the color of the Label at the input index according to the red, green, blue and optional alpha inputs.");
 	curr->addSFunc("setLabelColor(index,color)", "Sets the color of the Label at the input index by using a string containing hexadecimal r,g,b values (#rrggbb).");

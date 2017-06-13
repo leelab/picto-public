@@ -24,7 +24,7 @@ namespace Picto {
 		VisualElement(position, color)
 	{
 		//updatingParameterLists_ = false;		
-		AddDefinableProperty(QVariant::String, "LabelFontSize", 0);		
+		AddDefinableProperty(QVariant::String, "LabelFontSize", "0");
 		AddDefinableProperty(QVariant::String, "LabelContent", Content_);
 		AddDefinableProperty(QVariant::Size, "LabelSize", dimensions.size());
 		AddDefinableProperty(QVariant::Int, "NumLabels", 0);
@@ -99,7 +99,7 @@ namespace Picto {
 	*/
 	QString LabelFactoryGraphic::getLabelFontSize()
 	{
-		return propertyContainer_->getPropertyValue("LabelFontSize").toInt();
+		return propertyContainer_->getPropertyValue("LabelFontSize").toString();
 	}
 
 	/*! \brief Sets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
@@ -107,7 +107,7 @@ namespace Picto {
 	void LabelFactoryGraphic::setLabelFontSize(QString fontsize)
 	{
 		if (fontsize != "")
-		propertyContainer_->setPropertyValue("LabelFontSize", fontsize);	
+			propertyContainer_->setPropertyValue("LabelFontSize", fontsize);
 	}
 
 	QPoint LabelFactoryGraphic::getPositionOffset()
@@ -208,7 +208,7 @@ namespace Picto {
 	{
 		if (index < 0 || index >= getNumLabels())
 			return;
-		
+
 		QStringList fontsizes = propertyContainer_->getPropertyValue("LabelFontSizes").toString().split(",", QString::SkipEmptyParts);
 		fontsizes[index] = fontsize;
 		propertyContainer_->setPropertyValue("LabelFontSizes", fontsizes.join(","));
@@ -220,7 +220,7 @@ namespace Picto {
 	{
 		if (index < 0 || index >= getNumLabels())
 			return;
-		
+
 		QStringList Contents = propertyContainer_->getPropertyValue("LabelContents").toString().split(",", QString::SkipEmptyParts);
 		Contents[index] = Content;
 		propertyContainer_->setPropertyValue("LabelContents", Contents.join(","));
@@ -354,9 +354,11 @@ namespace Picto {
 
 	void LabelFactoryGraphic::draw()
 	{
+
 		int numLabels = getNumLabels();
 		QRect trayDimensions = QRect(QPoint(), propertyContainer_->getPropertyValue("Size").toSize());
 		QRect LabelDimensions = QRect(QPoint(), propertyContainer_->getPropertyValue("LabelSize").toSize());
+
 		//Make sure size of sizes,colors,Contents lists matches numLabels before drawing
 		QStringList sizes = propertyContainer_->getPropertyValue("LabelSizes").toString().split(",", QString::SkipEmptyParts);
 		QStringList colors = propertyContainer_->getPropertyValue("LabelColors").toString().split(",", QString::SkipEmptyParts);
@@ -365,21 +367,21 @@ namespace Picto {
 		QStringList ys = propertyContainer_->getPropertyValue("LabelYs").toString().split(",", QString::SkipEmptyParts);
 		QStringList fontSizes = propertyContainer_->getPropertyValue("LabelFontSizes").toString().split(",", QString::SkipEmptyParts);
 
-		if ((sizes.size() != getNumLabels())
+		if ((sizes.size() != getNumLabels() && fontSizes.size() != getNumLabels()) //either size or font size
 			|| (colors.size() != getNumLabels())
 			|| (Contents.size() != getNumLabels())
 			|| (xs.size() != getNumLabels())
 			|| (ys.size() != getNumLabels())
-			|| (fontSizes.size() != getNumLabels())
 			)
 		{
 			//Stuff is in the process of being updated.
 			return;
 		}
-		//Whenever a list's value is "_" it should juist used the default value
-		for (int i = 0; i<numLabels; i++)
+
+		//Whenever a list's value is "_" it should just used the default value
+		for (int i = 0; i < numLabels; i++)
 		{
-			if (sizes[i] == "_")
+			if (sizes.size() > i && sizes[i] == "_")
 				sizes[i] = "1.0";
 			if (colors[i] == "_")
 				colors[i] = getColor().name();
@@ -389,43 +391,137 @@ namespace Picto {
 				xs[i] = QString("0");
 			if (ys[i] == "_")
 				ys[i] = QString("0");
-			if (fontSizes[i] == "_")
+			if (fontSizes.size() > i && fontSizes[i] == "_")
 				fontSizes[i] = QString("0");
 		}
 		QRect imageDimensions = getImageDims();
-		QImage image(imageDimensions.width(), imageDimensions.height(), QImage::Format_ARGB32);
+		QImage image(imageDimensions.width() * 2, imageDimensions.height() * 3, QImage::Format_ARGB32);
 		image.fill(0);
 		posOffset_ = QPoint(-imageDimensions.left(), -imageDimensions.top());
 
-		for (int i = 0; i<numLabels; i++)
+		for (int i = 0; i < numLabels; i++)
 		{
-			QColor color(colors[i]);
-			double size = sizes[i].toDouble();
-			QRect dimensions(LabelDimensions.x(), LabelDimensions.y(), LabelDimensions.width()*size, LabelDimensions.height()*size);
-			QPoint LabelPosOffset = QPoint(dimensions.width() / 2.0, dimensions.height() / 2.0);
-			QPoint offset = posOffset_ + QPoint(xs[i].toInt(), ys[i].toInt()) - LabelPosOffset;
-			int fontsize = fontSizes[i].toInt();
-
-			QPainter p(&image);
-			QPen pen(color);
-			p.setBrush(color);
-			p.translate(offset);
-			p.setPen(pen);
-			p.setRenderHint(QPainter::Antialiasing, true);
-
 			if (Contents[i] != "")
 			{
-				p.setFont(QFont("Times", fontsize));
-				p.drawText(dimensions, Qt::AlignLeft | Qt::AlignVCenter, Contents[i]);
-			}
-			
+				QColor color(colors[i]);
+				double size = 1.; //default
+				if (sizes.size() > i  && sizes[i] != "_")
+					size = sizes[i].toDouble();
 
-			p.end();
+				QRect Tmpdimensions(LabelDimensions.x(), LabelDimensions.y(), LabelDimensions.width()*size, LabelDimensions.height()*size);
+				QPoint LabelPosOffset = QPoint(Tmpdimensions.width() / 2.0, Tmpdimensions.height() / 2.0);
+				QPoint offset = posOffset_ + QPoint(xs[i].toInt(), ys[i].toInt()) - LabelPosOffset;
+
+				// for each text, re-adjust to font size if size was not set in the script or if it is null or too small
+				int fontsize = getLabelFontSize().toInt();
+				if (fontSizes.size() > i  && fontSizes[i] != "_" && fontSizes[i] != "0")
+					fontsize = fontSizes[i].toInt();
+
+				QFont txtFont = QFont("Times", fontsize);
+				QString str = Contents[i];
+
+				QRect dimensions = adjustSizeToFont(str, txtFont, Tmpdimensions);
+
+				QPainter p(&image);
+				QPen pen(color);
+				p.setBrush(color);
+				p.translate(offset);
+				p.setPen(pen);
+				p.setRenderHint(QPainter::Antialiasing, true);
+
+				//if (Contents[i] != "")
+				{
+					p.setFont(txtFont);
+					p.drawText(dimensions, Qt::AlignLeft | Qt::AlignVCenter, Contents[i]);
+				}
+
+
+				p.end();
+			}
 		}
 		image_ = image;
 		//updateCompositingSurfaces();
 
 		shouldUpdateCompositingSurfaces_ = true;
+	}
+	
+	QRect LabelFactoryGraphic::adjustSizeToFont(QString str, QFont txtFont, QRect dimensions)
+	{
+		QRect returnVal(dimensions.left(), dimensions.top(), dimensions.width(), dimensions.height());
+
+		QFontMetrics fm(txtFont);
+		int strWidth = fm.boundingRect(str).width();
+		int strHeight = fm.boundingRect(str).height();
+
+		int rectWidth = 0;
+		int rectHeight = 0;
+
+		if (dimensions.width() != 0 && dimensions.height() != 0 && dimensions.isValid())
+		{
+			//default is defined size (percent of the default size)
+			rectWidth = dimensions.width();
+			rectHeight = dimensions.height();
+		}
+
+		QRect adjDimensions; //dimension of the longest subString in the text
+
+		//find all the return carriage \n in the text and keep the width of the longest substring
+		QStringList strList = str.split('\n');
+		if (strList.size() > 0)
+		{
+			int longestIndex = 0;
+			strWidth = 0;
+			for (int j = 0; j < strList.size(); ++j)
+			{
+				if (fm.width(strList.at(j)) > strWidth)
+				{
+					strWidth = fm.width(strList.at(j));
+					longestIndex = j;
+				}
+			}
+			adjDimensions = fm.boundingRect(strList.at(longestIndex));
+		}
+		else
+			adjDimensions = fm.boundingRect(str);
+
+		if (rectWidth < strWidth || rectHeight < strHeight)
+		{
+			//auto-adjust size to text if size was not defined or if it is null or too small for the text
+			if (adjDimensions.width() == 0 || adjDimensions.height() == 0 || !adjDimensions.isValid())
+			{
+				if (dimensions.width() == 0 || dimensions.height() == 0 || !dimensions.isValid())
+				{
+					//use original font size only				
+					returnVal.setWidth(fm.boundingRect(str).width());
+					returnVal.setHeight(fm.boundingRect(str).height());
+				}
+
+				if (strWidth > 0)
+				{
+					//auto-adjust font-size to specified size with a limit of 60% to 125%
+					double factor = dimensions.width() / strWidth;
+					if ((factor < 1) || factor > 1.25)
+					{
+						if (factor < 0.6)
+							factor = 0.6;
+						else if (factor > 1.5)
+							factor = 1.5;
+
+						txtFont.setPointSizeF(txtFont.pointSizeF()*factor);
+					}
+				}
+			}
+			else
+			{
+				//number of lines in the text
+				int nbLines = 1;
+				nbLines = nbLines + str.count('\n');
+
+				returnVal.setWidth(strWidth);
+				returnVal.setHeight(strHeight*nbLines);
+			}
+		}
+		return returnVal;
 	}
 
 	/*! \brief Creates a new LabelFactoryGraphic object and returns a shared Asset pointer to it.*/
@@ -504,10 +600,13 @@ namespace Picto {
 		QStringList sizes = propertyContainer_->getPropertyValue("LabelSizes").toString().split(",", QString::SkipEmptyParts);
 		QStringList xs = propertyContainer_->getPropertyValue("LabelXs").toString().split(",", QString::SkipEmptyParts);
 		QStringList ys = propertyContainer_->getPropertyValue("LabelYs").toString().split(",", QString::SkipEmptyParts);
+		QStringList fontSizes = propertyContainer_->getPropertyValue("LabelFontSizes").toString().split(",", QString::SkipEmptyParts);
+		QStringList Contents = propertyContainer_->getPropertyValue("LabelContents").toString().split(",", QString::SkipEmptyParts);
 
-		if ((sizes.size() < getNumLabels())
+		if ((sizes.size() < getNumLabels() && fontSizes.size() < getNumLabels())
 			|| (xs.size() < getNumLabels())
 			|| (ys.size() < getNumLabels())
+			|| (Contents.size() < getNumLabels())
 			)
 			return QRect();	//If this is the case, somethings being updated and calling draw and the system won't really need this data yet.
 
@@ -521,18 +620,33 @@ namespace Picto {
 				currPoint.setY(ys[i].toInt());
 			int height = defaultHeight;
 			int width = defaultWidth;
-			if (sizes[i] != "_")
+			if (sizes.size() > i && sizes[i] != "_")
 			{
 				height *= sizes[i].toDouble();
 				width *= sizes[i].toDouble();
 			}
+
+			int fontsize = getLabelFontSize().toInt();
+			QString str = Contents[i];
+			if (fontSizes.size() > i && fontSizes[i] != "_" && fontSizes[i] != "0")
+				fontsize = fontSizes[i].toInt();
+
+			QFont txtFont = QFont("Times", fontsize);			
 			
+			QRect Tmpdimensions(0., 0., width, height);
+			QRect dimensions = adjustSizeToFont(str, txtFont, Tmpdimensions);
+
+			width = dimensions.width();
+			height = dimensions.height();
+
 			int halfWidth = width / 2;
 			int halfHeight = height / 2;
+
 			int minX = currPoint.x() - halfWidth;
 			int minY = currPoint.y() - halfHeight;
 			int maxX = currPoint.x() + halfWidth;
 			int maxY = currPoint.y() + halfHeight;
+
 			if (returnVal.isEmpty())
 			{
 				returnVal = QRect(QPoint(minX, minY), QPoint(maxX, maxY));
@@ -546,6 +660,7 @@ namespace Picto {
 				returnVal.setRight(maxX);
 			if (maxY > returnVal.bottom())
 				returnVal.setBottom(maxY);
+			
 		}
 		return returnVal;
 	}

@@ -92,6 +92,8 @@ namespace Picto {
 	private:
 		void updateListSizes();
 		QRect getImageDims();
+		QRect adjustSizeToFont(QString str, QFont txtFont, QRect dimensions);
+
 		QPoint posOffset_;
 		QString Content_;
 		//QHash<int, QString> sizeDelta_;
