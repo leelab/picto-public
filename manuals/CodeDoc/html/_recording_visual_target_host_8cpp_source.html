@@ -268,82 +268,77 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="keywordtype">void</span> RecordingVisualTargetHost::setSelectedNeural(<span class="keywordtype">int</span> channel, <span class="keywordtype">int</span> unit)</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;{</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    selectedChannel_ = channel;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    selectedUnit_ = unit;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;}</div>
-<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#a8e540e5e2db4d51b8d0842cab0ce40df">  207</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a8e540e5e2db4d51b8d0842cab0ce40df">RecordingVisualTargetHost::finishRecording</a>()</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;{</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="comment">//Close the encoder</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordflow">if</span>(encoder_)</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="comment">//Close the encoder file</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        encoder_-&gt;close();</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        <span class="comment">//Delete the encoder and frame image</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        encoder_.clear();</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    }</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="comment">//Mark recording as uninitialized</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    recordingInitialized_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">  227</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">RecordingVisualTargetHost::updateRecordingTime</a>()</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;{</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="comment">//Get the last recording time</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">double</span> lastFrameTime = <a class="code" href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">getRecordingTime</a>();</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="comment">//If it was less than zero, the new time will be zero</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="comment">//Otherwise, new time equals last time plus the time on the frame timer clock</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">double</span> newFrameTime = 0;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">if</span>(lastFrameTime &gt;= 0)</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        newFrameTime = lastFrameTime + frameTimer_.elapsed();</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    }</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="comment">//Restart the frame timer clock</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    frameTimer_.restart();</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="comment">//Store the new recording time</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <a class="code" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">setRecordingTime</a>(newFrameTime);</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;}</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">  247</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">RecordingVisualTargetHost::getRecordingTime</a>()</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;{</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">return</span> currFrameMs_;</div>
+<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#a8e540e5e2db4d51b8d0842cab0ce40df">  202</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a8e540e5e2db4d51b8d0842cab0ce40df">RecordingVisualTargetHost::finishRecording</a>()</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;{</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="comment">//Close the encoder</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordflow">if</span>(encoder_)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="comment">//Close the encoder file</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        encoder_-&gt;close();</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="comment">//Delete the encoder and frame image</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        encoder_.clear();</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="comment">//Mark recording as uninitialized</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    recordingInitialized_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;}</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00222"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">  222</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">RecordingVisualTargetHost::updateRecordingTime</a>()</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;{</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">//Get the last recording time</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">double</span> lastFrameTime = <a class="code" href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">getRecordingTime</a>();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="comment">//If it was less than zero, the new time will be zero</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="comment">//Otherwise, new time equals last time plus the time on the frame timer clock</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordtype">double</span> newFrameTime = 0;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">if</span>(lastFrameTime &gt;= 0)</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    {</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        newFrameTime = lastFrameTime + frameTimer_.elapsed();</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="comment">//Restart the frame timer clock</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    frameTimer_.restart();</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="comment">//Store the new recording time</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <a class="code" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">setRecordingTime</a>(newFrameTime);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
+<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">  242</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">RecordingVisualTargetHost::getRecordingTime</a>()</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;{</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordflow">return</span> currFrameMs_;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;}</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="keywordtype">void</span> RecordingVisualTargetHost::updateFrameTime(<span class="keywordtype">double</span> time)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;{</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="keywordtype">int</span> MsTime = (int)time;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <a class="code" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">setRecordingTime</a>(MsTime);</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keywordtype">void</span> RecordingVisualTargetHost::updateFrameTime(<span class="keywordtype">double</span> time)</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordtype">int</span> MsTime = (int)time;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <a class="code" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">setRecordingTime</a>(MsTime);</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;}</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">  260</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">RecordingVisualTargetHost::setRecordingTime</a>(<span class="keywordtype">int</span> currMs)</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;{</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="comment">//If time didn&#39;t change, do nothing</span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">if</span>(currFrameMs_ == currMs)</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="comment">//Update the stored current frame time value</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    currFrameMs_ = currMs;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="comment">//If the new current frame time value is less than zero, it is an</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="comment">//initialization value, emit a time of zero to listeners</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <span class="keywordflow">if</span>(currFrameMs_ &lt; 0)</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    {</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        emit <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">updateRecordingTime</a>(0);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    }</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="comment">//Otherwise, emit the current time in seconds to listeners</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    emit <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">updateRecordingTime</a>(<span class="keywordtype">double</span>(currFrameMs_)/1000.0);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;}</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
+<div class="line"><a name="l00255"></a><span class="lineno"><a class="line" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">  255</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">RecordingVisualTargetHost::setRecordingTime</a>(<span class="keywordtype">int</span> currMs)</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;{</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="comment">//If time didn&#39;t change, do nothing</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">if</span>(currFrameMs_ == currMs)</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="comment">//Update the stored current frame time value</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    currFrameMs_ = currMs;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="comment">//If the new current frame time value is less than zero, it is an</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="comment">//initialization value, emit a time of zero to listeners</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordflow">if</span>(currFrameMs_ &lt; 0)</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        emit <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">updateRecordingTime</a>(0);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    }</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <span class="comment">//Otherwise, emit the current time in seconds to listeners</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    emit <a class="code" href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">updateRecordingTime</a>(<span class="keywordtype">double</span>(currFrameMs_)/1000.0);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a2215ccd6296d5cc9e8b4303aa63f42e6"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a2215ccd6296d5cc9e8b4303aa63f42e6">Picto::RecordingVisualTargetHost::restartRecording</a></div><div class="ttdeci">void restartRecording()</div><div class="ttdoc">Closes the video file and zeros out the recording time. Any new recording will erase the previous vid...</div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00092">RecordingVisualTargetHost.cpp:92</a></div></div>
-<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_ab9e39ee9d59a73c922b30343f3e7e338"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">Picto::RecordingVisualTargetHost::getRecordingTime</a></div><div class="ttdeci">int getRecordingTime()</div><div class="ttdoc">Gets the latest recording time in Ms. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00247">RecordingVisualTargetHost.cpp:247</a></div></div>
+<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_ab9e39ee9d59a73c922b30343f3e7e338"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#ab9e39ee9d59a73c922b30343f3e7e338">Picto::RecordingVisualTargetHost::getRecordingTime</a></div><div class="ttdeci">int getRecordingTime()</div><div class="ttdoc">Gets the latest recording time in Ms. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00242">RecordingVisualTargetHost.cpp:242</a></div></div>
 <div class="ttc" id="class_picto_1_1_visual_target_host_html_adee5a34fd8bd737e71f17d47ff97d3fd"><div class="ttname"><a href="class_picto_1_1_visual_target_host.html#adee5a34fd8bd737e71f17d47ff97d3fd">Picto::VisualTargetHost::paintEvent</a></div><div class="ttdeci">virtual void paintEvent(QPaintEvent *)</div><div class="ttdoc">Paints the underlying VisualTarget objects frame onto this object. </div><div class="ttdef"><b>Definition:</b> <a href="_visual_target_host_8cpp_source.html#l00038">VisualTargetHost.cpp:38</a></div></div>
-<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_af14d7a54701862a67575a753fb0d48eb"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">Picto::RecordingVisualTargetHost::setRecordingTime</a></div><div class="ttdeci">void setRecordingTime(int currMs)</div><div class="ttdoc">Sets the current recording time to a new value and tells any connected objects who care...</div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00260">RecordingVisualTargetHost.cpp:260</a></div></div>
+<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_af14d7a54701862a67575a753fb0d48eb"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#af14d7a54701862a67575a753fb0d48eb">Picto::RecordingVisualTargetHost::setRecordingTime</a></div><div class="ttdeci">void setRecordingTime(int currMs)</div><div class="ttdoc">Sets the current recording time to a new value and tells any connected objects who care...</div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00255">RecordingVisualTargetHost.cpp:255</a></div></div>
 <div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a489ff489ecd55ec6efcbfb470c69fcb8"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a489ff489ecd55ec6efcbfb470c69fcb8">Picto::RecordingVisualTargetHost::getVideoFileType</a></div><div class="ttdeci">QString getVideoFileType()</div><div class="ttdoc">Returns the type of video file currently handled by this object (ie. "avi" or "mpg"). </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00064">RecordingVisualTargetHost.cpp:64</a></div></div>
-<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a0c06d1b78f73be8bc30f0dbf0d051f1e"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">Picto::RecordingVisualTargetHost::updateRecordingTime</a></div><div class="ttdeci">void updateRecordingTime()</div><div class="ttdoc">Updates the current recording time to the current time. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00227">RecordingVisualTargetHost.cpp:227</a></div></div>
+<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a0c06d1b78f73be8bc30f0dbf0d051f1e"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a0c06d1b78f73be8bc30f0dbf0d051f1e">Picto::RecordingVisualTargetHost::updateRecordingTime</a></div><div class="ttdeci">void updateRecordingTime()</div><div class="ttdoc">Updates the current recording time to the current time. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00222">RecordingVisualTargetHost.cpp:222</a></div></div>
 <div class="ttc" id="class_picto_1_1_buffer_file_generator_html_afa04c82713737e28dc38e0d6d28445d1"><div class="ttname"><a href="class_picto_1_1_buffer_file_generator.html#afa04c82713737e28dc38e0d6d28445d1">Picto::BufferFileGenerator::createTempFile</a></div><div class="ttdeci">static QSharedPointer&lt; QFile &gt; createTempFile(QString subDirName, QString fileType)</div><div class="ttdoc">Creates a temporary file in the subDirName sub-directory of the "TemporaryFiles" directory in the Pic...</div><div class="ttdef"><b>Definition:</b> <a href="_buffer_file_generator_8cpp_source.html#l00015">BufferFileGenerator.cpp:15</a></div></div>
 <div class="ttc" id="class_picto_1_1_visual_target_host_html_a375c688433f74774ea9664fbe62b147d"><div class="ttname"><a href="class_picto_1_1_visual_target_host.html#a375c688433f74774ea9664fbe62b147d">Picto::VisualTargetHost::getVisualTarget</a></div><div class="ttdeci">QSharedPointer&lt; VisualTarget &gt; getVisualTarget()</div><div class="ttdoc">Returns the VisualTarget hosted by this VisualTargetHost. </div><div class="ttdef"><b>Definition:</b> <a href="_visual_target_host_8h_source.html#l00067">VisualTargetHost.h:67</a></div></div>
-<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a8e540e5e2db4d51b8d0842cab0ce40df"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a8e540e5e2db4d51b8d0842cab0ce40df">Picto::RecordingVisualTargetHost::finishRecording</a></div><div class="ttdeci">void finishRecording()</div><div class="ttdoc">Finishes up recording and closes required resources. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00207">RecordingVisualTargetHost.cpp:207</a></div></div>
+<div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a8e540e5e2db4d51b8d0842cab0ce40df"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a8e540e5e2db4d51b8d0842cab0ce40df">Picto::RecordingVisualTargetHost::finishRecording</a></div><div class="ttdeci">void finishRecording()</div><div class="ttdoc">Finishes up recording and closes required resources. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00202">RecordingVisualTargetHost.cpp:202</a></div></div>
 <div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_ac636397e7740a51ad0ef9ffc3a899333"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#ac636397e7740a51ad0ef9ffc3a899333">Picto::RecordingVisualTargetHost::paintEvent</a></div><div class="ttdeci">virtual void paintEvent(QPaintEvent *e)</div><div class="ttdoc">Does normal inherited painting plus optional recording of visual target data to a video...</div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00103">RecordingVisualTargetHost.cpp:103</a></div></div>
 <div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_a4376d5c56b8ff184a8497856dfd40806"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#a4376d5c56b8ff184a8497856dfd40806">Picto::RecordingVisualTargetHost::initializeRecording</a></div><div class="ttdeci">bool initializeRecording()</div><div class="ttdoc">Recording needs to be initialized once before any video files are recorded. This function takes care ...</div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00167">RecordingVisualTargetHost.cpp:167</a></div></div>
 <div class="ttc" id="class_picto_1_1_recording_visual_target_host_html_aef983c1915dc75e47a7626664484a13d"><div class="ttname"><a href="class_picto_1_1_recording_visual_target_host.html#aef983c1915dc75e47a7626664484a13d">Picto::RecordingVisualTargetHost::isRecording</a></div><div class="ttdeci">bool isRecording()</div><div class="ttdoc">Returns whether this object is currently in recording mode. </div><div class="ttdef"><b>Definition:</b> <a href="_recording_visual_target_host_8cpp_source.html#l00035">RecordingVisualTargetHost.cpp:35</a></div></div>

@@ -506,7 +506,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("randomize()","Generates the next pseudorandomly selected value and makes it accesible from the 'value' script property.");
 	curr->addSFunc("reshuffleLastValue()","Moves the last generated value back into the list of values to be randomized so that it will be generated again before the current list runs out of values.");
 	curr->addSFunc("reset()","Recreates the list of values to randomized according to the current'Min' and 'Max'.  After calling this, it is effectively as if randomize() has never been called.");
-
+	
 	curr = addDescription("RandomDoubleParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
 	curr->setOverview("Used to generate a random double in a set range.  New random doubles are created by calling 'randomize()' and their values retrieved by using the 'value' script property.");
@@ -528,6 +528,17 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Max","The maximum value in the range of values that will be randomized.");
 	curr->addSProp("value","Sets/Gets the current value stored in this element.");
 	curr->addSFunc("randomize()","Generates the next randomly selected value and makes it accesible from the 'value' script property.");
+
+	curr = addDescription("RandomNormDoubleParameter");
+	curr->setInherits(getAssetDescription("Parameter"));
+	curr->setOverview("Used to generate a random double from a normal distribution.  New random doubles are created by calling 'randomize()' and their values retrieved by using the 'value' script property.");
+	curr->addProp("Value", "The value stored in this object before any randomization occurs.");
+	curr->addProp("UseSeed", "Set this to true if you would like the order of randomized values to be identical for every experimental run.");
+	curr->addProp("Seed", "When 'UseSeed' is true, this is the seed that is used in the randomizer.  For each seed a different reproducable random sequence will be produced.");
+	curr->addProp("Mean", "The mean value of the gaussienne.");
+	curr->addProp("StdDeviation", "The standard deviation of the gaussienne.");
+	curr->addSProp("value", "Sets/Gets the current value stored in this element.");
+	curr->addSFunc("randomize()", "Generates the next randomly selected value and makes it accesible from the 'value' script property.");
 
 	curr = addDescription("RangeParameter");
 	curr->setInherits(getAssetDescription("Parameter"));

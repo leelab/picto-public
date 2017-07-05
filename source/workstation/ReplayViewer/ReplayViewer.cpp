@@ -329,16 +329,11 @@ void ReplayViewer::selectedChannelChanged(int channel)
 	if (selectedStr.split(QRegExp("\\s")).last().toInt())
 		selectedChannel_ = selectedStr.split(QRegExp("\\s")).last().toInt(); //5
 
-	//selectedChannel_ = channelBox_->itemData(channelBox_->currentIndex()).toInt();
-
 	unitBox_->clear();
 	selectedUnit_ = 0;
 
 	if (currentTaskConfig_)
 		currentTaskConfig_->setSelectedNeural(selectedChannel_, selectedUnit_);
-
-	if (visualTargetHost_)
-		visualTargetHost_->setSelectedNeural(selectedChannel_, selectedUnit_);
 
 	QList<int> unitList = ChannelsUnits_.value(selectedChannel_);
 	unitBox_->addItem("All Units", 0);

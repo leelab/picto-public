@@ -32,7 +32,6 @@ public:
 		bool isRecording();
 		bool saveRecordingAs(QString filePath);
 		QString getVideoFileType();
-		void setSelectedNeural(int channel, int unit);
 		
 		int getRecordingTime();
 		//neural data sonification:

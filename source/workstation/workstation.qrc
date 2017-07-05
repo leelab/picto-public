@@ -143,6 +143,7 @@
         <file>icons/pseudorandomfloat.svg</file>
         <file>icons/randomint.svg</file>
         <file>icons/pseudorandomint.svg</file>
+        <file>icons/random.svg</file>
         <file>icons/choicecontroller.svg</file>
         <file>icons/scriptcontroller.svg</file>
         <file>icons/stopwatchcontroller.svg</file>

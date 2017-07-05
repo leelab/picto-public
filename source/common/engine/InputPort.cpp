@@ -157,6 +157,9 @@ void InputPort::updateDataBuffer(double currTimestamp)
 		QHash<int, QVector<double>>::iterator it;
 		for(it = channelBuffers_.begin();it != channelBuffers_.end();it++)
 		{
+			int origSize = it.value().size();
+			int extSize = channelLeftOvers[it.key()].size();
+			it.value().resize(origSize + extSize);
 			(*it) = channelLeftOvers[it.key()] << (*it);
 			channelLeftOvers[it.key()].clear();
 		}

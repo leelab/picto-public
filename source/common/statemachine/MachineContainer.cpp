@@ -14,6 +14,7 @@
 #include "../parameter/RandomDoubleParameter.h"
 #include "../parameter/DoubleParameter.h"
 #include "../parameter/PseudorandomIntParameter.h"
+#include "../parameter/RandomNormDoubleParameter.h"
 #include "../parameter/TimerParameter.h"
 #include "../parameter/OperatorClickParameter.h"
 #include "../parameter/SignalValueParameter.h"
@@ -71,6 +72,8 @@ addingTransition_(false)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DoubleParameter::Create))));
 	parameterFactory_->addAssetType("PseudorandomInt",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PseudorandomIntParameter::Create))));
+	parameterFactory_->addAssetType("RandomNormFloat",
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(RandomNormDoubleParameter::Create))));
 	parameterFactory_->addAssetType("Timer",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TimerParameter::Create))));
 	parameterFactory_->addAssetType("OperatorClick",

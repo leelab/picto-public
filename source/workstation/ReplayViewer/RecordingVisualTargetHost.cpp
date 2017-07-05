@@ -197,11 +197,6 @@ bool RecordingVisualTargetHost::initializeRecording()
 
 	return true;
 }
-void RecordingVisualTargetHost::setSelectedNeural(int channel, int unit)
-{
-	selectedChannel_ = channel;
-	selectedUnit_ = unit;
-}
 /*! \brief Finishes up recording and closes required resources.
  */
 void RecordingVisualTargetHost::finishRecording()
