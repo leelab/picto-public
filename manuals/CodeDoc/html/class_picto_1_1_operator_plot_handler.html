@@ -110,8 +110,10 @@ Inheritance diagram for Picto::OperatorPlotHandler:</div>
   <img src="class_picto_1_1_operator_plot_handler.png" usemap="#Picto::OperatorPlotHandler_map" alt=""/>
   <map id="Picto::OperatorPlotHandler_map" name="Picto::OperatorPlotHandler_map">
 <area href="class_picto_1_1_bar_base_plot_handler.html" title="A handler for plots derived from the BarBasePlot. " alt="Picto::BarBasePlotHandler" shape="rect" coords="110,112,321,136"/>
+<area href="class_picto_1_1_raster_base_plot_handler.html" title="A handler for plots derived from the RasterBasePlot. " alt="Picto::RasterBasePlotHandler" shape="rect" coords="442,112,653,136"/>
 <area href="class_picto_1_1_bar_plot_plot_handler.html" title="A Handler for BarPlots. " alt="Picto::BarPlotPlotHandler" shape="rect" coords="0,168,211,192"/>
 <area href="class_picto_1_1_sampling_bar_base_plot_handler.html" title="A handler for plots derived from the SamplingBarBase. " alt="Picto::SamplingBarBasePlotHandler" shape="rect" coords="221,168,432,192"/>
+<area href="class_picto_1_1_raster_plot_handler.html" title="A handler for Raster Plots. " alt="Picto::RasterPlotHandler" shape="rect" coords="442,168,653,192"/>
 <area href="class_picto_1_1_p_s_t_h_plot_handler.html" title="A handler for PSTH Plots. " alt="Picto::PSTHPlotHandler" shape="rect" coords="110,224,321,248"/>
 <area href="class_picto_1_1_sampling_bar_plot_plot_handler.html" title="A handler for the Sampling Bar Plot. " alt="Picto::SamplingBarPlotPlotHandler" shape="rect" coords="331,224,542,248"/>
 </map>
@@ -125,12 +127,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>initializePlot</b> (c
 <tr class="memitem:a4a68f08a4c1144ecd64b6e8111bfc721"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a68f08a4c1144ecd64b6e8111bfc721"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setTitle</b> (const QString &amp;title)</td></tr>
 <tr class="separator:a4a68f08a4c1144ecd64b6e8111bfc721"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ded3d4657bea7bcd1368060cb6f2aeb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ded3d4657bea7bcd1368060cb6f2aeb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>connectToTaskConfig</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt; pTaskConfig)</td></tr>
-<tr class="separator:a9ded3d4657bea7bcd1368060cb6f2aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37c87524c8f6281b5bedb524cd69101b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37c87524c8f6281b5bedb524cd69101b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>exportPlot</b> (int type, int size, const QString fileName)</td></tr>
-<tr class="separator:a37c87524c8f6281b5bedb524cd69101b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e3541a2e8b264b62bb90a94c7582ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09e3541a2e8b264b62bb90a94c7582ab"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>getTitle</b> ()</td></tr>
+<tr class="separator:a09e3541a2e8b264b62bb90a94c7582ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -142,6 +141,12 @@ virtual QWidget *&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot_handler.html#acbf2bcba5018482181522519cdeed526">hideDataSelectionWidget</a> (bool)</td></tr>
 <tr class="memdesc:acbf2bcba5018482181522519cdeed526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual function to allow the toggling of the dataSelection part of the Plot Options widget. <br /></td></tr>
 <tr class="separator:acbf2bcba5018482181522519cdeed526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ded3d4657bea7bcd1368060cb6f2aeb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ded3d4657bea7bcd1368060cb6f2aeb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>connectToTaskConfig</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt; pTaskConfig)</td></tr>
+<tr class="separator:a9ded3d4657bea7bcd1368060cb6f2aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c87524c8f6281b5bedb524cd69101b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37c87524c8f6281b5bedb524cd69101b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>exportPlot</b> (int type, int size, const QString fileName)</td></tr>
+<tr class="separator:a37c87524c8f6281b5bedb524cd69101b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -160,8 +165,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Handler for plots derived from all OperatorPlots. </p>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="_operator_plot_handler_8h_source.html#l00024">24</a> of file <a class="el" href="_operator_plot_handler_8h_source.html">OperatorPlotHandler.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>

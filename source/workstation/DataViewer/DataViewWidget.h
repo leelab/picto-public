@@ -67,6 +67,8 @@ public:
 
 	void dissociate();
 
+	QWidget* getWidget();
+
 private:
 	//! This widget's organizational layout
 	QGridLayout* layout_;
@@ -90,6 +92,7 @@ private:
 	int xPos_;
 	//! The current Y-Position in the View Grid of this widget.  Only meaningful if it is currentlyDisplayed_.
 	int yPos_;
+
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include <QString>
 #include <QVector>
 #include <QWidget>
+#include <QSplitter>
 
 #include "../viewer.h"
 #include "../../common/operator/DataViewSpecs.h"
@@ -27,11 +28,29 @@ class DataViewOrganizer : public QWidget
 public:
 	DataViewOrganizer();
 	virtual ~DataViewOrganizer();
+
+signals:
+	void widgetDropped(QPoint offset);
+	void widgetDragged(QWidget *pWidget);
+
 public slots:
 	void removeWidgetSlot(QWidget *pWidget);
 	void addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size);
-protected:
+	
+protected:	
+
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dragMoveEvent(QDragMoveEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+
 	QGridLayout *layout_;
+	QSplitter *vSplitter_;
+	QSplitter *hSplitter1_;
+	QSplitter *hSplitter2_;
+	QSplitter *hSplitter3_;
+	QSplitter *hSplitter4_;
+
 };
 
 #endif

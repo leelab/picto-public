@@ -13,7 +13,7 @@ var searchData=
   ['channelphasemap_5f',['channelPhaseMap_',['../class_picto_1_1_input_port.html#a7d8ca8c443c7c2ae12b97bff252cc4c9',1,'Picto::InputPort']]],
   ['children_5f',['children_',['../class_picto_1_1_data_store.html#a0bc374b8aa5f6e755313f950121e47d6',1,'Picto::DataStore::children_()'],['../class_picto_1_1_obsolete_asset.html#acaf18f263ba840a25234d07886d4c4cc',1,'Picto::ObsoleteAsset::children_()']]],
   ['closerenderloops_5f',['closeRenderLoops_',['../class_picto_1_1_scene.html#a5315ed7828a2f41ac8115b9f653bf667',1,'Picto::Scene']]],
-  ['columntypes_5f',['columnTypes_',['../class_picto_1_1_bar_base.html#a32e1ae34cf481c6259b8cf73f666a099',1,'Picto::BarBase']]],
+  ['columntypes_5f',['columnTypes_',['../class_picto_1_1_bar_base.html#a32e1ae34cf481c6259b8cf73f666a099',1,'Picto::BarBase::columnTypes_()'],['../class_picto_1_1_raster_base.html#a38868b50c59b03ecedc176b5a4870e5d',1,'Picto::RasterBase::columnTypes_()']]],
   ['commanddata',['commandData',['../struct_playback_command.html#a3e930693f360986b843d16c0f97b73f1',1,'PlaybackCommand']]],
   ['commandtype',['commandType',['../struct_playback_command.html#a6545618f1f4f7c5c5c0aceeafe6a4e7d',1,'PlaybackCommand']]],
   ['componentid_5f',['componentId_',['../class_component_interface.html#a56beae2f457b7e5b735f0344db1d6b82',1,'ComponentInterface']]],
@@ -23,6 +23,6 @@ var searchData=
   ['conman_5f',['conMan_',['../class_connection_manager.html#ace292afdeb91489451efcf3405c839c9',1,'ConnectionManager']]],
   ['coordsmap',['coordsMap',['../class_view_position_widget.html#a3fbf6cb7437418402576ac82a786867c',1,'ViewPositionWidget::coordsMap()'],['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame::coordsMap()']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
-  ['currentsetname_5f',['currentSetName_',['../class_picto_1_1_bar_base.html#a499bc27bcdff6a66df36413e1273090e',1,'Picto::BarBase']]],
+  ['currentsetname_5f',['currentSetName_',['../class_picto_1_1_bar_base.html#a499bc27bcdff6a66df36413e1273090e',1,'Picto::BarBase::currentSetName_()'],['../class_picto_1_1_raster_base.html#a5eb9610e422cf5e5164892db3753b930',1,'Picto::RasterBase::currentSetName_()']]],
   ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_frame.html#abd6bb55e0fe1faca33336ffccca2ad42',1,'ViewSelectionFrame']]]
 ];

@@ -11,7 +11,7 @@ namespace Picto
 {
 
 TaskConfig::TaskConfig()
-	: updateSignalEnabled_(true), managerConnectionStatus_(Unconnected), NeuralTick_("audio/tick.wav"), selectedChannel_(0), selectedUnit_(0)
+	: updateSignalEnabled_(true), managerConnectionStatus_(Unconnected), NeuralTick_("audio/tick.wav"), selectedChannel_(0), selectedUnit_(0), listenerAdded_(false)
 {
 	reset();
 }
@@ -254,8 +254,15 @@ void TaskConfig::removeWidget(QWidget *widget)
 			analysisWidgetMap.remove(key, widget);
 		}
 
-		//Remove the name from the name map
+		//Remove the name from the name map		
 		widgetNameMap.remove(widget);
+
+		//for Plots
+		if (displayProperties.contains(widget))		
+			displayProperties.remove(widget);
+
+		//removed next time alignEvent() is called
+		//QList<QWeakPointer<NeuralDataListener>> neuralDataListeners_;
 	}
 }
 
@@ -320,12 +327,23 @@ const ViewProperties TaskConfig::getDisplayWidgetProperties(QWidget *widget) con
  */
 void TaskConfig::addNeuralDataListener(QWeakPointer<NeuralDataListener> listener)
 {
+	listenerAdded_ = true;
 	if (!neuralDataListeners_.contains(listener) && !listener.isNull())
 	{
 		neuralDataListeners_.push_back(listener);
 	}
 }
-
+void TaskConfig::removeNeuralDataListeners()
+{
+	if (listenerAdded_)
+	{
+		QList<QWeakPointer<NeuralDataListener>>::iterator it = neuralDataListeners_.begin();
+		while (it != neuralDataListeners_.end())
+		{
+				it = neuralDataListeners_.erase(it);
+		}
+	}
+}
 /*!	Distributes neuralData to registered listeners
  */
 void TaskConfig::notifyNeuralDataListeners(const NeuralDataUnit &neuralData)
@@ -369,11 +387,103 @@ void TaskConfig::notifyNeuralDataListeners(const NeuralDataUnit &neuralData)
 		}
 	}
 }
-
 void TaskConfig::setSelectedNeural(int channel, int unit)
 	{
 		selectedChannel_ = channel;
 		selectedUnit_ = unit;
 	}
 
+void TaskConfig::alignPlot(int alignID)
+{
+	bool bCleanupRequired = false;
+	foreach(QWeakPointer<NeuralDataListener> listener, neuralDataListeners_)
+	{
+		if (listener.isNull())
+		{
+			bCleanupRequired = true;
+		}
+		else
+		{
+			listener.data()->alignPlot(alignID);
+		}
+	}
+
+	if (bCleanupRequired)
+	{
+		QList<QWeakPointer<NeuralDataListener>>::iterator it = neuralDataListeners_.begin();
+		while (it != neuralDataListeners_.end())
+		{
+			if (it->isNull())
+			{
+				it = neuralDataListeners_.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+}
+void TaskConfig::eventAdded(int eventID)
+{
+	bool bCleanupRequired = false;
+	foreach(QWeakPointer<NeuralDataListener> listener, neuralDataListeners_)
+	{
+		if (listener.isNull())
+		{
+			bCleanupRequired = true;
+		}
+		else
+		{
+			listener.data()->addEventData(eventID);
+		}
+	}
+
+	if (bCleanupRequired)
+	{
+		QList<QWeakPointer<NeuralDataListener>>::iterator it = neuralDataListeners_.begin();
+		while (it != neuralDataListeners_.end())
+		{
+			if (it->isNull())
+			{
+				it = neuralDataListeners_.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+}
+void TaskConfig::scriptContAdded(int scriptID)
+{
+	bool bCleanupRequired = false;
+	foreach(QWeakPointer<NeuralDataListener> listener, neuralDataListeners_)
+	{
+		if (listener.isNull())
+		{
+			bCleanupRequired = true;
+		}
+		else
+		{
+			listener.data()->addScriptCont(scriptID);
+		}
+	}
+
+	if (bCleanupRequired)
+	{
+		QList<QWeakPointer<NeuralDataListener>>::iterator it = neuralDataListeners_.begin();
+		while (it != neuralDataListeners_.end())
+		{
+			if (it->isNull())
+			{
+				it = neuralDataListeners_.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+}
 }

@@ -145,6 +145,10 @@ Public Slots</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a1859f6331c1eeb71d28eeace4ed9fbed">alignEvent</a> ()</td></tr>
 <tr class="memdesc:a1859f6331c1eeb71d28eeace4ed9fbed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger an alignEvent, which opens a recording window. <br /></td></tr>
 <tr class="separator:a1859f6331c1eeb71d28eeace4ed9fbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7a428cbd6f2a38ce2bfeede1af49031"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7a428cbd6f2a38ce2bfeede1af49031"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#ae7a428cbd6f2a38ce2bfeede1af49031">alignPlot</a> (int alignID)</td></tr>
+<tr class="memdesc:ae7a428cbd6f2a38ce2bfeede1af49031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger an alignEvent, which opens a recording window. <br /></td></tr>
+<tr class="separator:ae7a428cbd6f2a38ce2bfeede1af49031"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_sampling_histogram_plot"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_sampling_histogram_plot')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_sampling_histogram_plot.html">Picto::SamplingHistogramPlot</a></td></tr>
 <tr class="memitem:a2be4f4b28b583c7e30b3efab645de0af inherit pub_slots_class_picto_1_1_sampling_histogram_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2be4f4b28b583c7e30b3efab645de0af"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_histogram_plot.html#a2be4f4b28b583c7e30b3efab645de0af">submitValue</a> (double bin, double value)</td></tr>
@@ -212,6 +216,44 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>receivePlotHa
 <tr class="memitem:a0688bf18aac413746370f7cad2279b78"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a0688bf18aac413746370f7cad2279b78">addSpikeData</a> (const <a class="el" href="class_picto_1_1_neural_data_unit.html">NeuralDataUnit</a> &amp;data)</td></tr>
 <tr class="memdesc:a0688bf18aac413746370f7cad2279b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates spikeData_ with the new spike and culls data older than the PreFlagWindow.  <a href="#a0688bf18aac413746370f7cad2279b78">More...</a><br /></td></tr>
 <tr class="separator:a0688bf18aac413746370f7cad2279b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e1661b11936919cdedf9d9ea0ac4e49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e1661b11936919cdedf9d9ea0ac4e49"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addEventData</b> (int eventID)</td></tr>
+<tr class="separator:a7e1661b11936919cdedf9d9ea0ac4e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9609ea9d7636ef7ab0b8dfeccb9a4b6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9609ea9d7636ef7ab0b8dfeccb9a4b6a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addScriptCont</b> (int scriptID)</td></tr>
+<tr class="separator:a9609ea9d7636ef7ab0b8dfeccb9a4b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a1b8393ed21d46dc4bea71a3d4002a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91a1b8393ed21d46dc4bea71a3d4002a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a91a1b8393ed21d46dc4bea71a3d4002a">setPreFlagWindow</a> (double flag)</td></tr>
+<tr class="memdesc:a91a1b8393ed21d46dc4bea71a3d4002a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to set the preFlagWindow property. <br /></td></tr>
+<tr class="separator:a91a1b8393ed21d46dc4bea71a3d4002a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a830aec103bbb98d24815e5352547fa6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a830aec103bbb98d24815e5352547fa6b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a830aec103bbb98d24815e5352547fa6b">setPostFlagWindow</a> (double flag)</td></tr>
+<tr class="memdesc:a830aec103bbb98d24815e5352547fa6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to set the postFlagWindow property. <br /></td></tr>
+<tr class="separator:a830aec103bbb98d24815e5352547fa6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace409aaf2068cbb5a4a6e113d24f9447"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace409aaf2068cbb5a4a6e113d24f9447"></a>
+virtual QPair&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getNeuron</b> ()</td></tr>
+<tr class="separator:ace409aaf2068cbb5a4a6e113d24f9447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a387933280931bcca324e2baae4b75982"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a387933280931bcca324e2baae4b75982"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setNeuron</b> (int channel, int unit)</td></tr>
+<tr class="separator:a387933280931bcca324e2baae4b75982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8ebbc66cc7f70a133f0a5bc3b60444d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8ebbc66cc7f70a133f0a5bc3b60444d"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>getEvent</b> ()</td></tr>
+<tr class="separator:aa8ebbc66cc7f70a133f0a5bc3b60444d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a987d166d560f764520d6a3530fb1c35b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a987d166d560f764520d6a3530fb1c35b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setEvent</b> (int eventID)</td></tr>
+<tr class="separator:a987d166d560f764520d6a3530fb1c35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac53381c3beb4d110da3f660a9fe667be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac53381c3beb4d110da3f660a9fe667be"></a>
+virtual QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAlignData</b> ()</td></tr>
+<tr class="separator:ac53381c3beb4d110da3f660a9fe667be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d8a88a9ba02c88035c9cfc7842c4e95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d8a88a9ba02c88035c9cfc7842c4e95"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setAlignData</b> (QList&lt; int &gt; alignElts)</td></tr>
+<tr class="separator:a9d8a88a9ba02c88035c9cfc7842c4e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b3a7e40b9bbe325333dfaf90c3c2d14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b3a7e40b9bbe325333dfaf90c3c2d14"></a>
+virtual QList&lt; QPair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCondition</b> ()</td></tr>
+<tr class="separator:a3b3a7e40b9bbe325333dfaf90c3c2d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca45352fc75201c9db9fcdee8fc578a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca45352fc75201c9db9fcdee8fc578a0"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setCondition</b> (QList&lt; QPair&lt; int, int &gt;&gt; scriptables)</td></tr>
+<tr class="separator:aca45352fc75201c9db9fcdee8fc578a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_sampling_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_sampling_bar_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_sampling_bar_base.html">Picto::SamplingBarBase</a></td></tr>
 <tr class="memitem:aeea9d356e36fd7448e9d7efdb6c61cb8 inherit pub_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeea9d356e36fd7448e9d7efdb6c61cb8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#aeea9d356e36fd7448e9d7efdb6c61cb8">draw</a> ()</td></tr>
@@ -310,6 +352,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>postLinkUpdat
 <tr class="memitem:a31d41ef185cecc7707ccd40a682b1f9f inherit pub_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31d41ef185cecc7707ccd40a682b1f9f"></a>
 <a class="el" href="class_picto_1_1_view_properties.html">ViewProperties</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDefaultViewProperties</b> () const </td></tr>
 <tr class="separator:a31d41ef185cecc7707ccd40a682b1f9f inherit pub_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d2a7830855f5ef7ca6bdd5765470e9 inherit pub_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3d2a7830855f5ef7ca6bdd5765470e9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setManualTitle</b> (const QString &amp;newTitle)</td></tr>
+<tr class="separator:ad3d2a7830855f5ef7ca6bdd5765470e9 inherit pub_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
 <tr class="memitem:a7f015645f56493d55bbfc350a6c61eec inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a7f015645f56493d55bbfc350a6c61eec">addScriptable</a> (QWeakPointer&lt; <a class="el" href="class_picto_1_1_scriptable.html">Scriptable</a> &gt; scriptable)</td></tr>
 <tr class="memdesc:a7f015645f56493d55bbfc350a6c61eec inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> object to this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> and makes it accessible to all <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects for which it will be in scope.  <a href="#a7f015645f56493d55bbfc350a6c61eec">More...</a><br /></td></tr>
@@ -363,6 +408,12 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a728180eeacd1b8611eda1540a9dd1a0f inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a728180eeacd1b8611eda1540a9dd1a0f">getScriptingInfo</a> ()</td></tr>
 <tr class="memdesc:a728180eeacd1b8611eda1540a9dd1a0f inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all of the script properties and script function for this <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> element.  <a href="#a728180eeacd1b8611eda1540a9dd1a0f">More...</a><br /></td></tr>
 <tr class="separator:a728180eeacd1b8611eda1540a9dd1a0f inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60493b022df45a013ff64bfd3b949c6 inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae60493b022df45a013ff64bfd3b949c6"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setScriptParam</b> (bool scriptCondParam)</td></tr>
+<tr class="separator:ae60493b022df45a013ff64bfd3b949c6 inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964ff224a1bc7675245df0f9ccb71857 inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a964ff224a1bc7675245df0f9ccb71857"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>getScriptParam</b> ()</td></tr>
+<tr class="separator:a964ff224a1bc7675245df0f9ccb71857 inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:a98007f02abd55321577ef5db5460caba inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98007f02abd55321577ef5db5460caba"></a>
 virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">getName</a> ()</td></tr>
@@ -614,6 +665,10 @@ virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset
 <tr class="memitem:a27017fa6d089ea68493f899d748e8b27 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a27017fa6d089ea68493f899d748e8b27">updateLinkPath</a> (QString oldPrefix, QString newPrefix)=0</td></tr>
 <tr class="memdesc:a27017fa6d089ea68493f899d748e8b27 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the section at the beginning of the linked path which is input as oldPrefix to the input newPrefix value.  <a href="#a27017fa6d089ea68493f899d748e8b27">More...</a><br /></td></tr>
 <tr class="separator:a27017fa6d089ea68493f899d748e8b27 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_picto_1_1_neural_data_listener"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_neural_data_listener')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_neural_data_listener.html">Picto::NeuralDataListener</a></td></tr>
+<tr class="memitem:aabd2a5f3e3f5779ab43a6d6a5a50c3ac inherit pub_methods_class_picto_1_1_neural_data_listener"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabd2a5f3e3f5779ab43a6d6a5a50c3ac"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>alignPlot</b> (int alignID)=0</td></tr>
+<tr class="separator:aabd2a5f3e3f5779ab43a6d6a5a50c3ac inherit pub_methods_class_picto_1_1_neural_data_listener"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -680,6 +735,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#ae1373d52c6a4ea89d3d4e95f69a5d020">submitScan</a> (const <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a> &amp;scan)</td></tr>
 <tr class="memdesc:ae1373d52c6a4ea89d3d4e95f69a5d020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data from the <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html" title="A class to hold onto data for currently-collecting scans. ">ActiveScan</a> into the histogram. <br /></td></tr>
 <tr class="separator:ae1373d52c6a4ea89d3d4e95f69a5d020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba85639d3bc3c1dcb8497fdc36ee8afb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba85639d3bc3c1dcb8497fdc36ee8afb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCurveOptions</b> ()</td></tr>
+<tr class="separator:aba85639d3bc3c1dcb8497fdc36ee8afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d64267cce4430f17ad64d1886237a49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d64267cce4430f17ad64d1886237a49"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>toAlign</b> (int toAlign)</td></tr>
+<tr class="separator:a1d64267cce4430f17ad64d1886237a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcb1506a07e92f2b09c4717d9060e81f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcb1506a07e92f2b09c4717d9060e81f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSpikes</b> (double time)</td></tr>
+<tr class="separator:adcb1506a07e92f2b09c4717d9060e81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3dd9c0bae1af162a5c19158046601b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3dd9c0bae1af162a5c19158046601b1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkConditions</b> (const <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a> &amp;scan)</td></tr>
+<tr class="separator:af3dd9c0bae1af162a5c19158046601b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_sampling_histogram_plot"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_sampling_histogram_plot')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_sampling_histogram_plot.html">Picto::SamplingHistogramPlot</a></td></tr>
 <tr class="memitem:a5684a33b2cebc72abf123ba64a2c89e8 inherit pro_methods_class_picto_1_1_sampling_histogram_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5684a33b2cebc72abf123ba64a2c89e8"></a>
 virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_histogram_plot.html#a5684a33b2cebc72abf123ba64a2c89e8">getBinSize</a> () const </td></tr>
@@ -892,6 +959,21 @@ QVector&lt; QVector&lt; <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_da
 QList&lt; <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a4e46e1591007cd132a5ad9e49fe655fe">activeScans_</a></td></tr>
 <tr class="memdesc:a4e46e1591007cd132a5ad9e49fe655fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all scans in progress. <br /></td></tr>
 <tr class="separator:a4e46e1591007cd132a5ad9e49fe655fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89da0cab57453e46de7fd2f806a8c53f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89da0cab57453e46de7fd2f806a8c53f"></a>
+QPair&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>neuron_</b></td></tr>
+<tr class="separator:a89da0cab57453e46de7fd2f806a8c53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0921506427c817040510c5d6fad69c75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0921506427c817040510c5d6fad69c75"></a>
+QList&lt; QPair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>conditions_</b></td></tr>
+<tr class="separator:a0921506427c817040510c5d6fad69c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a698ebe2e57ce73d72315ec4e190fb445"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a698ebe2e57ce73d72315ec4e190fb445"></a>
+QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>alignElts_</b></td></tr>
+<tr class="separator:a698ebe2e57ce73d72315ec4e190fb445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad48a0995f563d2acb202424440dce7a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad48a0995f563d2acb202424440dce7a4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>eventID_</b></td></tr>
+<tr class="separator:ad48a0995f563d2acb202424440dce7a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a008a863f62230ec5f1ff18531e36b037"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a008a863f62230ec5f1ff18531e36b037"></a>
+QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>eventsData_</b></td></tr>
+<tr class="separator:a008a863f62230ec5f1ff18531e36b037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_sampling_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_sampling_bar_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_sampling_bar_base.html">Picto::SamplingBarBase</a></td></tr>
 <tr class="memitem:ae48e823ba84f50e9fc8ed919c550341f inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae48e823ba84f50e9fc8ed919c550341f"></a>
 QHash&lt; QString, QHash&lt; long, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#ae48e823ba84f50e9fc8ed919c550341f">m_qhCumulValSq</a></td></tr>
@@ -987,6 +1069,10 @@ QSharedPointer&lt; QScriptEngine &gt;&#160;</td><td class="memItemRight" valign=
 QSharedPointer&lt; QScriptEngineDebugger &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a15a52a61d280e688b20b23a0f63586e1">qsEngineDebugger_</a></td></tr>
 <tr class="memdesc:a15a52a61d280e688b20b23a0f63586e1 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a shared pointer to the QScriptEngineDebugger. <br /></td></tr>
 <tr class="separator:a15a52a61d280e688b20b23a0f63586e1 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_picto_1_1_scriptable"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_scriptable')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_scriptable.html">Picto::Scriptable</a></td></tr>
+<tr class="memitem:a9b45955053bd8f0dca81d97c594086ef inherit pro_attribs_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b45955053bd8f0dca81d97c594086ef"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>scriptParam_</b></td></tr>
+<tr class="separator:a9b45955053bd8f0dca81d97c594086ef inherit pro_attribs_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
 <tr class="memitem:af50c0cd3df239ba86be9edc72ded3ccf inherit pro_attribs_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af50c0cd3df239ba86be9edc72ded3ccf"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">PropertyContainer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a></td></tr>
@@ -1110,8 +1196,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A plot populated in realtime during experiments or analysis, using collected Neural Data. </p>
-<p>The plot is meant for display in the Operator View. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<p>The plot is meant for display in the Operator View. </p><dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="_p_s_t_h_plot_8h_source.html#l00021">21</a> of file <a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -1142,7 +1228,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Implements <a class="el" href="class_picto_1_1_neural_data_listener.html">Picto::NeuralDataListener</a>.</p>
 
-<p>Definition at line <a class="el" href="_p_s_t_h_plot_8cpp_source.html#l00115">115</a> of file <a class="el" href="_p_s_t_h_plot_8cpp_source.html">PSTHPlot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_p_s_t_h_plot_8cpp_source.html#l00132">132</a> of file <a class="el" href="_p_s_t_h_plot_8cpp_source.html">PSTHPlot.cpp</a>.</p>
 
 </div>
 </div>

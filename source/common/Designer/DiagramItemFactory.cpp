@@ -78,7 +78,6 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("RandomGenerator",":/icons/random.svg",50,75);
 		addIconDefinition("PseudorandomInt",":/icons/pseudorandomint.svg",50,75);
 		addIconDefinition("PseudorandomFloat",":/icons/pseudorandomfloat.svg",50,75);
-		addIconDefinition("RandomNormFloat", ":/icons/random.svg", 50, 75);
 		addIconDefinition("RandomInt",":/icons/randomint.svg",50,75);
 		addIconDefinition("OperatorClick",":/icons/mouseclick.svg",50,75);
 		addIconDefinition("Task",":/icons/task.svg",100,100);
@@ -117,6 +116,10 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 
 		//Operator Features Icons
 		addIconDefinition("OperatorFeature", ":/icons/lfpdatasource.svg", 100, 100);
+
+		//Matlab object
+		addIconDefinition("MatlabObject", ":/icons/matlabObj.svg", 100, 100);
+
 
 		mapInitialized_ = true;
 	}

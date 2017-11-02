@@ -7,6 +7,7 @@ namespace Picto {
 
 Scriptable::Scriptable()
 {
+	scriptParam_ = false;
 }
 
 /*! \brief Returns true if something in this Scriptable can be used in a script engine (ie. a script property or script
@@ -261,6 +262,17 @@ void Scriptable::restoreProperties()
 	//	propertyContainer_->setPropertyValue(propItr.key(),propItr.value());
 	//	propItr++;
 	//}
+}
+void Scriptable::setScriptParam(bool scriptParam)
+{
+	if (scriptParam == true)
+		scriptParam_ = true;
+	else
+		scriptParam_ = false;
+}
+bool Scriptable::getScriptParam()
+{
+	return scriptParam_;
 }
 
 }; //namespace Picto

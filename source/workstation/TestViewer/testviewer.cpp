@@ -453,7 +453,7 @@ void TestViewer::playTriggered()
 			engine_->setLfpReader(liveLfpReader_);
 			engine_->setRewardReader(liveRewardReader_);
 			engine_->setSpikeReader(liveSpikeReader_);
-			connect(liveSpikeReader_.data(), SIGNAL(spikeEvent(double, int, int, QVariantList)), this, SLOT(spikeEvent(double, int, int, QVariantList)));
+			connect(liveSpikeReader_.data(), SIGNAL(spikeEvent(double, int, int, QVariantList)), this, SLOT(spikeAdded(double, int, int, QVariantList)));
 			foreach(QSharedPointer<LiveSignalReader> signalReader,signalReaders_)
 			{
 				engine_->setSignalReader(signalReader->getName(),signalReader);
@@ -604,7 +604,7 @@ void TestViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);
 }
-void TestViewer::spikeEvent(double time, int channel, int unit, QVariantList waveform)
+void TestViewer::spikeAdded(double time, int channel, int unit, QVariantList waveform)
 {
 	//Emit a sound for each spike detected
 	if ((selectedChannel_ == 0) || ((channel == selectedChannel_) && ((unit == selectedUnit_) || (selectedUnit_ == 0))))
@@ -632,6 +632,9 @@ void TestViewer::spikeEvent(double time, int channel, int unit, QVariantList wav
 
 		//Tell the Visual Target Host to encode audio for the spike, when recording a Picto movie
 		visualTargetHost_->spikeAdded(time);
+
+		//for Plots
+		viewSelectionFrame_->spikeAdded(channel, unit);
 	}
 }
 void TestViewer::rewarded(int quantity)

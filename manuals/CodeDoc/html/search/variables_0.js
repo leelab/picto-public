@@ -1,10 +1,11 @@
 var searchData=
 [
   ['actionframe_5f',['actionFrame_',['../class_picto_1_1_input_data_unit_package.html#ad698896e9beca4dc4667381354b9374c',1,'Picto::InputDataUnitPackage::actionFrame_()'],['../class_picto_1_1_property_data_unit.html#a771b69a435485d410c4bdd61c13b6fb9',1,'Picto::PropertyDataUnit::actionFrame_()']]],
-  ['activescans_5f',['activeScans_',['../class_picto_1_1_p_s_t_h_plot.html#a4e46e1591007cd132a5ad9e49fe655fe',1,'Picto::PSTHPlot']]],
+  ['activescans_5f',['activeScans_',['../class_picto_1_1_p_s_t_h_plot.html#a4e46e1591007cd132a5ad9e49fe655fe',1,'Picto::PSTHPlot::activeScans_()'],['../class_picto_1_1_raster_plot.html#a5b9256ed89d94afc59461890e13c5886',1,'Picto::RasterPlot::activeScans_()']]],
   ['activesoundlookup_5f',['activeSoundLookup_',['../class_picto_1_1_p_c_m_aural_target.html#ab65401c15ebb13bf30113e6c473edb46',1,'Picto::PCMAuralTarget']]],
   ['addanalysisaction_5f',['addAnalysisAction_',['../class_picto_1_1_analysis_option_widget.html#a1e922ca8b2a53c53352823aefb410d5a',1,'Picto::AnalysisOptionWidget']]],
   ['addtaskaction_5f',['addTaskAction_',['../class_picto_1_1_analysis_option_widget.html#a0f8fe9c31a3484495e1545c0f0279c56',1,'Picto::AnalysisOptionWidget']]],
+  ['alignelements_5f',['alignElements_',['../class_view_selection_frame.html#a9bf5ffaff9f7c476bf28f0abba9589eb',1,'ViewSelectionFrame']]],
   ['aligntotype_5f',['alignToType_',['../class_session_info.html#acba867ab513484d54573c4d80e332df5',1,'SessionInfo']]],
   ['analysisdisplaystate',['analysisDisplayState',['../class_picto_1_1_task_config.html#afd57eaed181bedfe7c23402dfd3e773f',1,'Picto::TaskConfig']]],
   ['analysisids_5f',['analysisIds_',['../struct_preloaded_session_data.html#a7f812ece03c96600fe57d16ea0e0bbe3',1,'PreloadedSessionData']]],

@@ -208,3 +208,8 @@ QVariantList LiveSpikeReader::getWaveformsUntil(double)
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
 }
+QVariantList LiveSpikeReader::getSpikeDataSince(double)
+{
+	//Since we can't see the future, we just always return an empty list.
+	return QVariantList();
+}

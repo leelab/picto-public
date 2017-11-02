@@ -50,6 +50,7 @@ public:
 	virtual QVariantList getUnitsUntil(double time);
 	virtual QVariantList getWaveformsSince(double time);
 	virtual QVariantList getWaveformsUntil(double time);
+	virtual QVariantList getSpikeDataSince(double time);
 
 signals:
 	/*! \brief Emitted whenever a PlaybackSpikeData object is traversed due to a call to moveToIndex().

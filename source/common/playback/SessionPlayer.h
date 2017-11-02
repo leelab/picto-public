@@ -48,6 +48,9 @@ signals:
 	/*! \brief Emitted when playback of the current Run ends.
 	*/
 	void reachedEnd();
+
+public slots:
+	void spikeEvent(double time, int channel, int unit, QVector<float> waveform);
 protected:
 
 private:

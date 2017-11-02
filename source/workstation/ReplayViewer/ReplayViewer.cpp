@@ -13,7 +13,6 @@
 #include <QSlider>
 #include <QApplication>
 #include <QProgressBar>
-#include <QSplitter>
 
 #include "ReplayViewer.h"
 
@@ -34,19 +33,21 @@
 
 #include "../DataViewer/DataViewOrganizer.h"
 #include "../DataViewer/DataViewWidget.h"
+#include "../DataViewer/PlotViewWidget.h"
 
 
 #include "../../common/memleakdetect.h"
 
 
 ReplayViewer::ReplayViewer(QWidget *parent) :
-Viewer(parent), selectedChannel_(0), selectedUnit_(0), noCallBack_(false), currentTime_(0)
+Viewer(parent), selectedChannel_(0), selectedUnit_(0), noCallBack_(false), currentTime_(0), activatePlots_(false)
 {
 	//Create the Playback Controller that handles all Experiment playback
 	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController());
 	connect(playbackController_.data(), SIGNAL(statusChanged(int)), this, SLOT(playbackStatusChanged(int)));
 	connect(playbackController_.data(), SIGNAL(taskChanged(QString)), this, SLOT(taskChanged(QString)));
-
+		
+	
 	//Setup the user interface
 	setupUi();
 }
@@ -70,6 +71,14 @@ void ReplayViewer::deinit()
 {
 	stop();
 	viewSelectionFrame_->clearPlotHandlers();
+	
+	//Plots	
+	if (activatePlots_)
+		viewSelectionFrame_->resetPlotsList(1);	
+	enablePlots_->setCheckState(Qt::Unchecked);
+	viewSelectionFrame_->updateUI(false);
+	activatePlots_ = false;
+	//end Plots
 	emit deinitComplete();
 }
 
@@ -94,6 +103,10 @@ void ReplayViewer::setupUi()
 	connect(runs_,SIGNAL(runSelectionChanged()),this,SLOT(runSelectionChanged()));
 	connect(playbackController_.data(),SIGNAL(sessionPreloaded(PreloadedSessionData)),this,SLOT(sessionPreloaded(PreloadedSessionData)));
 	connect(playbackController_.data(),SIGNAL(sessionPreloadFailed(QString)),this,SLOT(preloadError(QString)));
+
+	//Plots	
+		connect(playbackController_.data(), SIGNAL(sessionLoaded(LoadedSessionData)), this, SLOT(sessionLoaded(LoadedSessionData)));
+	//end Plots
 
 	///play/pause/stop actions and toolbar
 	playAction_ = new QAction(tr("&Start task"),this);
@@ -187,14 +200,20 @@ void ReplayViewer::setupUi()
 	channelBox_->setToolTip("Select a Channel");
 	channelBox_->addItem("All Channels", 0);
 	channelBox_->setCurrentIndex(0);
-	connect(channelBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedChannelChanged(int)));
+	connect(channelBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedChannelChanged()));
 
 	unitBox_ = new QComboBox(this);
 	unitBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	unitBox_->setToolTip("Select a Unit");
 	unitBox_->addItem("All Units", 0);
 	unitBox_->setCurrentIndex(0);
-	connect(unitBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedUnitChanged(int)));
+	connect(unitBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedUnitChanged()));
+
+//Plots
+	enablePlots_ = new QCheckBox("Plots",this);
+	enablePlots_->setCheckState(Qt::Unchecked);
+	connect(enablePlots_, SIGNAL(clicked(bool)), this, SLOT(checkClicked(bool)));
+//end Plots
 
 	testToolbar_ = new QToolBar(this);
 	testToolbar_->addAction(loadSessionAction_);
@@ -203,6 +222,8 @@ void ReplayViewer::setupUi()
 	testToolbar_->addAction(runToEndAction_);
 	testToolbar_->addAction(pauseAction_);
 	testToolbar_->addAction(stopAction_);
+	testToolbar_->addSeparator();	
+	testToolbar_->addWidget(enablePlots_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(userType_);
 	testToolbar_->addWidget(lfpRequirements_);
@@ -213,7 +234,7 @@ void ReplayViewer::setupUi()
 	testToolbar_->addAction(saveRecording_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(channelBox_);
-	testToolbar_->addWidget(unitBox_);
+	testToolbar_->addWidget(unitBox_);	
 	testToolbar_->addSeparator();
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
@@ -222,7 +243,7 @@ void ReplayViewer::setupUi()
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	
-	DataViewOrganizer *dataViewOrganizer = new DataViewOrganizer();
+	dataViewOrganizer_ = new DataViewOrganizer();
 	
 
 	//Set up the visual target host
@@ -230,7 +251,7 @@ void ReplayViewer::setupUi()
 	visualTargetHost_ = new RecordingVisualTargetHost();
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
 
-	stimulusLayout->addWidget(dataViewOrganizer);
+	stimulusLayout->addWidget(dataViewOrganizer_);
 
 	//connect(playbackController_.data(), SIGNAL(framePresented(double)), visualTargetHost_, SLOT(updateFrameTime(double)));
 	connect(visualTargetHost_, SIGNAL(updateRecordingTime(double)), this, SLOT(setRecordTime(double)));
@@ -260,9 +281,9 @@ void ReplayViewer::setupUi()
 	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
 
-	viewSelectionFrame_ = new ViewSelectionFrame();
+	viewSelectionFrame_ = new ViewSelectionFrame(true);	
 	viewSelectionFrame_->setVisualTargetHost(visualTargetHost_);
-	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
+	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer_);
 	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
 	viewSelectionFrame_->rebuild();
 
@@ -297,9 +318,19 @@ void ReplayViewer::setupUi()
 	operationLayout->addWidget(container);
 	operationLayout->setStretchFactor(0, 5);
 
-	container = new QWidget(operationLayout);
-	container->setLayout(stimulusLayout);
-	operationLayout->addWidget(container);
+	//Plots - keep even when no plots (tabs)	
+	viewTabs_ = new QTabWidget();
+	viewTabs_->setTabsClosable(true);
+	QWidget *tabStimulusWidget = new QWidget();
+	tabStimulusWidget->setLayout(stimulusLayout);
+	viewTabs_->addTab(tabStimulusWidget, "Task");
+	viewTabs_->setCurrentIndex(0);
+	operationLayout->addWidget(viewTabs_);
+	
+	connect(viewSelectionFrame_, SIGNAL(openInNewTab(QWidget*)), this, SLOT(openInNewTab(QWidget*)));
+	connect(viewTabs_, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+	//end Plots
+
 	operationLayout->setStretchFactor(1, 10);
 	Picto::UIHelper::addSplitterLine(operationLayout->handle(1), 200);
 
@@ -314,7 +345,7 @@ void ReplayViewer::setupUi()
 	mainLayout->addWidget(operationLayout,1);
 	setLayout(mainLayout);
 }
-void ReplayViewer::selectedChannelChanged(int channel)
+void ReplayViewer::selectedChannelChanged()
 {
 	if (noCallBack_)
 		return;
@@ -328,6 +359,8 @@ void ReplayViewer::selectedChannelChanged(int channel)
 	QString selectedStr = channelBox_->itemData(channelBox_->currentIndex()).toString(); //Channel 5
 	if (selectedStr.split(QRegExp("\\s")).last().toInt())
 		selectedChannel_ = selectedStr.split(QRegExp("\\s")).last().toInt(); //5
+
+	//selectedChannel_ = channelBox_->itemData(channelBox_->currentIndex()).toInt();
 
 	unitBox_->clear();
 	selectedUnit_ = 0;
@@ -343,9 +376,9 @@ void ReplayViewer::selectedChannelChanged(int channel)
 	}
 
 	//This will take care of resetting the spike plot for the case where channel changes but unit index doesn't change.
-	selectedUnitChanged(unitBox_->currentIndex());
+	selectedUnitChanged();
 }
-void ReplayViewer::selectedUnitChanged(int unit)
+void ReplayViewer::selectedUnitChanged()
 {
 	if (noCallBack_)
 		return;
@@ -586,6 +619,10 @@ void ReplayViewer::stop()
 	//Whenever stop is pressed, the runQueue_ should be reinitialized to everything that's in the run selector
 	QList<PlayRunInfo> selectedRuns = getSelectedPlayRunInfo();
 	setRunQueue(selectedRuns);
+	//Plots
+	if (activatePlots_)
+		viewSelectionFrame_->resetPlotsList(1);
+	//end Plots
 	playbackController_->stop();
 }
 
@@ -636,6 +673,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			lfpRequirements_->setEnabled(false);
 			analysisSelector_->setEnabled(false);
 			analysisSelector_->enableCheckboxes(false);
+			enablePlots_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -659,6 +697,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			lfpRequirements_->setEnabled(false);
 			analysisSelector_->setEnabled(true);
 			analysisSelector_->enableCheckboxes(true);
+			enablePlots_->setEnabled(true);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(false);
@@ -688,6 +727,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			playbackController_->getRenderingTarget()->showSplash();
 			analysisSelector_->setEnabled(true);
 			analysisSelector_->enableCheckboxes(true);
+			enablePlots_->setEnabled(true);
 		break;
 		case PlaybackControllerData::Loading:
 			progress_->setHighlightRange(0,0,0);
@@ -705,6 +745,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			lfpRequirements_->setEnabled(false);
 			analysisSelector_->setEnabled(true);
 			analysisSelector_->enableCheckboxes(false);
+			enablePlots_->setEnabled(false);
 			loadProgress_->setMaximum(0);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
@@ -727,6 +768,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			lfpRequirements_->setEnabled(false);
 			analysisSelector_->setEnabled(true);
 			analysisSelector_->enableCheckboxes(false);
+			enablePlots_->setEnabled(false);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
@@ -749,6 +791,7 @@ void ReplayViewer::playbackStatusChanged(int status)
 			lfpRequirements_->setEnabled(false);
 			analysisSelector_->setEnabled(true);
 			analysisSelector_->enableCheckboxes(false);
+			enablePlots_->setEnabled(false);
 			foreach(QWidget * outSigWidg, outputSignalsWidgets_)
 			{
 				static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
@@ -1161,6 +1204,7 @@ void ReplayViewer::spikeAdded(int channel, int unit, double time)
 		if (!unitList.contains(unit))
 		{
 			unitList.append(unit);
+			ChannelsUnits_[channel] = unitList;
 			//Update the Combo box for channel/unit
 			updateNeuralUI();
 		}
@@ -1218,9 +1262,82 @@ void ReplayViewer::taskChanged(QString newTask)
 	connect(currentTaskConfig_.data(), SIGNAL(spikeAdded(int, int, double)), this, SLOT(spikeAdded(int, int, double)));
 	connect(playbackController_.data(), SIGNAL(rewarded(int)), this, SLOT(rewarded(int)));
 
-
+	//Plots		
+	connect(playbackController_.data(), SIGNAL(alignPlotSig(int)), currentTaskConfig_.data(), SLOT(alignPlot(int)));	
+	connect(playbackController_.data(), SIGNAL(eventAddedSig(int)), currentTaskConfig_.data(), SLOT(eventAdded(int)));
+	connect(playbackController_.data(), SIGNAL(scriptContAddedSig(int)), currentTaskConfig_.data(), SLOT(scriptContAdded(int)));
+	//end Plots
 	viewSelectionFrame_->connectToTaskConfig(playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig());
+	viewSelectionFrame_->setTaskName(newTask);
 	viewSelectionFrame_->rebuild();
+	ChannelsUnits_.clear();
+	updateNeuralUI();
 
-	selectedChannelChanged(0);
+	selectedChannelChanged();
+}
+
+// for Plots
+/*! \brief Called when the PlaybackController successfully preloads a Session file.  Adds the preloaded data to the
+*	RunSelectorWidget and AnalysisSelectorWidget.
+*/
+void ReplayViewer::sessionLoaded(LoadedSessionData sessionData)
+{
+	alignElements_ = sessionData.alignElements_;
+	spikeReader_ = sessionData.spikeReader_;
+
+	if (activatePlots_)
+		viewSelectionFrame_->preloadEvents(playbackController_->getDesignRoot(), alignElements_, spikeReader_);
+}
+void ReplayViewer::openInNewTab(QWidget* pWidget)
+{
+	if (!activatePlots_)
+		return;
+
+	QString tabName = ((DataViewWidget*)pWidget)->getName();
+	if (tabName != "Task")
+	{
+		viewSelectionFrame_->hideCurrentWidget(pWidget);
+		viewTabs_->addTab(pWidget, tabName);
+		int index = viewTabs_->indexOf(pWidget);
+		viewTabs_->setCurrentIndex(index);
+	}
+}
+
+void ReplayViewer::closeTab(int index)
+{	
+if (!activatePlots_)
+		return;
+
+
+	int currIndex = index;
+
+	if (currIndex < 1)
+		return;
+
+	QWidget* pWidget = viewTabs_->widget(currIndex);
+	if (pWidget)
+	{
+		bool sameTabAsTask = ((PlotViewWidget*)pWidget)->tabInfo();
+		if (!sameTabAsTask)
+		{		
+			QWidget* pDVWidget = ((DataViewWidget*)(viewTabs_->widget(currIndex)))->getWidget();
+			viewTabs_->removeTab(currIndex);
+			viewSelectionFrame_->removeFromList(pDVWidget);
+		}
+	}
+}
+/*! \brief Callback helper when a checkbox is clicked.
+*/
+void ReplayViewer::checkClicked(bool)
+{	
+	if (enablePlots_->checkState() == Qt::Unchecked)
+	{
+		viewSelectionFrame_->resetPlotsList(1);
+		activatePlots_ = false;
+	}
+	else
+		activatePlots_ = true;
+
+	playbackController_->activatePlots(activatePlots_);
+	viewSelectionFrame_->updateUI(activatePlots_);
 }

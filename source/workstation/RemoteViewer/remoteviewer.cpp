@@ -50,8 +50,8 @@
 
 #include "../DataViewer/ViewSelectionFrame.h"
 #include "../DataViewer/DataViewWidget.h"
-#include "../DataViewer/DataViewOrganizer.h"
 
+#include "../DataViewer/PlotViewWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -98,7 +98,8 @@ RemoteViewer::RemoteViewer(QWidget *parent)
 	awaitingRejoin_(RejoinStatus::None),
 	numImportedAnalyses_(0),
 	lastExpHash_(0),
-	outputWidgetHolder_(nullptr)
+	outputWidgetHolder_(nullptr),
+	activatePlots_(false)
 {
 	setupServerChannel();
 	setupEngine();
@@ -573,6 +574,7 @@ void RemoteViewer::enterState()
 		currentRunViewer_->clear();
 		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
+		enablePlots_->setEnabled(true);
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
 		//mainTabbedFrame_->setTabEnabled(0,false);
@@ -605,6 +607,7 @@ void RemoteViewer::enterState()
 		currentRunViewer_->clear();
 		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
+		enablePlots_->setEnabled(true);
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
 		//mainTabbedFrame_->setTabEnabled(0,false);
@@ -637,6 +640,7 @@ void RemoteViewer::enterState()
 		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->deinitialize();
 		neuralDataViewer_->initialize();
+		enablePlots_->setEnabled(false);
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
 		//mainTabbedFrame_->setTabEnabled(0,false);
@@ -668,6 +672,7 @@ void RemoteViewer::enterState()
 		currentRunViewer_->clear();
 		activeExpName_->setText(myDesignRoot_->getDesignName());
 		neuralDataViewer_->initialize();
+		enablePlots_->setEnabled(false);
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
 		//mainTabbedFrame_->setTabEnabled(0,false);
@@ -725,6 +730,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
 		mainTabbedFrame_->setTabEnabled(0,true);
+		enablePlots_->setEnabled(false);
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
@@ -754,6 +760,7 @@ void RemoteViewer::enterState()
 		taskListBox_->setEnabled(false);
 		loadPropsAction_->setEnabled(true);
 		mainTabbedFrame_->setTabEnabled(0,true);
+		enablePlots_->setEnabled(false);
 		mainTabbedFrame_->setTabIcon(2,currentRunViewer_->getLatestRunIcon());
 		currentRunViewer_->markLatestAsRunning(true);
 		Scene::setZoom(zoomValue_);
@@ -787,6 +794,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
+		enablePlots_->setEnabled(true);
 		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
@@ -871,7 +879,15 @@ void RemoteViewer::deinit()
 {
 	//Stop the timers so that our state update functions won't get called anymore.
 	stateUpdateTimer_->stop();
+	enablePlots_->setCheckState(Qt::Unchecked);
 	viewSelectionFrame_->clearPlotHandlers();
+	//Plots	
+	if (activatePlots_)
+		viewSelectionFrame_->resetPlotsList(1);
+	enablePlots_->setCheckState(Qt::Unchecked);
+	viewSelectionFrame_->updateUI(false);
+	activatePlots_ = false;
+	//end Plots
 	emit deinitComplete();
 }
 
@@ -997,10 +1013,17 @@ void RemoteViewer::setupUi()
 	//The toolbar
 	toolBar_ = new QToolBar;
 
+	//Plots
+	enablePlots_ = new QCheckBox("Plots",this);
+	enablePlots_->setCheckState(Qt::Unchecked);
+	connect(enablePlots_, SIGNAL(clicked(bool)), this, SLOT(checkClicked(bool)));
+	//end Plots
+
 	toolBar_->addAction(playAction_);
 	toolBar_->addAction(pauseAction_);
 	toolBar_->addWidget(taskListBox_);
 	toolBar_->addAction(stopAction_);
+	toolBar_->addWidget(enablePlots_);
 	toolBar_->addSeparator();
 	toolBar_->addAction(loadPropsAction_);
 	toolBar_->addSeparator();
@@ -1081,16 +1104,16 @@ void RemoteViewer::setupUi()
 	zoomLayout->addWidget(zoomSlider_);
 	zoomLayout->addWidget(zoomPercentage_);
 
-	DataViewOrganizer *dataViewOrganizer = new DataViewOrganizer();
+	dataViewOrganizer_ = new DataViewOrganizer();
 
-	viewSelectionFrame_ = new ViewSelectionFrame();
+	viewSelectionFrame_ = new ViewSelectionFrame(true);
 	viewSelectionFrame_->setVisualTargetHost(visualTargetHost_);
-	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
+	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer_);
 	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
 	viewSelectionFrame_->rebuild();
 
 	QWidget *pContainer = new QWidget(this);
-	QVBoxLayout *leftPane = new QVBoxLayout(pContainer);
+	leftPane = new QVBoxLayout(pContainer);
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
 	leftPane->addWidget(viewSelectionFrame_,0);
@@ -1101,7 +1124,7 @@ void RemoteViewer::setupUi()
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	stimulusLayout->setContentsMargins(0, 0, 0, 0);
-	stimulusLayout->addWidget(dataViewOrganizer);
+	stimulusLayout->addWidget(dataViewOrganizer_);
 
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{
@@ -1120,6 +1143,11 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_->setTabEnabled(1,false);
 	mainTabbedFrame_->layout()->setContentsMargins(0, 0, 0, 0);
 
+	//for Plots	
+	mainTabbedFrame_->setTabsClosable(true);
+	connect(mainTabbedFrame_, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+	connect(viewSelectionFrame_, SIGNAL(openInNewTab(QWidget*)), this, SLOT(openInNewTab(QWidget*)));	
+	//end plots
 	QTabWidget *analysisTabs = new QTabWidget();
 
 	analysisSelector_ = new Picto::AnalysisSelectorWidget(analysisTabs);
@@ -1190,6 +1218,12 @@ void RemoteViewer::play()
 	QString modifiedTaskName = taskListBox_->currentText();
 	modifiedTaskName = modifiedTaskName.simplified().remove(' ');
 	sendTaskCommand("start:"+modifiedTaskName);
+
+	if (activatePlots_)
+	{
+		QList<QPair<int, int>> spikeReader; //spikes are loaded during runtime in remote mode
+		viewSelectionFrame_->preloadEvents(activeDesignRoot_, alignElements_, spikeReader);
+	}
 }
 
 /*! \brief Tells the Server to resume running the current Task from its paused state.
@@ -1210,6 +1244,8 @@ void RemoteViewer::pause()
  */
 void RemoteViewer::stop()
 {
+	if (activatePlots_)
+		viewSelectionFrame_->resetPlotsList(1);
 	sendTaskCommand("stop");
 }
 
@@ -1526,6 +1562,10 @@ void RemoteViewer::updateNeuralData()
 			if (task && task->getTaskConfig())
 			{
 				task->getTaskConfig()->notifyNeuralDataListeners(unit);
+
+				//for Plots
+				if (activatePlots_)
+					viewSelectionFrame_->spikeAdded(unit.getChannel(), unit.getUnit());
 			}
 
 			hadData = true;
@@ -2021,6 +2061,46 @@ bool RemoteViewer::joinSession()
 		return false;
 	}
 
+	//Plots
+	if (activatePlots_)
+	{
+		//Retrieve Elements lookup for Alignment selection - Plots
+		QList<Picto::AssetInfo> assets = activeExperiment_->getDesignConfig()->getElementInfo();
+
+		foreach(Picto::AssetInfo asset, assets)
+		{
+			int assetId = asset.id;
+			QList<int> scriptableIDs;
+			if (activeDesignRoot_ &&  activeDesignRoot_->getExperiment()->getDesignConfig())
+			{
+				QSharedPointer<Asset> asset = activeDesignRoot_->getExperiment()->getDesignConfig()->getAsset(assetId);
+				if (activeDesignRoot_ &&  activeDesignRoot_->getExperiment()->getDesignConfig())
+				{
+					QSharedPointer<Asset> asset = activeDesignRoot_->getExperiment()->getDesignConfig()->getAsset(assetId);
+					if (asset && asset->inherits("Picto::StateMachineElement"))
+					{
+						QList<int> scriptableIDs;
+						QList<QWeakPointer<Scriptable>> ScriptableMembers;
+						ScriptableMembers = asset.objectCast<ScriptableContainer>()->getScriptableList();
+						foreach(QSharedPointer<Scriptable> scriptable, ScriptableMembers)
+						{
+							int scriptableID = scriptable ? scriptable->getAssetId() : 0;
+							scriptableIDs.append(scriptableID);
+						}
+						if (!alignElements_.contains(assetId))
+							alignElements_.insert(assetId, scriptableIDs);
+					}
+				}
+			}
+		}
+		//QList<QPair<int, int>> spikeReader; //spikes are loaded during runtime in remote mode
+		//viewSelectionFrame_->preloadEvents(activeDesignRoot_, alignElements_, spikeReader);
+	}
+	connect(slaveExpDriver_.data(), SIGNAL(alignPlot(int)), this, SLOT(alignPlot(int)));
+	connect(slaveExpDriver_.data(), SIGNAL(eventAdded(int)), this, SLOT(eventAdded(int)));
+	connect(slaveExpDriver_.data(), SIGNAL(scriptContAdded(int)), this, SLOT(scriptContAdded(int)));
+	//end Plots
+
 	return true;
 }
 
@@ -2043,6 +2123,13 @@ bool RemoteViewer::disjoinSession()
 	serverChannel_->setSessionId(QUuid());
 	engineSlaveChannel_->setSessionId(QUuid());
 	neuralSlaveChannel_->setSessionId(QUuid());
+	//Plots	
+	if (activatePlots_)
+		viewSelectionFrame_->resetPlotsList(1);
+	enablePlots_->setCheckState(Qt::Unchecked);
+	viewSelectionFrame_->updateUI(false);
+	activatePlots_ = false;
+	//end Plots
 	return true;
 }
 
@@ -2274,8 +2361,9 @@ void RemoteViewer::currTaskChanged(QString task)
 			return;
 		}
 	}
-
+	
 	viewSelectionFrame_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
+	viewSelectionFrame_->setTaskName(task);
 	viewSelectionFrame_->rebuild();
 }
 
@@ -2505,3 +2593,76 @@ void RemoteViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);
 }
+void RemoteViewer::alignPlot(int alignID)
+{
+	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
+	if (task && task->getTaskConfig())
+	{
+		task->getTaskConfig()->alignPlot(alignID);
+	}
+}
+void RemoteViewer::openInNewTab(QWidget* pWidget)
+{
+if (!activatePlots_)
+		return;
+
+	QString tabName = ((DataViewWidget*)pWidget)->getName();
+	if (tabName != "Task")
+	{
+		viewSelectionFrame_->hideCurrentWidget(pWidget);
+		mainTabbedFrame_->addTab(pWidget, tabName);
+		int index = mainTabbedFrame_->indexOf(pWidget);
+		mainTabbedFrame_->setCurrentIndex(index);
+	}
+}
+
+void RemoteViewer::closeTab(int index)
+{
+if (!activatePlots_)
+		return;
+
+	int currIndex = index;
+
+	if (currIndex < 3)
+		return;
+
+	QWidget* pWidget = mainTabbedFrame_->widget(currIndex);
+	if (pWidget)
+	{
+		bool sameTabAsTask = ((PlotViewWidget*)pWidget)->tabInfo();
+		if (!sameTabAsTask)
+		{
+			QWidget* pDVWidget = ((DataViewWidget*)(mainTabbedFrame_->widget(currIndex)))->getWidget();
+			mainTabbedFrame_->removeTab(currIndex);
+			viewSelectionFrame_->removeFromList(pDVWidget);
+		}
+	}
+}
+/*! \brief Callback helper when a checkbox is clicked.
+*/
+void RemoteViewer::checkClicked(bool)
+{
+	if (enablePlots_->checkState() == Qt::Unchecked)
+		activatePlots_ = false;
+	else
+		activatePlots_ = true;
+
+	viewSelectionFrame_->updateUI(activatePlots_);
+}
+void RemoteViewer::eventAdded(int alignID)
+{
+	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
+	if (task && task->getTaskConfig())
+	{
+		task->getTaskConfig()->eventAdded(alignID);
+	}
+}
+void RemoteViewer::scriptContAdded(int alignID)
+{
+	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
+	if (task && task->getTaskConfig())
+	{
+		task->getTaskConfig()->scriptContAdded(alignID);
+	}
+}
+

@@ -17,6 +17,8 @@ SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState, QSharedPoin
 {
 	lastIndex_ = PlaybackIndex::minForTime(0);
 	nextFrame_ = PlaybackIndex();
+
+	connect(sessionState_.data(), SIGNAL(spikeEvent(double, int, int, QVector<float>)), this, SLOT(spikeEvent(double, int, int, QVector<float>)));
 }
 
 SessionPlayer::~SessionPlayer()
@@ -199,41 +201,6 @@ bool SessionPlayer::step(double lookForward)
 			{
 				dataState->moveToIndex(timeIndex);
 			}
-
-			// Tell the Neural Data Listeners
-			PlaybackIndex currSpikeInd = sessionState_->getSpikeState()->getCurrentIndex();
-			if (prevSpikeInd != currSpikeInd)
-			{
-				//alert NeuralDataListener
-				//Get the first transition in this run
-				int firstTransId = sessionState_->getTransitionState()->getFirstTransIdInRun();
-				if (firstTransId != 0)
-				{
-					QSharedPointer<Experiment> pExperiment = sessionLoader_->getDesignRoot()->getExperiment().objectCast<Experiment>();
-					if (pExperiment)
-					{
-						QSharedPointer<Asset> trans = pExperiment->getDesignConfig()->getAsset(firstTransId);
-						if (trans)
-						{
-							QString taskName = trans->getPath().split("::").first();
-							if (pExperiment->getTaskByName(taskName))
-							{
-								QSharedPointer<Picto::NeuralDataUnit> neuralData = QSharedPointer<Picto::NeuralDataUnit>(new Picto::NeuralDataUnit());
-								neuralData->setTimestamp(sessionState_->getSpikeState()->getLatestTime());
-								neuralData->setChannel(sessionState_->getSpikeState()->getLatestChannel());
-								neuralData->setUnit(sessionState_->getSpikeState()->getLatestUnit());
-
-								//QSharedPointer<QVector<float>> waveform(&((QVector<float>)(sessionState_->getSpikeState()->getLatestWaveform())));
-								//neuralData->setWaveform(waveform);
-								neuralData->setFittedtime(sessionState_->getSpikeState()->getLatestTime());
-
-								pExperiment->getTaskByName(taskName)->getTaskConfig()->notifyNeuralDataListeners(*neuralData);
-							}
-						}
-					}
-				}
-			}
-			//END NeuralDataListeners
 		}
 	}
 	stateToTrigger->moveToIndex(stateToTrigger->getNextIndex(nextFrameId.time()));
@@ -300,4 +267,35 @@ QSharedPointer<DataState> SessionPlayer::getNextTriggerState(double lookForward)
 	if (!indexBuffer.isValid())
 		return QSharedPointer<DataState>();
 	return idIndexedStates[nBuffer];
+}
+void SessionPlayer::spikeEvent(double time, int channel, int unit, QVector<float> waveform)
+{
+	// Tell the Neural Data Listeners	
+	//alert NeuralDataListener
+	//Get the first transition in this run
+	int firstTransId = sessionState_->getTransitionState()->getFirstTransIdInRun();
+	if (firstTransId != 0)
+	{
+		QSharedPointer<Experiment> pExperiment = sessionLoader_->getDesignRoot()->getExperiment().objectCast<Experiment>();
+		if (pExperiment)
+		{
+			QSharedPointer<Asset> trans = pExperiment->getDesignConfig()->getAsset(firstTransId);
+			if (trans)
+			{
+				QString taskName = trans->getPath().split("::").first();
+				if (pExperiment->getTaskByName(taskName))
+				{
+					QSharedPointer<Picto::NeuralDataUnit> neuralData = QSharedPointer<Picto::NeuralDataUnit>(new Picto::NeuralDataUnit());
+					neuralData->setTimestamp(time);
+					neuralData->setChannel(channel);
+					neuralData->setUnit(unit);
+					neuralData->setFittedtime(time);
+
+					pExperiment->getTaskByName(taskName)->getTaskConfig()->notifyNeuralDataListeners(*neuralData);
+				}
+			}
+		}
+	}
+	
+	//END NeuralDataListeners
 }

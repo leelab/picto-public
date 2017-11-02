@@ -87,7 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_data_view_organizer-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -119,6 +121,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a510d4323bd5114604b82f5b1e46810dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A slot emitted by the <a class="el" href="class_view_selection_frame.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionFrame</a> to signal that the specified widget should be added to the layout at the specified position with the indiciated span. <br /></td></tr>
 <tr class="separator:a510d4323bd5114604b82f5b1e46810dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:ada3b9ebe4ee90e9e6313cdf5bf4bc8d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada3b9ebe4ee90e9e6313cdf5bf4bc8d7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>widgetDropped</b> (QPoint offset)</td></tr>
+<tr class="separator:ada3b9ebe4ee90e9e6313cdf5bf4bc8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30d9857695e1140a02c2064d16862b92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30d9857695e1140a02c2064d16862b92"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>widgetDragged</b> (QWidget *pWidget)</td></tr>
+<tr class="separator:a30d9857695e1140a02c2064d16862b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad5dfca0d67f7d04c9df6f94c62e49314"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5dfca0d67f7d04c9df6f94c62e49314"></a>
@@ -130,18 +141,48 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memdesc:a6437782a7537404e68bfa5053a4b2a02"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_data_view_organizer.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewOrganizer</a> destructor. <br /></td></tr>
 <tr class="separator:a6437782a7537404e68bfa5053a4b2a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aea69e656c0b543592aa5145c06536a04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea69e656c0b543592aa5145c06536a04"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>dragEnterEvent</b> (QDragEnterEvent *event) override</td></tr>
+<tr class="separator:aea69e656c0b543592aa5145c06536a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acad4a1ce92c5420f063c1e4ddec08596"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acad4a1ce92c5420f063c1e4ddec08596"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>dragMoveEvent</b> (QDragMoveEvent *event) override</td></tr>
+<tr class="separator:acad4a1ce92c5420f063c1e4ddec08596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae597172487d97f066300f40a10d6ef20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae597172487d97f066300f40a10d6ef20"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>dropEvent</b> (QDropEvent *event) override</td></tr>
+<tr class="separator:ae597172487d97f066300f40a10d6ef20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a338a66829f6af295524224344b28db98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a338a66829f6af295524224344b28db98"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (QMouseEvent *event) override</td></tr>
+<tr class="separator:a338a66829f6af295524224344b28db98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:acf9366a2f7873962c41b7c778363395b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf9366a2f7873962c41b7c778363395b"></a>
 QGridLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>layout_</b></td></tr>
 <tr class="separator:acf9366a2f7873962c41b7c778363395b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e04fd3aa46fc20734f3b942b0dd2bd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e04fd3aa46fc20734f3b942b0dd2bd7"></a>
+QSplitter *&#160;</td><td class="memItemRight" valign="bottom"><b>vSplitter_</b></td></tr>
+<tr class="separator:a0e04fd3aa46fc20734f3b942b0dd2bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d145085ece2abfe1fdbdd2e40652f70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d145085ece2abfe1fdbdd2e40652f70"></a>
+QSplitter *&#160;</td><td class="memItemRight" valign="bottom"><b>hSplitter1_</b></td></tr>
+<tr class="separator:a6d145085ece2abfe1fdbdd2e40652f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a822433bd7012f220ce8ca73953a7ecfa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a822433bd7012f220ce8ca73953a7ecfa"></a>
+QSplitter *&#160;</td><td class="memItemRight" valign="bottom"><b>hSplitter2_</b></td></tr>
+<tr class="separator:a822433bd7012f220ce8ca73953a7ecfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6748b0c227473c9cbefb664a5891d31c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6748b0c227473c9cbefb664a5891d31c"></a>
+QSplitter *&#160;</td><td class="memItemRight" valign="bottom"><b>hSplitter3_</b></td></tr>
+<tr class="separator:a6748b0c227473c9cbefb664a5891d31c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5aaf0fef45670520231091f4b77fd32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5aaf0fef45670520231091f4b77fd32"></a>
+QSplitter *&#160;</td><td class="memItemRight" valign="bottom"><b>hSplitter4_</b></td></tr>
+<tr class="separator:af5aaf0fef45670520231091f4b77fd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget to contain objects meant to be displayed in the Experiment <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. </p>
 <p>The <a class="el" href="class_data_view_organizer.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewOrganizer</a> is a simple widget responsible for positioning and manipulating DataViewWidgets. The real bulk of the work is done by the <a class="el" href="class_view_selection_frame.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionFrame</a>. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_data_view_organizer_8h_source.html#l00024">24</a> of file <a class="el" href="_data_view_organizer_8h_source.html">DataViewOrganizer.h</a>.</p>
+<p>Definition at line <a class="el" href="_data_view_organizer_8h_source.html#l00025">25</a> of file <a class="el" href="_data_view_organizer_8h_source.html">DataViewOrganizer.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/workstation/DataViewer/<a class="el" href="_data_view_organizer_8h_source.html">DataViewOrganizer.h</a></li>
 <li>source/workstation/DataViewer/<a class="el" href="_data_view_organizer_8cpp_source.html">DataViewOrganizer.cpp</a></li>

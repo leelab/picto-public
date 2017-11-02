@@ -13,6 +13,7 @@
 #include "RemoteStateUpdater.h"
 #include "neuraldataviewer.h"
 #include "TaskRunViewer.h"
+#include "../DataViewer/DataViewOrganizer.h"
 
 #include <QUuid>
 #include <QFuture>
@@ -27,6 +28,7 @@ class QSlider;
 class QSpinBox;
 class QLineEdit;
 class QTabWidget;
+class QCheckBox;
 QT_END_NAMESPACE
 
 
@@ -54,8 +56,8 @@ using namespace Picto;
  *	Experiment (only Workstations with the correct password entered in the password box can control a Session).  All
  *	Workstations attached to the same Session are all synchronized.  When one changes something about the Experiment,
  *	all others are updated accordingly.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 class RemoteViewer : public Viewer
 {
@@ -69,7 +71,13 @@ public:
 
 public slots:
 	void init();  //Called just before displaying the viewer
-	void deinit();	//Called just after the user switches out of the viewer
+	void deinit();	//Called just after the user switches out of the viewer	
+	void openInNewTab(QWidget* pWidget);
+	void closeTab(int index);
+
+	void alignPlot(int);
+	void eventAdded(int);
+	void scriptContAdded(int);
 
 private slots:
 	void playAction();
@@ -273,12 +281,23 @@ private:
 
 	QStringList analysesCurrentlyActive_;
 
+	QMap<int, QList<int>> alignElements_;
+	QSharedPointer<DesignRoot> designRootForData_;
+	bool activatePlots_;
+	QCheckBox* enablePlots_;
+	QVBoxLayout *leftPane;
+	QSharedPointer<TaskConfig> currentTaskConfig_;
+
 private slots:
 	void notifyAnalysisSelection(const QString&, bool, bool);
 	void taskListIndexChanged(int index);
 	bool assureChannelConnections();
 	void currTaskChanged(QString task);
 	void runStarted(QUuid runId);
+	void checkClicked(bool);
+
+protected:
+	DataViewOrganizer *dataViewOrganizer_;
 
 };
 

@@ -506,7 +506,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("randomize()","Generates the next pseudorandomly selected value and makes it accesible from the 'value' script property.");
 	curr->addSFunc("reshuffleLastValue()","Moves the last generated value back into the list of values to be randomized so that it will be generated again before the current list runs out of values.");
 	curr->addSFunc("reset()","Recreates the list of values to randomized according to the current'Min' and 'Max'.  After calling this, it is effectively as if randomize() has never been called.");
-	
+
 	curr = addDescription("RandomDoubleParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
 	curr->setOverview("Used to generate a random double in a set range.  New random doubles are created by calling 'randomize()' and their values retrieved by using the 'value' script property.");
@@ -528,17 +528,6 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Max","The maximum value in the range of values that will be randomized.");
 	curr->addSProp("value","Sets/Gets the current value stored in this element.");
 	curr->addSFunc("randomize()","Generates the next randomly selected value and makes it accesible from the 'value' script property.");
-
-	curr = addDescription("RandomNormDoubleParameter");
-	curr->setInherits(getAssetDescription("Parameter"));
-	curr->setOverview("Used to generate a random double from a normal distribution.  New random doubles are created by calling 'randomize()' and their values retrieved by using the 'value' script property.");
-	curr->addProp("Value", "The value stored in this object before any randomization occurs.");
-	curr->addProp("UseSeed", "Set this to true if you would like the order of randomized values to be identical for every experimental run.");
-	curr->addProp("Seed", "When 'UseSeed' is true, this is the seed that is used in the randomizer.  For each seed a different reproducable random sequence will be produced.");
-	curr->addProp("Mean", "The mean value of the gaussienne.");
-	curr->addProp("StdDeviation", "The standard deviation of the gaussienne.");
-	curr->addSProp("value", "Sets/Gets the current value stored in this element.");
-	curr->addSFunc("randomize()", "Generates the next randomly selected value and makes it accesible from the 'value' script property.");
 
 	curr = addDescription("RangeParameter");
 	curr->setInherits(getAssetDescription("Parameter"));
@@ -884,6 +873,10 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("AnalysisOutput");
 	curr->setInherits(getAssetDescription("AnalysisVariable"));
 
+	//Matlab
+	curr = addDescription("AnalysisMatlabObj");
+	curr->setInherits(getAssetDescription("AnalysisVariable"));
+
 	//Variables
 	curr = addDescription("AnalysisNumberVariable");
 	curr->setInherits(getAssetDescription("Variable"));
@@ -1171,5 +1164,12 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("A Peri-Stimulus Time Histogram meant for accumulating presorted neural data and displaying the average firing rate surrounding an AlignEvent.  The bin size is specified by the parameter BinSize, and values are submitted with the time relative to the AlignEvent.  It can automatically calculate and display the Standard Error for each bin.  The Error is calcualted by retaining only a couple of values for each bin: the sum of all samples, the sum of the squares of all samples, and the number of samples.  This way memory overhead and calculations are minimized.  In order to restore the state of a plot, make sure to use all three of the following: setCumulativeValue, setCumulativeValueSquared, and setSamples.  Otherwise new samples won't accumulate correctly.");
 	curr->addProp("PreFlagWindow", "The size of the window preceeding an AlignEvent over which data is collected and displayed.  Setting this value too large can result in large overhead for tracking plots.");
 	curr->addProp("PostFlagWindow", "The size of the window following an AlignEvent over which data is collected and displayed.");
-	curr->addSFunc("alignEvent()", "Triggers an AlignEvent and accumulates neural data for all open channels over the described window.");
+	curr->addSFunc("alignEvent(int value)", "Triggers an AlignEvent and accumulates neural data for all open channels over the described window.");
+
+	curr = addDescription("RasterPlot");
+	curr->setInherits(getAssetDescription("SamplingHistogramPlot"));
+	curr->setOverview("A Raster Plot meant for accumulating neural data and displaying a vertical line for each spike received around an AlignEvent.");
+	curr->addProp("PreFlagWindow", "The size of the window preceeding an AlignEvent over which data is collected and displayed.  Setting this value too large can result in large overhead for tracking plots.");
+	curr->addProp("PostFlagWindow", "The size of the window following an AlignEvent over which data is collected and displayed.");
+	curr->addSFunc("alignEvent(int)", "Triggers an AlignEvent and accumulates neural data for all open channels over the described window.");
 }

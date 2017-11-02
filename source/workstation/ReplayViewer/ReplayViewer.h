@@ -2,6 +2,7 @@
 #define REPLAYVIEWER_H_
 
 #include <QList>
+#include <QSplitter>
 #include "../viewer.h"
 #include "../../common/engine/pictoengine.h"
 #include "../../common/compositor/PixmapVisualTarget.h"
@@ -15,6 +16,7 @@
 #include "../../common/Designer/RunSelectorWidget.h"
 #include "../../common/Designer/AnalysisSelectorWidget.h"
 #include "../DataViewer/ViewSelectionFrame.h"
+#include "../DataViewer/DataViewOrganizer.h"
 
 class QLabel;
 class QDoubleSpinBox;
@@ -68,6 +70,9 @@ public slots:
 	//neural data sonification: alerts the Visual target so it records reward/neural data sounds in the movie
 	void spikeAdded(int channel, int unit, double time);
 	void rewarded(int quantity);
+	//void alignPlot(int alignID);
+	void openInNewTab(QWidget* pWidget);
+	void closeTab(int index);		
 
 private:
 	void updateNeuralUI();
@@ -154,6 +159,16 @@ private:
 	double currentTime_;
 	QTextStream* stream_;
 
+	QSharedPointer<DesignRoot> designRootForData_;
+	QMap<int, QList<int>> alignElements_;
+	QList<QPair<int,int>> spikeReader_;
+	QSharedPointer<Picto::Analysis> customAnalysis_;
+	int customAnalysisIndex_;
+	QTabWidget* viewTabs_;
+	bool activatePlots_;
+	QCheckBox* enablePlots_;
+	QHBoxLayout *viewLayout_;
+	
 	private slots:
 
 	void playbackStatusChanged(int status);
@@ -177,8 +192,14 @@ private:
 	void loadError(QString errorMsg);
 	void sessionPreloaded(PreloadedSessionData sessionData);
 	void taskChanged(QString newTask);
-	void selectedChannelChanged(int channel);
-	void selectedUnitChanged(int unit);
+	void selectedChannelChanged();
+	void selectedUnitChanged();
+
+	void sessionLoaded(LoadedSessionData sessionData);
+	void checkClicked(bool);
+
+	protected:
+		DataViewOrganizer *dataViewOrganizer_;
 
 };
 

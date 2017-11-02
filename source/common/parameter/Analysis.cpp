@@ -23,6 +23,8 @@
 #include "../operator/SamplingBarPlot.h"
 #include "../operator/SamplingHistogramPlot.h"
 #include "../operator/PSTHPlot.h"
+#include "../operator/RasterPlot.h"
+#include "../parameter/AnalysisMatlabObj.h"
 
 
 #include "../memleakdetect.h"
@@ -77,6 +79,8 @@ Analysis::Analysis()
 	AddDefinableObjectFactory("AnalysisFunction",functionFactory_);
 	functionFactory_->addAssetType("",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFunction::Create))));
+	functionFactory_->addAssetType("MatlabObj",
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalysisMatlabObj::Create))));
 
 	AddDefinableObjectFactory("AnalysisScriptHolder",scriptFactory_);
 	scriptFactory_->addAssetType("",
@@ -94,6 +98,8 @@ Analysis::Analysis()
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingHistogramPlot::Create))));
 	dataViewElementFactory_->addAssetType(PSTHPlot::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(PSTHPlot::Create))));
+	dataViewElementFactory_->addAssetType(RasterPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(RasterPlot::Create))));
 
 	//A copy paste error led to all data sources being saved with the AnalysisScriptContainer tag before Picto version 1.0.30 and syntax version 0.0.2
 	//For this reason we changed the AnalysisScriptContainer name to AnalysisScriptHolder and in the upgradeVersion function we are recreating all 

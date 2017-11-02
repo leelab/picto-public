@@ -86,7 +86,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_plot_view_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PlotViewWidget Class Reference</div>  </div>
@@ -107,6 +110,21 @@ Inheritance diagram for PlotViewWidget:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:a43cd005467e12e5311943b4f73422f4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43cd005467e12e5311943b4f73422f4a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>newTab</b> ()</td></tr>
+<tr class="separator:a43cd005467e12e5311943b4f73422f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dc9858670ec9875047fbfb72d45325a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dc9858670ec9875047fbfb72d45325a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>mouseDoubleClickEvent</b> (QMouseEvent *e) override</td></tr>
+<tr class="separator:a3dc9858670ec9875047fbfb72d45325a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a658019f03a16eb17ac503f1b8e737509"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a658019f03a16eb17ac503f1b8e737509"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>openInNewTab</b> (QWidget *pWidget)</td></tr>
+<tr class="separator:a658019f03a16eb17ac503f1b8e737509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af9a1d8f0e78a4960eef4739e8ecc78b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9a1d8f0e78a4960eef4739e8ecc78b4"></a>
@@ -116,6 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa08e345578b1e064a2196af7877f1c6f"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plot_view_widget.html#aa08e345578b1e064a2196af7877f1c6f">~PlotViewWidget</a> ()</td></tr>
 <tr class="memdesc:aa08e345578b1e064a2196af7877f1c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> destructor automatically dissociates itself from its view widget so the owning asset can control its memory.  <a href="#aa08e345578b1e064a2196af7877f1c6f">More...</a><br /></td></tr>
 <tr class="separator:aa08e345578b1e064a2196af7877f1c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02f08e1538ec54280050f4866e8ec81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa02f08e1538ec54280050f4866e8ec81"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>tabInfo</b> ()</td></tr>
+<tr class="separator:aa02f08e1538ec54280050f4866e8ec81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_data_view_widget"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_data_view_widget')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_data_view_widget.html">DataViewWidget</a></td></tr>
 <tr class="memitem:a2f4c828043f2251f2b68328f51d05443 inherit pub_methods_class_data_view_widget"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f4c828043f2251f2b68328f51d05443"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#a2f4c828043f2251f2b68328f51d05443">DataViewWidget</a> (const QString cqsName, QWidget *pqwWidget, DVW_RetentionPolicy eRetentionPolicy=DVW_CLEAR)</td></tr>
@@ -171,6 +192,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#a4db5f3a819e8c71c9295fce7355328a1">dissociate</a> ()</td></tr>
 <tr class="memdesc:a4db5f3a819e8c71c9295fce7355328a1 inherit pub_methods_class_data_view_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">This segregates the view widget from this <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> container prior to deletion, so that the actual view item can be managed by its true owner, the Asset responsible for spawning it. <br /></td></tr>
 <tr class="separator:a4db5f3a819e8c71c9295fce7355328a1 inherit pub_methods_class_data_view_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac40ff2005dac6160d326c49721db8468 inherit pub_methods_class_data_view_widget"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac40ff2005dac6160d326c49721db8468"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>getWidget</b> ()</td></tr>
+<tr class="separator:ac40ff2005dac6160d326c49721db8468 inherit pub_methods_class_data_view_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ad9bfd955ec5590f18eb13ee2621ee71d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9bfd955ec5590f18eb13ee2621ee71d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plot_view_widget.html#ad9bfd955ec5590f18eb13ee2621ee71d">sameTabAsTask_</a></td></tr>
+<tr class="memdesc:ad9bfd955ec5590f18eb13ee2621ee71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the widget is still in the same original tab as the Task, returns false if it was open in a new tab. <br /></td></tr>
+<tr class="separator:ad9bfd955ec5590f18eb13ee2621ee71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget to contain plots meant to be displayed in the Experiment <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. </p>
@@ -203,7 +234,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p><a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> destructor automatically dissociates itself from its view widget so the owning asset can control its memory. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_data_view_widget.html#a4db5f3a819e8c71c9295fce7355328a1" title="This segregates the view widget from this DataViewWidget container prior to deletion, so that the actual view item can be managed by its true owner, the Asset responsible for spawning it. ">DataViewWidget::dissociate()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_plot_view_widget_8cpp_source.html#l00026">26</a> of file <a class="el" href="_plot_view_widget_8cpp_source.html">PlotViewWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_plot_view_widget_8cpp_source.html#l00030">30</a> of file <a class="el" href="_plot_view_widget_8cpp_source.html">PlotViewWidget.cpp</a>.</p>
 
 </div>
 </div>

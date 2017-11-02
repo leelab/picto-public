@@ -359,6 +359,18 @@ bool FileSessionLoader::loadDesignDefinition()
 	while(query.next())
 	{
 		updater.addSessionElement(query.value(0).toInt(),query.value(1).toString());
+
+		//Plots
+		int AssetID = query.value(0).toInt();
+		if (!Assets_.keys().contains(AssetID))
+		{
+			QString name = query.value(1).toString();
+			if (name != "")
+				name = query.value(1).toString().split("::").last();
+			if (name != "")
+				Assets_.insert(query.value(0).toInt(), name);
+		}
+		//end Plots
 	}
 
 	////////////////////////////////////////////////////////
@@ -378,4 +390,8 @@ bool FileSessionLoader::loadDesignDefinition()
 QSqlDatabase FileSessionLoader::getDatabase()
 {
 	return QSqlDatabase::database(connectionName_);
+}
+QMap<int, QString> FileSessionLoader::getAssets()
+{
+	return Assets_;
 }

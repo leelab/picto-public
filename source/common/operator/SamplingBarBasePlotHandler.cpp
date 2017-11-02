@@ -27,7 +27,8 @@ void SamplingBarBasePlotHandler::initializeSampling()
 
 void SamplingBarBasePlotHandler::setErrorSamples(const QString &setName, const QVector<QwtIntervalSample> &qvErrorSamples)
 {
-	m_qhpErrorBars[setName]->setSamples(new QwtIntervalSeriesData(qvErrorSamples));
+	if (m_qhpErrorBars.contains(setName))
+		m_qhpErrorBars[setName]->setSamples(new QwtIntervalSeriesData(qvErrorSamples));
 }
 
 void SamplingBarBasePlotHandler::setErrorBarsVisible(bool bVisible)

@@ -82,7 +82,7 @@ public slots:
 	void LoadPropValsFromFile();
 
 	//Neural data sonification
-	void spikeEvent(double time, int channel, int unit, QVariantList waveform);
+	void spikeAdded(double time, int channel, int unit, QVariantList waveform);
 	void rewarded(int quantity);
 
 private:
@@ -144,6 +144,10 @@ private:
 	QAction *saveRecording_;
 	bool recordModeOn_;
 	bool isRunning_;
+
+	QMap<int, QList<int>> alignElements_;
+	QSharedPointer<DesignRoot> designRootForData_;
+	int taskTabIndex_;
 
 private slots:
 	void playTriggered();

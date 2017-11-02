@@ -380,3 +380,13 @@ PlaybackIndex SpikeState::globalTimeToRunIndex(double time)
 	returnVal.time() -= runStart_;
 	return returnVal;
 }
+QVariantList SpikeState::getSpikeDataSince(double time)
+{
+	QVariantList returnVal;
+	for (int i = 0; i < data_.size(); ++i)
+	{
+		QVariant v = QVariant::fromValue(data_[i]);
+		returnVal.append(v);
+	}
+	return returnVal;
+}

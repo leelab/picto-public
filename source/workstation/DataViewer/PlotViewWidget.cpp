@@ -7,6 +7,8 @@
 
 #include "../../common/memleakdetect.h"
 
+#include <QMenu>
+
 using namespace Picto;
 
 /*! \brief Constructs a new DataViewWidget with the specified name and containing the passed Widget
@@ -17,6 +19,8 @@ PlotViewWidget::PlotViewWidget(const QString cqsName, QWidget *pqwWidget, const 
 	setCurrentSize(defaultViewProperties.size_);
 	setPosition(defaultViewProperties.x_, defaultViewProperties.y_);
 	hideDefaultTitle();
+	
+	sameTabAsTask_ = true;	
 }
 
 /*! \brief DataViewWidget destructor automatically dissociates itself from its view widget so the owning asset can control
@@ -26,4 +30,20 @@ PlotViewWidget::PlotViewWidget(const QString cqsName, QWidget *pqwWidget, const 
 PlotViewWidget::~PlotViewWidget()
 {
 	dissociate();
+}
+void PlotViewWidget::newTab()
+{	
+	sameTabAsTask_ = false;
+	emit openInNewTab((QWidget*)(this));
+}
+bool PlotViewWidget::tabInfo()
+{
+	return sameTabAsTask_;
+}
+void PlotViewWidget::mouseDoubleClickEvent(QMouseEvent * e)
+{
+	if (e->button() == Qt::LeftButton)
+	{
+		newTab();
+	}
 }

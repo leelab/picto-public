@@ -20,8 +20,6 @@ RecordingVisualTargetHost::RecordingVisualTargetHost()
 	setRecordingTime(-1);
 	frameTimer_.start();
 	
-	selectedChannel_ = 0;
-	selectedUnit_ = 0;
 
 }
 

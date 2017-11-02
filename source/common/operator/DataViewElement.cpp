@@ -67,4 +67,10 @@ QMap<QString, QString> DataViewElement::getScripts()
 	return scripts;
 }
 
+void DataViewElement::setManualTitle(const QString &newTitle)
+{
+	propertyContainer_->setPropertyValue("ViewTitle", newTitle);
+}
+
+
 };

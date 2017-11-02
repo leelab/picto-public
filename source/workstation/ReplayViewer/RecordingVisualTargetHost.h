@@ -61,9 +61,6 @@ public:
 		int currFrameMs_;
 		QTime frameTimer_;
 		QSharedPointer<QFile> videoFile_;
-	
-		int selectedChannel_;
-		int selectedUnit_;
 	};
 
 

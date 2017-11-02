@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label()']]],
+  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label(double value) const '],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label(double value) const ']]],
   ['labelfactorygraphic',['LabelFactoryGraphic',['../class_picto_1_1_label_factory_graphic.html#ad92456b735ee00788b81168c5a428a80',1,'Picto::LabelFactoryGraphic']]],
   ['last',['last',['../class_picto_1_1_analysis_variable_list.html#aa82766ac746114423f1efdd96fa45153',1,'Picto::AnalysisVariableList::last()'],['../class_picto_1_1_variable_list.html#ac684133fd817f006316f4e5d15f2ea98',1,'Picto::VariableList::last()']]],
   ['lastasnum',['lastAsNum',['../class_picto_1_1_analysis_variable_list.html#ab8327a2a13d12929da67083395cf53dd',1,'Picto::AnalysisVariableList::lastAsNum()'],['../class_picto_1_1_variable_list.html#a5597f41e1e1d3dfe659748c366b1682b',1,'Picto::VariableList::lastAsNum()']]],
@@ -35,6 +35,7 @@ var searchData=
   ['loaddatafrompropery',['loadDataFromPropery',['../class_picto_1_1_file_parameter.html#adf6dd91d7411e80f71f4e9112675aad2',1,'Picto::FileParameter']]],
   ['loaddesign',['loadDesign',['../class_designer.html#a88737acaeeaf7223fdd2f928df93ba8d',1,'Designer']]],
   ['loaddesigndefinition',['loadDesignDefinition',['../class_picto_1_1_file_session_loader.html#a7f60a3615da61586db2afb05a7728554',1,'Picto::FileSessionLoader']]],
+  ['loadedsessiondata',['LoadedSessionData',['../struct_loaded_session_data.html#a8c9b087ef1b460a999837c9ef1139a5e',1,'LoadedSessionData']]],
   ['loaderror',['loadError',['../class_playback_controller.html#a1cc0f95c904b3d1055544c833f9efcaa',1,'PlaybackController::loadError()'],['../class_replay_viewer.html#a90eafe1d6a884ed5ac424827f279b192',1,'ReplayViewer::loadError()']]],
   ['loadfile',['loadFile',['../class_main_window.html#a5e6b98e681544f7790606a0dfe968696',1,'MainWindow']]],
   ['loading',['loading',['../class_picto_1_1_session_player.html#a7419758edb2920b408443d2683d8d029',1,'Picto::SessionPlayer::loading()'],['../class_playback_controller.html#a8edabbfebbc16e2f840da4393505840b',1,'PlaybackController::loading()'],['../class_picto_1_1_playback_state_updater.html#aa098ed4e64e19cf6c5927acca6bedd77',1,'Picto::PlaybackStateUpdater::loading()']]],

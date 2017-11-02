@@ -18,8 +18,8 @@ struct PlaybackSpikeData;
  *	\note Since the functions here simply implement the SpikeReader and DataState classes for data read in from a Session
  *	Database, there is not much to add in terms of documentation beyond what was described above, so we will not be adding
  *	function level documentation for this class.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 class SpikeState : public SpikeReader, public DataState
 {
@@ -53,6 +53,7 @@ public:
 	virtual QVariantList getWaveformsSince(double time);
 	virtual QVariantList getWaveformsUntil(double time);
 
+	virtual QVariantList getSpikeDataSince(double time);
 signals:
 	/*! \brief Emitted whenever a PlaybackSpikeData object is traversed due to a call to moveToIndex().
 	 *	\details time is the time at which the spike occured, channel is the electrode channel on which it occured, unit
@@ -71,7 +72,7 @@ private:
 	double sampPeriod_;
 	QVariantList channels_;
 	QHash<int,QVariantList> unitsLookup_;
-	QList<PlaybackSpikeData> data_;
+	QList<PlaybackSpikeData> data_;	
 };
 
 /*! \brief A struct used to store data for a single Neural spike.
@@ -82,6 +83,13 @@ struct PlaybackSpikeData
 {
 	PlaybackSpikeData(){};
 	PlaybackSpikeData(double time,int channel, int unit, QVector<float> waveform){time_=time;channel_=channel;unit_=unit;waveform_ = waveform;};
+	PlaybackSpikeData(const PlaybackSpikeData& other){
+		time_ = other.time_;
+		channel_ = other.channel_;
+		unit_ = other.unit_;
+		waveform_ = other.waveform_;
+	};
+	~PlaybackSpikeData(){};
 	//! One PlaybackSpikeData is lower than another if its time_ is lower.
 	inline bool operator<(const PlaybackSpikeData& someData) const {
 		return time_ < someData.time_;
@@ -91,6 +99,6 @@ struct PlaybackSpikeData
 	int unit_;
 	QVector<float> waveform_;
 };
-
+Q_DECLARE_METATYPE(PlaybackSpikeData)
 }; //namespace Picto
 #endif

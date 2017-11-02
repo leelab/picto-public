@@ -9,6 +9,8 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QMap>
+#include <QListWidget>
+#include <QPushButton>
 
 #include "../viewer.h"
 #include "../../common/operator/DataViewSpecs.h"
@@ -20,16 +22,35 @@ class DataViewOrganizer;
 class Picto::OperatorPlotHandler;
 
 
+/*!	\brief A widget to contain label and line edit for Scriptables (conditions)
+*	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+*	\date 2009-2017
+*/
+class lblEdit : public QWidget
+{
+	Q_OBJECT
+public:
+	lblEdit(QString strLabel, QString strContent = "");
+
+	QString getLabel();
+	QLineEdit* getLineEdit();
+
+private:
+	QString label_;
+	QLineEdit* lineEdit_;
+};
+
+
 /*!	\brief A widget to contain objects meant to be displayed in the Experiment Viewer
 *	\details Details forthcoming
-*	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
-*	\date 2009-2015
+*	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+*	\date 2009-2017
 */
 class ViewSelectionFrame : public QFrame
 {
 	Q_OBJECT
 public:
-	ViewSelectionFrame();
+	ViewSelectionFrame(bool replay = false);
 	virtual ~ViewSelectionFrame();
 
 	void registerView(DataViewWidget *pNewView);
@@ -42,6 +63,15 @@ public:
 	void rebuild();
 	void clear();
 
+	void spikeAdded(int channel, int unit);
+	void preloadEvents(QSharedPointer<DesignRoot> designRoot, QMap<int, QList<int>> alignElements, QList<QPair<int, int>> spikes);
+	void resetPlotsList(int resetSelection = 0); //1 means clear all lists, 2 means uncheck but do not clear
+	void removeFromList(QWidget* widget);
+	void resetDesignRoot(QSharedPointer<DesignRoot> designRoot);
+	void hideCurrentWidget(QWidget *pWidget);
+	void updateUI(bool activatePlots);
+	void setTaskName(QString taskName);
+
 signals:
 	//! A signal broadcast when a widget is to be removed from the connected ViewSelectionLayout.
 	void widgetRemoved(QWidget *pWidget);
@@ -53,7 +83,9 @@ signals:
 	//! Message used to indicate to TaskConfig when the manager is ready to receive 
 	void managerConnectionEstablished(bool connected);
 
-public slots:
+	void openInNewTab(QWidget* pWidget);
+
+	public slots:
 	void updateWidgetContainer(QWidget *pWidget);
 	void removeWidgetContainer(QWidget *pWidget);
 	void addWidgetContainer(QWidget *pWidget);
@@ -61,6 +93,8 @@ public slots:
 	void clearAnalysisSelection(bool local);
 
 	void clearPlotHandlers();
+	void widgetDropped(QPoint offset);
+	void widgetDragged(QWidget *pWidget);
 
 private:
 	void updateSizeAndPositionOptions();
@@ -69,6 +103,13 @@ private:
 	DataViewWidget *createDataViewWidget(QWidget *pWidget);
 	void removeDataViewWidget(DataViewWidget *pWidget, bool bRemoveFromVector = true);
 
+	void createCustomWidget(QString dataSetName, QList<int> alignIDList, QList<QPair<int, int>> scComb, QString scriptCombIndex = "");
+	QList<QList<QPair<int, int>>> generateScrComb(QList<QPair<QString, QString>> scriptables);
+	int maxVals(QList<QList<QPair<QString, QString>>> pairsList);
+	QPair<int, int> getNeuron(QString dataSetName);
+	int getEvent(QString dataSetName);
+	QPair<int, int> getFlags();
+
 private slots:
 	void selectedPlotIndexChanged(int selectedIndex);
 	void selectedSizeIndexChanged(int selectedIndex);
@@ -76,6 +117,16 @@ private slots:
 
 	void plotHandlerRequested(const QString plotPath);
 	void cachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
+
+	void selectedLevelIndexChangedNeur();
+	void selectedLevelIndexChangedHor();
+	void selectedLevelIndexChangedAl();
+	void selectedLevelIndexChangedSc();
+	void selectedLevelIndexChangedVal();
+	void selectedLevelIndexChangedMark();
+	void selectedPlotTypeChanged(int);
+	void readSettings();
+	void writeSettings();
 
 protected:
 	//! A Vector holding all registered DataViewWidgets
@@ -120,6 +171,48 @@ private:
 	QWeakPointer<TaskConfig> lastTaskConfig_;
 
 	int configIndex(QWeakPointer<TaskConfig> referenceConfig);
+
+	//! Combobox containing all Events available for the current task. 
+	QListWidget *levelsSelectionHor_;
+	//! Combobox containing all Neurons available for the current task. 
+	QListWidget* levelsSelectionNeur_;
+	//! Combobox containing all reference events for alignment available for the current task. 
+	QListWidget *levelsSelectionAl_;
+	//! Combobox containing all Scriptable members available for the current align event. 
+	QListWidget *levelsSelectionSc_;
+	//! Combobox containing all Conditions members available for the current align event. 
+	QListWidget* levelsSelectionVal_;
+	//! Combobox containing all Neurons available for the current task. 
+	QListWidget* levelsSelectionMark_;
+
+	//! Plot type selection: Raster, PSTH or both
+	QString selectedType_;
+	QComboBox* plotType_;
+	QSharedPointer<DesignRoot> designRoot_;
+	//! A Map of asset Ids corresponding to all elements (selected or not) that can be used
+	// for alignment and their correspnding list of existing (selected or not) scriptable members
+	QMap<int, QList<int>> alignElements_;
+	QList<QPair<int, int>> spikesList_;
+	QSharedPointer<Analysis> customAnalysis_;
+	int customAnalysisIndex_;
+	bool NoCallBack_;
+	lblEdit* preflagEdit_;
+	lblEdit* postflagEdit_;
+	QWidget* neuronsSelWidget_;
+	QWidget* typeSelWidget_;
+	QWidget* flagSelWidget_;
+
+	QSharedPointer<Picto::Analysis> CreateCustomAnalysis();
+	void DeleteCustomAnalysis();
+
+	void savePlotSettings();
+	void retrievePlotSettings();
+
+	bool activatePlots_;
+	QPushButton* saveSettings_;
+	QPushButton* recoverSettings_;
+	QStringList plotSettings_;
+	QString currentTask_;
 };
 
 #endif
