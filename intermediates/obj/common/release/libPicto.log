@@ -1,4 +1,4 @@
-﻿Build started 11/2/2017 4:10:18 PM.
+﻿Build started 11/3/2017 9:44:55 AM.
      1>Project "C:\Projects\Picto\source\common\libPicto.vcxproj" on node 2 (Build target(s)).
      1>CustomBuild:
          MOC c:/Projects/Picto/source/common/parameter/AnalysisMatlabObj.h
@@ -602,4 +602,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:15.81
+Time Elapsed 00:00:16.61

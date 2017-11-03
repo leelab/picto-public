@@ -1,4 +1,4 @@
-﻿Build started 11/2/2017 4:10:34 PM.
+﻿Build started 11/3/2017 9:45:12 AM.
      1>Project "C:\Projects\Picto\source\config\PictoConfig.vcxproj" on node 5 (Build target(s)).
      1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"c:\Projects\Picto\output\bin\release\\PictoConfig.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib /LIBPATH:C:/Qt64/Qt5.5.1/5.5/msvc2013_64/lib /LIBPATH:C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser\lib /LIBPATH:C:\qwt\lib /LIBPATH:c:\Projects\Picto\intermediates\lib\release C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\qtmain.lib shell32.lib C:/Qt64/Qt5.5.1/5.5/msvc2013_64/lib\Qt5Core.lib C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser/lib/QtPropertyBrowser.lib libPicto.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Widgets.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Gui.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Xml.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Network.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"c:\Projects\Picto\output\bin\release\PictoConfig.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X64 "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" c:\Projects\Picto\intermediates\obj\config\release\TestLabel.obj
@@ -9,4 +9,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.64
+Time Elapsed 00:00:00.53
