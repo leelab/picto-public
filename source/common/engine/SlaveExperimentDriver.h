@@ -46,6 +46,11 @@ signals:
 	*	Tasks run ended.
 	*/
 	void taskChanged(QString currTask);
+
+	void alignPlot(int alignID);
+	void eventAdded(int eventID);
+	void scriptContAdded(int scriptID);
+
 private:
 	void renderFrame();
 	void handleEvent(SlaveEvent& event);

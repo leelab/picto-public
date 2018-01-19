@@ -2,6 +2,10 @@
 #include "../statemachine/State.h"
 #include "../memleakdetect.h"
 
+
+#include "../variable/NumberVariable.h"
+#include "../parameter/BooleanParameter.h"
+
 using namespace Picto;
 #define FRAMEMS 16
 /*! \brief Constructs a SlaveExperimentDriver.
@@ -169,6 +173,48 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 				return;
 			}
 	
+			//Plots	- right after analyses exit script		
+			if (sourceAsset && sourceAsset->inherits("Picto::StateMachineElement"))
+			{
+				QSharedPointer<StateMachineElement> srcElement = sourceAsset.staticCast<StateMachineElement>();
+				int srcEltID = sourceAsset ? sourceAsset->getAssetId() : 0;
+				if (srcElement && srcElement->getAlignParam())
+					emit(alignPlot(srcEltID));
+				if (srcElement && (srcElement->getSelEventParam() || (srcElement->getMarkerParam())))
+					emit(eventAdded(srcEltID));
+			}
+			if (sourceAsset && sourceAsset->inherits("Picto::ScriptableContainer"))
+			{		
+				QSharedPointer<ScriptableContainer> srcElement = sourceAsset.staticCast<ScriptableContainer>();
+				QStringList childTags = srcElement->getDefinedChildTags();
+				foreach(QString childTag, childTags)
+				{
+					QList<QSharedPointer<Asset>> tagChildren = srcElement->getGeneratedChildren(childTag);
+					foreach(QSharedPointer<Asset> tagChild, tagChildren)
+					{
+						if (tagChild->inherits("Picto::Scriptable"))
+						{
+							QSharedPointer<Scriptable> childElt = tagChild.staticCast<Scriptable>();
+							int srcEltChildID = tagChild ? tagChild->getAssetId() : 0;
+							if (childElt && childElt->getScriptParam())
+							{
+								int scTrialVal = -1;
+								if (tagChild && tagChild.objectCast<NumberVariable>())
+								{
+									scTrialVal = tagChild.objectCast<NumberVariable>()->getValue();
+								}
+								else if (tagChild && tagChild.objectCast<BooleanParameter>())
+								{
+									scTrialVal = tagChild.objectCast<BooleanParameter>()->getValue();
+								}
+								emit(scriptContAdded(srcEltChildID));
+							}
+						}
+					}
+				}
+			}
+			//end Plots
+
 			QSharedPointer<Asset> destAsset = trans->getDestinationAsset();
 			QString destName = destAsset?destAsset->getName():"";
 			if(!destAsset || !destAsset->inherits("Picto::StateMachineElement"))

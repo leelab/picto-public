@@ -280,6 +280,11 @@ public:
 	 *	from this function and channels from getChannelsUntil(), units from getUnitsUntil()
 	 *	and times from getTimesUntil().*/
 	virtual QVariantList getWaveformsUntil(double time)=0;
+	/*! \brief Returns a list of PlayBackSpikeData for spikes that occured with times > the input time and
+	*	<= the current time on all channels and units.  There is a one to one matchup of waveforms
+	*	from this function and channels from getChannelsSince(), units from getUnitsSince()
+	*	and times from getTimesSince().*/
+	virtual QVariantList getSpikeDataSince(double time) = 0;
 };
 
 }; //namespace Picto

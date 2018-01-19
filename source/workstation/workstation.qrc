@@ -154,5 +154,6 @@
         <file>icons/runnotes.svg</file>
         <file>icons/sessionopen.png</file>
         <file>icons/settings.png</file>
+		<file>icons/matlabObj.svg</file>
     </qresource>
 </RCC>

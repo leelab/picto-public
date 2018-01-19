@@ -118,27 +118,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> startingRun(QString taskName,QString runName);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> loading(<span class="keywordtype">bool</span> startingLoad);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> reachedEnd();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">bool</span> stepForward(<span class="keywordtype">double</span> lookForward);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">bool</span> stepToNextFrame(<span class="keywordtype">double</span> lookForward);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">bool</span> step(<span class="keywordtype">double</span> lookForward);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> markLoading(<span class="keywordtype">bool</span> load);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    QSharedPointer&lt;SessionState&gt; sessionState_;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    QSharedPointer&lt;FileSessionLoader&gt; sessionLoader_;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> lastIndex_;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> nextFrame_;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">bool</span> processing_;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">bool</span> reachedEnd_;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">bool</span> loading_;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QSharedPointer&lt;DataState&gt; getNextTriggerState(<span class="keywordtype">double</span> lookForward);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;};</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> spikeEvent(<span class="keywordtype">double</span> time, <span class="keywordtype">int</span> channel, <span class="keywordtype">int</span> unit, QVector&lt;float&gt; waveform);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">bool</span> stepForward(<span class="keywordtype">double</span> lookForward);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">bool</span> stepToNextFrame(<span class="keywordtype">double</span> lookForward);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">bool</span> step(<span class="keywordtype">double</span> lookForward);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> markLoading(<span class="keywordtype">bool</span> load);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QSharedPointer&lt;SessionState&gt; sessionState_;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QSharedPointer&lt;FileSessionLoader&gt; sessionLoader_;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> lastIndex_;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> nextFrame_;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> processing_;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">bool</span> reachedEnd_;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">bool</span> loading_;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QSharedPointer&lt;DataState&gt; getNextTriggerState(<span class="keywordtype">double</span> lookForward);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_session_player_html"><div class="ttname"><a href="class_picto_1_1_session_player.html">Picto::SessionPlayer</a></div><div class="ttdoc">Controls the timing and ordering of played back events during Picto Session playback. </div><div class="ttdef"><b>Definition:</b> <a href="_session_player_8h_source.html#l00028">SessionPlayer.h:28</a></div></div>
 <div class="ttc" id="struct_picto_1_1_playback_index_html"><div class="ttname"><a href="struct_picto_1_1_playback_index.html">Picto::PlaybackIndex</a></div><div class="ttdoc">This class stores an index used to capture the ordering of different Session events for playback purp...</div><div class="ttdef"><b>Definition:</b> <a href="_playback_index_8h_source.html#l00028">PlaybackIndex.h:28</a></div></div>

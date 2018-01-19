@@ -82,7 +82,8 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	mainWidget_->setLayout(layout);
 	setWidget(mainWidget_);
 	int reqWidth = mainWidget_->sizeHint().width()+25;
-	setFixedWidth((reqWidth<350)?reqWidth:350);
+	//setFixedWidth((reqWidth<350)?reqWidth:350);
+	setMinimumWidth((reqWidth<350) ? reqWidth : 350);
 }
 
 /*! \brief Loads a session at the input filename path and sets all of the final init property values from that

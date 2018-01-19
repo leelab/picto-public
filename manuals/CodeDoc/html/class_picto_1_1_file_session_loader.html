@@ -170,6 +170,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memitem:af6aded906c060e90e0543e5861bcdec1"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#af6aded906c060e90e0543e5861bcdec1">currRunName</a> ()</td></tr>
 <tr class="memdesc:af6aded906c060e90e0543e5861bcdec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the currently loaded run.  <a href="#af6aded906c060e90e0543e5861bcdec1">More...</a><br /></td></tr>
 <tr class="separator:af6aded906c060e90e0543e5861bcdec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83978059973b5288723affb24272b34e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83978059973b5288723affb24272b34e"></a>
+QMap&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAssets</b> ()</td></tr>
+<tr class="separator:a83978059973b5288723affb24272b34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -217,6 +220,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>runIndex_</b></td></tr
 <tr class="memitem:a836687a3a4b079419b8d090aad99c7e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a836687a3a4b079419b8d090aad99c7e6"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>sessionDataLoaded_</b></td></tr>
 <tr class="separator:a836687a3a4b079419b8d090aad99c7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fb30a070cc0081698e495374a6479b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fb30a070cc0081698e495374a6479b0"></a>
+QMap&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Assets_</b></td></tr>
+<tr class="separator:a4fb30a070cc0081698e495374a6479b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -228,8 +234,8 @@ static QHash&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bo
 <div class="textblock"><p>A Component of the Picto Playback system that loads data from a Session file into a <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a>. </p>
 <p>This class takes care of loading the session file, extracting various meta-data like task run information and the types of input signals used in the experiment, and setting all of this data into a <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>The most confusing part of what a <a class="el" href="class_picto_1_1_file_session_loader.html" title="A Component of the Picto Playback system that loads data from a Session file into a SessionState...">FileSessionLoader</a> does is the upgrade of the Design used in the session file. Since the Session might have been recorded when an older version of Picto was in use, when the Design is loaded into this version of Picto, some Assets might be upgraded automatically. Whenever this happens though, there is a possibility that Assets that were not upgraded might have their <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ids changed for various reasons. This class uses a <a class="el" href="class_picto_1_1_session_version_interfacer.html" title="Resets the Asset ID values of an Experiment to those used in a Session file. ">SessionVersionInterfacer</a> to automatically fix the changed <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs and extract the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs of Assets that are now obsolete so that their <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values can be ignored. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="_file_session_loader_8h_source.html#l00029">29</a> of file <a class="el" href="_file_session_loader_8h_source.html">FileSessionLoader.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

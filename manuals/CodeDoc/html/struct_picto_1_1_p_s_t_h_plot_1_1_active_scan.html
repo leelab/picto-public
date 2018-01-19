@@ -113,6 +113,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a1e45a4af4365b25efd765e13c234f1ca">addSpike</a> (int channel, int unit, double time)</td></tr>
 <tr class="memdesc:a1e45a4af4365b25efd765e13c234f1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a spike to ongoing scans. <br /></td></tr>
 <tr class="separator:a1e45a4af4365b25efd765e13c234f1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96ae7b607a9cee7481a392515b0cbae9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96ae7b607a9cee7481a392515b0cbae9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setTrialCond</b> (QPair&lt; int, int &gt; scrTrialPair)</td></tr>
+<tr class="separator:a96ae7b607a9cee7481a392515b0cbae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -148,11 +151,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 QVector&lt; QVector&lt; QVector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a2714fcd202b99fefc734c6f010cfdbd5">spikes_</a></td></tr>
 <tr class="memdesc:a2714fcd202b99fefc734c6f010cfdbd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A vector of Channel, Number, then Bin of spike counts. <br /></td></tr>
 <tr class="separator:a2714fcd202b99fefc734c6f010cfdbd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ac687028d2fa1a92f655025ebfd7a4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ac687028d2fa1a92f655025ebfd7a4b"></a>
+QList&lt; QPair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>trialConditions_</b></td></tr>
+<tr class="separator:a8ac687028d2fa1a92f655025ebfd7a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class to hold onto data for currently-collecting scans. </p>
 
-<p>Definition at line <a class="el" href="_p_s_t_h_plot_8h_source.html#l00060">60</a> of file <a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a>.</p>
+<p>Definition at line <a class="el" href="_p_s_t_h_plot_8h_source.html#l00080">80</a> of file <a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following files:<ul>
 <li>source/common/operator/<a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a></li>
 <li>source/common/operator/<a class="el" href="_p_s_t_h_plot_8cpp_source.html">PSTHPlot.cpp</a></li>

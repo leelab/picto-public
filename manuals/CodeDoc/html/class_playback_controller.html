@@ -185,6 +185,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af9d4632a4a184e94f37311ae0d40fa3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9d4632a4a184e94f37311ae0d40fa3c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>rewarded</b> (int quantity)</td></tr>
 <tr class="separator:af9d4632a4a184e94f37311ae0d40fa3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9ef35f1b842205caf467ec8d4a1ab35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9ef35f1b842205caf467ec8d4a1ab35"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>alignPlotSig</b> (int alignID)</td></tr>
+<tr class="separator:ad9ef35f1b842205caf467ec8d4a1ab35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a006ed52dfe4e0da8c6e80697bdb16a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a006ed52dfe4e0da8c6e80697bdb16a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sessionLoaded</b> (<a class="el" href="struct_loaded_session_data.html">LoadedSessionData</a> sessionData)</td></tr>
+<tr class="separator:a5a006ed52dfe4e0da8c6e80697bdb16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfc0fc63a2a8066a30984aeb0348a3e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfc0fc63a2a8066a30984aeb0348a3e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>eventAddedSig</b> (int eventID)</td></tr>
+<tr class="separator:acfc0fc63a2a8066a30984aeb0348a3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a346d9c49c810e479d9a3d317b6276e02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a346d9c49c810e479d9a3d317b6276e02"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scriptContAddedSig</b> (int scriptID)</td></tr>
+<tr class="separator:a346d9c49c810e479d9a3d317b6276e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -232,6 +244,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_playback_controller.html#a73fd9f50fc2b203f0700c42efc3318f7">precacheAnalysisNames</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt; import)</td></tr>
 <tr class="memdesc:a73fd9f50fc2b203f0700c42efc3318f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates names for potentially imported Analyses so that the TaskConfig can idenfify them before they are first run. <br /></td></tr>
 <tr class="separator:a73fd9f50fc2b203f0700c42efc3318f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7f3c6500b1cba5e584829134dbb7f7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7f3c6500b1cba5e584829134dbb7f7d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>activatePlots</b> (bool activate)</td></tr>
+<tr class="separator:ac7f3c6500b1cba5e584829134dbb7f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
 Private Slots</h2></td></tr>
@@ -314,6 +329,12 @@ QHash&lt; QString, QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"
 <tr class="memitem:a74356380cfda8f149583e8054b36d927"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74356380cfda8f149583e8054b36d927"></a>
 QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cachedAnalysisNames_</b></td></tr>
 <tr class="separator:a74356380cfda8f149583e8054b36d927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5965da7abee315b2ba746a1153219c00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5965da7abee315b2ba746a1153219c00"></a>
+QMap&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>assets_</b></td></tr>
+<tr class="separator:a5965da7abee315b2ba746a1153219c00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3838a3ef3247c15d83b36794c1f61663"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3838a3ef3247c15d83b36794c1f61663"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>activatePlots_</b></td></tr>
+<tr class="separator:a3838a3ef3247c15d83b36794c1f61663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimentDriver. </p>
@@ -321,7 +342,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <p>A number of signals are available for a view into what is happening inside the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> as well as a way to gather data about things like <a class="el" href="struct_preloaded_session_data.html" title="A simple struct for storing preloaded data about a Session. ">PreloadedSessionData</a>. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8h_source.html#l00165">165</a> of file <a class="el" href="_playback_controller_8h_source.html">PlaybackController.h</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8h_source.html#l00189">189</a> of file <a class="el" href="_playback_controller_8h_source.html">PlaybackController.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa686af90c24fd2d3060cef9ae9a1bfc9"></a>
 <div class="memitem">
@@ -339,7 +360,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <p>Constructs a <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> object. </p>
 <p>Along with variable initialization, this function creates a new playback QThread, starts its event loop and moves this object to that thread. This means that the Session playback/loading will occur in a different, non-gui thread. This is good because it will prevent long processes like loading of session data from tying up the UI. </p>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00032">32</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00034">34</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -374,7 +395,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00107">107</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00113">113</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -403,7 +424,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <p>Generates a new <a class="el" href="struct_playback_command.html" title="Defines a command to be used to change the PlaybackController State. ">PlaybackCommand</a> directing the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to enable/disable loading of LFP data. </p>
 <p>Disabling LFP data can have a significant effect in improving Session load times. </p>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00265">265</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00271">271</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -432,7 +453,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <p>Generates a new <a class="el" href="struct_playback_command.html" title="Defines a command to be used to change the PlaybackController State. ">PlaybackCommand</a> directing the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to jump the playback time to the input time (in seconds). </p>
 <dl class="section note"><dt>Note</dt><dd>Jumping backwards in time results in playback starting from zero and moving forward to that time. This is to make sure that analyses that can only be run during a fast forward, not a rewind, will be valid. </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00379">379</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00385">385</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -535,7 +556,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <dl class="section note"><dt>Note</dt><dd>Runs can be loaded and started by pressing play, in which case playback starts, or pause, in which case the Run loads and playback moves to time zero and then waits for play to be pressed. The reason that we include these two input parameters is for the case where the Run is started with a pause. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_playback_controller.html#a29b6bd812eb8a8347bd697eaa381b33a" title="Activates the input Analyses in the Experiment so that Analysis will occur during playback...">activateAnalyses()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00358">358</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00364">364</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -573,7 +594,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_playback_controller.html#a29b6bd812eb8a8347bd697eaa381b33a" title="Activates the input Analyses in the Experiment so that Analysis will occur during playback...">activateAnalyses()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00338">338</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00344">344</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -594,7 +615,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <p>Generates a new <a class="el" href="struct_playback_command.html" title="Defines a command to be used to change the PlaybackController State. ">PlaybackCommand</a> directing the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to preload all of the files with paths in the input list. </p>
 <p>Preload loads meta data about the file without loading the large quantities of actual Session data. These will be loaded later if Run from a file are selected for playback and run. </p>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00068">68</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00074">74</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -660,7 +681,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00238">238</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00244">244</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>
@@ -688,7 +709,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <p>Updates the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>'s StateMachine. </p>
 <p>Each time this is called, the next command from the <a class="el" href="class_playback_controller_data.html" title="This class holds data for the PlaybackController. Since this class ends up being called by both the G...">PlaybackControllerData</a> object is taken from the queue. Depending on the current state, the command is handled in different ways. Sometimes it even causes the state (called status here) to change and is pushed back onto the front of the command list so that the new state can handle it the next time <a class="el" href="class_playback_controller.html#a61ad36a4123520bea56f9a6961da42a5" title="Updates the PlaybackController&#39;s StateMachine. ">update()</a> is called. Whenever the state does change, the change is reported with the <a class="el" href="class_playback_controller.html#a66adff4299db16e37e92776f5caffdbe" title="Emitted when the PlaybackController Status (this is really its state, it is a PlaybackCOntrollerData:...">statusChanged()</a> signal. </p><dl class="section note"><dt>Note</dt><dd>One of the major issues in the current playback system is that the entire active Session's data is stored in RAM. This causes some memory issues. There is some complex code in the part of this function handling the "Loading" state that attempts to make sure that only one session is ever in RAM at a given time and tries to defragment the RAM (when we're in Windows) before loading the session. Don't let this code scare you. That's all it does. In the future, we should spend some time working on new methods for improving RAM usage like storing parts of the Session data lists in simple serial files until they are needed. </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00502">502</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_controller_8cpp_source.html#l00508">508</a> of file <a class="el" href="_playback_controller_8cpp_source.html">PlaybackController.cpp</a>.</p>
 
 </div>
 </div>

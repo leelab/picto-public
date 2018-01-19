@@ -108,6 +108,7 @@ Inheritance diagram for Picto::NeuralDataListener:</div>
   <img src="class_picto_1_1_neural_data_listener.png" usemap="#Picto::NeuralDataListener_map" alt=""/>
   <map id="Picto::NeuralDataListener_map" name="Picto::NeuralDataListener_map">
 <area href="class_picto_1_1_p_s_t_h_plot.html" title="A plot populated in realtime during experiments or analysis, using collected Neural Data..." alt="Picto::PSTHPlot" shape="rect" coords="0,56,155,80"/>
+<area href="class_picto_1_1_raster_plot.html" title="A raster plot populated in realtime during experiments or analysis, using collected Neural Data..." alt="Picto::RasterPlot" shape="rect" coords="165,56,320,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -116,11 +117,56 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac6523e7b4204ecd98358da2cf18a0bf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6523e7b4204ecd98358da2cf18a0bf8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addSpikeData</b> (const <a class="el" href="class_picto_1_1_neural_data_unit.html">NeuralDataUnit</a> &amp;data)=0</td></tr>
 <tr class="separator:ac6523e7b4204ecd98358da2cf18a0bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabd2a5f3e3f5779ab43a6d6a5a50c3ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabd2a5f3e3f5779ab43a6d6a5a50c3ac"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>alignPlot</b> (int alignID)=0</td></tr>
+<tr class="separator:aabd2a5f3e3f5779ab43a6d6a5a50c3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bd65ea0e0cf4c552b647484c6a4f33d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bd65ea0e0cf4c552b647484c6a4f33d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addEventData</b> (int eventID)=0</td></tr>
+<tr class="separator:a1bd65ea0e0cf4c552b647484c6a4f33d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a1323528347a3d83db853ddb6d749d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a1323528347a3d83db853ddb6d749d3"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addScriptCont</b> (int scriptID)=0</td></tr>
+<tr class="separator:a8a1323528347a3d83db853ddb6d749d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab721eed2ea68ce3ed759b9f65c18d16f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab721eed2ea68ce3ed759b9f65c18d16f"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>getPreFlagWindow</b> () const =0</td></tr>
+<tr class="separator:ab721eed2ea68ce3ed759b9f65c18d16f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc4c0e4e7cfd9acb7148fcc7729c2a56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc4c0e4e7cfd9acb7148fcc7729c2a56"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>getPostFlagWindow</b> () const =0</td></tr>
+<tr class="separator:abc4c0e4e7cfd9acb7148fcc7729c2a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d7281465b304ac6689200e3a4e66258"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d7281465b304ac6689200e3a4e66258"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setPreFlagWindow</b> (double flag)=0</td></tr>
+<tr class="separator:a0d7281465b304ac6689200e3a4e66258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a844db54fe4404600523488bbd9c14a2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a844db54fe4404600523488bbd9c14a2d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setPostFlagWindow</b> (double flag)=0</td></tr>
+<tr class="separator:a844db54fe4404600523488bbd9c14a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4215701b9c067e338043152b9698f615"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4215701b9c067e338043152b9698f615"></a>
+virtual QPair&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getNeuron</b> ()=0</td></tr>
+<tr class="separator:a4215701b9c067e338043152b9698f615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bbec96c622584cf8acaf7cdf8ce6f28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bbec96c622584cf8acaf7cdf8ce6f28"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setNeuron</b> (int channel, int unit)=0</td></tr>
+<tr class="separator:a8bbec96c622584cf8acaf7cdf8ce6f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b4c02bce930f4750e23f7d5bfbcb72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18b4c02bce930f4750e23f7d5bfbcb72"></a>
+virtual QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAlignData</b> ()=0</td></tr>
+<tr class="separator:a18b4c02bce930f4750e23f7d5bfbcb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33d37fb56bbd0620856605c15a7a3933"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33d37fb56bbd0620856605c15a7a3933"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setAlignData</b> (QList&lt; int &gt; alignElts)=0</td></tr>
+<tr class="separator:a33d37fb56bbd0620856605c15a7a3933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3046ffbec738e037c21fc3feb116da47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3046ffbec738e037c21fc3feb116da47"></a>
+virtual QList&lt; QPair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCondition</b> ()=0</td></tr>
+<tr class="separator:a3046ffbec738e037c21fc3feb116da47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5470cf1de2a3e912037bda1ce943fb06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5470cf1de2a3e912037bda1ce943fb06"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setCondition</b> (QList&lt; QPair&lt; int, int &gt;&gt; scriptables)=0</td></tr>
+<tr class="separator:a5470cf1de2a3e912037bda1ce943fb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98ef57a7de52e3974641db493aab2383"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98ef57a7de52e3974641db493aab2383"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>getEvent</b> ()=0</td></tr>
+<tr class="separator:a98ef57a7de52e3974641db493aab2383"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e5d21500cb9a91795e8bd37f799ed3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e5d21500cb9a91795e8bd37f799ed3d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setEvent</b> (int eventID)=0</td></tr>
+<tr class="separator:a9e5d21500cb9a91795e8bd37f799ed3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An abstract interface for items receiving NeuralData. </p>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="_neural_data_listener_8h_source.html#l00016">16</a> of file <a class="el" href="_neural_data_listener_8h_source.html">NeuralDataListener.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>

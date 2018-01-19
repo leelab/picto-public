@@ -66,7 +66,7 @@ protected:
 
 	//! Returns the value of the DisplayStdErr property.
 	bool _getDisplayErrBar() const { return propertyContainer_->getPropertyValue("DisplayStdErr").toBool(); };
-
+	
 	//!	The cumulative binwise-sum of the squares of submitted values, indexed by dataset name.
 	QHash<QString, QHash<long, double>> m_qhCumulValSq;
 	//!	The cumulative binwise-total of the number of submitted values, indexed by dataset name..

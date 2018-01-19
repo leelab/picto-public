@@ -160,6 +160,8 @@ void PseudorandomIntParameter::postDeserialize()
 	min_ = propertyContainer_->getPropertyValue("Min").toInt();
 	max_ = propertyContainer_->getPropertyValue("Max").toInt();
 	setPropertyRuntimeEditable("Value");
+	setPropertyRuntimeEditable("Min");
+	setPropertyRuntimeEditable("Max");
 }
 
 /*! \brief Extends Parameter::validateObject() to verify that the Min Property is not greater

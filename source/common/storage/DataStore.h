@@ -141,6 +141,8 @@ public:
 	//when they shouldn't have been.
 	void setDescendantPropertiesAsAssociates();
 
+	//void deleteChildren(QString tagName){ if (children_.contains(tagName)) children_.remove(tagName);  };
+
 signals:
 	/*! \brief Emitted whenever a child is added to this DataStore after its Deserialize function has already run.
 	 *	\details The function is emitted when either Experimental or Associate children are added.

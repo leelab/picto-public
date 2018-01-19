@@ -2,6 +2,7 @@ var searchData=
 [
   ['aboutelementbox',['AboutElementBox',['../class_about_element_box.html',1,'']]],
   ['activescan',['ActiveScan',['../struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html',1,'Picto::PSTHPlot']]],
+  ['activescan',['ActiveScan',['../struct_picto_1_1_raster_plot_1_1_active_scan.html',1,'Picto::RasterPlot']]],
   ['alignmentdataunit',['AlignmentDataUnit',['../class_picto_1_1_alignment_data_unit.html',1,'Picto']]],
   ['alignmentevent',['AlignmentEvent',['../struct_alignment_tool_1_1_alignment_event.html',1,'AlignmentTool']]],
   ['alignmentinfo',['AlignmentInfo',['../class_picto_1_1_alignment_info.html',1,'Picto']]],
@@ -18,6 +19,7 @@ var searchData=
   ['analysisinfo',['AnalysisInfo',['../struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html',1,'Picto::AnalysisSelectorWidget']]],
   ['analysisitem',['AnalysisItem',['../class_analysis_item.html',1,'']]],
   ['analysislfpdata',['AnalysisLfpData',['../class_picto_1_1_analysis_lfp_data.html',1,'Picto']]],
+  ['analysismatlabobj',['AnalysisMatlabObj',['../class_picto_1_1_analysis_matlab_obj.html',1,'Picto']]],
   ['analysisnumbervariable',['AnalysisNumberVariable',['../class_picto_1_1_analysis_number_variable.html',1,'Picto']]],
   ['analysisoptionwidget',['AnalysisOptionWidget',['../class_picto_1_1_analysis_option_widget.html',1,'Picto']]],
   ['analysisoutput',['AnalysisOutput',['../class_picto_1_1_analysis_output.html',1,'Picto']]],

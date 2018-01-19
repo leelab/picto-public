@@ -19,6 +19,18 @@ class PlotViewWidget : public DataViewWidget
 public:
 	PlotViewWidget(const QString cqsName, QWidget *pqwWidget, const ViewProperties defaultViewProperties);
 	virtual ~PlotViewWidget();
+
+	bool tabInfo();
+	
+	//! Returns true if the widget is still in the same original tab as the Task, returns false if it was open in a new tab.
+	bool sameTabAsTask_;
+
+public slots:	
+	void newTab();
+	void mouseDoubleClickEvent(QMouseEvent * e)  override;
+
+signals:
+	void openInNewTab(QWidget* pWidget);
 };
 
 #endif

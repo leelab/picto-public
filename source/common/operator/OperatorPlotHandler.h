@@ -15,8 +15,8 @@ namespace Picto {
 class TaskConfig;
 
 /*! \brief A Handler for plots derived from all OperatorPlots
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API OperatorPlotHandler : public QObject
@@ -37,6 +37,7 @@ public:
 public slots:
 	void initializePlot(const QString &xTitle, const QString &yTitle);
 	void setTitle(const QString &title);
+	QString getTitle(){ return m_tmpTitle;};
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 
 	void exportPlot(int type, int size, const QString fileName);

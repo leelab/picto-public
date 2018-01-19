@@ -126,6 +126,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a15784e8a89b3ddb38c601187701bf638">managerConnectionEstablished</a> (bool connected)</td></tr>
 <tr class="memdesc:a15784e8a89b3ddb38c601187701bf638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal sent when a PlotHandler manager connects and disconnects. <br /></td></tr>
 <tr class="separator:a15784e8a89b3ddb38c601187701bf638"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f43251a5d8235cbbf959a46f802f7aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f43251a5d8235cbbf959a46f802f7aa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>alignPlot</b> (int alignID)</td></tr>
+<tr class="separator:a0f43251a5d8235cbbf959a46f802f7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a227bd1eb079562e16ece9056ded9e9ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a227bd1eb079562e16ece9056ded9e9ae"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>eventAdded</b> (int eventID)</td></tr>
+<tr class="separator:a227bd1eb079562e16ece9056ded9e9ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5952b81e4b47b056f395c171ea95a1aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5952b81e4b47b056f395c171ea95a1aa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scriptContAdded</b> (int scriptID)</td></tr>
+<tr class="separator:a5952b81e4b47b056f395c171ea95a1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
@@ -207,7 +216,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a82e4a932787fa244289c37c384a43fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c37d6528821d5bc979290f6d2d2e2ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c37d6528821d5bc979290f6d2d2e2ac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a8c37d6528821d5bc979290f6d2d2e2ac">setTaskViewProperties</a> (const <a class="el" href="class_picto_1_1_view_properties.html">ViewProperties</a> props)</td></tr>
-<tr class="memdesc:a8c37d6528821d5bc979290f6d2d2e2ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to set the size of the TaskDisplay for the <a class="el" href="class_view_selection_frame.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionFrame</a>. <br /></td></tr>
+<tr class="memdesc:a8c37d6528821d5bc979290f6d2d2e2ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to set the size of the TaskDisplay folDatar the <a class="el" href="class_view_selection_frame.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionFrame</a>. <br /></td></tr>
 <tr class="separator:a8c37d6528821d5bc979290f6d2d2e2ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99cadd16ff7f2e2c2de293fcf30122e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99cadd16ff7f2e2c2de293fcf30122e1"></a>
 const <a class="el" href="class_picto_1_1_view_properties.html">ViewProperties</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a99cadd16ff7f2e2c2de293fcf30122e1">getTaskViewProperties</a> () const </td></tr>
@@ -220,6 +229,9 @@ const <a class="el" href="class_picto_1_1_view_properties.html">ViewProperties</
 <tr class="memitem:a4985a6b4002f235354ad3e1d3f0ed44f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4985a6b4002f235354ad3e1d3f0ed44f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSelectedNeural</b> (int channel, int unit)</td></tr>
 <tr class="separator:a4985a6b4002f235354ad3e1d3f0ed44f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24ff4b9d1ee375b993011a0cd60b3fe4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24ff4b9d1ee375b993011a0cd60b3fe4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>removeNeuralDataListeners</b> ()</td></tr>
+<tr class="separator:a24ff4b9d1ee375b993011a0cd60b3fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
@@ -279,6 +291,9 @@ QMap&lt; QString, QWeakPointer&lt; <a class="el" href="class_picto_1_1_operator_
 QList&lt; QWeakPointer&lt; <a class="el" href="class_picto_1_1_neural_data_listener.html">NeuralDataListener</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#af8ed35af77ee6bdd309694a1210d9ab9">neuralDataListeners_</a></td></tr>
 <tr class="memdesc:af8ed35af77ee6bdd309694a1210d9ab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of registered NeuralDataListeners. <br /></td></tr>
 <tr class="separator:af8ed35af77ee6bdd309694a1210d9ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee5c446426a821682ff76430fd4dcd4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adee5c446426a821682ff76430fd4dcd4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>listenerAdded_</b></td></tr>
+<tr class="separator:adee5c446426a821682ff76430fd4dcd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93456ea01c377ce9acbb6fc272865e8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93456ea01c377ce9acbb6fc272865e8a"></a>
 enum Picto::TaskConfig::ConnectionStatus&#160;</td><td class="memItemRight" valign="bottom"><b>managerConnectionStatus_</b></td></tr>
 <tr class="separator:a93456ea01c377ce9acbb6fc272865e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -301,8 +316,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 <li>Configuring and accessing <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> plot objects</li>
 <li>(FUTURE) Uniquely gating Input vs Output on the NIDaq Digital lines</li>
 </ul>
-<p>These and other general task configuration issues are handled by this class. Every Picto <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> holds a pointer to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of the task to which it is attached and elements needing to be accessed through the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> add themselves to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> object (which holds a weak pointer to them to avoid circular shared pointer issues). The <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of a particular <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> can be accessed using its <a class="el" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16" title="Returns a QSharedPointer to the TaskConfig managing this asset. ">Asset::getTaskConfig()</a> function. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<p>These and other general task configuration issues are handled by this class. Every Picto <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> holds a pointer to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of the task to which it is attached and elements needing to be accessed through the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> add themselves to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> object (which holds a weak pointer to them to avoid circular shared pointer issues). The <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of a particular <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> can be accessed using its <a class="el" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16" title="Returns a QSharedPointer to the TaskConfig managing this asset. ">Asset::getTaskConfig()</a> function. </p><dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="_task_config_8h_source.html#l00040">40</a> of file <a class="el" href="_task_config_8h_source.html">TaskConfig.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -321,7 +336,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 </div><div class="memdoc">
 <p>Registers a <a class="el" href="class_picto_1_1_neural_data_listener.html" title="An abstract interface for items receiving NeuralData. ">NeuralDataListener</a> to receive live NeuralData updates. </p>
 
-<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00321">321</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00328">328</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -340,7 +355,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 </div><div class="memdoc">
 <p>Returns the cached <a class="el" href="class_picto_1_1_view_properties.html">ViewProperties</a> associated with the passed-in displayWidget </p>
 
-<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00309">309</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00316">316</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -359,7 +374,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 </div><div class="memdoc">
 <p>Returns the stored name for the passsed-in widget pointer. </p>
 
-<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00296">296</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00303">303</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -377,7 +392,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 </div><div class="memdoc">
 <p>Returns a QList of the names of the current View Widgets. </p>
 
-<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00289">289</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00296">296</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -396,7 +411,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedUnit_</b></td>
 </div><div class="memdoc">
 <p>Distributes neuralData to registered listeners </p>
 
-<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00331">331</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8cpp_source.html#l00349">349</a> of file <a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a>.</p>
 
 </div>
 </div>

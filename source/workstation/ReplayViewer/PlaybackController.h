@@ -123,8 +123,8 @@ private:
 /*! \brief A simple struct for storing preloaded data about a Session.
  *	\details The PlaybackController preloads Session files to retrieve high level data about them without
  *	loading the entire file.  This struct stores that data.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 struct PreloadedSessionData
 {
@@ -148,6 +148,30 @@ struct PreloadedSessionData
 	QStringList analysisNames_;	//!< The names of the local Analyses that are available in the preloaded design.
 };
 Q_DECLARE_METATYPE(PreloadedSessionData)
+
+/*! \brief A simple struct for storing data about a Session.
+*	\details The PlaybackController preloads Session files to retrieve high level data about them without
+*	loading the entire file.  This struct stores that data.
+*	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+*	\date 2009-2017
+*/
+struct LoadedSessionData
+{
+	LoadedSessionData(){};
+	/*! \brief A copy constructor.
+	*/
+	LoadedSessionData(const LoadedSessionData& other){
+		spikeReader_ = other.spikeReader_;
+		alignElements_ = other.alignElements_;
+	};
+	~LoadedSessionData(){};
+
+	QList<QPair<int, int>> spikeReader_;
+	//a Map of Elements ID used for Alignment and their corresponding list of Scriptable members IDs
+	QMap<int, QList<int>> alignElements_;
+
+};
+Q_DECLARE_METATYPE(LoadedSessionData)
 
 /*!	\brief The top level object that controls Session playback using the PlaybackStateUpdater
  *	and SlaveExperimentDriver.
@@ -181,6 +205,7 @@ public:
 	void play(QList<QUuid> activeAnalyses,QStringList importAnalyses);
 	void pause(QList<QUuid> activeAnalyses = QList<QUuid>(),QStringList importAnalyses = QStringList());
 	QStringList precacheAnalysisNames(QSharedPointer<DesignRoot> import);
+	void activatePlots(bool activate);
 
 public slots:
 	void stop();
@@ -192,6 +217,9 @@ public slots:
 	void selectFile(QString filePath);
 	void selectRun(int index);
 
+	//void alignPlot(int alignID);
+
+
 signals:
 	/*! \brief Emitted when a Session has been preloaded.
 	 *	@param sessionData A PreloadedSessionData object that includes information about the Preloaded Session.
@@ -200,6 +228,7 @@ signals:
 	/*! \brief Emitted when preloading of a Session fails.*/
 	void sessionPreloadFailed(QString error);
 	/*! \brief Emitted when the current Session time changes. */
+
 	void timeChanged(double time);
 	/*! \brief Emitted when loading of a session (not preloading) starts and stops.
 	 *	@param isLoading Indicates if the load is starting or stopping.
@@ -223,6 +252,11 @@ signals:
 	////neural data sonification: adds reward sound to Picto movie
 	void rewarded(int quantity);
 
+	void alignPlotSig(int alignID); 
+	void sessionLoaded(LoadedSessionData sessionData);
+	void eventAddedSig(int eventID);
+	void scriptContAddedSig(int scriptID);
+
 private:
 	QString activateAnalyses(QStringList analysisData);
 	QTimer stateUpdateTimer_;
@@ -242,6 +276,9 @@ private:
 	int numImportedAnalyses_;
 	QHash<QString, QUuid> cachedAnalysis_;
 	QHash<QString, QString> cachedAnalysisNames_;
+	QMap<int, QString> assets_;
+	bool activatePlots_;
+
 private slots:
 	void newRunLength(double length);
 	void setCurrTime(double time);

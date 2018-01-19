@@ -34,6 +34,7 @@ namespace ColumnType {
 		COLUMN_RAISED_COLUMN,	//!< 3D Bar Plot Symbols
 		COLUMN_LINES,			//!< Simple lines at the specified values
 		COLUMN_CURVE,			//!< A curve of the values
+		COLUMN_STICKS,			//!< Raster spikes
 		COLUMN_FILLED_CURVE,	//!< A filled curve of the values
 		COLUMN_MAX				//!< An invalid value
 	};

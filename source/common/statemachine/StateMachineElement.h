@@ -38,8 +38,8 @@ class Result;
  *	Scripts cannot access AnalysisElements).  If two Scriptable elements have the same name and are both in scope, the
  *	scriptable with the longer path will be the one that is accessed by using its name.
  *
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 
 #if defined WIN32 || defined WINCE
@@ -74,6 +74,15 @@ public:
 	virtual QString getUITemplate(){return "StateMachineElement";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
 
+	virtual void setAlignParam(bool alignParam);
+	virtual bool getAlignParam();
+
+	virtual void setSelEventParam(bool setSelEvt);
+	virtual bool getSelEventParam();
+		
+	virtual void setMarkerParam(bool markerParam);
+	virtual bool getMarkerParam();
+
 protected:
 	virtual QString defaultTagName(){return "StateMachineElement";};
 	virtual void postDeserialize();
@@ -90,6 +99,10 @@ protected:
 
 	QPoint layoutPosition_;
 	friend class SlaveExperimentDriver;
+
+	bool setForAlignment_;
+	bool setForSelEvent_;
+	bool setForMarker_;
 
 };
 

@@ -20,8 +20,8 @@ namespace Picto {
  *	there is a possibility that Assets that were not upgraded might have their Asset ids changed for various reasons.
  *	This class uses a SessionVersionInterfacer to automatically fix the changed Asset IDs and extract the Asset IDs of
  *	Assets that are now obsolete so that their Property values can be ignored.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API FileSessionLoader : public QObject
@@ -43,6 +43,8 @@ public:
 	double runDuration(int index);
 	double currRunDuration();
 	QString currRunName();
+
+	QMap<int, QString> getAssets();
 signals:
 	void percentLoaded(double percent);
 
@@ -81,6 +83,8 @@ private:
 	int runIndex_;
 	bool sessionDataLoaded_;
 	static QHash<QString,int> connectionUsers_;
+
+	QMap<int, QString> Assets_;
 };
 
 }; //namespace Picto

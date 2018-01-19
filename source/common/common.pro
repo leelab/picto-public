@@ -271,6 +271,14 @@ HEADERS += $$(PICTO_TREE)/source/common/operator/PSTHPlot.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/PSTHPlot.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/PSTHPlotHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/PSTHPlotHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/RasterPlot.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/RasterPlot.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/RasterPlotHandler.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/RasterPlotHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/RasterBase.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/RasterBase.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/RasterBasePlotHandler.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/RasterBasePlotHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/NeuralDataListener.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/NeuralDataListener.cpp
 
@@ -327,6 +335,9 @@ HEADERS += $$(PICTO_TREE)/source/common/parameter/AnalysisVariableMap.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/AnalysisVariableMap.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/AnalysisVariable.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/AnalysisVariable.cpp
+HEADERS += $$(PICTO_TREE)/source/common/parameter/AnalysisMatlabObj.h
+SOURCES += $$(PICTO_TREE)/source/common/parameter/AnalysisMatlabObj.cpp
+
 HEADERS += $$(PICTO_TREE)/source/common/parameter/AnalysisVariableList.h
 SOURCES += $$(PICTO_TREE)/source/common/parameter/AnalysisVariableList.cpp
 HEADERS += $$(PICTO_TREE)/source/common/parameter/AssociateElement.h
@@ -833,4 +844,50 @@ DEFINES += __STDC_CONSTANT_MACROS
 # ##############################################################################
 # FFMPEG: END OF CONFIGURATION
 # ##############################################################################
+
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_data.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_data.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_emxAPI.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_emxAPI.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_emxutil.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_emxutil.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_initialize.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_initialize.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_terminate.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_terminate.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binocdfCoderWrap_types.h
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binodeviance.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binodeviance.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binopdf.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binopdf.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/binopdfCoderWrap.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/binopdfCoderWrap.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/eml_rand_mt19937ar_stateful.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/eml_rand_mt19937ar_stateful.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/fileManager.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/fileManager.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/fprintf.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/fprintf.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/gammaln.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/gammaln.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/normrndCoderWrap.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/normrndCoderWrap.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/rand.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/rand.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/randCoderWrap.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/randCoderWrap.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/randn.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/randn.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/rt_nonfinite.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/rt_nonfinite.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/rtGetInf.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/rtGetInf.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/rtGetNaN.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/rtGetNaN.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/rtwtypes.h
+SOURCES += $$(PICTO_TREE)/3rdparty/matlab/stirlerr.cpp
+HEADERS += $$(PICTO_TREE)/3rdparty/matlab/stirlerr.h
+
 

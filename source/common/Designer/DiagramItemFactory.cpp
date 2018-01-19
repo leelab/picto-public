@@ -117,6 +117,10 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		//Operator Features Icons
 		addIconDefinition("OperatorFeature", ":/icons/lfpdatasource.svg", 100, 100);
 
+		//Matlab object
+		addIconDefinition("MatlabObject", ":/icons/matlabObj.svg", 100, 100);
+
+
 		mapInitialized_ = true;
 	}
 	editorState_ = editorState;

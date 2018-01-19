@@ -157,7 +157,7 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//This property tells us if the user entered or exited the target this frame.  Initialize it to false.
-	propertyContainer_->getProperty("OnTargetChanged")->setValue(false);
+	//propertyContainer_->getProperty("OnTargetChanged")->setValue(false);
 
 	Controller::TimerUnits::TimerUnits timeUnits;
 	if(unitList_.value(timeUnits_,"") == "Sec")

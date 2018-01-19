@@ -17,6 +17,8 @@
 #include "../../common/statemachine/Scene.h"
 #include "../../common/storage/AssetExportImport.h"
 
+#include "../../common/playback/SpikeState.h"
+
 #if defined WIN32 || defined WINCE
 #include <Windows.h>
 #endif
@@ -31,6 +33,7 @@ using namespace Picto;
  */
 PlaybackController::PlaybackController()
 {
+	activatePlots_=false;
 	pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("BNC0")));
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("PAR0")));
@@ -40,6 +43,9 @@ PlaybackController::PlaybackController()
 
 	//This allows preloaded session data to be used in signal and slots
 	qRegisterMetaType<PreloadedSessionData>();
+
+	//This allows preloaded session data to be used in signal and slots
+	qRegisterMetaType<LoadedSessionData>();
 
 	//Allows for the threaded playback
 	qRegisterMetaType<QList<double>>("QList<double>");
@@ -553,7 +559,9 @@ void PlaybackController::update()
 				}
 				else
 				{
-					PreloadedSessionData preloadData;
+					assets_ = loader.getAssets();
+
+					PreloadedSessionData preloadData;					
 					preloadData.fileName_ = filePath;
 					preloadData.runs_ = loader.getRunNames();
 					preloadData.notes_ = loader.getRunNotes();
@@ -731,6 +739,9 @@ void PlaybackController::update()
 					//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
 					slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(experiment_,playbackUpdater_));
 					connect(slaveExpDriver_.data(), SIGNAL(taskChanged(QString)), this, SIGNAL(taskChanged(QString)));
+					connect(slaveExpDriver_.data(), SIGNAL(alignPlot(int)), this, SIGNAL(alignPlotSig(int)));
+					connect(slaveExpDriver_.data(), SIGNAL(eventAdded(int)), this, SIGNAL(eventAddedSig(int)));
+					connect(slaveExpDriver_.data(), SIGNAL(scriptContAdded(int)), this, SIGNAL(scriptContAddedSig(int)));
 					emit designRootChanged();
 				}
 
@@ -747,6 +758,65 @@ void PlaybackController::update()
 					data_.setNextStatus(PlaybackControllerData::Stopped);
 					break;
 				}
+
+				//Plots
+if (activatePlots_)
+{
+				//Send spikes and other states data to the UI
+				LoadedSessionData loadData;
+				QSharedPointer<SpikeReader> currSpikeReader = playbackUpdater_->getSpikeReader();
+				QVariantList spikeList = currSpikeReader->getSpikeDataSince(0.0);
+				foreach(QVariant v, spikeList)
+				{
+					if (v.canConvert<PlaybackSpikeData>())
+					{
+						PlaybackSpikeData spikeData = v.value<PlaybackSpikeData>();
+						QPair<int, int> chUnit;
+						chUnit.first = spikeData.channel_;
+						chUnit.second = spikeData.unit_;
+						if (!loadData.spikeReader_.contains(chUnit))
+							loadData.spikeReader_.append(chUnit);
+					}
+				}
+
+				//loadData.alignElements_ = assets_;
+				QMap<int, QList<int>> alignElements;
+				QList<int> assetIds = assets_.keys();
+				foreach(int assetId, assetIds)
+				{
+					if (designRoot_ &&  designRoot_->getExperiment()->getDesignConfig())
+					{
+						QSharedPointer<Asset> asset = designRoot_->getExperiment()->getDesignConfig()->getAsset(assetId);
+						if (asset && asset->inherits("Picto::StateMachineElement"))
+						{
+							QStringList currTaskNames = designRoot_->getExperiment().staticCast<Experiment>()->getTaskNames();
+
+							//only display events contained in the tasks played in the current run							
+							QString assetTask = asset->getPath().split("::").first();
+							if (currTaskNames.contains(assetTask))
+							{
+								QList<int> scriptableIDs;
+								QList<QWeakPointer<Scriptable>> ScriptableMembers;
+								ScriptableMembers = asset.objectCast<ScriptableContainer>()->getScriptableList();
+								foreach(QSharedPointer<Scriptable> scriptable, ScriptableMembers)
+								{
+									int scriptableID = scriptable ? scriptable->getAssetId() : 0;
+									scriptableIDs.append(scriptableID);
+								}
+								if (!alignElements.contains(assetId))
+									alignElements.insert(assetId, scriptableIDs);
+							}						
+						}
+					}
+				}
+				loadData.alignElements_ = alignElements;
+
+				
+				emit sessionLoaded(loadData);
+
+}
+				//end Plots
+
 
 				//Now that the analyses have been added, we need to reinitialize scripting for the experiment
 				//Since a whole lot of memory is allocated at this point, the script engine allocation occuring
@@ -836,6 +906,11 @@ void PlaybackController::update()
 		data_.setStatus(data_.getNextStatus());
 		emit statusChanged(nextStatus);
 	}
+}
+
+void PlaybackController::activatePlots(bool activate)
+{
+	activatePlots_ = activate;
 }
 
 

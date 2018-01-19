@@ -74,6 +74,7 @@ void Reward::postDeserialize()
 	StateMachineElement::postDeserialize();
 	setPropertyRuntimeEditable("NumRewards");
 	setPropertyRuntimeEditable("RewardQty");
+	setPropertyRuntimeEditable("MinRewardPeriod");	
 }
 
 /*! \brief Extends StateMachineElement::validateObject() to verify that Property values for this element are greater than zero.

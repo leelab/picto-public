@@ -22,6 +22,10 @@ StateMachineElement::StateMachineElement()
 	AddDefinableProperty("EntryScript","");
 	AddDefinableProperty("ExitScript","");
 	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+
+	setForAlignment_ = false;
+	setForSelEvent_ = false;
+	setForMarker_ = false;
 }
 
 /*! \brief In any StateMachineElement where experimental time passes (currently State and PausePoint) this function causes the latest frame
@@ -140,5 +144,37 @@ QMap<QString,QString> StateMachineElement::getScripts()
 
 	return scripts;
 }
-
+void StateMachineElement::setAlignParam(bool alignParam)
+{
+	if (alignParam == true)
+		setForAlignment_ = true;
+	else
+		setForAlignment_ = false;
+}
+bool StateMachineElement::getAlignParam()
+{
+	return setForAlignment_;
+}
+void StateMachineElement::setSelEventParam(bool setSelEvt)
+{
+	if (setSelEvt == true)
+		setForSelEvent_ = true;
+	else
+		setForSelEvent_ = false;
+}
+bool StateMachineElement::getSelEventParam()
+{
+	return setForSelEvent_;
+}
+void StateMachineElement::setMarkerParam(bool markerParam)
+{
+	if (markerParam == true)
+		setForMarker_ = true;
+	else
+		setForMarker_ = false;
+}
+bool StateMachineElement::getMarkerParam()
+{
+	return setForMarker_;
+}
 }; //namespace Picto

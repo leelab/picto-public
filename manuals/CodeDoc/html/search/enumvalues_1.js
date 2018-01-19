@@ -11,6 +11,7 @@ var searchData=
   ['column_5fmax',['COLUMN_MAX',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33aca93935ed7f2f3c5cc5673ab765f1224',1,'Picto::ColumnType']]],
   ['column_5foutline',['COLUMN_OUTLINE',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83',1,'Picto::ColumnType']]],
   ['column_5fraised_5fcolumn',['COLUMN_RAISED_COLUMN',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe',1,'Picto::ColumnType']]],
+  ['column_5fsticks',['COLUMN_STICKS',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33afd21db71b61a34e3efa071380e271b67',1,'Picto::ColumnType']]],
   ['complete',['COMPLETE',['../class_picto_1_1_run_selector_widget.html#ac540ab59a379b3bfb5534ecde54dc2aaaa24e25489965138f8328057b5a8f473a',1,'Picto::RunSelectorWidget']]],
   ['connected',['connected',['../class_picto_1_1_command_channel.html#ab7d91aac6340369c17e2bd2be8a465dbacab8110f599c9fb57e044a328111b2c6',1,'Picto::CommandChannel']]]
 ];

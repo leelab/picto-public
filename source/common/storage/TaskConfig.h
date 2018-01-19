@@ -31,8 +31,8 @@ class NeuralDataUnit;
  *	the TaskConfig of the task to which it is attached and elements needing to be accessed through the TaskConfig add
  *	themselves to the TaskConfig object (which holds a weak pointer to them to avoid circular shared pointer issues).
  *	The TaskConfig of a particular Task can be accessed using its Asset::getTaskConfig() function.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2017
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API TaskConfig : public QObject
@@ -71,7 +71,7 @@ public:
 public:
 	const ViewProperties getDisplayWidgetProperties(QWidget *widget) const;
 
-	//! Used to set the size of the TaskDisplay for the ViewSelectionFrame
+	//! Used to set the size of the TaskDisplay folDatar the ViewSelectionFrame
 	void setTaskViewProperties(const ViewProperties props) { taskViewProperties_ = props; };
 	//! Used to get the size of the TaskDisplay for the ViewSelectionFrame
 	const ViewProperties getTaskViewProperties() const { return taskViewProperties_; };
@@ -79,6 +79,7 @@ public:
 	void addNeuralDataListener(QWeakPointer<NeuralDataListener> plot);
 	void notifyNeuralDataListeners(const NeuralDataUnit &neuralData);
 	void setSelectedNeural(int channel, int unit);
+	void removeNeuralDataListeners();
 
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.
@@ -98,6 +99,9 @@ public slots:
 	void receivePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
 	void managerConnectionEstablished(bool connected);
 	
+	void alignPlot(int alignID);
+	void eventAdded(int eventID);
+	void scriptContAdded(int scriptID);
 
 private:
 	    //neural data sonification
@@ -129,6 +133,7 @@ protected:
 
 	//! A list of registered NeuralDataListeners
 	QList<QWeakPointer<NeuralDataListener>> neuralDataListeners_;
+	bool listenerAdded_;
 
 	void addWaitingAssets();
 

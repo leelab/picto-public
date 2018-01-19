@@ -181,6 +181,7 @@ protected:
 
 	//! Used to stagger new colors
 	char m_cUnasignedNum;
+	
 };
 
 

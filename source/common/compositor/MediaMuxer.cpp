@@ -383,7 +383,7 @@ int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 	// simple sound encoding	
 	double Fs = 8000.; //8 samples per ms - sound is 1ms
 	uint8_t samples[5 * N * 8] = { 0 }; // large buffer
-	int n;                // buffer index
+	//int n;                // buffer index
 	
 	double duration = 1.0; //sound duration in ms
 	double silenceDuration = 50; //ms
@@ -449,7 +449,7 @@ int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 	if (audio_outbuf == 0)
 		return false;
 	
-	int frame_size = pAudioCodecCtx_->frame_size;
+	//int frame_size = pAudioCodecCtx_->frame_size;
 	int  out_size = ffmpeg::avcodec_encode_audio(pAudioCodecCtx_, audio_outbuf, audio_outbuf_size, (const short*)samples);
 	pAudioCodecCtx_->coded_frame->pts = pts;  // Set the time stamp
 

@@ -127,9 +127,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a8ff7fc29e9eb7473a8f6f2994ed7ea1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a8ff7fc29e9eb7473a8f6f2994ed7ea1d">LoadPropValsFromFile</a> ()</td></tr>
 <tr class="memdesc:a8ff7fc29e9eb7473a8f6f2994ed7ea1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads runtime Property initValues from a previous Session to replace those in the current Experiment.  <a href="#a8ff7fc29e9eb7473a8f6f2994ed7ea1d">More...</a><br /></td></tr>
 <tr class="separator:a8ff7fc29e9eb7473a8f6f2994ed7ea1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79345bf884011c398a9866a6e97ccd11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79345bf884011c398a9866a6e97ccd11"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>spikeEvent</b> (double time, int channel, int unit, QVariantList waveform)</td></tr>
-<tr class="separator:a79345bf884011c398a9866a6e97ccd11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37d2c04fef37a055cecbd5cedecbfcc8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37d2c04fef37a055cecbd5cedecbfcc8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>spikeAdded</b> (double time, int channel, int unit, QVariantList waveform)</td></tr>
+<tr class="separator:a37d2c04fef37a055cecbd5cedecbfcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a209c24dd6a3dae0d0fc3b5f80fcac84c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a209c24dd6a3dae0d0fc3b5f80fcac84c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>rewarded</b> (int quantity)</td></tr>
 <tr class="separator:a209c24dd6a3dae0d0fc3b5f80fcac84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -379,6 +379,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>recordModeOn_</b></td
 <tr class="memitem:a07bed831aba1bceb47c559df8fe86204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07bed831aba1bceb47c559df8fe86204"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isRunning_</b></td></tr>
 <tr class="separator:a07bed831aba1bceb47c559df8fe86204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a690fdf3a57da0972f58108e359ba2d26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a690fdf3a57da0972f58108e359ba2d26"></a>
+QMap&lt; int, QList&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>alignElements_</b></td></tr>
+<tr class="separator:a690fdf3a57da0972f58108e359ba2d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08da3aad11e45fe1aa9879769dec1516"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08da3aad11e45fe1aa9879769dec1516"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRootForData_</b></td></tr>
+<tr class="separator:a08da3aad11e45fe1aa9879769dec1516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac800012335b77105311f9d9e35b67892"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac800012335b77105311f9d9e35b67892"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>taskTabIndex_</b></td></tr>
+<tr class="separator:ac800012335b77105311f9d9e35b67892"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -407,8 +416,8 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <li>Add a step function for advancing frame by frame </li>
 </ul>
 </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2017 </dd></dl>
 
 <p>Definition at line <a class="el" href="testviewer_8h_source.html#l00069">69</a> of file <a class="el" href="testviewer_8h_source.html">testviewer.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -605,7 +614,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the user toggles the record button. </p>
 <p>Handles changes to the Icon, and the recording state. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_test_viewer.html#a3545d63dfc752e03b02c082adf8e359d" title="Updates the Recording Visual Target Host to record or not depending on the current run and record mod...">updateRecordingTarget()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00746">746</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00749">749</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>

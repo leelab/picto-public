@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
@@ -113,6 +114,12 @@ Inheritance diagram for Picto::SessionPlayer:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:ac331cd475cc1c074e054d36ba6aa4a56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac331cd475cc1c074e054d36ba6aa4a56"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>spikeEvent</b> (double time, int channel, int unit, QVector&lt; float &gt; waveform)</td></tr>
+<tr class="separator:ac331cd475cc1c074e054d36ba6aa4a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:af6e2ed1e376e9d940c8f5554efbf753b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6e2ed1e376e9d940c8f5554efbf753b"></a>
@@ -255,7 +262,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>loading_</b></td></tr
 <p>This is used in order to step through the session in the proper order. We always choose the next lowest DataId so that can be sure, for example, that any <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes that occured before a particular <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> was traversed in the actual experiment will always be played back before that <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> and not afterward.</p>
 <p>The lookForward time is in Run time (ie. 0 is the beginning of the run) in units of seconds. If no appropriate <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> can be found before the lookForward time, an empty shared <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> pointer is returned. </p>
 
-<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00268">268</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00235">235</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
 
 </div>
 </div>
@@ -275,7 +282,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>loading_</b></td></tr
 <p>Returns the current playback time. </p>
 <p>All Session events that occured up to this time have been emitted through <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a> signals. </p>
 
-<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00129">129</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00131">131</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
 
 </div>
 </div>
@@ -304,7 +311,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>loading_</b></td></tr
 <p>Steps playback forward to the next Session event so long as that event occurs before the input lookForward time. </p>
 <p>The lookForward time is in Run time (ie. 0 is the beginning of the run) in units of seconds. </p><dl class="section note"><dt>Note</dt><dd>Since some Picto events have no DataIds and are indexed only by their timestamps, the ordering of this <a class="el" href="class_picto_1_1_session_player.html#aa23b015b74b7115294dcfabfbed7945b" title="Steps playback forward to the next Session event so long as that event occurs before the input lookFo...">step()</a> function could have been set up in multiple ways. We have set it up so that all DataId indexed events marked with the upcoming frame presentation time are traversed first. Then, before the actual frame presentation is traversed, we traverse all timestamp indexed Session events (spikes, lfp, signal channels, rewards) up to the time of the upcoming frame presentation. We currently just move through all of the time based events one after the other. This means, for example that if we had a Position signal with times .003, .005, .007, etc and a spike at time .004 we would still see all of the Position signal data first and only then see the spike event, or alternatively, we might see the spike event first and only then all of the Position signal data. Strictly speaking, we should probably be presenting these in their time order too; however it is currently irrelevant because the only place where anything can actually happen with this data is in <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> scripts which are part of the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a> traversal. <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> Scripts are triggered by <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> traversals and frame presentations, so whenever an <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> script is called, all of the Timestamp indexed events for the latest frame will have been triggered anyway. It should also be pointed out that even though timestamp indexed events might sometimes have occured just after one frame was presented, all DataId indexed events will be traversed before those timestamp based events are traversed. We thought long and hard about this, and it has to do with the fact that the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> system itself only has access to position data from the previous frame regardless of when position data for the upcoming frame is read. If you want to change this, think about it for a long long time. </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00178">178</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00180">180</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
 
 </div>
 </div>
@@ -333,7 +340,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>loading_</b></td></tr
 <p>Steps playback forward to the next Frame presentation so long as it occurs before the input lookForward time. </p>
 <p>The lookForward time is in runtime (ie. 0 is the beginning of the run) in units of seconds. </p>
 
-<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00147">147</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00149">149</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
 
 </div>
 </div>
@@ -356,7 +363,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>loading_</b></td></tr
 <p>If the input time is lower than the current time in the Run, the Run will be restarted and then <a class="el" href="class_picto_1_1_session_player.html#aedbfbf3c79e0543fcadfde66a160ac1c" title="Steps playback forward to the next Frame presentation so long as it occurs before the input lookForwa...">stepToNextFrame()</a> will be called until the input time as usual. This is due to the fact that Analyses depend on a complete pass through the Session Run from the beginning. If we "rewound", we would have to undo <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> script effects while we rewind to the input time and then restart <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> at that point. That is not supported so we need to just clear the entire <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> and start over from scratch. In cases where we end up restarting the run, the outside world will know what happened because the <a class="el" href="class_picto_1_1_session_player.html#af6e2ed1e376e9d940c8f5554efbf753b" title="Emitted when playback of a Session Run starts or is restarted. taskName is the name of the task that ...">startingRun()</a> signal will be emitted, just as it always is when playback of a new run starts.</p>
 <p>If we reach the end of the Run before arriving at the input time, the <a class="el" href="class_picto_1_1_session_player.html#a37f89e41b206df6d3e88611f9638a394" title="Emitted when playback of the current Run ends. ">reachedEnd()</a> will be emitted. </p>
 
-<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00055">55</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_player_8cpp_source.html#l00057">57</a> of file <a class="el" href="_session_player_8cpp_source.html">SessionPlayer.cpp</a>.</p>
 
 </div>
 </div>

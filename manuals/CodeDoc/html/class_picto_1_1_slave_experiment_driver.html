@@ -119,6 +119,15 @@ Signals</h2></td></tr>
 <tr class="memitem:a9a9bf3a5ed00d009eb31019315a7b5a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a9a9bf3a5ed00d009eb31019315a7b5a1">taskChanged</a> (QString currTask)</td></tr>
 <tr class="memdesc:a9a9bf3a5ed00d009eb31019315a7b5a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the currently running task changes. currTask is the name of the new <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>.  <a href="#a9a9bf3a5ed00d009eb31019315a7b5a1">More...</a><br /></td></tr>
 <tr class="separator:a9a9bf3a5ed00d009eb31019315a7b5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ab5f04baafbf06f996c8dec0e0a9618"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ab5f04baafbf06f996c8dec0e0a9618"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>alignPlot</b> (int alignID)</td></tr>
+<tr class="separator:a0ab5f04baafbf06f996c8dec0e0a9618"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a7608a3d33d1524d326fa03a57a1d7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a7608a3d33d1524d326fa03a57a1d7a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>eventAdded</b> (int eventID)</td></tr>
+<tr class="separator:a2a7608a3d33d1524d326fa03a57a1d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a919616882f93730fe4a60a92f4e00b24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a919616882f93730fe4a60a92f4e00b24"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scriptContAdded</b> (int scriptID)</td></tr>
+<tr class="separator:a919616882f93730fe4a60a92f4e00b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -271,7 +280,7 @@ qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>finalTransition
 <p>Constructs a <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a>. </p>
 <p>The updater provides State/Transition/Input data from the Session master, be it a remotely running instance of the Picto <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> or simply a session file being played back in the Playback viewer. Data provided from the updater is sent into the exp <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> and rendered on screen. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00012">12</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00016">16</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -301,7 +310,7 @@ qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>finalTransition
 <p>Disables/Enables rendering of frames to the <a class="el" href="struct_picto_1_1_rendering_target.html" title="This is a top level container acting as a single location to access all of the various objects that a...">RenderingTarget</a>. </p>
 <p>This is useful for cases when we are fast forwarding or skipping around in session playback and don't need to actually see every frame on screen. Even though the frames aren't rendered, however, all other logic operates exactly the same whether rendering is enabled or disabled. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00410">410</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00456">456</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -330,7 +339,7 @@ qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>finalTransition
 <p>Handles the appropriate response to each input <a class="el" href="class_picto_1_1_slave_event.html" title="Holds information about an experimental state change event. Used by SlaveExperimentDriver. ">SlaveEvent</a>. </p>
 <p>When a PROP_VAL_CHANGE or INIT_PROP_VAL_CHANGE comes in, we change the value of our local <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a>. When a TRANS_ACTIVATED comes in, we move control to the appropriate <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a> and call whatever <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> scripts need to be called in the process. </p><dl class="section note"><dt>Note</dt><dd>Rather than handling each different type of event as it comes in from the <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a>, we queue them up at handle each frame all at once. This gives us the flexibility to know all data about the frame before it is actually presented to the display. It should be noted, however, that we are not taking advantage of this capability to any significant extent at this point. </dd></dl>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00103">103</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00107">107</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -369,7 +378,7 @@ qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>finalTransition
 <p>Called when a new Run starts. Handles various initializations that need to occur at the beginning of a new run. </p>
 <p>As part of this function, the <a class="el" href="class_picto_1_1_slave_experiment_driver.html#a9a9bf3a5ed00d009eb31019315a7b5a1" title="Emitted when the currently running task changes. currTask is the name of the new Task. ">taskChanged()</a> signal is emitted. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00211">211</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00257">257</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -414,7 +423,7 @@ qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>finalTransition
 <p>Called when a list of ne signal values comes in from the master. Adds the values to the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523" title="Adds a single input value to the input subchannel from an outside source. ">SignalChannel::insertValue()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00394">394</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00440">440</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -442,7 +451,7 @@ qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>finalTransition
 <p>Renders the current frame by calling <a class="el" href="class_picto_1_1_state.html#a6daa792c1055a50bef88729ba46ece64" title="Handles rendering of the latest frame to the display while this State is active and when the Experime...">State::slaveRenderFrame()</a>. </p>
 <p>Note that in slave mode, the Picto <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> is working with the Qt Event loop which is why we are calling slaveRenderFrame from an outside class. In master experiment execution, the experiment is one giant loop of code that doesn't make use of the Qt Event loop. In that case frame rendering is handled as part of running a State/PausePoint. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00075">75</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00079">79</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>

@@ -3,6 +3,8 @@
 
 #include "../../common/memleakdetect.h"
 
+#include <QMenu>
+
 using namespace Picto;
 
 /*! \brief Constructs a new DataViewWidget with the specified name and containing the passed Widget
@@ -27,6 +29,7 @@ DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget, DVW_Re
 	setLayout(layout_);
 
 	name_ = cqsName;
+
 }
 
 /*! \brief DataViewWidget destructor automatically dissociates itself from its view widget so the owning asset can control
@@ -108,4 +111,9 @@ void DataViewWidget::setName(const QString &newName)
 	name_ = newName;
 	myLabel_->setText(newName);
 }
+QWidget* DataViewWidget::getWidget()
+{
+	return myViewWidget_;
+}
+
 

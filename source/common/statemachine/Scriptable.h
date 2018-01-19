@@ -60,10 +60,15 @@ public:
 	virtual QString getScriptingInfo();
 	QString getInfo();
 
+	virtual void setScriptParam(bool scriptCondParam);
+	virtual bool getScriptParam();
+
 protected:
 	virtual QString defaultTagName(){return "Scriptable";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
+	bool scriptParam_;
 
 private:
 	void restoreProperties();
