@@ -1,0 +1,48 @@
+﻿Build started 11/3/2017 9:45:12 AM.
+     1>Project "C:\Projects\Picto\source\director\PictoDirector.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"c:\Projects\Picto\output\bin\release\\PictoDirector.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib /LIBPATH:C:/Qt64/Qt5.5.1/5.5/msvc2013_64/lib /LIBPATH:C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser\lib /LIBPATH:C:\qwt\lib /LIBPATH:c:\Projects\Picto\intermediates\lib\release C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\qtmain.lib shell32.lib C:/Qt64/Qt5.5.1/5.5/msvc2013_64/lib\Qt5Core.lib "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\/Lib/x64/D3D9.lib" "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\/Lib/x64/d3dx9.lib" Strmiids.lib "C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\/lib64/msvc/NIDAQmx.lib" C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser/lib/QtPropertyBrowser.lib libPicto.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Multimedia.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Widgets.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Gui.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Xml.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Network.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Script.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Sql.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5ScriptTools.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Concurrent.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"c:\Projects\Picto\output\bin\release\PictoDirector.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X64 "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" c:\Projects\Picto\intermediates\obj\director\release\D3DCompositingSurface.obj
+         c:\Projects\Picto\intermediates\obj\director\release\D3DVisualTarget.obj
+         c:\Projects\Picto\intermediates\obj\director\release\LegacySystemXPAnalogInputPort.obj
+         c:\Projects\Picto\intermediates\obj\director\release\PictoBoxXPAnalogInputPort.obj
+         c:\Projects\Picto\intermediates\obj\director\release\FPFLUSHCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\FPGETCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\FPInterface.obj
+         c:\Projects\Picto\intermediates\obj\director\release\FPPUTCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\FPREWARDCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\LegacySystemXPEventCodeGenerator.obj
+         c:\Projects\Picto\intermediates\obj\director\release\LegacySystemXPRewardController.obj
+         c:\Projects\Picto\intermediates\obj\director\release\PictoBoxXPEventCodeGenerator.obj
+         c:\Projects\Picto\intermediates\obj\director\release\PictoBoxXPOutputSignalController.obj
+         c:\Projects\Picto\intermediates\obj\director\release\PictoBoxXPRewardController.obj
+         c:\Projects\Picto\intermediates\obj\director\release\WinSound.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorStatusManager.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorClickResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorEndSessionResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorErrorResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorLoadExpResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorNewSessionResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorParameterResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorPauseResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorResumeResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorRewardResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorStartResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\DirectorStopResponseHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\Director.obj
+         c:\Projects\Picto\intermediates\obj\director\release\HardwareSetup.obj
+         c:\Projects\Picto\intermediates\obj\director\release\main.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_Director.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_DirectorStatusManager.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_FPFLUSHCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_FPGETCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_FPInterface.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_FPPUTCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_FPREWARDCommandHandler.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_LegacySystemXPEventCodeGenerator.obj
+         c:\Projects\Picto\intermediates\obj\director\release\moc_PictoBoxXPEventCodeGenerator.obj
+         PictoDirector.vcxproj -> c:\Projects\Picto\output\bin\release\PictoDirector.exe
+     1>Done Building Project "C:\Projects\Picto\source\director\PictoDirector.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.06
