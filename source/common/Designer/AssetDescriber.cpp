@@ -633,6 +633,39 @@ void AssetDescriber::setupDescriptions()
 	curr->addSProp("radius","Sets/Gets the circle's current radius.");
 	curr->addSProp("outline","Sets/Gets whether currently only the circle outline is being drawn.");
 
+	curr = addDescription("TriangleGraphic");
+	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to create a triangle graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->addProp("Outline", "If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness", "If 'Outline' is true, this defines the thickness in pixels of the outline.");
+	curr->addProp("Angle", "Sets the rotation angle for this graphic.");
+	curr->addProp("Size", "Sets the size of this graphic.");
+	curr->addSProp("width", "Sets/Gets the width of this graphic.");
+	curr->addSProp("height", "Sets/Gets the height of this graphic.");
+	curr->addSProp("outline", "Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSProp("angle", "Sets the rotation angle for this graphic.");
+	curr->addSFunc("setDimensions(w,h)", "Sets the width and height of this graphic in a single function call.");
+	curr->addSFunc("setRotationAngle(a)", "Sets the rotation angle.");
+
+	/*
+	curr = addDescription("PolygonGraphic");
+	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("This element is used to create a polygon graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->addProp("Outline", "If true, only the outline of this graphic will be drawn.");
+	curr->addProp("OutlineThickness", "If 'Outline' is true, this defines the thickness in pixels of the outline.");	
+	curr->addProp("Size", "Sets the size of this graphic.");
+	curr->addSProp("width", "Sets/Gets the width of this graphic.");
+	curr->addSProp("height", "Sets/Gets the height of this graphic.");
+	curr->addSProp("outline", "Sets/Gets whether currently only the graphic's outline is being drawn.");
+	curr->addSProp("angle", "Sets the rotation angle for this graphic.");
+	curr->addSFunc("setDimensions(w,h)", "Sets the width and height of this graphic in a single function call.");
+	curr->addSProp("setVertexX(index,x)", "Sets the x component of the position of the Vertex .");
+	curr->addSProp("setVertexY(index,y)", "Sets the y component of the position of the Vertex.");
+	curr->addSProp("getVertexX(index,x)", "Gets the x component of the position of the Vertex .");
+	curr->addSProp("getVertexY(index,y)", "Gets the y component of the position of the Vertex.");
+	curr->addSFunc("setDimensions(w,h)", "Sets the width and height of this graphic in a single function call.");
+	*/
+
 	curr = addDescription("DiamondGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
 	curr->setOverview("This element is used to create a diamond graphic on screen.  The center of the graphic will lie at the set 'Position'.");
@@ -645,7 +678,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSProp("angle", "Sets the rotation angle for this graphic.");
 	curr->addSProp("outline","Sets/Gets whether currently only the graphic's outline is being drawn.");
 	curr->addSFunc("setDimensions(w,h)","Sets the width and height of this graphic in a single function call.");
-	curr->addSFunc("setRotationAngle(a)", "Sets the rotation angle.");
+
 
 	curr = addDescription("EllipseGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
@@ -743,7 +776,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("The Token Tray Graphic fills an often used role by presenting a tray of tokens on screen where the tokens have set shapes, they are arranged in a set shape, they each have set colors and sizes and appear in set positions within the tray.  This tray is quite robust and allows for a whole lot of different types of configurations.  In general, the design properties are used to set default values for the tokens and the various values of individual tokens can then be set and changed by scripts during the session run.  See the properties and functions for further details.");
 	curr->addProp("Shape","The shape of the token tray (Ellipse only. Rectangle, Diamond are not yet implemented).  ie. The imaginary shape on which the tokens are placed.");
 	curr->addProp("Size","Sets the size of the token tray.  ie. The size of the imaginary shape on which the tokens are placed.");
-	curr->addProp("TokenShape","The shape (Ellipse,Rectangle,Diamond) of the tokens in the tray.");
+	curr->addProp("TokenShape","The shape (Ellipse,Rectangle,Diamond,Triangle) of the tokens in the tray.");
 	curr->addProp("TokenSize","The size of the tokens in the tray.");
 	curr->addProp("NumTokens","The number of tokens in the tray.");
 	curr->addProp("Phase","Phase in degrees at which the first token (Token0) sits in the tray.  The token will sit at the point where a line drawn outward from the tray center at the input phase intersects the tray shape.");
@@ -786,7 +819,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("The Token Factory Graphic is a set of individual 'token' graphics that have individual shapes, colors, sizes and positions that can be set during runtime by the designer.  This graphic is particularly useful if you have a widely variable number of graphics that will need to be used during experimentation.  It functions much like the Token Tray graphic with the main difference being that the token positions are setable.  This graphic is quite robust and allows for a whole lot of different types of configurations.  In general, the design properties are used to set default values for the tokens and the various values of individual tokens are then be set and changed by scripts during the session run.  See the properties and functions for further details.");
 	curr->addProp("Shape","The shape of the token tray (Ellipse only. Rectangle, Diamond are not yet implemented).  ie. The imaginary shape on which the tokens are placed.");
 	curr->addProp("Size","Sets the size of the token tray.  ie. The size of the imaginary shape on which the tokens are placed.");
-	curr->addProp("TokenShape","The shape (Ellipse,Rectangle,Diamond) of the tokens in the tray.");
+	curr->addProp("TokenShape","The shape (Ellipse,Rectangle,Diamond,Triangle) of the tokens in the tray.");
 	curr->addProp("TokenSize","The size of the tokens in the tray.");
 	curr->addProp("NumTokens","The number of tokens in the tray.");
 	curr->addProp("Phase","Phase in degrees at which the first token (Token0) sits in the tray.  The token will sit at the point where a line drawn outward from the tray center at the input phase intersects the tray shape.");
@@ -805,8 +838,8 @@ void AssetDescriber::setupDescriptions()
 	curr->addSProp("setTokenY(index,y)","Sets the y component of the position of the token at the input index in global coordinates (ie. top left corner of screen is 0,0).");
 	curr->addSProp("setTokenLocalX(index,x)","Sets the x component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
 	curr->addSProp("setTokenLocalY(index,y)","Sets the y component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
-	curr->addSFunc("setTokenSize(index,size)","Scales the size of the token at the input index by a factor of the input size, where size is a number between 0 and 1.");
-	curr->addSFunc("setTokenColor(index,r,g,b,a) or setTokenColor(index,r,g,b)","Sets the color of the token at the input index according to the red, green, blue and optional alpha inputs.");
+	curr->addSFunc("setTokenSize(index,size)","Scales the size of the token at the input index by a factor of the input size, where size is a number between 0 and 1. In case of Triangle tokens, size (width and/or height) is twice the radius of the circle in which the triangle is inscribed.");
+	curr->addSFunc("setTokenColor(index,r,g,b,a) or setTokenColor(index,r,g,b)", "Sets the color of the token at the input index according to the red, green, blue and optional alpha inputs.");
 	curr->addSFunc("setTokenColor(index,color)","Sets the color of the token at the input index by using a string containing hexadecimal r,g,b values (#rrggbb).");
 	curr->addSFunc("setTokenShape(index,shape)","Sets the shape of the token at the input index according to the input shape ('Ellipse','Rectangle','Diamond').");
 	curr->addSFunc("setTokenOutline(index,on)","Sets whether the token at the input index will be drawn as outline only (on=true).");
@@ -816,7 +849,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("getTokenLocalX(index)","Gets the x component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
 	curr->addSFunc("getTokenLocalY(index)","Gets the y component of the position of the token at the input index in local coordinates (ie. Token at (0,0) has the same position as the token factory.  Token at (10,10) has position 10 pixels to the right of and 10 pixels below the position set for the token factory.");
 	curr->addSFunc("getTokenSize(index)","Gets the scale factor from 0 to 1.0 of the token at the input index.");
-	curr->addSFunc("getTokenRed(index)","Gets the red component of the color of the token at the input index.");
+	curr->addSFunc("getTokenRed(index)", "Gets the red component of the color of the token at the input index.");
 	curr->addSFunc("getTokenGreen(index)","Gets the green component of the color of the token at the input index.");
 	curr->addSFunc("getTokenBlue(index)","Gets the blue component of the color of the token at the input index.");
 	curr->addSFunc("getTokenAlpha(index)","Gets the alpha component of the color of the token at the input index.");
@@ -824,7 +857,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("getTokenOutline(index)","Returns whether the token at the input index is being drawn as outline only");
 	curr->addSFunc("getTokenOutlineWidth(index)","Gets the width in pixels of the outline that is used on the token at the input index if it is set to be drawn outline only.");
 	curr->addSFunc("getTokenShape(index)","Gets the shape of the token at the input index ('Ellipse','Rectangle','Diamond').");
-
+	
 	curr = addDescription("LabelFactoryGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
 	curr->setOverview("The Label Factory Graphic is a set of individual 'Label' graphics that have individual Contents, colors, sizes and positions that can be set during runtime by the designer.  This graphic is particularly useful if you have a widely variable number of graphics that will need to be used during experimentation.  It functions much like the Label Tray graphic with the main difference being that the Label positions are setable.  This graphic is quite robust and allows for a whole lot of different types of configurations.  In general, the design properties are used to set default values for the Labels and the various values of individual Labels are then be set and changed by scripts during the session run.  See the properties and functions for further details.");

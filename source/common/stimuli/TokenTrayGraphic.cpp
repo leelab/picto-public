@@ -35,7 +35,7 @@ VisualElement(position,color)
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
 
-	shapeList_ << "Rectangle" << "Diamond";
+	shapeList_ << "Rectangle" << "Diamond" << "Triangle";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TokenShape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Size,"TokenSize",dimensions.size());
 
@@ -511,6 +511,22 @@ void TokenTrayGraphic::draw()
 					<< QPoint(0,maxHPoint/2)
 					<< QPoint(maxWPoint/2,0);
 			p.drawPolygon(diamond);
+		}
+		else if (shapes[i] == "Triangle")
+		{
+			float radius = (dimensions.width()) / 2;
+			QPolygonF triangle;
+			float xTop = radius;
+			float yTop = 0.;
+			float xLeft = radius * (1.0 - ((sqrt(3)) / 2));
+			float yLeft = 1.5 * radius;
+			float xRight = radius * (1.0 + ((sqrt(3)) / 2));
+			float yRight = 1.5 * radius;
+			triangle << QPointF(xTop, yTop)
+				<< QPointF(xLeft, yLeft)
+				<< QPointF(xRight, yRight)
+				<< QPointF(xTop, yTop);
+			p.drawPolygon(triangle);
 		}
 
 		p.end();

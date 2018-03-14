@@ -273,8 +273,8 @@ void Experiment::updateSignalCoefficients(Property*,QVariant)
 		return;
 	QSharedPointer<DoubletSignalChannel> posChannel = engine_->getSignalChannel("Position").dynamicCast<DoubletSignalChannel>();
 	QRect windowDims = engine_->getRenderingTargets().first()->getVisualTarget()->getDimensions();
-	int displayWidth = 800;
-	int displayHeight = 600;
+	int displayWidth = RESOLUTIONH;
+	int displayHeight = RESOLUTIONV;
 
 	if(!signalCoeffInitialized_)
 	{

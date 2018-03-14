@@ -59,7 +59,7 @@ class VisualTarget : public QWidget
 	Q_OBJECT
 	friend class VisualTargetHost;
 public:
-	VisualTarget(bool _bWindowed = false, int _width = 800, int _height = 600);
+	VisualTarget(bool _bWindowed = false, int _width = RESOLUTIONH, int _height = RESOLUTIONV);
 	virtual ~VisualTarget();
 	/*! \brief Creates and returns a new CompositingSurface that can be used to translate a QImage into a graphical data structure that this VisualTarget can understand.
 	 *	\details The returned CompositingSurface should set up with a QImage by the calling function.

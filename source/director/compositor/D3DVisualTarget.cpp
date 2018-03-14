@@ -19,7 +19,7 @@ namespace Picto {
  *	assumes that everything is going to be 800x600.  This is something that we should consider working on.
  */
 D3DVisualTarget::D3DVisualTarget(bool timingCritical) :
-	VisualTarget(false, 800,600)
+VisualTarget(false, RESOLUTIONH, RESOLUTIONV)
 {
 	//zero all of the pointers
 	pD3D_ = 0;  

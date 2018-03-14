@@ -451,7 +451,7 @@ void MainWindow::changeSystemNumber()
 	if (!okToContinue())
 		return;
 	bool result = false;
-	int newSystemNum = QInputDialog::getInt(this, "Change System Number", "Select a new system number", Picto::portNums->getSystemNumber(), 1, 10, 1, &result);
+	int newSystemNum = QInputDialog::getInt(this, "Change System Number", "Select a new system number", Picto::portNums->getSystemNumber(), 1, 130, 1, &result);
 	if (!result)
 		return;
 	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(), QCoreApplication::arguments(), newSystemNum, true);

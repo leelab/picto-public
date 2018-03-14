@@ -3,7 +3,7 @@
 
 #include "../common.h"
 
-#include "Variable.h"
+#include "../parameter/Parameter.h"
 
 namespace Picto {
 
@@ -14,9 +14,9 @@ namespace Picto {
  *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API StringVariable : public Variable
+	class PICTOLIB_API StringVariable : public Parameter
 #else
-class StringVariable : public Variable
+	class StringVariable : public Parameter
 #endif
 {
 	Q_OBJECT
@@ -35,6 +35,9 @@ public:
 
 	virtual QString getUITemplate(){return "StringVariable";};
 	virtual QString friendlyTypeName(){return "String Variable";};
+
+	virtual bool valuesAreValid(QString& warning = QString());
+	virtual void fixValues();
 
 protected:
 	virtual void postDeserialize();

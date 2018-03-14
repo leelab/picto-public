@@ -128,9 +128,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a640b2cbbd611a280f97f88c29eef610a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_visual_target.html#a640b2cbbd611a280f97f88c29eef610a">VisualTarget</a> (bool _bWindowed=false, int _width=800, int _height=600)</td></tr>
-<tr class="memdesc:a640b2cbbd611a280f97f88c29eef610a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> with size defined by _width and _height and _bWindowed defining if rendering is windowed or full screeen.  <a href="#a640b2cbbd611a280f97f88c29eef610a">More...</a><br /></td></tr>
-<tr class="separator:a640b2cbbd611a280f97f88c29eef610a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4134956f3693b0731618c6e8329c462b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_visual_target.html#a4134956f3693b0731618c6e8329c462b">VisualTarget</a> (bool _bWindowed=false, int _width=RESOLUTIONH, int _height=RESOLUTIONV)</td></tr>
+<tr class="memdesc:a4134956f3693b0731618c6e8329c462b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> with size defined by _width and _height and _bWindowed defining if rendering is windowed or full screeen.  <a href="#a4134956f3693b0731618c6e8329c462b">More...</a><br /></td></tr>
+<tr class="separator:a4134956f3693b0731618c6e8329c462b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4a01741b91fa6a984e18453d47b9da8"><td class="memItemLeft" align="right" valign="top">virtual QSharedPointer&lt; <a class="el" href="struct_picto_1_1_compositing_surface.html">CompositingSurface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_visual_target.html#ac4a01741b91fa6a984e18453d47b9da8">generateCompositingSurface</a> ()=0</td></tr>
 <tr class="memdesc:ac4a01741b91fa6a984e18453d47b9da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and returns a new <a class="el" href="struct_picto_1_1_compositing_surface.html" title="A base class that represents an area with a drawing on it. ">CompositingSurface</a> that can be used to translate a QImage into a graphical data structure that this <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> can understand.  <a href="#ac4a01741b91fa6a984e18453d47b9da8">More...</a><br /></td></tr>
 <tr class="separator:ac4a01741b91fa6a984e18453d47b9da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,7 +233,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>VisualTargetHost</b>
 
 <p>Definition at line <a class="el" href="_visual_target_8h_source.html#l00056">56</a> of file <a class="el" href="_visual_target_8h_source.html">VisualTarget.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a640b2cbbd611a280f97f88c29eef610a"></a>
+<a class="anchor" id="a4134956f3693b0731618c6e8329c462b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -247,13 +247,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>VisualTargetHost</b>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>_width</em> = <code>800</code>, </td>
+          <td class="paramname"><em>_width</em> = <code>RESOLUTIONH</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>_height</em> = <code>600</code>&#160;</td>
+          <td class="paramname"><em>_height</em> = <code>RESOLUTIONV</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

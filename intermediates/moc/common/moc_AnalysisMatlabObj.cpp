@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Picto__AnalysisMatlabObj_t {
     QByteArrayData data[12];
-    char stringdata0[79];
+    char stringdata0[99];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,22 +30,22 @@ struct qt_meta_stringdata_Picto__AnalysisMatlabObj_t {
 static const qt_meta_stringdata_Picto__AnalysisMatlabObj_t qt_meta_stringdata_Picto__AnalysisMatlabObj = {
     {
 QT_MOC_LITERAL(0, 0, 24), // "Picto::AnalysisMatlabObj"
-QT_MOC_LITERAL(1, 25, 7), // "binocdf"
-QT_MOC_LITERAL(2, 33, 0), // ""
-QT_MOC_LITERAL(3, 34, 3), // "in1"
-QT_MOC_LITERAL(4, 38, 3), // "in2"
-QT_MOC_LITERAL(5, 42, 3), // "in3"
-QT_MOC_LITERAL(6, 46, 7), // "binopdf"
-QT_MOC_LITERAL(7, 54, 4), // "rand"
-QT_MOC_LITERAL(8, 59, 2), // "in"
-QT_MOC_LITERAL(9, 62, 7), // "normrnd"
-QT_MOC_LITERAL(10, 70, 2), // "mu"
-QT_MOC_LITERAL(11, 73, 5) // "sigma"
+QT_MOC_LITERAL(1, 25, 12), // "binocdfCoder"
+QT_MOC_LITERAL(2, 38, 0), // ""
+QT_MOC_LITERAL(3, 39, 3), // "in1"
+QT_MOC_LITERAL(4, 43, 3), // "in2"
+QT_MOC_LITERAL(5, 47, 3), // "in3"
+QT_MOC_LITERAL(6, 51, 12), // "binopdfCoder"
+QT_MOC_LITERAL(7, 64, 9), // "randCoder"
+QT_MOC_LITERAL(8, 74, 2), // "in"
+QT_MOC_LITERAL(9, 77, 12), // "normrndCoder"
+QT_MOC_LITERAL(10, 90, 2), // "mu"
+QT_MOC_LITERAL(11, 93, 5) // "sigma"
 
     },
-    "Picto::AnalysisMatlabObj\0binocdf\0\0in1\0"
-    "in2\0in3\0binopdf\0rand\0in\0normrnd\0mu\0"
-    "sigma"
+    "Picto::AnalysisMatlabObj\0binocdfCoder\0"
+    "\0in1\0in2\0in3\0binopdfCoder\0randCoder\0"
+    "in\0normrndCoder\0mu\0sigma"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,13 +83,13 @@ void Picto::AnalysisMatlabObj::qt_static_metacall(QObject *_o, QMetaObject::Call
         AnalysisMatlabObj *_t = static_cast<AnalysisMatlabObj *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: { QVariantList _r = _t->binocdf((*reinterpret_cast< QVariantList(*)>(_a[1])),(*reinterpret_cast< QVariantList(*)>(_a[2])),(*reinterpret_cast< QVariantList(*)>(_a[3])));
+        case 0: { QVariantList _r = _t->binocdfCoder((*reinterpret_cast< QVariantList(*)>(_a[1])),(*reinterpret_cast< QVariantList(*)>(_a[2])),(*reinterpret_cast< QVariantList(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< QVariantList*>(_a[0]) = _r; }  break;
-        case 1: { QVariantList _r = _t->binopdf((*reinterpret_cast< QVariantList(*)>(_a[1])),(*reinterpret_cast< QVariantList(*)>(_a[2])),(*reinterpret_cast< QVariantList(*)>(_a[3])));
+        case 1: { QVariantList _r = _t->binopdfCoder((*reinterpret_cast< QVariantList(*)>(_a[1])),(*reinterpret_cast< QVariantList(*)>(_a[2])),(*reinterpret_cast< QVariantList(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< QVariantList*>(_a[0]) = _r; }  break;
-        case 2: { QVariantList _r = _t->rand((*reinterpret_cast< double(*)>(_a[1])));
+        case 2: { QVariantList _r = _t->randCoder((*reinterpret_cast< double(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QVariantList*>(_a[0]) = _r; }  break;
-        case 3: { QVariantList _r = _t->normrnd((*reinterpret_cast< QVariantList(*)>(_a[1])),(*reinterpret_cast< QVariantList(*)>(_a[2])));
+        case 3: { QVariantList _r = _t->normrndCoder((*reinterpret_cast< QVariantList(*)>(_a[1])),(*reinterpret_cast< QVariantList(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QVariantList*>(_a[0]) = _r; }  break;
         default: ;
         }

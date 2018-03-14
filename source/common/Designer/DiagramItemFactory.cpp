@@ -58,6 +58,8 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("VisualElement",":/icons/visualelement.svg",50,75);
 		addIconDefinition("BoxElement",":/icons/box.svg",50,75);
 		addIconDefinition("CircleElement",":/icons/circle.svg",50,75);
+		addIconDefinition("TriangleElement", ":/icons/triangle.svg", 50, 75);
+		addIconDefinition("PolygonElement", ":/icons/polygon.svg", 50, 75);
 		addIconDefinition("EllipseElement",":/icons/ellipse.svg",50,75);
 		addIconDefinition("ImageElement",":/icons/image.svg",50,75);
 		addIconDefinition("DiamondElement",":/icons/diamond.svg",50,75);

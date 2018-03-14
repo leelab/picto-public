@@ -1,7 +1,7 @@
 /*! \file common.h
  * \brief Definitions common to the %Picto library
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2018
  */
 
 #ifndef _COMMON_H_
@@ -105,6 +105,8 @@
  */
 #define DESIGNSYNTAXVERSION "0.0.2"
 
+#define RESOLUTIONH 800
+#define RESOLUTIONV 600
 
 #ifdef _DEBUG 
 	//Uncomment this to enable memory leak detection

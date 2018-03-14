@@ -18,6 +18,8 @@
 #include "../stimuli/LabelFactoryGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
+#include "../stimuli/TriangleGraphic.h"
+#include "../stimuli/PolygonGraphic.h"
 #include "../stimuli/ImageGraphic.h"
 #include "../stimuli/GridGraphic.h"
 #include "../stimuli/RandomlyFilledGridGraphic.h"
@@ -59,6 +61,10 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
 	visualElementFactory_->addAssetType(EllipseGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
+	visualElementFactory_->addAssetType(TriangleGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(TriangleGraphic::Create))));
+	visualElementFactory_->addAssetType(PolygonGraphic::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(PolygonGraphic::Create))));
 	visualElementFactory_->addAssetType(ShapeShifterGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ShapeShifterGraphic::Create))));
 	visualElementFactory_->addAssetType(TokenTrayGraphic::type,

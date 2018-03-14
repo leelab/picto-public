@@ -110,7 +110,7 @@ Inheritance diagram for Picto::StringVariable:</div>
  <div class="center">
   <img src="class_picto_1_1_string_variable.png" usemap="#Picto::StringVariable_map" alt=""/>
   <map id="Picto::StringVariable_map" name="Picto::StringVariable_map">
-<area href="class_picto_1_1_variable.html" title="A base class for storing values that can be used in a state machine. " alt="Picto::Variable" shape="rect" coords="68,280,195,304"/>
+<area href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. " alt="Picto::Parameter" shape="rect" coords="68,280,195,304"/>
 <area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="68,224,195,248"/>
 <area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="68,168,195,192"/>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="68,112,195,136"/>
@@ -139,11 +139,17 @@ virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="memitem:ae14fdea0cf5e80dd976985208dc64fcc"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_variable.html#ae14fdea0cf5e80dd976985208dc64fcc">friendlyTypeName</a> ()</td></tr>
 <tr class="memdesc:ae14fdea0cf5e80dd976985208dc64fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a friendly string identifying this type of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>.  <a href="#ae14fdea0cf5e80dd976985208dc64fcc">More...</a><br /></td></tr>
 <tr class="separator:ae14fdea0cf5e80dd976985208dc64fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_picto_1_1_variable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_variable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_variable.html">Picto::Variable</a></td></tr>
-<tr class="memitem:ab5e5110c067b892a49bbb0830865f32a inherit pub_methods_class_picto_1_1_variable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5e5110c067b892a49bbb0830865f32a"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable.html#ab5e5110c067b892a49bbb0830865f32a">getUIGroup</a> ()</td></tr>
-<tr class="memdesc:ab5e5110c067b892a49bbb0830865f32a inherit pub_methods_class_picto_1_1_variable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a type of elements with which this element should be grouped in things like ToolBox widget. <br /></td></tr>
-<tr class="separator:ab5e5110c067b892a49bbb0830865f32a inherit pub_methods_class_picto_1_1_variable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24fe2275f207dad1349ee674038ef18a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_variable.html#a24fe2275f207dad1349ee674038ef18a">valuesAreValid</a> (QString &amp;warning=QString())</td></tr>
+<tr class="memdesc:a24fe2275f207dad1349ee674038ef18a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this Parameters current <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values are valid. Returns false otherwise.  <a href="#a24fe2275f207dad1349ee674038ef18a">More...</a><br /></td></tr>
+<tr class="separator:a24fe2275f207dad1349ee674038ef18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa94c01716fbab1baca0c53415e2235"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_variable.html#a3fa94c01716fbab1baca0c53415e2235">fixValues</a> ()</td></tr>
+<tr class="memdesc:a3fa94c01716fbab1baca0c53415e2235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixes values that are outside of valid ranges.  <a href="#a3fa94c01716fbab1baca0c53415e2235">More...</a><br /></td></tr>
+<tr class="separator:a3fa94c01716fbab1baca0c53415e2235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_picto_1_1_parameter"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_parameter')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_parameter.html">Picto::Parameter</a></td></tr>
+<tr class="memitem:abc3fd80bab8d8086fedf29eb50e733f3 inherit pub_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc3fd80bab8d8086fedf29eb50e733f3"></a>
+virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#abc3fd80bab8d8086fedf29eb50e733f3">getUIGroup</a> ()</td></tr>
+<tr class="memdesc:abc3fd80bab8d8086fedf29eb50e733f3 inherit pub_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a type of elements with which this element should be grouped in things like ToolBox widget. <br /></td></tr>
+<tr class="separator:abc3fd80bab8d8086fedf29eb50e733f3 inherit pub_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_scriptable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_scriptable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable.html">Picto::Scriptable</a></td></tr>
 <tr class="memitem:a582fbaab4825738e4ec30c9fc55ced7c inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a582fbaab4825738e4ec30c9fc55ced7c"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a582fbaab4825738e4ec30c9fc55ced7c">hasContentsForScriptEngine</a> ()</td></tr>
@@ -426,14 +432,13 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1a1628007dc860d2f092f9fbb03944f1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_variable.html#a1a1628007dc860d2f092f9fbb03944f1">postDeserialize</a> ()</td></tr>
 <tr class="memdesc:a1a1628007dc860d2f092f9fbb03944f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization.  <a href="#a1a1628007dc860d2f092f9fbb03944f1">More...</a><br /></td></tr>
 <tr class="separator:a1a1628007dc860d2f092f9fbb03944f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbcca2dfd2b76a8d312f08cc14f7be6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbcca2dfd2b76a8d312f08cc14f7be6b"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_variable.html#adbcca2dfd2b76a8d312f08cc14f7be6b">validateObject</a> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
-<tr class="memdesc:adbcca2dfd2b76a8d312f08cc14f7be6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies that, if the element has scripting elements, its name is valid for use in a script environment. <br /></td></tr>
+<tr class="memitem:adbcca2dfd2b76a8d312f08cc14f7be6b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_variable.html#adbcca2dfd2b76a8d312f08cc14f7be6b">validateObject</a> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
+<tr class="memdesc:adbcca2dfd2b76a8d312f08cc14f7be6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_scriptable.html#ab6e2944c43a3b5d418bf7b251594386d" title="Verifies that, if the element has scripting elements, its name is valid for use in a script environme...">Scriptable::validateObject()</a> to verify that the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values of this <a class="el" href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. ">Parameter</a> are within acceptable ranges.  <a href="#adbcca2dfd2b76a8d312f08cc14f7be6b">More...</a><br /></td></tr>
 <tr class="separator:adbcca2dfd2b76a8d312f08cc14f7be6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_picto_1_1_variable"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_variable')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_variable.html">Picto::Variable</a></td></tr>
-<tr class="memitem:a7a29c48c2d30d39cfe6a6e8abf97261d inherit pro_methods_class_picto_1_1_variable"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable.html#a7a29c48c2d30d39cfe6a6e8abf97261d">defaultTagName</a> ()</td></tr>
-<tr class="memdesc:a7a29c48c2d30d39cfe6a6e8abf97261d inherit pro_methods_class_picto_1_1_variable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s default XML tag.  <a href="#a7a29c48c2d30d39cfe6a6e8abf97261d">More...</a><br /></td></tr>
-<tr class="separator:a7a29c48c2d30d39cfe6a6e8abf97261d inherit pro_methods_class_picto_1_1_variable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_picto_1_1_parameter"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_parameter')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_parameter.html">Picto::Parameter</a></td></tr>
+<tr class="memitem:a78d708af5b8c02e1d7529250e1e2ee85 inherit pro_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#a78d708af5b8c02e1d7529250e1e2ee85">defaultTagName</a> ()</td></tr>
+<tr class="memdesc:a78d708af5b8c02e1d7529250e1e2ee85 inherit pro_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s default XML tag.  <a href="#a78d708af5b8c02e1d7529250e1e2ee85">More...</a><br /></td></tr>
+<tr class="separator:a78d708af5b8c02e1d7529250e1e2ee85 inherit pro_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:aa465db35db425df38af40754218249d7 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#aa465db35db425df38af40754218249d7">preSerialize</a> ()</td></tr>
 <tr class="memdesc:aa465db35db425df38af40754218249d7 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called before an asset is serialized in toXML().  <a href="#aa465db35db425df38af40754218249d7">More...</a><br /></td></tr>
@@ -576,6 +581,36 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3fa94c01716fbab1baca0c53415e2235"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::StringVariable::fixValues </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fixes values that are outside of valid ranges. </p>
+<p>This is used during a live experiment to make sure that runtime editable values stay within their valid ranges. </p><dl class="section note"><dt>Note</dt><dd>There is some kind of bug here. We have noticed that even when values are updated by this function, the fixed values are not necessarily reflected either in the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> or <a class="el" href="class_property_browser.html" title="This Widget contains all property widgets for setting/getting Property values of the currently select...">PropertyBrowser</a>. This is worth looking into in the future. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#a219dc74f193fc0f25e813275a945b822">Picto::Parameter</a>.</p>
+
+<p>Definition at line <a class="el" href="_string_variable_8cpp_source.html#l00038">38</a> of file <a class="el" href="_string_variable_8cpp_source.html">StringVariable.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae14fdea0cf5e80dd976985208dc64fcc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -600,7 +635,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Returns a friendly string identifying this type of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>. </p>
 <p>This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a>, "Total Time Excceeded" result). </p>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_variable.html#abf83dc0e4cfbfe89c43720eca1c49664">Picto::Variable</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#a379ef70ba283fa7c49f2548dad432dbb">Picto::Parameter</a>.</p>
 
 <p>Definition at line <a class="el" href="_string_variable_8h_source.html#l00037">37</a> of file <a class="el" href="_string_variable_8h_source.html">StringVariable.h</a>.</p>
 
@@ -630,9 +665,71 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization. </p>
 <p>In the case of the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> class, during postDeserialize we tell the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a> that if we have reached the stage of loading where <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs must be unique, it should make sure that our <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID is different from all others in this design. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0" title="Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...">DesignConfig::fixDuplicatedAssetIds()</a> </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_variable.html#a447e12ef138cdd99ae9ba870ed3b5174">Picto::Variable</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#aacf1829d9c0e0dc44a7854412f3face6">Picto::Parameter</a>.</p>
 
 <p>Definition at line <a class="el" href="_string_variable_8cpp_source.html#l00021">21</a> of file <a class="el" href="_string_variable_8cpp_source.html">StringVariable.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adbcca2dfd2b76a8d312f08cc14f7be6b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Picto::StringVariable::validateObject </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; QXmlStreamReader &gt;&#160;</td>
+          <td class="paramname"><em>xmlStreamReader</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extends <a class="el" href="class_picto_1_1_scriptable.html#ab6e2944c43a3b5d418bf7b251594386d" title="Verifies that, if the element has scripting elements, its name is valid for use in a script environme...">Scriptable::validateObject()</a> to verify that the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values of this <a class="el" href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. ">Parameter</a> are within acceptable ranges. </p>
+<p><a class="el" href="class_picto_1_1_string_variable.html#a24fe2275f207dad1349ee674038ef18a" title="Returns true if this Parameters current Property values are valid. Returns false otherwise. ">valuesAreValid()</a> is used for this. </p>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#a94c0e4191ffcc0bd642b647d24557082">Picto::Parameter</a>.</p>
+
+<p>Definition at line <a class="el" href="_string_variable_8cpp_source.html#l00027">27</a> of file <a class="el" href="_string_variable_8cpp_source.html">StringVariable.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a24fe2275f207dad1349ee674038ef18a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Picto::StringVariable::valuesAreValid </td>
+          <td>(</td>
+          <td class="paramtype">QString &amp;&#160;</td>
+          <td class="paramname"><em>warning</em> = <code>QString()</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if this Parameters current <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values are valid. Returns false otherwise. </p>
+<p>If this function returns false, the design will not pass validation (ie. compilation). Also, if the function returns false, a string describing the problem is loaded into the warning reference for printing out to the validation error window. </p>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#a3443808da4c3edf26f2c3c3772d95b10">Picto::Parameter</a>.</p>
+
+<p>Definition at line <a class="el" href="_string_variable_8cpp_source.html#l00033">33</a> of file <a class="el" href="_string_variable_8cpp_source.html">StringVariable.cpp</a>.</p>
 
 </div>
 </div>

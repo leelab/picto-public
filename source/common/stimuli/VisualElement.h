@@ -160,7 +160,7 @@ public slots:
 	 */
 	void setColor(int r, int g, int b, int a=255){setColor(QColor(r,g,b,a));};
 	/*! \brief Sets the position of this VisualElement in the Scene.
-	 *	\details Inputs are x: 0-800, y: 0-600
+	 *	\details Inputs are x: 0-800, y: 0-600 in case of a (800 x 600 resolution)
 	 */
 	void setPos(int x, int y){setPosition(QPoint(x,y));};
 

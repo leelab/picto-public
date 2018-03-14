@@ -1,20 +1,20 @@
-﻿Build started 11/2/2017 3:25:35 PM.
+﻿Build started 3/9/2018 12:49:39 PM.
      1>Project "C:\Projects\Picto\source\plexonwrapper\PlexonWrapper.vcxproj" on node 2 (Build target(s)).
      1>CustomBuild:
-         MOC c:/Projects/Picto/source/plexonwrapper/Task.h
+         MOC Task.h
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I. /I. /Ic:\Projects\Picto\3rdparty\include /I..\..\..\..\Qt\Qt5.5.1\5.5\msvc2013\include /I..\..\..\..\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore /Ic:\Projects\Picto\intermediates\moc\plexonwrapper /I"..\..\..\..\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\win32-msvc2013" /nologo /W3 /WX- /O2 /Oy- /D _CONSOLE /D UNICODE /D WIN32 /D _BIND_TO_CURRENT_CRT_VERSION /D QT_NO_DEBUG /D QT_CORE_LIB /D NDEBUG /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"c:\Projects\Picto\intermediates\obj\plexonwrapper\release\\" /Gd /TP /analyze- /errorReport:prompt -Zc:strictStrings -w34100 -w34189 -w44996 c:\Projects\Picto\source\plexonwrapper\Task.cpp c:\Projects\Picto\source\plexonwrapper\main.cpp c:\Projects\Picto\intermediates\moc\plexonwrapper\moc_Task.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I. /I. /I..\..\3rdparty\include /I..\..\..\..\Qt\Qt5.5.1\5.5\msvc2013\include /I..\..\..\..\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore /I..\..\intermediates\moc\plexonwrapper /I"..\..\..\..\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\win32-msvc2013" /nologo /W3 /WX- /O2 /Oy- /D _CONSOLE /D UNICODE /D WIN32 /D _BIND_TO_CURRENT_CRT_VERSION /D QT_NO_DEBUG /D QT_CORE_LIB /D NDEBUG /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"..\..\intermediates\obj\plexonwrapper\release\\" /Gd /TP /analyze- /errorReport:prompt -Zc:strictStrings -w34100 -w34189 -w44996 Task.cpp main.cpp ..\..\intermediates\moc\plexonwrapper\moc_Task.cpp
          Task.cpp
          main.cpp
          moc_Task.cpp
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"c:\Projects\Picto\output\bin\release\wrapper\\PlexonWrapper.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:c:\Projects\Picto\3rdparty\lib /LIBPATH:C:\Qt\Qt5.5.1\5.5\msvc2013\lib PlexClient.lib C:\Qt\Qt5.5.1\5.5\msvc2013\lib\Qt5Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"c:\Projects\Picto\output\bin\release\wrapper\PlexonWrapper.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /SAFESEH "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" c:\Projects\Picto\intermediates\obj\plexonwrapper\release\Task.obj
-         c:\Projects\Picto\intermediates\obj\plexonwrapper\release\main.obj
-         c:\Projects\Picto\intermediates\obj\plexonwrapper\release\moc_Task.obj
-         PlexonWrapper.vcxproj -> c:\Projects\Picto\output\bin\release\wrapper\PlexonWrapper.exe
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\output\bin\release\wrapper\\PlexonWrapper.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Projects\Picto\3rdparty\lib /LIBPATH:C:\Qt\Qt5.5.1\5.5\msvc2013\lib PlexClient.lib C:\Qt\Qt5.5.1\5.5\msvc2013\lib\Qt5Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"..\..\output\bin\release\wrapper\PlexonWrapper.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /SAFESEH "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" ..\..\intermediates\obj\plexonwrapper\release\Task.obj
+         ..\..\intermediates\obj\plexonwrapper\release\main.obj
+         ..\..\intermediates\obj\plexonwrapper\release\moc_Task.obj
+         PlexonWrapper.vcxproj -> C:\Projects\Picto\source\plexonwrapper\..\..\output\bin\release\wrapper\PlexonWrapper.exe
      1>Done Building Project "C:\Projects\Picto\source\plexonwrapper\PlexonWrapper.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.83
+Time Elapsed 00:00:05.26

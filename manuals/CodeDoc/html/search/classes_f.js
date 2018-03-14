@@ -33,6 +33,7 @@ var searchData=
   ['plexonplugin',['PlexonPlugin',['../class_plexon_plugin.html',1,'']]],
   ['plotviewwidget',['PlotViewWidget',['../class_plot_view_widget.html',1,'']]],
   ['pointproperty',['PointProperty',['../class_picto_1_1_point_property.html',1,'Picto']]],
+  ['polygongraphic',['PolygonGraphic',['../class_picto_1_1_polygon_graphic.html',1,'Picto']]],
   ['portnums',['PortNums',['../class_picto_1_1_port_nums.html',1,'Picto']]],
   ['preloadedsessiondata',['PreloadedSessionData',['../struct_preloaded_session_data.html',1,'']]],
   ['preloadedsound',['PreloadedSound',['../class_picto_1_1_preloaded_sound.html',1,'Picto']]],

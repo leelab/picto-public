@@ -1,23 +1,8 @@
-﻿Build started 11/3/2017 9:44:55 AM.
+﻿Build started 3/14/2018 8:50:51 AM.
      1>Project "C:\Projects\Picto\source\common\libPicto.vcxproj" on node 2 (Build target(s)).
-     1>CustomBuild:
-         MOC c:/Projects/Picto/source/common/parameter/AnalysisMatlabObj.h
-       ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I. /IC:/Qt64/Qt5.5.1/5.5/msvc2013_64/src/3rdparty/zlib /I..\..\..\..\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser /I..\..\..\..\qwt\src /IQVideoEncoder /Ic:\Projects\Picto\3rdparty\QTFFmpegWrapper\QTFFmpegWrapper /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtMultimedia /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtSvg /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtWidgets /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtGui /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtANGLE /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtXml /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtNetwork /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtScript /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtScriptTools /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtSql /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtConcurrent /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtCore /Ic:\Projects\Picto\intermediates\moc\common /I"..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\mkspecs\win32-msvc2013" /IC:\Projects\Picto\3rdparty\matlab /nologo /W3 /WX- /O2 /D _WINDOWS /D UNICODE /D WIN32 /D WIN64 /D PICTOLIB_EXPORTS /D _WIN32_WINNT=0x0601 /D _WINVER=0x0601 /D _BIND_TO_CURRENT_CRT_VERSION /D __STDC_CONSTANT_MACROS /D QT_NO_DEBUG /D QT_MULTIMEDIA_LIB /D QT_SVG_LIB /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_XML_LIB /D QT_NETWORK_LIB /D QT_SCRIPT_LIB /D QT_SCRIPTTOOLS_LIB /D QT_SQL_LIB /D QT_CONCURRENT_LIB /D QT_CORE_LIB /D NDEBUG /D _WINDLL /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"c:\Projects\Picto\intermediates\obj\common\release\\" /Gd /TP /errorReport:prompt -Zc:strictStrings -w34100 -w34189 -w44996 c:\Projects\Picto\intermediates\moc\common\moc_AnalysisMatlabObj.cpp c:\Projects\Picto\source\common\parameter\Analysis.cpp c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp
-         moc_AnalysisMatlabObj.cpp
-         Analysis.cpp
-         AnalysisMatlabObj.cpp
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(60): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(69): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(78): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(82): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(104): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(113): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(122): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(126): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(172): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-     1>c:\Projects\Picto\source\common\parameter\AnalysisMatlabObj.cpp(181): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-         Generating Code...
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I. /I. /IC:\Projects\Picto\3rdparty\matlab /IC:/Qt64/Qt5.5.1/5.5/msvc2013_64/src/3rdparty/zlib /I..\..\..\..\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser /I..\..\..\..\qwt\src /IQVideoEncoder /Ic:\Projects\Picto\3rdparty\QTFFmpegWrapper\QTFFmpegWrapper /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtMultimedia /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtSvg /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtWidgets /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtGui /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtANGLE /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtXml /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtNetwork /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtScript /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtScriptTools /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtSql /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtConcurrent /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtCore /Ic:\Projects\Picto\intermediates\moc\common /I"..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\mkspecs\win32-msvc2013" /nologo /W3 /WX- /O2 /D _WINDOWS /D UNICODE /D WIN32 /D WIN64 /D PICTOLIB_EXPORTS /D _WIN32_WINNT=0x0601 /D _WINVER=0x0601 /D _BIND_TO_CURRENT_CRT_VERSION /D __STDC_CONSTANT_MACROS /D QT_NO_DEBUG /D QT_MULTIMEDIA_LIB /D QT_SVG_LIB /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_XML_LIB /D QT_NETWORK_LIB /D QT_SCRIPT_LIB /D QT_SCRIPTTOOLS_LIB /D QT_SQL_LIB /D QT_CONCURRENT_LIB /D QT_CORE_LIB /D NDEBUG /D _WINDLL /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"c:\Projects\Picto\intermediates\obj\common\release\\" /Gd /TP /errorReport:prompt -Zc:strictStrings -w34100 -w34189 -w44996 c:\Projects\Picto\source\common\stimuli\TokenFactoryGraphic.cpp
+         TokenFactoryGraphic.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"c:\Projects\Picto\intermediates\lib\release\\libPicto.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser\lib /LIBPATH:C:\qwt\lib /LIBPATH:C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib /LIBPATH:c:\Projects\Picto\3rdparty\QTFFmpegWrapper\ffmpeg_lib_win64 C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser/lib/QtPropertyBrowser.lib qwt.lib avutil.lib avcodec.lib avformat.lib swscale.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Multimedia.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Svg.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Widgets.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Gui.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Xml.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Network.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Script.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5ScriptTools.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Sql.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Concurrent.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"c:\Projects\Picto\intermediates\lib\release\libPicto.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X64 /DLL c:\Projects\Picto\intermediates\obj\common\release\QVideoDecoder.obj
          c:\Projects\Picto\intermediates\obj\common\release\QVideoEncoder.obj
@@ -305,12 +290,14 @@
          c:\Projects\Picto\intermediates\obj\common\release\OutputElement.obj
          c:\Projects\Picto\intermediates\obj\common\release\OutputSignal.obj
          c:\Projects\Picto\intermediates\obj\common\release\PictureGraphic.obj
+         c:\Projects\Picto\intermediates\obj\common\release\PolygonGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\PreloadedSound.obj
          c:\Projects\Picto\intermediates\obj\common\release\RandomlyFilledGridGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\ShapeShifterGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\TextGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\TokenFactoryGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\TokenTrayGraphic.obj
+         c:\Projects\Picto\intermediates\obj\common\release\TriangleGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\VisualElement.obj
          c:\Projects\Picto\intermediates\obj\common\release\AlignmentDataUnit.obj
          c:\Projects\Picto\intermediates\obj\common\release\AlignmentInfo.obj
@@ -493,6 +480,7 @@
          c:\Projects\Picto\intermediates\obj\common\release\moc_PixmapVisualTarget.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_PlaybackInterfaces.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_PointProperty.obj
+         c:\Projects\Picto\intermediates\obj\common\release\moc_PolygonGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_Property.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_PropertyBrowser.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_PropertyContainer.obj
@@ -571,6 +559,7 @@
          c:\Projects\Picto\intermediates\obj\common\release\moc_Toolbox.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_Transition.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_TransitionState.obj
+         c:\Projects\Picto\intermediates\obj\common\release\moc_TriangleGraphic.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_UIData.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_UIElement.obj
          c:\Projects\Picto\intermediates\obj\common\release\moc_UIEnabled.obj
@@ -602,4 +591,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:16.61
+Time Elapsed 00:00:36.31

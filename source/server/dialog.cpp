@@ -27,6 +27,7 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 	startButton = new QPushButton(tr("&Start %1 Service/Daemon").arg(Picto::Names->serverAppName));
 	stopButton = new QPushButton(tr("S&top %1 Service/Daemon").arg(Picto::Names->serverAppName));
 	systemNumberBox = new QSpinBox();
+	systemNumberBox->setMaximum(130);
 	systemNumberBox->setValue(Picto::portNums->getSystemNumber());
 
 	if(systemService->isInstalled())

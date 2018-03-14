@@ -7,7 +7,7 @@ namespace Picto {
  *	\details Adds a "Value" property.
  */
 StringVariable::StringVariable()
-: Variable()
+: Parameter()
 {
 	AddDefinableProperty(QVariant::String,"Value",QVariant());
 }
@@ -20,14 +20,22 @@ QSharedPointer<Asset> StringVariable::Create()
 
 void StringVariable::postDeserialize()
 {
-	Variable::postDeserialize();
+	Parameter::postDeserialize();
+	setPropertyRuntimeEditable("Value");
 }
 
 bool StringVariable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	if(!Variable::validateObject(xmlStreamReader))
+	if (!Parameter::validateObject(xmlStreamReader))
 		return false;
 	return true;
 }
+bool StringVariable::valuesAreValid(QString& warning)
+{
+	return true;
+}
 
+void StringVariable::fixValues()
+{	
+}
 }; //namespace Picto

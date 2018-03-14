@@ -120,6 +120,8 @@
         <file>icons/ellipse.svg</file>
         <file>icons/diamond.svg</file>
         <file>icons/circle.svg</file>
+        <file>icons/triangle.svg</file>
+        <file>icons/polygon.svg</file>
         <file>icons/box.svg</file>
         <file>icons/SignalDataSource.svg</file>
         <file>icons/grid.svg</file>

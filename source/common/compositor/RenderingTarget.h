@@ -54,6 +54,7 @@ private:
 	QSharedPointer<VisualTarget> visualTarget_;
 	QSharedPointer<AuralTarget> auralTarget_;
 	QString status_;
+	int index_;
 };
 
 }; //namespace Picto

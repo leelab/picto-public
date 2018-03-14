@@ -2,7 +2,8 @@
 #include "TokenFactoryGraphic.h"
 #include "../storage/ObsoleteAsset.h"
 #include "../memleakdetect.h"
-
+#include <sstream>
+#include <iostream>
 namespace Picto {
 
 #define PI 3.141592
@@ -29,7 +30,7 @@ TokenFactoryGraphic::TokenFactoryGraphic(QPoint position, QRect dimensions, QCol
 VisualElement(position,color)
 {
 	//updatingParameterLists_ = false;
-	shapeList_ << "Ellipse" << "Rectangle" << "Diamond";
+	shapeList_ << "Ellipse" << "Rectangle" << "Diamond" << "Triangle";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TokenShape",0,"enumNames",shapeList_);
 	AddDefinableProperty(QVariant::Size,"TokenSize",dimensions.size());
 
@@ -76,14 +77,14 @@ void TokenFactoryGraphic::setTokenDimensions(QRect dimensions)
 	propertyContainer_->setPropertyValue("TokenSize",dimensions.size());
 }
 
-/*! \brief Gets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+/*! \brief Gets the default TokenShape as a string ("Ellipse", "Rectangle", "Diamond" or "Triangle").
 */
 QString TokenFactoryGraphic::getTokenShape()
 {
 	return shapeList_.value(propertyContainer_->getPropertyValue("TokenShape").toInt(),"");
 }
 
-/*! \brief Sets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+/*! \brief Sets the default TokenShape as a string ("Ellipse", "Rectangle", "Diamond" or "Triangle").
 */
 void TokenFactoryGraphic::setTokenShape(QString shape)
 {
@@ -218,7 +219,8 @@ void TokenFactoryGraphic::setTokenColor(int index, int r, int g, int b, int a)
 	if(index < 0 || index >= getNumTokens())
 		return;
 	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
-	colors[index] = QColor(r,g,b,a).name();
+	QString alpha = QString::number(a);
+	colors[index] = QColor(r, g, b, a).name() + "@" + alpha;
 	propertyContainer_->setPropertyValue("TokenColors",colors.join(","));
 }
 
@@ -227,10 +229,10 @@ void TokenFactoryGraphic::setTokenColor(int index, int r, int g, int b, int a)
 void TokenFactoryGraphic::setTokenColor(int index,QVariant color)
 {
 	QColor col = color.value<QColor>();
-	setTokenColor(index,col.red(),col.green(),col.blue());
+	setTokenColor(index,col.red(),col.green(),col.blue(),col.alpha());
 }
 
-/*! \brief Sets the shape of the token with the input index to the input shape name ("Ellipse", "Rectangle", or "Diamond").
+/*! \brief Sets the shape of the token with the input index to the input shape name ("Ellipse", "Rectangle", "Diamond" or "Triangle").
  */
 void TokenFactoryGraphic::setTokenShape(int index, QString shape)
 {
@@ -351,12 +353,51 @@ QColor TokenFactoryGraphic::getTokenColor(int index)
 		return QColor();
 	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
 	
-	QString result = "_";
-	if(colors.size()>=index)
-		result = colors[index];
-	if(result == "_")
-		return getColor();;
-	return QColor(result);
+	QColor result = "_";	
+	int alpha = 255;
+	int r, g, b;
+	if (colors.size() >= index)
+	{
+		QString color = "_";
+		color = colors[index];
+		int n = color.indexOf("@");		
+	
+		if (n > -1)
+		{
+			QString str = color.mid(n + 1);
+			alpha = str.toInt();
+			QString tmp = color.left(n);
+			color = QString(tmp); //3 2-digits hexadecimal numbers
+		}
+		if (color == "_")
+			return getColor();
+
+		QString subStr1 = color.mid(1, 2);
+		QByteArray ba1 = subStr1.toLatin1();
+		const char *c_str1 = ba1.data();
+		std::stringstream st1;
+		st1 << std::hex << c_str1;
+		st1 >> r;
+
+		QString subStr2 = color.mid(3, 2);
+		QByteArray ba2 = subStr2.toLatin1();
+		const char *c_str2 = ba2.data();
+		std::stringstream st2;
+		st2 << std::hex << c_str2;
+		st2 >> g;
+
+		QString subStr3 = color.mid(5, 2);
+		QByteArray ba3 = subStr3.toLatin1();
+		const char *c_str3 = ba3.data();
+		std::stringstream st3;
+		st3 << std::hex << c_str3;
+		st3 >> b;
+	}
+
+	result = QColor(r,g,b,alpha);
+	return result;
+
+
 }
 /*! \brief Returns whether only the outline is being drawn for the token at the input index.
  */
@@ -388,7 +429,7 @@ int TokenFactoryGraphic::getTokenOutlineWidth(int index)
 	return result.toInt();
 }
 
-/*! \brief Returns the shape of the token at the input index as a string ("Ellipse", "Rectangle", or "Diamond").
+/*! \brief Returns the shape of the token at the input index as a string ("Ellipse", "Rectangle", "Diamond" or "Triangle").
  */
 QString TokenFactoryGraphic::getTokenShape(int index)
 {
@@ -446,6 +487,7 @@ void TokenFactoryGraphic::draw()
 		if(ys[i] == "_")
 			ys[i] = QString("0");
 	}
+
 	QRect imageDimensions = getImageDims();
 	QImage image(imageDimensions.width(),imageDimensions.height(),QImage::Format_ARGB32);
 	image.fill(0);
@@ -453,14 +495,19 @@ void TokenFactoryGraphic::draw()
 
 	for(int i=0;i<numTokens;i++)
 	{	
-		QColor color(colors[i]);
+		QColor color = getTokenColor(i);
+		
 		double size = sizes[i].toDouble();
 		QRect dimensions(tokenDimensions.x(),tokenDimensions.y(),tokenDimensions.width()*size,tokenDimensions.height()*size);
 		QPoint tokenPosOffset = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 		QPoint offset = posOffset_+QPoint(xs[i].toInt(),ys[i].toInt())-tokenPosOffset;
 		QPainter p(&image);
 		QPen pen(color);
-		p.setBrush(color);
+		pen.setColor(color);
+
+		QBrush pBrush(color);		
+		p.setBrush(pBrush);
+
 		p.translate(offset);
 		if(outlines[i].toInt())
 		{
@@ -490,6 +537,22 @@ void TokenFactoryGraphic::draw()
 					<< QPoint(maxWPoint/2,0);
 			p.drawPolygon(diamond);
 		}
+		else if (shapes[i] == "Triangle")
+			{
+				QPolygonF triangle;
+				double radius = (dimensions.width()) / 2;
+				float xTop = radius;
+				float yTop = 0.;
+				float xLeft = radius * (1.0 - ((sqrt(3)) / 2));
+				float yLeft = 1.5 * radius;
+				float xRight = radius * (1.0 + ((sqrt(3)) / 2));
+				float yRight = 1.5 * radius;
+				triangle << QPointF(xTop, yTop)
+					<< QPointF(xLeft, yLeft)
+					<< QPointF(xRight, yRight)
+					<< QPointF(xTop, yTop);
+				p.drawPolygon(triangle);
+			}
 
 		p.end();
 	}

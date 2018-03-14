@@ -326,8 +326,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    QSharedPointer&lt;DoubletSignalChannel&gt; posChannel = engine_-&gt;getSignalChannel(<span class="stringliteral">&quot;Position&quot;</span>).dynamicCast&lt;<a class="code" href="class_picto_1_1_doublet_signal_channel.html">DoubletSignalChannel</a>&gt;();</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    QRect windowDims = engine_-&gt;getRenderingTargets().first()-&gt;getVisualTarget()-&gt;getDimensions();</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordtype">int</span> displayWidth = 800;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordtype">int</span> displayHeight = 600;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordtype">int</span> displayWidth = RESOLUTIONH;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordtype">int</span> displayHeight = RESOLUTIONV;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keywordflow">if</span>(!signalCoeffInitialized_)</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    {</div>

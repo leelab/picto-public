@@ -28,8 +28,8 @@ namespace Picto {
  *	also means that a TokenFactoryGraphic with a high layer and tokens that are spread out very far could cover other graphics.  We may want to think
  *	of a clean way to deal with this at some point.  In the meantime, TokenFactoryGraphics should be set to have a low layer so that other things will
  *	be in front of them.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2018
  */
 class PICTOLIB_CLASS TokenFactoryGraphic : public VisualElement
 {
@@ -38,7 +38,7 @@ class PICTOLIB_CLASS TokenFactoryGraphic : public VisualElement
 	Q_PROPERTY(int tokenWidth READ getTokenWidth WRITE setTokenWidth)
 	/*! \brief Sets/gets the default token height.*/
 	Q_PROPERTY(int tokenHeight READ getTokenHeight WRITE setTokenHeight)
-	/*! \brief Sets/gets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").*/
+	/*! \brief Sets/gets the default TokenShape as a string ("Ellipse", "Rectangle", "Triangle" or "Diamond").*/
 	Q_PROPERTY(QString tokenShape READ getTokenShape WRITE setTokenShape)
 	/*! \brief Sets/gets whether only the outline of the tokens will be shown by default.*/
 	Q_PROPERTY(bool outline READ getOutline WRITE setOutline);

@@ -86,7 +86,7 @@ void Picto::StringVariable::qt_static_metacall(QObject *_o, QMetaObject::Call _c
 }
 
 const QMetaObject Picto::StringVariable::staticMetaObject = {
-    { &Variable::staticMetaObject, qt_meta_stringdata_Picto__StringVariable.data,
+    { &Parameter::staticMetaObject, qt_meta_stringdata_Picto__StringVariable.data,
       qt_meta_data_Picto__StringVariable,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
@@ -101,12 +101,12 @@ void *Picto::StringVariable::qt_metacast(const char *_clname)
     if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_Picto__StringVariable.stringdata0))
         return static_cast<void*>(const_cast< StringVariable*>(this));
-    return Variable::qt_metacast(_clname);
+    return Parameter::qt_metacast(_clname);
 }
 
 int Picto::StringVariable::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = Variable::qt_metacall(_c, _id, _a);
+    _id = Parameter::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     

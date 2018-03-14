@@ -10,6 +10,8 @@ RenderingTarget::RenderingTarget(QSharedPointer<VisualTarget> visualTarget,
 {
 	visualTarget_ = visualTarget;
 	auralTarget_ = auralTarget;
+
+	index_ = 0;
 }
 
 RenderingTarget::~RenderingTarget()
@@ -37,12 +39,19 @@ void RenderingTarget::showSplash()
 {
 	QSharedPointer<CompositingSurface> compositingSurface = generateCompositingSurface();
 	QSharedPointer<Picto::PictureGraphic> pictureGraphic(
-											new PictureGraphic(QPoint(0,0),":/common/images/splash.png"));
+											new PictureGraphic(QPoint(0,0),":/common/images/splashNew.png"));
 	pictureGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);
 	QRect splashScreenRect = pictureGraphic->getBoundingRect();
 	QRect visualTargetRect = visualTarget_->getDimensions();
-	pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
-								       (visualTargetRect.height()-splashScreenRect.height())/2));
+	//pictureGraphic->setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,
+	//							       (visualTargetRect.height()-splashScreenRect.height())/2));
+
+	//move to bottom right corner to avoid screen burn
+	double w = visualTargetRect.width() - splashScreenRect.width();
+	double h = visualTargetRect.height() - splashScreenRect.height();
+
+	pictureGraphic->setPosition(QPoint(w,h));
+
 	visualTarget_->draw(pictureGraphic->getPosition(), QPoint(),pictureGraphic->getCompositingSurface(compositingSurface->getTypeName()));
 
 	compositingSurface = generateCompositingSurface();

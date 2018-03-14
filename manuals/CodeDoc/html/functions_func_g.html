@@ -208,6 +208,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_picto_1_1_box_graphic.html#ace1c91460a2f6f98e3dd2d04dd91521c">Picto::BoxGraphic</a>
 , <a class="el" href="class_picto_1_1_diamond_graphic.html#aff373bb474224a5c53f9510392416466">Picto::DiamondGraphic</a>
 , <a class="el" href="class_picto_1_1_ellipse_graphic.html#a5965dbd9f07aa5272745cdc72b133647">Picto::EllipseGraphic</a>
+, <a class="el" href="class_picto_1_1_triangle_graphic.html#a04aeb520c8d24b4dade57af2a54c4859">Picto::TriangleGraphic</a>
 </li>
 <li>getArrowDest()
 : <a class="el" href="class_wireable_item.html#a5f8262432eb4666fe5dd85f796ae711d">WireableItem</a>
@@ -1300,6 +1301,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a3c00ca1526c0958f610051eaab933b3f">Picto::TokenFactoryGraphic</a>
 , <a class="el" href="class_picto_1_1_token_tray_graphic.html#ab3fe961ceaf3c4da4548bb4e0decd50a">Picto::TokenTrayGraphic</a>
 </li>
+<li>getNumVertices()
+: <a class="el" href="class_picto_1_1_polygon_graphic.html#a91daf21cbba16456a41b5dd0a1bb4498">Picto::PolygonGraphic</a>
+</li>
 <li>getObsoleteAssets()
 : <a class="el" href="class_picto_1_1_session_version_interfacer.html#a226ca2af73c8ebbd2c475a38b791b50a">Picto::SessionVersionInterfacer</a>
 </li>
@@ -1331,6 +1335,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_ellipse_graphic.html#afc9cc6adf28be3b9f03431773c51901e">Picto::EllipseGraphic</a>
 , <a class="el" href="class_picto_1_1_token_factory_graphic.html#afe57ffd13a0135951aa8803d3a87312c">Picto::TokenFactoryGraphic</a>
 , <a class="el" href="class_picto_1_1_token_tray_graphic.html#ae6c0a3ac4d8e1ac31952be8be23a1b67">Picto::TokenTrayGraphic</a>
+, <a class="el" href="class_picto_1_1_triangle_graphic.html#ad0fde9bbd0face8ff60c7ec8c78e8763">Picto::TriangleGraphic</a>
 </li>
 <li>getOutlineWidth()
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a7f87d70ed67948ae1167ca698759e354">Picto::TokenFactoryGraphic</a>
@@ -1414,11 +1419,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_grid_graphic.html#a55cc705ee5c5715834ee22d06209ad13">Picto::GridGraphic</a>
 , <a class="el" href="class_picto_1_1_image_graphic.html#a1013da92c87614ebea63df77fdf2873d">Picto::ImageGraphic</a>
 , <a class="el" href="class_picto_1_1_label_factory_graphic.html#a2468f962d646ba35b447474f6b73cd04">Picto::LabelFactoryGraphic</a>
+, <a class="el" href="class_picto_1_1_polygon_graphic.html#a76c235b4191529f517d02ae914498244">Picto::PolygonGraphic</a>
 , <a class="el" href="class_picto_1_1_randomly_filled_grid_graphic.html#ae78a7a82bc7c563f4ad8afb5c6e82076">Picto::RandomlyFilledGridGraphic</a>
 , <a class="el" href="class_picto_1_1_rect_target.html#af23bf52263c2d2ac99b768b16ae2cde1">Picto::RectTarget</a>
 , <a class="el" href="class_picto_1_1_shape_shifter_graphic.html#a2031443815ea02c9e75fbe9b898f24e0">Picto::ShapeShifterGraphic</a>
 , <a class="el" href="class_picto_1_1_token_factory_graphic.html#a71b5942ff3e1318e86470fb9e64b0f0e">Picto::TokenFactoryGraphic</a>
 , <a class="el" href="class_picto_1_1_token_tray_graphic.html#a4426c7825d2ccd63117ed0adbe09395c">Picto::TokenTrayGraphic</a>
+, <a class="el" href="class_picto_1_1_triangle_graphic.html#a5575f7e021fe77e94ac1374f54b7273d">Picto::TriangleGraphic</a>
 , <a class="el" href="struct_picto_1_1_visual_element.html#ab2cc472e080868dd4504c9df323d0559">Picto::VisualElement</a>
 </li>
 <li>getPostFlagWindow()
@@ -1459,7 +1466,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getPrevValues()
 : <a class="el" href="class_picto_1_1_analysis_lfp_data.html#abc3fdc4e54b48f6254793ec88c696665">Picto::AnalysisLfpData</a>
-, <a class="el" href="class_picto_1_1_analysis_signal_data.html#ab8e6e16d5e97e4fe4aaa4d6e4d1b2871">Picto::AnalysisSignalData</a>
+, <a class="el" href="class_picto_1_1_analysis_signal_data.html#a5531db7f4dffd88f6a95feb3d5e093e9">Picto::AnalysisSignalData</a>
 </li>
 <li>getPrevWaveforms()
 : <a class="el" href="class_picto_1_1_analysis_spike_data.html#afd0f2d38028b3f6fef76e2d6eae6f2d6">Picto::AnalysisSpikeData</a>
@@ -1512,6 +1519,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getRadius()
 : <a class="el" href="class_picto_1_1_circle_graphic.html#a26a5a35821c92b51afbe15771ceef375">Picto::CircleGraphic</a>
 , <a class="el" href="class_picto_1_1_circle_target.html#a8252c7eec34f038fc06e635791ff3ede">Picto::CircleTarget</a>
+, <a class="el" href="class_picto_1_1_triangle_graphic.html#abc80236e620dc40caaf3cfe09d3294d3">Picto::TriangleGraphic</a>
 , <a class="el" href="class_status_light.html#aec8873097154efb946e9ca5c4db68195">StatusLight</a>
 </li>
 <li>getRawValues()
@@ -1803,7 +1811,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_connection_manager.html#a6608548da05a185b1e7a4a3361974766">ConnectionManager</a>
 </li>
 <li>getSessionInfoByComponent()
-: <a class="el" href="class_connection_manager.html#aff1c3942e20523922e9ef264bce83c77">ConnectionManager</a>
+: <a class="el" href="class_connection_manager.html#a3248768ab6c18c6cceed2a024924dd1e">ConnectionManager</a>
 </li>
 <li>getSessionPathByComponent()
 : <a class="el" href="class_server_config.html#a868a40ae84ee613f8cc464a74216163a">ServerConfig</a>
@@ -2092,7 +2100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getTokenShape()
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a207fa6b03f28b02c927397e63c04ceee">Picto::TokenFactoryGraphic</a>
-, <a class="el" href="class_picto_1_1_token_tray_graphic.html#a640010240952f73592df607fdd79dd00">Picto::TokenTrayGraphic</a>
+, <a class="el" href="class_picto_1_1_token_tray_graphic.html#aeabef7a0079764911d4e5cf6fe20c42c">Picto::TokenTrayGraphic</a>
 </li>
 <li>getTokenSize()
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a12732f912a9a52419bb4d970b5d4be25">Picto::TokenFactoryGraphic</a>
@@ -2244,6 +2252,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="struct_picto_1_1_output_signal.html#ac6a74459af41e7629188b270d620fae7">Picto::OutputSignal</a>
 , <a class="el" href="class_picto_1_1_parameter.html#a1f72bd3b6d881ef062db768ada609302">Picto::Parameter</a>
 , <a class="el" href="class_picto_1_1_pause_point.html#aa30efd030e05c5edb877e3b886690eaa">Picto::PausePoint</a>
+, <a class="el" href="class_picto_1_1_polygon_graphic.html#a57f93e5fcd846e8c1062f3e37a8cd9d5">Picto::PolygonGraphic</a>
 , <a class="el" href="class_picto_1_1_pseudorandom_int_parameter.html#a1eadd3d219540dce999a43fd96bdc19a">Picto::PseudorandomIntParameter</a>
 , <a class="el" href="class_picto_1_1_random_double_parameter.html#a4325960bd37be7ee2732bd3bd9892738">Picto::RandomDoubleParameter</a>
 , <a class="el" href="class_picto_1_1_random_int_parameter.html#adf7101a7199bcfe8b69b67adb33d11ac">Picto::RandomIntParameter</a>
@@ -2271,6 +2280,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_timer_parameter.html#a6a9d0f3b463058591cb13d0a6cf41dee">Picto::TimerParameter</a>
 , <a class="el" href="class_picto_1_1_token_factory_graphic.html#a8c0bcda0456cbba4419737b3888ac42f">Picto::TokenFactoryGraphic</a>
 , <a class="el" href="class_picto_1_1_token_tray_graphic.html#a3fde5ccaaf6068f3ebd7c080c40986d5">Picto::TokenTrayGraphic</a>
+, <a class="el" href="class_picto_1_1_triangle_graphic.html#a67c368c51f8029e1d67be90748eae95f">Picto::TriangleGraphic</a>
 , <a class="el" href="class_picto_1_1_u_i_enabled.html#aaefaa1a16d116cd724c2bc7c19c797de">Picto::UIEnabled</a>
 , <a class="el" href="class_picto_1_1_variable.html#aae536e42c9e88e430da6b5cd298ea98a">Picto::Variable</a>
 , <a class="el" href="class_picto_1_1_variable_list.html#a5c96018fc14bc6f72877fc8a11360cff">Picto::VariableList</a>
@@ -2368,13 +2378,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getValuesUntil()
 : <a class="el" href="class_picto_1_1_analysis_lfp_data.html#a5bfcc3a704d1e31485ac85f8a13861bf">Picto::AnalysisLfpData</a>
-, <a class="el" href="class_picto_1_1_analysis_signal_data.html#adb0f20fab12d57483f45dd4e7a3ec261">Picto::AnalysisSignalData</a>
+, <a class="el" href="class_picto_1_1_analysis_signal_data.html#a2e4b921b2946722b7926d90a108d38eb">Picto::AnalysisSignalData</a>
 , <a class="el" href="class_picto_1_1_lfp_reader.html#af87044267aefc42bf205d54dff096144">Picto::LfpReader</a>
 , <a class="el" href="class_picto_1_1_lfp_state.html#a3f37b279a3fcc62ba348ed29000d24ed">Picto::LfpState</a>
 , <a class="el" href="class_picto_1_1_live_lfp_reader.html#a62252bcd22e61191d7ca25c030fe0657">Picto::LiveLfpReader</a>
 , <a class="el" href="class_picto_1_1_live_signal_reader.html#a88a1320f1154f7f4fea727f29d93e57b">Picto::LiveSignalReader</a>
 , <a class="el" href="class_picto_1_1_signal_reader.html#abc299eb90960d503b96ba5f94779a0d8">Picto::SignalReader</a>
 , <a class="el" href="class_picto_1_1_signal_state.html#a6e05d7e957504c88575976c8f3247d2a">Picto::SignalState</a>
+</li>
+<li>getVertexX()
+: <a class="el" href="class_picto_1_1_polygon_graphic.html#ae7bfe86904aa310d3f1325b4b361b972">Picto::PolygonGraphic</a>
+</li>
+<li>getVertexY()
+: <a class="el" href="class_picto_1_1_polygon_graphic.html#ae27df93c99eef0da7e90bd6ad1bd83da">Picto::PolygonGraphic</a>
 </li>
 <li>getVideoFileType()
 : <a class="el" href="class_picto_1_1_recording_visual_target_host.html#a489ff489ecd55ec6efcbfb470c69fcb8">Picto::RecordingVisualTargetHost</a>

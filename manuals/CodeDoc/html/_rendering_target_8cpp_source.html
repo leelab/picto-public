@@ -103,50 +103,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    visualTarget_ = visualTarget;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    auralTarget_ = auralTarget;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;}</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;RenderingTarget::~RenderingTarget()</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    printf(<span class="stringliteral">&quot;RenderTarget destructor&quot;</span>);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;QSharedPointer&lt;CompositingSurface&gt; RenderingTarget::generateCompositingSurface()</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">return</span> visualTarget_-&gt;generateCompositingSurface();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;QSharedPointer&lt;MixingSample&gt; RenderingTarget::generateMixingSample()</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">return</span> auralTarget_-&gt;generateMixingSample();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="struct_picto_1_1_rendering_target.html#aee17f76b4ff8218bbe2f1c1bc110f09a">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_rendering_target.html#aee17f76b4ff8218bbe2f1c1bc110f09a">RenderingTarget::showSplash</a>()</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    QSharedPointer&lt;CompositingSurface&gt; compositingSurface = generateCompositingSurface();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    QSharedPointer&lt;Picto::PictureGraphic&gt; pictureGraphic(</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                            <span class="keyword">new</span> <a class="code" href="class_picto_1_1_picture_graphic.html">PictureGraphic</a>(QPoint(0,0),<span class="stringliteral">&quot;:/common/images/splash.png&quot;</span>));</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    pictureGraphic-&gt;addCompositingSurface(compositingSurface-&gt;getTypeName(),compositingSurface);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    QRect splashScreenRect = pictureGraphic-&gt;getBoundingRect();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    QRect visualTargetRect = visualTarget_-&gt;getDimensions();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    pictureGraphic-&gt;setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                       (visualTargetRect.height()-splashScreenRect.height())/2));</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    visualTarget_-&gt;draw(pictureGraphic-&gt;getPosition(), QPoint(),pictureGraphic-&gt;getCompositingSurface(compositingSurface-&gt;getTypeName()));</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    compositingSurface = generateCompositingSurface();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> textHeight = 20;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    QPoint textPos = QPoint(0,visualTargetRect.bottom()-textHeight);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    QRect textRect = QRect(0,0,visualTargetRect.width(), textHeight);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    QSharedPointer&lt;TextGraphic&gt; textGraphic(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_text_graphic.html">TextGraphic</a>(textPos,textRect,QColor(255,255,255),status_));</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    textGraphic-&gt;addCompositingSurface(compositingSurface-&gt;getTypeName(),compositingSurface);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    visualTarget_-&gt;draw(textGraphic-&gt;getPosition(),QPoint(),textGraphic-&gt;getCompositingSurface(compositingSurface-&gt;getTypeName()));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    visualTarget_-&gt;present();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    index_ = 0;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;RenderingTarget::~RenderingTarget()</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    printf(<span class="stringliteral">&quot;RenderTarget destructor&quot;</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;QSharedPointer&lt;CompositingSurface&gt; RenderingTarget::generateCompositingSurface()</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">return</span> visualTarget_-&gt;generateCompositingSurface();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;QSharedPointer&lt;MixingSample&gt; RenderingTarget::generateMixingSample()</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">return</span> auralTarget_-&gt;generateMixingSample();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="struct_picto_1_1_rendering_target.html#aee17f76b4ff8218bbe2f1c1bc110f09a">   38</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_rendering_target.html#aee17f76b4ff8218bbe2f1c1bc110f09a">RenderingTarget::showSplash</a>()</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    QSharedPointer&lt;CompositingSurface&gt; compositingSurface = generateCompositingSurface();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    QSharedPointer&lt;Picto::PictureGraphic&gt; pictureGraphic(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                            <span class="keyword">new</span> <a class="code" href="class_picto_1_1_picture_graphic.html">PictureGraphic</a>(QPoint(0,0),<span class="stringliteral">&quot;:/common/images/splashNew.png&quot;</span>));</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    pictureGraphic-&gt;addCompositingSurface(compositingSurface-&gt;getTypeName(),compositingSurface);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    QRect splashScreenRect = pictureGraphic-&gt;getBoundingRect();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QRect visualTargetRect = visualTarget_-&gt;getDimensions();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">//pictureGraphic-&gt;setPosition(QPoint((visualTargetRect.width()-splashScreenRect.width())/2,</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">//                                 (visualTargetRect.height()-splashScreenRect.height())/2));</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">//move to bottom right corner to avoid screen burn</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">double</span> w = visualTargetRect.width() - splashScreenRect.width();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">double</span> h = visualTargetRect.height() - splashScreenRect.height();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    pictureGraphic-&gt;setPosition(QPoint(w,h));</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    visualTarget_-&gt;draw(pictureGraphic-&gt;getPosition(), QPoint(),pictureGraphic-&gt;getCompositingSurface(compositingSurface-&gt;getTypeName()));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    compositingSurface = generateCompositingSurface();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> textHeight = 20;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    QPoint textPos = QPoint(0,visualTargetRect.bottom()-textHeight);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QRect textRect = QRect(0,0,visualTargetRect.width(), textHeight);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QSharedPointer&lt;TextGraphic&gt; textGraphic(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_text_graphic.html">TextGraphic</a>(textPos,textRect,QColor(255,255,255),status_));</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    textGraphic-&gt;addCompositingSurface(compositingSurface-&gt;getTypeName(),compositingSurface);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    visualTarget_-&gt;draw(textGraphic-&gt;getPosition(),QPoint(),textGraphic-&gt;getCompositingSurface(compositingSurface-&gt;getTypeName()));</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    visualTarget_-&gt;present();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="ttc" id="class_picto_1_1_text_graphic_html"><div class="ttname"><a href="class_picto_1_1_text_graphic.html">Picto::TextGraphic</a></div><div class="ttdoc">Displays text in the Experiment Scene. </div><div class="ttdef"><b>Definition:</b> <a href="_text_graphic_8h_source.html#l00028">TextGraphic.h:28</a></div></div>
 <div class="ttc" id="_rendering_target_8h_html"><div class="ttname"><a href="_rendering_target_8h.html">RenderingTarget.h</a></div></div>
-<div class="ttc" id="struct_picto_1_1_rendering_target_html_aee17f76b4ff8218bbe2f1c1bc110f09a"><div class="ttname"><a href="struct_picto_1_1_rendering_target.html#aee17f76b4ff8218bbe2f1c1bc110f09a">Picto::RenderingTarget::showSplash</a></div><div class="ttdeci">void showSplash()</div><div class="ttdoc">Displays a splash screen on the visual target. </div><div class="ttdef"><b>Definition:</b> <a href="_rendering_target_8cpp_source.html#l00036">RenderingTarget.cpp:36</a></div></div>
+<div class="ttc" id="struct_picto_1_1_rendering_target_html_aee17f76b4ff8218bbe2f1c1bc110f09a"><div class="ttname"><a href="struct_picto_1_1_rendering_target.html#aee17f76b4ff8218bbe2f1c1bc110f09a">Picto::RenderingTarget::showSplash</a></div><div class="ttdeci">void showSplash()</div><div class="ttdoc">Displays a splash screen on the visual target. </div><div class="ttdef"><b>Definition:</b> <a href="_rendering_target_8cpp_source.html#l00038">RenderingTarget.cpp:38</a></div></div>
 <div class="ttc" id="class_picto_1_1_picture_graphic_html"><div class="ttname"><a href="class_picto_1_1_picture_graphic.html">Picto::PictureGraphic</a></div><div class="ttdoc">This is ALMOST an obsolete class that does the same thing as ImageFile but in a less logical way...</div><div class="ttdef"><b>Definition:</b> <a href="_picture_graphic_8h_source.html#l00027">PictureGraphic.h:27</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

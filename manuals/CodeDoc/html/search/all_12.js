@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['radius',['radius',['../class_picto_1_1_circle_target.html#a92b430d79fa5aae82e025c7c7e3b6f68',1,'Picto::CircleTarget::radius()'],['../class_picto_1_1_circle_graphic.html#a574ae580b977bfec39184f209f816cab',1,'Picto::CircleGraphic::radius()']]],
+  ['radius',['radius',['../class_picto_1_1_circle_target.html#a92b430d79fa5aae82e025c7c7e3b6f68',1,'Picto::CircleTarget::radius()'],['../class_picto_1_1_circle_graphic.html#a574ae580b977bfec39184f209f816cab',1,'Picto::CircleGraphic::radius()'],['../class_picto_1_1_triangle_graphic.html#a7d588446f39564e15f36fab6f2a4d2e5',1,'Picto::TriangleGraphic::radius()']]],
   ['randomdoubleparameter',['RandomDoubleParameter',['../class_picto_1_1_random_double_parameter.html',1,'Picto']]],
   ['randomdoubleparameter',['RandomDoubleParameter',['../class_picto_1_1_random_double_parameter.html#a0ef74a84ce113e2e763e620f9fd0c193',1,'Picto::RandomDoubleParameter']]],
   ['randomintparameter',['RandomIntParameter',['../class_picto_1_1_random_int_parameter.html',1,'Picto']]],

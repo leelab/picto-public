@@ -95,7 +95,7 @@ namespace Picto {
 	{
 		return propertyContainer_->getPropertyValue("NumLabels").toInt();
 	}
-	/*! \brief Gets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+	/*! \brief Gets the default Label Font size
 	*/
 	QString LabelFactoryGraphic::getLabelFontSize()
 	{

@@ -28,5 +28,6 @@ var searchData=
   ['transinfo',['TransInfo',['../struct_picto_1_1_trans_info.html',1,'Picto']]],
   ['transition',['Transition',['../class_picto_1_1_transition.html',1,'Picto']]],
   ['transitionstate',['TransitionState',['../class_picto_1_1_transition_state.html',1,'Picto']]],
-  ['translatednames',['TranslatedNames',['../class_picto_1_1_translated_names.html',1,'Picto']]]
+  ['translatednames',['TranslatedNames',['../class_picto_1_1_translated_names.html',1,'Picto']]],
+  ['trianglegraphic',['TriangleGraphic',['../class_picto_1_1_triangle_graphic.html',1,'Picto']]]
 ];

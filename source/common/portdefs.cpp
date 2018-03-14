@@ -32,7 +32,7 @@ void PortNums::setSystemNumber(QString appExePath,QStringList appExeArgs,int sys
 {
 	if(systemNumber == systemNumber_)
 		return;
-	if(systemNumber > 10 || systemNumber < 1)
+	if(systemNumber > 130 || systemNumber < 1)
 		return;
 	QSettings settings((usedInSystemService_?QSettings::SystemScope:QSettings::UserScope),"Block Designs",appName_);
 	settings.setValue("SystemNum",systemNumber);
@@ -99,7 +99,7 @@ void PortNums::updatePortNumbers()
 	}
 	else
 		systemNumber_ = settings.value("SystemNum").toInt();
-	if(systemNumber_ > 10 || systemNumber_ < 1)
+	if(systemNumber_ > 130 || systemNumber_ < 1)
 		systemNumber_ = 1;
 
 	if(systemNumber_ > 1)

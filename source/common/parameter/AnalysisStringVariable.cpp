@@ -21,6 +21,7 @@ QSharedPointer<Asset> AnalysisStringVariable::Create()
 void AnalysisStringVariable::postDeserialize()
 {
 	AnalysisVariable::postDeserialize();
+	setPropertyRuntimeEditable("Value");
 }
 
 bool AnalysisStringVariable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)

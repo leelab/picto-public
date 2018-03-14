@@ -26,6 +26,8 @@ C:/Projects/Picto/source/common/time_ce/time_ce.h:48: warning: Compound tm is no
 C:/Projects/Picto/source/workstation/ReplayViewer/EncodeAudio.m:28: warning: documented symbol `C is in ms AudioOutputFile analyses C(idx)' was not declared or defined.
 C:/Projects/Picto/source/embedded/frontpanel/FrontPanelRewardController.cpp:169: warning: Found unknown command `\detail'
 C:/Projects/Picto/source/workstation/ReplayViewer/ProgressWidget.cpp:443: warning: explicit link request to 'rrggbb' could not be resolved
+C:/Projects/Picto/source/common/common.h:108: warning: Member RESOLUTIONH (macro definition) of file common.h is not documented.
+C:/Projects/Picto/source/common/common.h:109: warning: Member RESOLUTIONV (macro definition) of file common.h is not documented.
 C:/Projects/Picto/source/director/main.cpp:72: warning: Member connectToServer(QUuid directorID) (function) of file director/main.cpp is not documented.
 C:/Projects/Picto/source/director/main.cpp:73: warning: Member setUserInfo(QSharedPointer< Picto::Engine::PictoEngine > engine, QString status) (function) of file director/main.cpp is not documented.
 C:/Projects/Picto/source/embedded/blankscreen/main.cpp:82: warning: Member main(int argc, char *argv[]) (function) of file embedded/blankscreen/main.cpp is not documented.
@@ -2565,6 +2567,16 @@ C:/Projects/Picto/source/common/playback/TransitionState.h:66: warning: Member P
 C:/Projects/Picto/source/common/playback/TransitionState.h:67: warning: Member index_ (variable) of class Picto::PlaybackTransData is not documented.
 C:/Projects/Picto/source/common/playback/TransitionState.h:68: warning: Member transId_ (variable) of class Picto::PlaybackTransData is not documented.
 C:/Projects/Picto/source/common/property/Property.h:53: warning: Member getAttributes() (function) of class Picto::Property is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:33: warning: Member getOutline() (function) of class Picto::PolygonGraphic is not documented.
+C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:68: warning: Member deepReinitScripting(bool enableDebugging) (function) of class Picto::ScriptableContainer is not documented.
+C:/Projects/Picto/source/common/statemachine/Scriptable.h:63: warning: Member setScriptParam(bool scriptCondParam) (function) of class Picto::Scriptable is not documented.
+C:/Projects/Picto/source/common/statemachine/Scriptable.h:64: warning: Member getScriptParam() (function) of class Picto::Scriptable is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:29: warning: Member type (variable) of class Picto::PolygonGraphic is not documented.
+C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:98: warning: Member scriptableContainerCustomInitialization() (function) of class Picto::ScriptableContainer is not documented.
+C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:101: warning: Member deepDeinitScripting() (function) of class Picto::ScriptableContainer is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:49: warning: Member posOffset_ (variable) of class Picto::PolygonGraphic is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:50: warning: Member listNames_ (variable) of class Picto::PolygonGraphic is not documented.
+C:/Projects/Picto/source/common/statemachine/Scriptable.h:71: warning: Member scriptParam_ (variable) of class Picto::Scriptable is not documented.
 C:/Projects/Picto/source/common/portdefs.h:48: warning: Member appName_ (variable) of class Picto::PortNums is not documented.
 C:/Projects/Picto/source/common/portdefs.h:49: warning: Member systemNumber_ (variable) of class Picto::PortNums is not documented.
 C:/Projects/Picto/source/common/portdefs.h:51: warning: Member appUpdatePort_ (variable) of class Picto::PortNums is not documented.
@@ -2938,6 +2950,7 @@ C:/Projects/Picto/source/common/compositor/RenderingTarget.h:51: warning: Member
 C:/Projects/Picto/source/common/compositor/RenderingTarget.h:54: warning: Member visualTarget_ (variable) of class Picto::RenderingTarget is not documented.
 C:/Projects/Picto/source/common/compositor/RenderingTarget.h:55: warning: Member auralTarget_ (variable) of class Picto::RenderingTarget is not documented.
 C:/Projects/Picto/source/common/compositor/RenderingTarget.h:56: warning: Member status_ (variable) of class Picto::RenderingTarget is not documented.
+C:/Projects/Picto/source/common/compositor/RenderingTarget.h:57: warning: Member index_ (variable) of class Picto::RenderingTarget is not documented.
 C:/Projects/Picto/source/common/statemachine/Result.h:32: warning: Member Result(QString name) (function) of class Picto::Result is not documented.
 C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:68: warning: Member deepReinitScripting(bool enableDebugging) (function) of class Picto::ScriptableContainer is not documented.
 C:/Projects/Picto/source/common/statemachine/Scriptable.h:63: warning: Member setScriptParam(bool scriptCondParam) (function) of class Picto::Scriptable is not documented.
@@ -3604,6 +3617,15 @@ C:/Projects/Picto/source/common/namedefs.h:30: warning: Member directorAppName (
 C:/Projects/Picto/source/common/namedefs.h:31: warning: Member frontPanelAppName (variable) of class Picto::TranslatedNames is not documented.
 C:/Projects/Picto/source/common/namedefs.h:32: warning: Member directorHWName (variable) of class Picto::TranslatedNames is not documented.
 C:/Projects/Picto/source/common/namedefs.h:33: warning: Member workstationAppName (variable) of class Picto::TranslatedNames is not documented.
+C:/Projects/Picto/source/common/stimuli/TriangleGraphic.h:43: warning: Member setAngle(double angle) (function) of class Picto::TriangleGraphic is not documented.
+C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:68: warning: Member deepReinitScripting(bool enableDebugging) (function) of class Picto::ScriptableContainer is not documented.
+C:/Projects/Picto/source/common/statemachine/Scriptable.h:63: warning: Member setScriptParam(bool scriptCondParam) (function) of class Picto::Scriptable is not documented.
+C:/Projects/Picto/source/common/statemachine/Scriptable.h:64: warning: Member getScriptParam() (function) of class Picto::Scriptable is not documented.
+C:/Projects/Picto/source/common/stimuli/TriangleGraphic.h:32: warning: Member type (variable) of class Picto::TriangleGraphic is not documented.
+C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:98: warning: Member scriptableContainerCustomInitialization() (function) of class Picto::ScriptableContainer is not documented.
+C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:101: warning: Member deepDeinitScripting() (function) of class Picto::ScriptableContainer is not documented.
+C:/Projects/Picto/source/common/stimuli/TriangleGraphic.h:54: warning: Member posOffset_ (variable) of class Picto::TriangleGraphic is not documented.
+C:/Projects/Picto/source/common/statemachine/Scriptable.h:71: warning: Member scriptParam_ (variable) of class Picto::Scriptable is not documented.
 C:/Projects/Picto/source/common/statemachine/UIData.h:45: warning: Member elementFactory_ (variable) of class Picto::UIData is not documented.
 C:/Projects/Picto/source/common/parameter/AssociateElement.h:177: warning: Member postLinkUpdate() (function) of class Picto::AssociateElement is not documented.
 C:/Projects/Picto/source/common/statemachine/UIEnabled.h:64: warning: Member uiAssociateId_ (variable) of class Picto::UIEnabled is not documented.
