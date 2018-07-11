@@ -59,7 +59,7 @@ public:
 		NullGen				//!< No event codes will be created
 	} EventCodeGeneratorType;
 
-	bool setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical);
+	bool setupRenderingTargets(VisualTargetType visualTargetType, QColor bgColor, bool timingCritical);
 	bool setupSignalChannel(SignalChannelType channelType);
 	bool setupRewardController(RewardControllerType controllerType);
 	bool setupOutputSignalController(OutputSignalControllerType controllerType, EventCodeGeneratorType generatorType);

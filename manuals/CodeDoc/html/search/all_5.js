@@ -26,7 +26,7 @@ var searchData=
   ['emptysignalchannels',['emptySignalChannels',['../class_picto_1_1_engine_1_1_picto_engine.html#ab4819f116e44b987e402334fde8be727',1,'Picto::Engine::PictoEngine']]],
   ['enable',['enable',['../class_picto_1_1_output_signal_widget.html#a0c51033620dc219a6d8c81e9e7d68897',1,'Picto::OutputSignalWidget::enable()'],['../class_picto_1_1_input_port.html#a38b518f5abf207187207da782e32302b',1,'Picto::InputPort::enable()']]],
   ['enablearrowdest',['enableArrowDest',['../class_wireable_item.html#ae5c0b483177a4671cc68182e34fab228',1,'WireableItem']]],
-  ['enablecheckboxes',['enableCheckBoxes',['../class_picto_1_1_run_selector_widget.html#a50c5be487bb6716e7446bb684818382f',1,'Picto::RunSelectorWidget::enableCheckBoxes()'],['../class_picto_1_1_analysis_selector_widget.html#ab95a7447d0400309b775b1c21db3baaf',1,'Picto::AnalysisSelectorWidget::enableCheckboxes()']]],
+  ['enablecheckboxes',['enableCheckboxes',['../class_picto_1_1_analysis_selector_widget.html#ab95a7447d0400309b775b1c21db3baaf',1,'Picto::AnalysisSelectorWidget::enableCheckboxes()'],['../class_picto_1_1_run_selector_widget.html#a50c5be487bb6716e7446bb684818382f',1,'Picto::RunSelectorWidget::enableCheckBoxes()']]],
   ['enabled',['enabled',['../struct_picto_1_1_output_signal_controller_1_1_pin_data.html#ac4f1566701318a9d2deef4b0a1eb8d39',1,'Picto::OutputSignalController::PinData::enabled()'],['../struct_picto_1_1_output_signal.html#a9ce6698871455bc355d2fab0efa8e317',1,'Picto::OutputSignal::enabled()'],['../struct_search_request.html#a7cc91f29c41992c02bb1b46a9d4a0cc0',1,'SearchRequest::enabled()']]],
   ['enabled_5f',['enabled_',['../class_picto_1_1_input_port.html#adfbf414c63792c971ed3e9fb9f730902',1,'Picto::InputPort']]],
   ['enableediting',['enableEditing',['../class_task_run_viewer.html#ab359424cacdb5fc4498340f18ea19b5f',1,'TaskRunViewer']]],
@@ -102,7 +102,7 @@ var searchData=
   ['exporttotext',['exportToText',['../class_asset_export_import.html#a164a5810ba088a4577ecb5e7b81a12ef',1,'AssetExportImport']]],
   ['exporttype',['ExportType',['../namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489',1,'Picto::ExportType']]],
   ['exporttypelist_5f',['exportTypeList_',['../class_picto_1_1_analysis_plot_output.html#ae720bd7bc79f5505626dc62d51b59a79',1,'Picto::AnalysisPlotOutput']]],
-  ['externalbuttonclick',['externalButtonClick',['../class_phidgets.html#aa8fd54a481d892ad93379b42505b2943',1,'Phidgets']]],
+  ['externalbuttonclick',['externalButtonClick',['../class_legacy_phidgets.html#ad2051a74c2ff7fbee91fa83d31d2876f',1,'LegacyPhidgets::externalButtonClick()'],['../class_phidgets.html#aa8fd54a481d892ad93379b42505b2943',1,'Phidgets::externalButtonClick()']]],
   ['extractexperimentfromdesign',['extractExperimentFromDesign',['../struct_startsession_command_handler.html#a9b41dfca62f0eaf5bdcadd77cd6bc0d3',1,'StartsessionCommandHandler']]],
   ['eyetrackerlegacysystemxp',['EyetrackerLegacySystemXp',['../class_hardware_setup.html#a47f2dfba54bc1a8d0bbd64d885d638e6aa37a374b7c5af662532c47532152ba7c',1,'HardwareSetup']]],
   ['eyetrackerpictoboxxp',['EyetrackerPictoBoxXp',['../class_hardware_setup.html#a47f2dfba54bc1a8d0bbd64d885d638e6aa5092296cb0e9f4668e438ed9d126377',1,'HardwareSetup']]]

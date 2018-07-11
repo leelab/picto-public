@@ -35,6 +35,6 @@ var searchData=
   ['buildevent',['buildEvent',['../class_simple_l_f_p_source.html#a5ec1d12fd33fae9419f06b3b59cbcd6d',1,'SimpleLFPSource::buildEvent()'],['../class_simple_mark_source.html#a233577f961e2911124ae959809698b2a',1,'SimpleMarkSource::buildEvent()'],['../class_simple_spike_source.html#a42730994330acdf1d66e3b232d86f276',1,'SimpleSpikeSource::buildEvent()']]],
   ['buildtableindeces',['buildTableIndeces',['../class_stored_session_data.html#ab187a23f5736693963806ea948fb5abf',1,'StoredSessionData']]],
   ['button_5f',['button_',['../struct_picto_1_1_run_selector_widget_1_1_run_info.html#ad6e93cf57cfae6a48c6475008744015d',1,'Picto::RunSelectorWidget::RunInfo']]],
-  ['buttonclicked',['buttonClicked',['../class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68',1,'Picto::RunSelectorWidget::buttonClicked()'],['../class_phidgets.html#a53cfa8a8488c9ca56aa10cb1049400ce',1,'Phidgets::buttonClicked()']]],
+  ['buttonclicked',['buttonClicked',['../class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68',1,'Picto::RunSelectorWidget::buttonClicked()'],['../class_legacy_phidgets.html#adcab1d9becb3b370f4354325194daff8',1,'LegacyPhidgets::buttonClicked()'],['../class_phidgets.html#a53cfa8a8488c9ca56aa10cb1049400ce',1,'Phidgets::buttonClicked()']]],
   ['buttongroupclicked',['buttonGroupClicked',['../class_tool_group.html#a542edd6618a823fd7c7f905d1e5f7d34',1,'ToolGroup']]]
 ];

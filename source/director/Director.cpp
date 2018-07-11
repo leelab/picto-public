@@ -54,7 +54,9 @@ Director::Director(QString name,
 		int xDiamChannel,
 		int yDiamChannel,
 		int posSampPer,
-		int diamSampPer):
+		int diamSampPer,
+		QColor bgCol,
+		int legacyPhidgets) :
 	ComponentInterface("DIRECTOR"),
 	sigChannel_(sigChannel),
 	visualTarget_(visualTarget),
@@ -67,6 +69,8 @@ Director::Director(QString name,
 	yDiamChannel_(yDiamChannel),
 	posSampPer_(posSampPer),
 	diamSampPer_(diamSampPer),
+	bgCol_(bgCol),
+	legacyPhidgets_(legacyPhidgets),
 	useFrontPanel_(rewardController == HardwareSetup::PictoBoxXpReward),
 	directorData_(new DirectorData())
 {
@@ -185,7 +189,7 @@ int Director::openDevice()
 	
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
 	//otherwise use d3d.
-	if(!hwSetup.setupRenderingTargets(visualTarget_,sigChannel_ != HardwareSetup::Mouse)) 
+	if (!hwSetup.setupRenderingTargets(visualTarget_, bgCol_,sigChannel_ != HardwareSetup::Mouse))
 		return 1;
 	if(!hwSetup.setXYChannelNums(xChannel_,yChannel_))
 		return 1;
@@ -208,7 +212,7 @@ int Director::openDevice()
 	if(useFrontPanel_)
 	{
 		frontPanelProcess_ = QSharedPointer<QProcess>(new QProcess());
-		frontPanelProcess_->start(QCoreApplication::applicationDirPath() + "/" + FRONTPANELEXECUTABLE,QStringList() << "-systemNumber" << QString::number(Picto::portNums->getSystemNumber()));
+		frontPanelProcess_->start(QCoreApplication::applicationDirPath() + "/" + FRONTPANELEXECUTABLE, QStringList() << "-systemNumber" << QString::number(Picto::portNums->getSystemNumber()) << "-legacyPhidgets" << QString::number(legacyPhidgets_));
 		if(!frontPanelProcess_->waitForStarted())
 			return 1;
 		//Assure that the update downloader will kill the front panel process if it needs to restart the application.

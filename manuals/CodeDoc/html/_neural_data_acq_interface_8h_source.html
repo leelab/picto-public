@@ -121,18 +121,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="class_neural_data_acq_interface.html#ab5de05e0b1bd90ac37d0fd7e317e85e3">samplingRate</a>() = 0;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> QList&lt;QSharedPointer&lt;Picto::DataUnit&gt;&gt; <a class="code" href="class_neural_data_acq_interface.html#a5726ef21daaedd9947640b146e554c97">dumpData</a>() = 0;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_neural_data_acq_interface.html#ae2a18728d2a56fe1a65a66e10a33282f">acqDataAfterNow</a>() = 0;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;QT_BEGIN_NAMESPACE</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> alignSysTimes(QString rhdFile, QString saveFolder, QString sqlFile, QString mdaFile, <span class="keywordtype">bool</span> convert=<span class="keyword">true</span>) = 0;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;};</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;Q_DECLARE_INTERFACE(<a class="code" href="class_neural_data_acq_interface.html">NeuralDataAcqInterface</a>,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    <span class="stringliteral">&quot;org.blockdesign.Picto.ProxyServer.NeuralDataAcqInterface/1.0&quot;</span>)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;QT_END_NAMESPACE</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;QT_BEGIN_NAMESPACE</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;Q_DECLARE_INTERFACE(<a class="code" href="class_neural_data_acq_interface.html">NeuralDataAcqInterface</a>,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    <span class="stringliteral">&quot;org.blockdesign.Picto.ProxyServer.NeuralDataAcqInterface/1.0&quot;</span>)</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;QT_END_NAMESPACE</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_neural_data_acq_interface_html_afaece5bd061753aa9a4b1e05c0d1e61d"><div class="ttname"><a href="class_neural_data_acq_interface.html#afaece5bd061753aa9a4b1e05c0d1e61d">NeuralDataAcqInterface::startDevice</a></div><div class="ttdeci">virtual deviceStatus startDevice()=0</div><div class="ttdoc">Starts interfacing with the device and gathering data. Returns the deviceStatus after the function wa...</div></div>
 <div class="ttc" id="class_neural_data_acq_interface_html_a5726ef21daaedd9947640b146e554c97"><div class="ttname"><a href="class_neural_data_acq_interface.html#a5726ef21daaedd9947640b146e554c97">NeuralDataAcqInterface::dumpData</a></div><div class="ttdeci">virtual QList&lt; QSharedPointer&lt; Picto::DataUnit &gt; &gt; dumpData()=0</div><div class="ttdoc">Returns a list of DataUnits read from the Neural data device since the last call to this function...</div></div>
 <div class="ttc" id="class_neural_data_acq_interface_html_a18d2ffb89521e40cba91a159e47fd449a179221e026143c59c99f8398ecc52bc6"><div class="ttname"><a href="class_neural_data_acq_interface.html#a18d2ffb89521e40cba91a159e47fd449a179221e026143c59c99f8398ecc52bc6">NeuralDataAcqInterface::notStarted</a></div><div class="ttdoc">Device is not ready. </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_acq_interface_8h_source.html#l00030">NeuralDataAcqInterface.h:30</a></div></div>

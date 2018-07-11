@@ -1,6 +1,82 @@
-﻿Build started 3/14/2018 8:51:28 AM.
+﻿Build started 7/11/2018 11:04:00 AM.
      1>Project "C:\Projects\Picto\source\director\PictoDirector.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>CustomBuild:
+         MOC c:/Projects/Picto/source/director/frontpanel/FPFLUSHCommandHandler.h
+         MOC c:/Projects/Picto/source/director/frontpanel/FPGETCommandHandler.h
+         MOC c:/Projects/Picto/source/director/frontpanel/FPInterface.h
+         MOC c:/Projects/Picto/source/director/frontpanel/FPPUTCommandHandler.h
+         MOC c:/Projects/Picto/source/director/frontpanel/FPREWARDCommandHandler.h
+         MOC c:/Projects/Picto/source/director/iodevices/LegacySystemXPEventCodeGenerator.h
+         MOC c:/Projects/Picto/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
+         MOC c:/Projects/Picto/source/director/network/DirectorStatusManager.h
+         MOC c:/Projects/Picto/source/director/Director.h
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I. /I. /I"..\..\..\..\Program Files (x86)\Microsoft DirectX SDK (June 2010)\include" /I"..\..\..\..\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\include" /I..\..\..\..\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser /I..\..\..\..\qwt\src /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtMultimedia /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtWidgets /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtGui /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtANGLE /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtXml /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtNetwork /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtScript /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtSql /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtScriptTools /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtConcurrent /I..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\include\QtCore /Ic:\Projects\Picto\intermediates\moc\director /I"..\..\..\..\Qt64\Qt5.5.1\5.5\msvc2013_64\mkspecs\win32-msvc2013" /nologo /W3 /WX- /O2 /D _WINDOWS /D UNICODE /D WIN32 /D WIN64 /D _WIN32_WINNT=0x0601 /D _WINVER=0x0601 /D _BIND_TO_CURRENT_CRT_VERSION /D QT_NO_DEBUG /D QT_MULTIMEDIA_LIB /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_XML_LIB /D QT_NETWORK_LIB /D QT_SCRIPT_LIB /D QT_SQL_LIB /D QT_SCRIPTTOOLS_LIB /D QT_CONCURRENT_LIB /D QT_CORE_LIB /D NDEBUG /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"c:\Projects\Picto\intermediates\obj\director\release\\" /Gd /TP /errorReport:prompt -Zc:strictStrings -w34100 -w34189 -w44996 c:\Projects\Picto\source\director\compositor\D3DCompositingSurface.cpp c:\Projects\Picto\source\director\compositor\D3DVisualTarget.cpp c:\Projects\Picto\source\director\engine\LegacySystemXPAnalogInputPort.cpp c:\Projects\Picto\source\director\engine\PictoBoxXPAnalogInputPort.cpp c:\Projects\Picto\source\director\frontpanel\FPFLUSHCommandHandler.cpp c:\Projects\Picto\source\director\frontpanel\FPGETCommandHandler.cpp c:\Projects\Picto\source\director\frontpanel\FPInterface.cpp c:\Projects\Picto\source\director\frontpanel\FPPUTCommandHandler.cpp c:\Projects\Picto\source\director\frontpanel\FPREWARDCommandHandler.cpp c:\Projects\Picto\source\director\iodevices\LegacySystemXPEventCodeGenerator.cpp c:\Projects\Picto\source\director\iodevices\LegacySystemXPRewardController.cpp c:\Projects\Picto\source\director\iodevices\PictoBoxXPEventCodeGenerator.cpp c:\Projects\Picto\source\director\iodevices\PictoBoxXPOutputSignalController.cpp c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp c:\Projects\Picto\source\director\iodevices\WinSound.cpp c:\Projects\Picto\source\director\network\DirectorStatusManager.cpp c:\Projects\Picto\source\director\protocol\DirectorClickResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorEndSessionResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorErrorResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorLoadExpResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorNewSessionResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorParameterResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorPauseResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorResumeResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorRewardResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorStartResponseHandler.cpp c:\Projects\Picto\source\director\protocol\DirectorStopResponseHandler.cpp c:\Projects\Picto\source\director\Director.cpp c:\Projects\Picto\source\director\HardwareSetup.cpp c:\Projects\Picto\source\director\main.cpp c:\Projects\Picto\intermediates\moc\director\moc_Director.cpp c:\Projects\Picto\intermediates\moc\director\moc_DirectorStatusManager.cpp c:\Projects\Picto\intermediates\moc\director\moc_FPFLUSHCommandHandler.cpp c:\Projects\Picto\intermediates\moc\director\moc_FPGETCommandHandler.cpp c:\Projects\Picto\intermediates\moc\director\moc_FPInterface.cpp c:\Projects\Picto\intermediates\moc\director\moc_FPPUTCommandHandler.cpp c:\Projects\Picto\intermediates\moc\director\moc_FPREWARDCommandHandler.cpp c:\Projects\Picto\intermediates\moc\director\moc_LegacySystemXPEventCodeGenerator.cpp c:\Projects\Picto\intermediates\moc\director\moc_PictoBoxXPEventCodeGenerator.cpp
+         D3DCompositingSurface.cpp
+         D3DVisualTarget.cpp
+         LegacySystemXPAnalogInputPort.cpp
+         PictoBoxXPAnalogInputPort.cpp
+         FPFLUSHCommandHandler.cpp
+         FPGETCommandHandler.cpp
+         FPInterface.cpp
+         FPPUTCommandHandler.cpp
+         FPREWARDCommandHandler.cpp
+         LegacySystemXPEventCodeGenerator.cpp
+         LegacySystemXPRewardController.cpp
+         PictoBoxXPEventCodeGenerator.cpp
+         PictoBoxXPOutputSignalController.cpp
+         PictoBoxXPRewardController.cpp
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(94): warning C4258: 'channel' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(82) : definition of 'channel' ignored
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(72) : definition of 'channel' used
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(99): warning C4258: 'channel' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(82) : definition of 'channel' ignored
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(72) : definition of 'channel' used
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(101): warning C4258: 'channel' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(82) : definition of 'channel' ignored
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(72) : definition of 'channel' used
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(107): warning C4258: 'channel' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(82) : definition of 'channel' ignored
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(72) : definition of 'channel' used
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(110): warning C4258: 'channel' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(82) : definition of 'channel' ignored
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(72) : definition of 'channel' used
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(111): warning C4258: 'channel' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(82) : definition of 'channel' ignored
+                 c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(72) : definition of 'channel' used
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(181): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(228): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(257): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\Projects\Picto\source\director\iodevices\PictoBoxXPRewardController.cpp(309): warning C4018: '>' : signed/unsigned mismatch
+         WinSound.cpp
+         DirectorStatusManager.cpp
+         DirectorClickResponseHandler.cpp
+         DirectorEndSessionResponseHandler.cpp
+         DirectorErrorResponseHandler.cpp
+         DirectorLoadExpResponseHandler.cpp
+         Generating Code...
+         Compiling...
+         DirectorNewSessionResponseHandler.cpp
+         DirectorParameterResponseHandler.cpp
+         DirectorPauseResponseHandler.cpp
+         DirectorResumeResponseHandler.cpp
+         DirectorRewardResponseHandler.cpp
+         DirectorStartResponseHandler.cpp
+         DirectorStopResponseHandler.cpp
+         Director.cpp
+         HardwareSetup.cpp
+         main.cpp
+         moc_Director.cpp
+         moc_DirectorStatusManager.cpp
+         moc_FPFLUSHCommandHandler.cpp
+         moc_FPGETCommandHandler.cpp
+         moc_FPInterface.cpp
+         moc_FPPUTCommandHandler.cpp
+         moc_FPREWARDCommandHandler.cpp
+         moc_LegacySystemXPEventCodeGenerator.cpp
+         moc_PictoBoxXPEventCodeGenerator.cpp
+         Generating Code...
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"c:\Projects\Picto\output\bin\release\\PictoDirector.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib /LIBPATH:C:/Qt64/Qt5.5.1/5.5/msvc2013_64/lib /LIBPATH:C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser\lib /LIBPATH:C:\qwt\lib /LIBPATH:c:\Projects\Picto\intermediates\lib\release C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\qtmain.lib shell32.lib C:/Qt64/Qt5.5.1/5.5/msvc2013_64/lib\Qt5Core.lib "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\/Lib/x64/D3D9.lib" "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\/Lib/x64/d3dx9.lib" Strmiids.lib "C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\/lib64/msvc/NIDAQmx.lib" C:\Qt64\Qt5.5.1\5.5\Src\qttools\src\shared\qtpropertybrowser/lib/QtPropertyBrowser.lib libPicto.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Multimedia.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Widgets.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Gui.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Xml.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Network.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Script.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Sql.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5ScriptTools.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Concurrent.lib C:\Qt64\Qt5.5.1\5.5\msvc2013_64\lib\Qt5Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"c:\Projects\Picto\output\bin\release\PictoDirector.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X64 "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" c:\Projects\Picto\intermediates\obj\director\release\D3DCompositingSurface.obj
          c:\Projects\Picto\intermediates\obj\director\release\D3DVisualTarget.obj
          c:\Projects\Picto\intermediates\obj\director\release\LegacySystemXPAnalogInputPort.obj
@@ -45,4 +121,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.80
+Time Elapsed 00:01:18.97

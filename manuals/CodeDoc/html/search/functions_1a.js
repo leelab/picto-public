@@ -14,6 +14,7 @@ var searchData=
   ['_7efrontpanelrewardcontroller',['~FrontPanelRewardController',['../class_picto_1_1_front_panel_reward_controller.html#a0971824746bbf2e478fde6e03f835b8c',1,'Picto::FrontPanelRewardController']]],
   ['_7egenericinput',['~GenericInput',['../class_picto_1_1_generic_input.html#a774d772302c58686d086986a180ebd42',1,'Picto::GenericInput']]],
   ['_7einputdataunitpackage',['~InputDataUnitPackage',['../class_picto_1_1_input_data_unit_package.html#a98331d8afef60f2cf4264e46f6ae717e',1,'Picto::InputDataUnitPackage']]],
+  ['_7elegacyphidgets',['~LegacyPhidgets',['../class_legacy_phidgets.html#a43eade2aeaebe5f3e8a2d91ecdd09e15',1,'LegacyPhidgets']]],
   ['_7elegacysystemxpanaloginputport',['~LegacySystemXPAnalogInputPort',['../class_picto_1_1_legacy_system_x_p_analog_input_port.html#a316f1a839eefb91fbf6b4b346eeb6351',1,'Picto::LegacySystemXPAnalogInputPort']]],
   ['_7ephidgets',['~Phidgets',['../class_phidgets.html#a63632587e91cd54861763eccee1d154c',1,'Phidgets']]],
   ['_7eplotviewwidget',['~PlotViewWidget',['../class_plot_view_widget.html#aa08e345578b1e064a2196af7877f1c6f',1,'PlotViewWidget']]],

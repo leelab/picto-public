@@ -55,14 +55,15 @@ pushd %PICTO_TREE%
   ROBOCOPY %QWTDIR%\lib %PICTO_TREE%\output\bin\debug *d.dll /NFL /NDL /NJH /NJS
   
   echo Getting Phidget Libraries
-  ROBOCOPY %PHIDGETSDIR%\x64 %PICTO_TREE%\output\bin\release *.dll /NFL /NDL /NJH /NJS
-  ROBOCOPY %PHIDGETSDIR%\x64 %PICTO_TREE%\output\bin\debug *.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %PHIDGETSDIR%\phidgets22\x64 %PICTO_TREE%\output\bin\release *.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %PHIDGETSDIR%\phidgets22\x64 %PICTO_TREE%\output\bin\debug *.dll /NFL /NDL /NJH /NJS
+ ROBOCOPY %PHIDGETSDIR%\phidgets21\x64 %PICTO_TREE%\output\bin\release *.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %PHIDGETSDIR%\phidgets21\x64 %PICTO_TREE%\output\bin\debug *.dll /NFL /NDL /NJH /NJS
   
   echo Getting FFMPEG Libraries
   ROBOCOPY %PICTO_TREE%/3rdparty/QTFFmpegWrapper/ffmpeg_lib_win64 %PICTO_TREE%\output\bin\release *.dll /NFL /NDL /NJH /NJS
   ROBOCOPY %PICTO_TREE%/3rdparty/QTFFmpegWrapper/ffmpeg_lib_win64 %PICTO_TREE%\output\bin\debug *.dll /NFL /NDL /NJH /NJS
 )
-
 
 popd
 ENDLOCAL

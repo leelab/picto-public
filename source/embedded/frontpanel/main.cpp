@@ -18,7 +18,9 @@
 #include "../../common/globals.h"
 #include "../../common/namedefs.h"
 
+#include "legacyphidgets.h"
 #include "phidgets.h"
+
 #include "menu.h"
 #include "engineconnections.h"
 #include "FrontPanelInfo.h"
@@ -58,40 +60,82 @@ int main(int argc, char *argv[])
 		Picto::portNums->setSystemNumber(app.applicationFilePath(),app.arguments(),systemNumber.toInt(),false);
 	}
 
+	int legPhidgets = 1;
+	int legArgIdx = app.arguments().indexOf("-legacyPhidgets");
+	if (legArgIdx > 0)
+	{
+		legPhidgets = (app.arguments()[legArgIdx + 1]).toInt();
+	}
+
+
 	QTextStream outstream(stdout);
 	outstream<<"PictoBox Front Panel Display Activated\n";
 	outstream.flush();
 
 	FrontPanelInfo *panelInfo = new FrontPanelInfo();
 	
-	Phidgets phidgets(panelInfo);
-	Menu M(panelInfo);
-	EngineConnections E(panelInfo);
+	int retVal;
 
-	//Connect the phidgets API signals to the Menu object in the Picto Front Panel Application so 
-	//that the phidgets LCD and knob can handle output and input
-	QObject::connect(&M, SIGNAL(updateLCD(int, QString)), &phidgets, SLOT(updateLCD(int, QString)));
-	QObject::connect(&M, SIGNAL(toggleBacklight()), &phidgets, SLOT(toggleBacklight()));
-	QObject::connect(&M, SIGNAL(turnOnBacklight()), &phidgets, SLOT(turnOnBacklight()));
-	QObject::connect(&M, SIGNAL(turnOffBacklight()), &phidgets, SLOT(turnOffBacklight()));
-	QObject::connect(&app, SIGNAL(aboutToQuit()), &M, SLOT(aboutToQuit()));
-	QObject::connect(&phidgets, SIGNAL(userInputSignal(int)), &M, SLOT(userInputSlot(int)));
-	//QObject::connect(&E, SIGNAL(newEventRead()), &M, SLOT(updateStatus()));
+//#ifdef LEGACY_PHIDGETS
+	if (legPhidgets == 1)
+	{
+		LegacyPhidgets phidgets(panelInfo);
+		Menu M(panelInfo);
+		EngineConnections E(panelInfo);
 
-	M.initMenu();
+		//Connect the phidgets API signals to the Menu object in the Picto Front Panel Application so 
+		//that the phidgets LCD and knob can handle output and input
+		QObject::connect(&M, SIGNAL(updateLCD(int, QString)), &phidgets, SLOT(updateLCD(int, QString)));
+		QObject::connect(&M, SIGNAL(toggleBacklight()), &phidgets, SLOT(toggleBacklight()));
+		QObject::connect(&M, SIGNAL(turnOnBacklight()), &phidgets, SLOT(turnOnBacklight()));
+		QObject::connect(&M, SIGNAL(turnOffBacklight()), &phidgets, SLOT(turnOffBacklight()));
+		QObject::connect(&app, SIGNAL(aboutToQuit()), &M, SLOT(aboutToQuit()));
+		QObject::connect(&phidgets, SIGNAL(userInputSignal(int)), &M, SLOT(userInputSlot(int)));
+		//QObject::connect(&E, SIGNAL(newEventRead()), &M, SLOT(updateStatus()));
+		M.initMenu();
 
+		//For debugging: Since CE doesn't like to force quit stuff, we'll quit after a fixed time
+		/*QTimer timer;
+		timer.setInterval(30000);
+		QObject::connect(&timer, SIGNAL(timeout()), &app, SLOT(quit()));
+		timer.start();*/
 
-	//For debugging: Since CE doesn't like to force quit stuff, we'll quit after a fixed time
-	/*QTimer timer;
-	timer.setInterval(30000);
-	QObject::connect(&timer, SIGNAL(timeout()), &app, SLOT(quit()));
-	timer.start();*/
-	
+		retVal = app.exec();
+		phidgets.turnOffBacklight();
+		phidgets.updateLCD(1, "");
+		phidgets.updateLCD(2, "");
+	}
+//#else
+	else
+	{
+		Phidgets phidgets(panelInfo);
+		Menu M(panelInfo);
+		EngineConnections E(panelInfo);
 
-	int retVal = app.exec();
-	phidgets.turnOffBacklight();
-	phidgets.updateLCD(1,"");
-	phidgets.updateLCD(2,"");
+		//Connect the phidgets API signals to the Menu object in the Picto Front Panel Application so 
+		//that the phidgets LCD and knob can handle output and input
+		QObject::connect(&M, SIGNAL(updateLCD(int, QString)), &phidgets, SLOT(updateLCD(int, QString)));
+		QObject::connect(&M, SIGNAL(toggleBacklight()), &phidgets, SLOT(toggleBacklight()));
+		QObject::connect(&M, SIGNAL(turnOnBacklight()), &phidgets, SLOT(turnOnBacklight()));
+		QObject::connect(&M, SIGNAL(turnOffBacklight()), &phidgets, SLOT(turnOffBacklight()));
+		QObject::connect(&app, SIGNAL(aboutToQuit()), &M, SLOT(aboutToQuit()));
+		QObject::connect(&phidgets, SIGNAL(userInputSignal(int)), &M, SLOT(userInputSlot(int)));
+		//QObject::connect(&E, SIGNAL(newEventRead()), &M, SLOT(updateStatus()));
+		M.initMenu();
+
+		//For debugging: Since CE doesn't like to force quit stuff, we'll quit after a fixed time
+		/*QTimer timer;
+		timer.setInterval(30000);
+		QObject::connect(&timer, SIGNAL(timeout()), &app, SLOT(quit()));
+		timer.start();*/
+
+		retVal = app.exec();
+		phidgets.turnOffBacklight();
+		phidgets.updateLCD(1, "");
+		phidgets.updateLCD(2, "");
+		//#endif
+	}
 	Picto::CloseLib();
 	return retVal;
 }
+

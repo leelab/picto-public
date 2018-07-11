@@ -176,15 +176,6 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>LCDRow1</b></td></
 <tr class="memitem:a1093ada8d8ae814ff08d42574e1391c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1093ada8d8ae814ff08d42574e1391c0"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>LCDRow2</b></td></tr>
 <tr class="separator:a1093ada8d8ae814ff08d42574e1391c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae09bd5feecd96927e72c64a8c9d57715"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae09bd5feecd96927e72c64a8c9d57715"></a>
-CPhidgetTextLCDHandle&#160;</td><td class="memItemRight" valign="bottom"><b>hTextLCD</b></td></tr>
-<tr class="separator:ae09bd5feecd96927e72c64a8c9d57715"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4f7f24132d0866cb2ccbe0906104975"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4f7f24132d0866cb2ccbe0906104975"></a>
-CPhidgetInterfaceKitHandle&#160;</td><td class="memItemRight" valign="bottom"><b>hIntKit</b></td></tr>
-<tr class="separator:af4f7f24132d0866cb2ccbe0906104975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4c71371f4e0892b945ec69e1fd41f24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4c71371f4e0892b945ec69e1fd41f24"></a>
-CPhidgetEncoderHandle&#160;</td><td class="memItemRight" valign="bottom"><b>hEncoder</b></td></tr>
-<tr class="separator:ab4c71371f4e0892b945ec69e1fd41f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89b1e8e1748211fb67eb769c7c2589e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89b1e8e1748211fb67eb769c7c2589e3"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>lastRot</b></td></tr>
 <tr class="separator:a89b1e8e1748211fb67eb769c7c2589e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -218,7 +209,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 <p>The front panel deals with two different <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> devices: a 2-line LCD (1203) and a rotary encoder with push button (1052). This object handles all of the I/O for these devices. It does this by connecting to the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> device API. This file includes a number of global callback functions that the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> API calls whenever user input events occur. Internally, these functions call the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> object which in turn sends messages to the FrontPanel application. It should be noted that some threading issues had to be considered here since calls from the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> API run in a seperate thread from the one used in the Front Panel application. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="phidgets_8h_source.html#l00040">40</a> of file <a class="el" href="phidgets_8h_source.html">phidgets.h</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8h_source.html#l00024">24</a> of file <a class="el" href="phidgets_8h_source.html">phidgets.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a0cb121d024743a04cc13b62ee256b9ce"></a>
 <div class="memitem">
@@ -236,7 +227,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 
 <p>Constructs a new <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> object, initializes its data values and sets up its interaction with the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> API. </p>
 
-<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00015">15</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00048">48</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>
@@ -258,7 +249,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 <p>Called by the phidgets API whenever the knob is turned left and emits the PanelInfo::rotateLeft or PanelInfo::rotateLeftFast userInputSignals. </p>
 <p>This function is called from the phidgets thread. The qt system only actually triggers the emitted signals below once control returns to the qt thread. We want to avoid having multiple userInputSignals for turn events queued up so we set a turnWasTriggered bool before emitting the userInputSignal and unset it in a slot connected to that signal. Each time this function is called, we just check if the bool, and if it's true we don't emit a new turn signal. </p>
 
-<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00195">195</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00301">301</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>
@@ -279,7 +270,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 <p>Called by the phidgets API whenever the knob is turned right and emits the PanelInfo::rotateRight or PanelInfo::rotateRightFast userInputSignals. </p>
 <p>See <a class="el" href="class_phidgets.html#a224bc2b322e60fce68f515ee5504e2cd" title="Called by the phidgets API whenever the knob is turned left and emits the PanelInfo::rotateLeft or Pa...">dialTurnedLeft()</a> for more detail </p>
 
-<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00221">221</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00327">327</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>
@@ -300,7 +291,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 <p>Called by the phidgets API whenever the reward or flush buttons are pressed and emits the PanelInfo::rewardButton or PanelInfo::flushButton userInputSignals accordingly. </p>
 <p>In the PictoBox, the reward button is connected to digital input 0 of the LCD display. The flush button is connected to digital input 7. </p>
 
-<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00241">241</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00347">347</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>
@@ -329,7 +320,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 <p>A function used internally to assure that multiple turn userInputSignals aren't emitted in a row before the FrontPanel Application can handle them. </p>
 <p>This gets called whenever a userInputSignal is triggered by the qt event loop in the FrontPanel Application thread, whereas we find out when the phidgets knob was turned from a separate phidgets thread. By using the turnWasTriggered_ bool, we can be sure that we don't put multiple turn signals into the qt event queue before earlier ones were triggered. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_phidgets.html#a224bc2b322e60fce68f515ee5504e2cd" title="Called by the phidgets API whenever the knob is turned left and emits the PanelInfo::rotateLeft or Pa...">dialTurnedLeft()</a>, <a class="el" href="class_phidgets.html#a2f3335dae70f28d466f26c321be3cd04" title="Called by the phidgets API whenever the knob is turned right and emits the PanelInfo::rotateRight or ...">dialTurnedRight()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00261">261</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00367">367</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,7 +359,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b>
 <p>Sets the input text to the input line of the LCD display. </p>
 <p>Line1 is the top line of the display, Line 2 is the bottom line </p>
 
-<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00120">120</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00229">229</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>

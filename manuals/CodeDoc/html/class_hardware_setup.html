@@ -138,9 +138,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hardware_setup.html#ac373e5ac14b566519590bc113408fb67">HardwareSetup</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt; engine)</td></tr>
 <tr class="memdesc:ac373e5ac14b566519590bc113408fb67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_hardware_setup.html" title="Sets up the Picto::Engine::PictoEngine according to the PictoDirector hardware. ">HardwareSetup</a> object that configures the input <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Picto::Engine::PictoEngine</a>. <br /></td></tr>
 <tr class="separator:ac373e5ac14b566519590bc113408fb67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1699cea38d2eaa236d8f4d94e279854"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hardware_setup.html#ac1699cea38d2eaa236d8f4d94e279854">setupRenderingTargets</a> (<a class="el" href="class_hardware_setup.html#a69c004a7774626593182bda8c88c1005">VisualTargetType</a> visualTargetType, bool timingCritical)</td></tr>
-<tr class="memdesc:ac1699cea38d2eaa236d8f4d94e279854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the rendering target used in the experiment with appropriate <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">Picto::VisualTarget</a> and <a class="el" href="class_picto_1_1_p_c_m_aural_target.html" title="A pulse code modulation (PCM) aural target. ">Picto::PCMAuralTarget</a> objects, then adds it to the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Picto::Engine::PictoEngine</a>.  <a href="#ac1699cea38d2eaa236d8f4d94e279854">More...</a><br /></td></tr>
-<tr class="separator:ac1699cea38d2eaa236d8f4d94e279854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae239344efdb20ff05dbfbede82504d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hardware_setup.html#aaae239344efdb20ff05dbfbede82504d">setupRenderingTargets</a> (<a class="el" href="class_hardware_setup.html#a69c004a7774626593182bda8c88c1005">VisualTargetType</a> visualTargetType, QColor bgColor, bool timingCritical)</td></tr>
+<tr class="memdesc:aaae239344efdb20ff05dbfbede82504d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the rendering target used in the experiment with appropriate <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">Picto::VisualTarget</a> and <a class="el" href="class_picto_1_1_p_c_m_aural_target.html" title="A pulse code modulation (PCM) aural target. ">Picto::PCMAuralTarget</a> objects, then adds it to the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Picto::Engine::PictoEngine</a>.  <a href="#aaae239344efdb20ff05dbfbede82504d">More...</a><br /></td></tr>
+<tr class="separator:aaae239344efdb20ff05dbfbede82504d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79cc88d4063ce1e8f8e57e8ccc4da370"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hardware_setup.html#a79cc88d4063ce1e8f8e57e8ccc4da370">setupSignalChannel</a> (<a class="el" href="class_hardware_setup.html#a47f2dfba54bc1a8d0bbd64d885d638e6">SignalChannelType</a> channelType)</td></tr>
 <tr class="memdesc:a79cc88d4063ce1e8f8e57e8ccc4da370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the signal channels used for input.  <a href="#a79cc88d4063ce1e8f8e57e8ccc4da370">More...</a><br /></td></tr>
 <tr class="separator:a79cc88d4063ce1e8f8e57e8ccc4da370"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -401,7 +401,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>diamSampPer_</b></td><
 
 </div>
 </div>
-<a class="anchor" id="ac1699cea38d2eaa236d8f4d94e279854"></a>
+<a class="anchor" id="aaae239344efdb20ff05dbfbede82504d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -410,6 +410,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>diamSampPer_</b></td><
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hardware_setup.html#a69c004a7774626593182bda8c88c1005">VisualTargetType</a>&#160;</td>
           <td class="paramname"><em>visualTargetType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>bgColor</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

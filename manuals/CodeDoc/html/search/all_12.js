@@ -61,7 +61,7 @@ var searchData=
   ['remotestateupdater',['RemoteStateUpdater',['../class_picto_1_1_remote_state_updater.html',1,'Picto']]],
   ['remotestatexmlhandler',['RemoteStateXMLHandler',['../class_picto_1_1_remote_state_x_m_l_handler.html#a775921eb364bb72994572e4268825bb4',1,'Picto::RemoteStateXMLHandler']]],
   ['remotestatexmlhandler',['RemoteStateXMLHandler',['../class_picto_1_1_remote_state_x_m_l_handler.html',1,'Picto']]],
-  ['remoteviewer',['RemoteViewer',['../class_remote_viewer.html',1,'RemoteViewer'],['../class_remote_viewer.html#a736db3e32f94c4eaab0791be858e117b',1,'RemoteViewer::RemoteViewer()']]],
+  ['remoteviewer',['RemoteViewer',['../class_remote_viewer.html',1,'RemoteViewer'],['../class_remote_viewer.html#a2809e6477e11b79c604f63c12b614dd4',1,'RemoteViewer::RemoteViewer()']]],
   ['removeanalysis',['removeAnalysis',['../class_picto_1_1_design_root.html#a7049bc66947f5b9f36d7670c470356fb',1,'Picto::DesignRoot']]],
   ['removearrow',['removeArrow',['../class_arrow_port_item.html#af64ba878fa69b8d7d16c2c035654d853',1,'ArrowPortItem']]],
   ['removearrows',['removeArrows',['../class_arrow_port_item.html#a6bfc3325592e7eca77478c9d2f7bf7ae',1,'ArrowPortItem']]],

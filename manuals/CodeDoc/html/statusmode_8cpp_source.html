@@ -173,7 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        statusChar = <span class="stringliteral">&#39;\xD&#39;</span>;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4a400cfa9793674167cd58f89c9c83165a">DirRun</a>:</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        statusChar = <span class="stringliteral">&#39;\xE&#39;</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        statusChar = <span class="stringliteral">&#39;\x09&#39;</span>;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4a9672d9b7de0b438d4f7a0421b2ed08fa">DirPause</a>:</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        statusChar = <span class="stringliteral">&#39;\xE&#39;</span>;</div>
@@ -182,7 +182,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    QString statusStr = QString(19-name.size(),<span class="charliteral">&#39; &#39;</span>) + statusChar;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    statusItems_.append(name+statusStr);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    QString RewDur = <span class="stringliteral">&quot;R:&quot;</span>+QString::number((directorIf_-&gt;getRewardDuration(controller)))+<span class="stringliteral">&quot;\x8&quot;</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    QString RewDur = <span class="stringliteral">&quot;R:&quot;</span> + QString::number((directorIf_-&gt;getRewardDuration(controller))) + <span class="stringliteral">&quot;ms&quot;</span>;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    QString flushDur = <span class="stringliteral">&quot;F:&quot;</span>+QString::number((directorIf_-&gt;getFlushDuration(controller)))+<span class="stringliteral">&quot;s&quot;</span>;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    QString contStr = <span class="stringliteral">&quot;C:&quot;</span>+QString::number(controller);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">int</span> spacesLeft = 20-(RewDur.size()+flushDur.size()+contStr.size());</div>

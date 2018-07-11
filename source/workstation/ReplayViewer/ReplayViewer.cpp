@@ -39,8 +39,8 @@
 #include "../../common/memleakdetect.h"
 
 
-ReplayViewer::ReplayViewer(QWidget *parent) :
-Viewer(parent), selectedChannel_(0), selectedUnit_(0), noCallBack_(false), currentTime_(0), activatePlots_(false)
+ReplayViewer::ReplayViewer(QColor bgColor, QWidget *parent) :
+Viewer(parent), selectedChannel_(0), selectedUnit_(0), noCallBack_(false), currentTime_(0), activatePlots_(false), bgCol_(bgColor)
 {
 	//Create the Playback Controller that handles all Experiment playback
 	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController());
@@ -248,7 +248,7 @@ void ReplayViewer::setupUi()
 
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which gives us memory exceptions.
-	visualTargetHost_ = new RecordingVisualTargetHost();
+	visualTargetHost_ = new RecordingVisualTargetHost(bgCol_);
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
 
 	stimulusLayout->addWidget(dataViewOrganizer_);

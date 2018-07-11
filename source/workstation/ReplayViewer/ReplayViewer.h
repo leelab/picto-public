@@ -50,7 +50,7 @@ class ReplayViewer : public Viewer
 {
 	Q_OBJECT
 public:
-	ReplayViewer(QWidget *parent=0);
+	ReplayViewer(QColor bgColor,QWidget *parent = 0);
 	virtual ~ReplayViewer(){};
 	QString type() { return "Replay"; };
 
@@ -169,6 +169,7 @@ private:
 	QCheckBox* enablePlots_;
 	QHBoxLayout *viewLayout_;
 	
+	QColor bgCol_;
 	private slots:
 
 	void playbackStatusChanged(int status);

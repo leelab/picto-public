@@ -1,5 +1,6 @@
 Warning: the dot tool could not be found at tools/graphviz-2.34/release/bin
 C:/Projects/Picto/source/common/Designer/AssetToolGroup.h:36: warning: Compound AssetToolGroup::ElemInfo is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.h:71: warning: Compound MDAIO_HEADER is not documented.
 C:/Projects/Picto/source/server/connections/SessionInfo.h:207: warning: Compound SessionInfo::NeuralVariable is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/MediaMuxer.h:18: warning: Compound MediaMuxer is not documented.
 C:/Projects/Picto/source/common/playback/LiveSignalReader.h:47: warning: Compound Picto::LiveSignalReader::PlaybackSignalData is not documented.
@@ -8,12 +9,19 @@ C:/Projects/Picto/source/common/playback/LiveSpikeReader.h:66: warning: Compound
 C:/Projects/Picto/source/common/playback/SessionVersionInterfacer.h:71: warning: Compound Picto::SessionVersionInterfacer::SVIAssetNode is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ProgressWidget.h:75: warning: Compound HighlightData is not documented.
 C:/Projects/Picto/source/server/datacollection/alignmenttool.h:62: warning: Compound AlignmentTool::coefficients is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:62: warning: Compound AlignmentTool::coefficients is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.cpp:26: warning: Compound is_same is not documented.
 C:/Projects/Picto/source/common/Designer/DiagramItemFactory.h:36: warning: Compound IconDef is not documented.
 C:/Projects/Picto/source/server/connections/StoredSessionData.h:49: warning: Compound StoredSessionData::TableInfo is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:9: warning: Compound SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.cpp:32: warning: Compound is_same< T, T > is not documented.
 C:/Projects/Picto/source/common/playback/RunNotesState.h:38: warning: Compound Picto::RunNotesState::RunInfo is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Release/moc_intanplugin.cpp:22: warning: Compound qt_meta_stringdata_IntanPlugin_t is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:22: warning: Compound qt_meta_stringdata_IntanPlugin_t is not documented.
 C:/Projects/Picto/source/common/operator/DataViewSpecs.h:80: warning: Compound Picto::ViewProperties is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:85: warning: Compound ReplayViewer::PlayRunInfo is not documented.
 C:/Projects/Picto/source/server/datacollection/alignmenttool.h:50: warning: Compound AlignmentTool::AlignmentEvent is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:50: warning: Compound AlignmentTool::AlignmentEvent is not documented.
 C:/Projects/Picto/source/server/service/systemservice.h:83: warning: Compound SystemService::workThread is not documented.
 C:/Projects/Picto/source/proxyserver/service/systemservice.h:82: warning: Compound SystemService::workThread is not documented.
 C:/Projects/Picto/source/common/playback/LiveRewardReader.h:48: warning: Compound Picto::LiveRewardReader::RewardData is not documented.
@@ -23,11 +31,21 @@ C:/Projects/Picto/source/embedded/blankscreen/main.cpp:52: warning: Compound Bla
 C:/Projects/Picto/source/common/playback/FileSessionLoader.h:73: warning: Compound Picto::FileSessionLoader::SigData is not documented.
 C:/Projects/Picto/source/common/parameter/AnalysisFileOutputWidget.h:54: warning: Compound Picto::AnalysisFileOutputWidget::PageDef is not documented.
 C:/Projects/Picto/source/common/time_ce/time_ce.h:48: warning: Compound tm is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:56: warning: documented symbol `void IntanPlugin::qt_static_metacall' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:64: warning: documented symbol `const QMetaObject IntanPlugin::staticMetaObject' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:70: warning: documented symbol `const QMetaObject * IntanPlugin::metaObject' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:75: warning: documented symbol `void * IntanPlugin::qt_metacast' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:87: warning: documented symbol `int IntanPlugin::qt_metacall' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Release/moc_intanplugin.cpp:56: warning: documented symbol `void IntanPlugin::qt_static_metacall' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Release/moc_intanplugin.cpp:64: warning: documented symbol `const QMetaObject IntanPlugin::staticMetaObject' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Release/moc_intanplugin.cpp:70: warning: documented symbol `const QMetaObject * IntanPlugin::metaObject' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Release/moc_intanplugin.cpp:75: warning: documented symbol `void * IntanPlugin::qt_metacast' was not declared or defined.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Release/moc_intanplugin.cpp:87: warning: documented symbol `int IntanPlugin::qt_metacall' was not declared or defined.
 C:/Projects/Picto/source/workstation/ReplayViewer/EncodeAudio.m:28: warning: documented symbol `C is in ms AudioOutputFile analyses C(idx)' was not declared or defined.
 C:/Projects/Picto/source/embedded/frontpanel/FrontPanelRewardController.cpp:169: warning: Found unknown command `\detail'
 C:/Projects/Picto/source/workstation/ReplayViewer/ProgressWidget.cpp:443: warning: explicit link request to 'rrggbb' could not be resolved
-C:/Projects/Picto/source/common/common.h:108: warning: Member RESOLUTIONH (macro definition) of file common.h is not documented.
-C:/Projects/Picto/source/common/common.h:109: warning: Member RESOLUTIONV (macro definition) of file common.h is not documented.
+C:/Projects/Picto/source/common/common.h:109: warning: Member RESOLUTIONH (macro definition) of file common.h is not documented.
+C:/Projects/Picto/source/common/common.h:110: warning: Member RESOLUTIONV (macro definition) of file common.h is not documented.
 C:/Projects/Picto/source/director/main.cpp:72: warning: Member connectToServer(QUuid directorID) (function) of file director/main.cpp is not documented.
 C:/Projects/Picto/source/director/main.cpp:73: warning: Member setUserInfo(QSharedPointer< Picto::Engine::PictoEngine > engine, QString status) (function) of file director/main.cpp is not documented.
 C:/Projects/Picto/source/embedded/blankscreen/main.cpp:82: warning: Member main(int argc, char *argv[]) (function) of file embedded/blankscreen/main.cpp is not documented.
@@ -36,22 +54,32 @@ C:/Projects/Picto/source/common/Designer/AboutElementBox.h:30: warning: Member e
 C:/Projects/Picto/source/common/Designer/AboutElementBox.h:31: warning: Member assetDescriber_ (variable) of class AboutElementBox is not documented.
 C:/Projects/Picto/source/common/Designer/SearchableTextEdit.h:26: warning: Member focusOut() (signal) of class SearchableTextEdit is not documented.
 C:/Projects/Picto/source/common/Designer/SearchableTextEdit.h:33: warning: Member singleLine_ (variable) of class SearchableTextEdit is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:68: warning: Member coeff_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:77: warning: Member sumXX_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:77: warning: Member sumYY_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:77: warning: Member sumXY_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:78: warning: Member sumX_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:78: warning: Member sumY_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:79: warning: Member n_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:82: warning: Member trials_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:84: warning: Member alignmentMutex_ (variable) of class AlignmentTool is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:51: warning: Member id (variable) of class AlignmentTool::AlignmentEvent is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:52: warning: Member alignCode (variable) of class AlignmentTool::AlignmentEvent is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:53: warning: Member trialNum (variable) of class AlignmentTool::AlignmentEvent is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:54: warning: Member timestamp (variable) of class AlignmentTool::AlignmentEvent is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:63: warning: Member A (variable) of class AlignmentTool::coefficients is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:64: warning: Member B (variable) of class AlignmentTool::coefficients is not documented.
-C:/Projects/Picto/source/server/datacollection/alignmenttool.h:65: warning: Member corr (variable) of class AlignmentTool::coefficients is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:37: warning: Member resetValues() (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:38: warning: Member convertToBehavioralTimebase(double neuralTime) (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:39: warning: Member convertToNeuralTimebase(double behavioralTime) (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:40: warning: Member convertSamplePeriodToBehavioralTimebase(double neuralSamplePeriod) (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:41: warning: Member convertSamplePeriodToNeuralTimebase(double behavioralSamplePeriod) (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:42: warning: Member getJitter(double bAlignTimestamp, double nAlignTimestamp) (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:43: warning: Member getCorrelationCoefficient() (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:44: warning: Member getNeuralOffsetTime() (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:45: warning: Member getNeuralTemporalFactor() (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/server/datacollection/alignmenttool.h:46: warning: Member updateCoefficients(double bAlignTimestamp, double nAlignTimestamp) (function) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:68: warning: Member coeff_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:77: warning: Member sumXX_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:77: warning: Member sumYY_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:77: warning: Member sumXY_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:78: warning: Member sumX_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:78: warning: Member sumY_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:79: warning: Member n_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:82: warning: Member trials_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:84: warning: Member alignmentMutex_ (variable) of class AlignmentTool is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:51: warning: Member id (variable) of class AlignmentTool::AlignmentEvent is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:52: warning: Member alignCode (variable) of class AlignmentTool::AlignmentEvent is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:53: warning: Member trialNum (variable) of class AlignmentTool::AlignmentEvent is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:54: warning: Member timestamp (variable) of class AlignmentTool::AlignmentEvent is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:63: warning: Member A (variable) of class AlignmentTool::coefficients is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:64: warning: Member B (variable) of class AlignmentTool::coefficients is not documented.
+C:/Projects/Picto/source/common/storage/AlignmentTool.h:65: warning: Member corr (variable) of class AlignmentTool::coefficients is not documented.
 C:/Projects/Picto/source/server/connections/AlignSessionData.h:32: warning: Member eraseEverything() (function) of class AlignSessionData is not documented.
 C:/Projects/Picto/source/server/connections/AlignSessionData.h:36: warning: Member matchedCol_ (variable) of class AlignSessionData is not documented.
 C:/Projects/Picto/source/common/Designer/diagramitem.h:123: warning: Member editorState_ (variable) of class DiagramItem is not documented.
@@ -249,26 +277,31 @@ C:/Projects/Picto/source/proxyserver/dialog.h:32: warning: Member startButton (v
 C:/Projects/Picto/source/proxyserver/dialog.h:33: warning: Member stopButton (variable) of class Dialog is not documented.
 C:/Projects/Picto/source/proxyserver/dialog.h:34: warning: Member targetService (variable) of class Dialog is not documented.
 C:/Projects/Picto/source/server/dialog.h:42: warning: Member systemNumberBox (variable) of class Dialog is not documented.
-C:/Projects/Picto/source/director/Director.h:48: warning: Member name_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:49: warning: Member engine_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:50: warning: Member fpInterface_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:51: warning: Member directorData_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:52: warning: Member configDb_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:53: warning: Member sigChannel_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:54: warning: Member visualTarget_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:55: warning: Member rewardController_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:56: warning: Member outSigController_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:57: warning: Member eventCodeGenerator_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:58: warning: Member rewardDurs_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:59: warning: Member flushDurs_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:60: warning: Member frontPanelProcess_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:61: warning: Member xChannel_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:62: warning: Member yChannel_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:63: warning: Member xDiamChannel_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:64: warning: Member yDiamChannel_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:65: warning: Member posSampPer_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:66: warning: Member diamSampPer_ (variable) of class Director is not documented.
-C:/Projects/Picto/source/director/Director.h:67: warning: Member useFrontPanel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:50: warning: Member name_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:51: warning: Member engine_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:52: warning: Member fpInterface_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:53: warning: Member directorData_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:54: warning: Member configDb_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:55: warning: Member sigChannel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:56: warning: Member visualTarget_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:57: warning: Member rewardController_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:58: warning: Member outSigController_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:59: warning: Member eventCodeGenerator_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:60: warning: Member rewardDurs_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:61: warning: Member flushDurs_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:62: warning: Member frontPanelProcess_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:63: warning: Member xChannel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:64: warning: Member yChannel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:65: warning: Member xDiamChannel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:66: warning: Member yDiamChannel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:67: warning: Member posSampPer_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:68: warning: Member diamSampPer_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:69: warning: Member useFrontPanel_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:70: warning: Member bgCol_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.h:71: warning: Member legacyPhidgets_ (variable) of class Director is not documented.
+C:/Projects/Picto/source/director/Director.cpp:31: warning: The following parameters of Director::Director(QString name="", HardwareSetup::SignalChannelType sigChannel=HardwareSetup::Mouse, HardwareSetup::VisualTargetType visualTarget=HardwareSetup::Pixmap, HardwareSetup::RewardControllerType rewardController=HardwareSetup::NullReward, HardwareSetup::OutputSignalControllerType outSigController=HardwareSetup::NullOutSig, HardwareSetup::EventCodeGeneratorType eventCodeGenerator=HardwareSetup::NullGen, int xEyeChannel=0, int yEyeChannel=1, int xDiamChannel=-1, int yDiamChannel=-1, int posSampPer=2, int diamSampPer=4, QColor bgCol=2, int legacyPhidgets=1) are not documented:
+  parameter 'bgCol'
+  parameter 'legacyPhidgets'
 C:/Projects/Picto/source/director/protocol/DirectorClickResponseHandler.h:15: warning: Member DirectorClickResponseHandler(QSharedPointer< DirectorStatusManager > statusManager) (function) of class DirectorClickResponseHandler is not documented.
 C:/Projects/Picto/source/common/protocol/ClickResponseHandler.h:24: warning: Member ClickResponseHandler(QSharedPointer< ComponentStatusManager > statusManager) (function) of class Picto::ClickResponseHandler is not documented.
 C:/Projects/Picto/source/common/protocol/ClickResponseHandler.h:26: warning: Member method() (function) of class Picto::ClickResponseHandler is not documented.
@@ -391,6 +424,8 @@ C:/Projects/Picto/source/director/HardwareSetup.h:86: warning: Member xDiamChan_
 C:/Projects/Picto/source/director/HardwareSetup.h:87: warning: Member yDiamChan_ (variable) of class HardwareSetup is not documented.
 C:/Projects/Picto/source/director/HardwareSetup.h:88: warning: Member posSampPer_ (variable) of class HardwareSetup is not documented.
 C:/Projects/Picto/source/director/HardwareSetup.h:89: warning: Member diamSampPer_ (variable) of class HardwareSetup is not documented.
+C:/Projects/Picto/source/director/HardwareSetup.cpp:76: warning: The following parameters of HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, QColor bgColor, bool timingCritical) are not documented:
+  parameter 'bgColor'
 C:/Projects/Picto/source/workstation/ReplayViewer/ProgressWidget.cpp:443: warning: explicit link request to 'rrggbb' could not be resolved
 C:/Projects/Picto/source/workstation/ReplayViewer/ProgressWidget.h:92: warning: Member min_ (variable) of class HighlightData is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ProgressWidget.h:93: warning: Member max_ (variable) of class HighlightData is not documented.
@@ -399,6 +434,38 @@ C:/Projects/Picto/source/common/Designer/DiagramItemFactory.h:38: warning: Membe
 C:/Projects/Picto/source/common/Designer/DiagramItemFactory.h:39: warning: Member fileName_ (variable) of class IconDef is not documented.
 C:/Projects/Picto/source/common/Designer/DiagramItemFactory.h:40: warning: Member width_ (variable) of class IconDef is not documented.
 C:/Projects/Picto/source/common/Designer/DiagramItemFactory.h:41: warning: Member height_ (variable) of class IconDef is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:62: warning: Member alignSysTimes(QString rhdFile, QString saveFolder, QString sqlFile, QString mdaFile, bool convert=true) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:66: warning: Member readSQLData(QString path) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:67: warning: Member readRhdData(QString path, QString saveFolder, bool convertToMda=false) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:68: warning: Member readMdaData(QString path) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:69: warning: Member readRhdHeader() (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:70: warning: Member updateAlignInfo(QList< QVariantList > behavAlignEvents, QList< QVariantList > neuralAlignEvents) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:71: warning: Member readNeuralAlignEventsFromSQLForTesting(QString path) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:73: warning: Member writeData(int dataType, QVariantList data) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:74: warning: Member startDataWrite(QString connName) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:75: warning: Member endDataWrite(QString connName) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:77: warning: Member fread_QString(FILE *file) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:78: warning: Member allocateIntArray2D(QVector< QVector< int > > &array2D, int xSize, int ySize) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:79: warning: Member formatSuffix(QString filename) (function) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:81: warning: Member infile (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:82: warning: Member sample_rate (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:84: warning: Member num_samples_per_data_block (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:85: warning: Member num_temp_sensor_channels (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:86: warning: Member data_file_main_version_number (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:87: warning: Member data_file_secondary_version_number (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:88: warning: Member event_codes (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:90: warning: Member numTimeStampsLH[32] (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:91: warning: Member numTimeStampsHL[32] (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:92: warning: Member namePrefix (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:93: warning: Member nameSuffix (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:94: warning: Member name (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:95: warning: Member nameNumber (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:96: warning: Member commentPos (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:98: warning: Member smartStream (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:100: warning: Member deviceStatus_ (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:101: warning: Member alignmentTool_ (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:102: warning: Member newSession_ (variable) of class IntanPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/intanplugin.h:103: warning: Member query_ (variable) of class IntanPlugin is not documented.
 C:/Projects/Picto/source/common/Designer/ScriptSyntaxHighlighter.cpp:91: warning: Member KeywordHelper(const QString &word) (function) of class KeywordHelper is not documented.
 C:/Projects/Picto/source/common/Designer/ScriptSyntaxHighlighter.cpp:92: warning: Member needle (variable) of class KeywordHelper is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:33: warning: Member lblEdit(QString strLabel, QString strContent="") (function) of class lblEdit is not documented.
@@ -406,9 +473,21 @@ C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:35: warning
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:36: warning: Member getLineEdit() (function) of class lblEdit is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:39: warning: Member label_ (variable) of class lblEdit is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:40: warning: Member lineEdit_ (variable) of class lblEdit is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:48: warning: Member panelInfo (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:50: warning: Member textLCDSerialNumber (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:51: warning: Member encoderSerialNumber (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:53: warning: Member LCDRow1 (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:54: warning: Member LCDRow2 (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:59: warning: Member lastRot (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:60: warning: Member cumRot (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:61: warning: Member cumTime (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:62: warning: Member prevClickState (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:64: warning: Member mutex_ (variable) of class LegacyPhidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/legacyphidgets.h:65: warning: Member turnWasTriggered_ (variable) of class LegacyPhidgets is not documented.
 C:/Projects/Picto/source/common/Designer/ScriptTextEdit.h:69: warning: Member codeEditor (variable) of class LineNumberArea is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackController.h:169: warning: Member spikeReader_ (variable) of class LoadedSessionData is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackController.h:171: warning: Member alignElements_ (variable) of class LoadedSessionData is not documented.
+C:/Projects/Picto/source/workstation/mainwindow.h:46: warning: Member MainWindow(QColor) (function) of class MainWindow is not documented.
 C:/Projects/Picto/source/workstation/mainwindow.h:83: warning: Member convertTextToPictoData() (function) of class MainWindow is not documented.
 C:/Projects/Picto/source/workstation/mainwindow.h:88: warning: Member designRoot_ (variable) of class MainWindow is not documented.
 C:/Projects/Picto/source/workstation/mainwindow.h:90: warning: Member errorList_ (variable) of class MainWindow is not documented.
@@ -437,6 +516,12 @@ C:/Projects/Picto/source/workstation/mainwindow.h:131: warning: Member viewerNam
 C:/Projects/Picto/source/workstation/mainwindow.h:134: warning: Member isModified_ (variable) of class MainWindow is not documented.
 C:/Projects/Picto/source/workstation/mainwindow.h:135: warning: Member currFile_ (variable) of class MainWindow is not documented.
 C:/Projects/Picto/source/workstation/mainwindow.h:136: warning: Member recentFiles_ (variable) of class MainWindow is not documented.
+C:/Projects/Picto/source/workstation/mainwindow.h:138: warning: Member bgCol_ (variable) of class MainWindow is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.h:73: warning: Member data_type (variable) of class MDAIO_HEADER is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.h:74: warning: Member num_bytes_per_entry (variable) of class MDAIO_HEADER is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.h:75: warning: Member num_dims (variable) of class MDAIO_HEADER is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.h:76: warning: Member dims[MDAIO_MAX_DIMS] (variable) of class MDAIO_HEADER is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/mdaio.h:80: warning: Member header_size (variable) of class MDAIO_HEADER is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/MediaMuxer.h:94: warning: Member createFile(QString filename, unsigned width, unsigned height, unsigned bitrate, unsigned gop, unsigned fps=25) (function) of class MediaMuxer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/MediaMuxer.h:101: warning: Member isOk() (function) of class MediaMuxer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/MediaMuxer.h:56: warning: Member getWidth() (function) of class MediaMuxer is not documented.
@@ -488,6 +573,7 @@ C:/Projects/Picto/source/embedded/frontpanel/menumode.h:41: warning: Member curr
 C:/Projects/Picto/source/embedded/frontpanel/menumode.h:35: warning: Member MenuItem(PanelInfo::DisplayModeType m, QString t) (function) of class MenuMode::MenuItem is not documented.
 C:/Projects/Picto/source/embedded/frontpanel/menumode.h:36: warning: Member mode (variable) of class MenuMode::MenuItem is not documented.
 C:/Projects/Picto/source/embedded/frontpanel/menumode.h:37: warning: Member text (variable) of class MenuMode::MenuItem is not documented.
+C:/Projects/Picto/source/proxyserver/NeuralDataAcqInterface.h:66: warning: Member alignSysTimes(QString rhdFile, QString saveFolder, QString sqlFile, QString mdaFile, bool convert=true)=0 (function) of class NeuralDataAcqInterface is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/neuralDataViewer.h:73: warning: Member neuralDataTimer_ (variable) of class NeuralDataViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/neuralDataViewer.h:74: warning: Member axisMin_ (variable) of class NeuralDataViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/neuralDataViewer.h:75: warning: Member axisMax_ (variable) of class NeuralDataViewer is not documented.
@@ -529,20 +615,17 @@ C:/Projects/Picto/source/workstation/ReplayViewer/OutputWidgetHolder.h:33: warni
 C:/Projects/Picto/source/workstation/ReplayViewer/OutputWidgetHolder.h:34: warning: Member updateTimer_ (variable) of class OutputWidgetHolder is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/OutputWidgetHolder.h:35: warning: Member saveToPath_ (variable) of class OutputWidgetHolder is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/OutputWidgetHolder.h:36: warning: Member separateSubDirs_ (variable) of class OutputWidgetHolder is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:65: warning: Member panelInfo (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:67: warning: Member textLCDSerialNumber (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:68: warning: Member encoderSerialNumber (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:70: warning: Member LCDRow1 (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:71: warning: Member LCDRow2 (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:73: warning: Member hTextLCD (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:74: warning: Member hIntKit (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:76: warning: Member hEncoder (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:79: warning: Member lastRot (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:80: warning: Member cumRot (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:81: warning: Member cumTime (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:82: warning: Member prevClickState (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:84: warning: Member mutex_ (variable) of class Phidgets is not documented.
-C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:85: warning: Member turnWasTriggered_ (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:49: warning: Member panelInfo (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:51: warning: Member textLCDSerialNumber (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:52: warning: Member encoderSerialNumber (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:54: warning: Member LCDRow1 (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:55: warning: Member LCDRow2 (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:60: warning: Member lastRot (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:61: warning: Member cumRot (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:62: warning: Member cumTime (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:63: warning: Member prevClickState (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:65: warning: Member mutex_ (variable) of class Phidgets is not documented.
+C:/Projects/Picto/source/embedded/frontpanel/phidgets.h:66: warning: Member turnWasTriggered_ (variable) of class Phidgets is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackController.h:253: warning: Member rewarded(int quantity) (signal) of class PlaybackController is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackController.h:255: warning: Member alignPlotSig(int alignID) (signal) of class PlaybackController is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackController.h:256: warning: Member sessionLoaded(LoadedSessionData sessionData) (signal) of class PlaybackController is not documented.
@@ -586,24 +669,25 @@ C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackController.h:119: warn
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackThread.h:24: warning: Member init() (signal) of class PlaybackThread is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackThread.h:25: warning: Member update() (signal) of class PlaybackThread is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/PlaybackThread.h:29: warning: Member updateCaller_ (variable) of class PlaybackThread is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:56: warning: Member CheckAndOpenWrapper() (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:58: warning: Member CloseClient() (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:60: warning: Member IsSortClientRunning() (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:61: warning: Member GetTimeStampTick() (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:62: warning: Member GetSlowInfo(int *freq, int *channels, int *gains) (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:63: warning: Member GetGain(int *gain) (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:64: warning: Member GetLongWaveFormStructures(int *pnmax, PL_WaveLong *waves, int *serverdropped, int *mmfdropped) (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:65: warning: Member GetTimeStampStructures(int *pnmax, PL_Event *events) (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:66: warning: Member CommandQuit() (function) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:68: warning: Member m_sharedMemory (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:69: warning: Member myProcess (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:70: warning: Member m_bWrapperRunning (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:48: warning: Member lfpData_ (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:49: warning: Member deviceStatus_ (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:50: warning: Member freq (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:51: warning: Member channels[128] (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:52: warning: Member lfpGains[128] (variable) of class PlexonPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:53: warning: Member spikeGains[128] (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:47: warning: Member alignSysTimes(QString rhdFile, QString saveFolder, QString sqlFile, QString mdaFile, bool convert=true) (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:57: warning: Member CheckAndOpenWrapper() (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:59: warning: Member CloseClient() (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:61: warning: Member IsSortClientRunning() (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:62: warning: Member GetTimeStampTick() (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:63: warning: Member GetSlowInfo(int *freq, int *channels, int *gains) (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:64: warning: Member GetGain(int *gain) (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:65: warning: Member GetLongWaveFormStructures(int *pnmax, PL_WaveLong *waves, int *serverdropped, int *mmfdropped) (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:66: warning: Member GetTimeStampStructures(int *pnmax, PL_Event *events) (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:67: warning: Member CommandQuit() (function) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:69: warning: Member m_sharedMemory (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:70: warning: Member myProcess (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:71: warning: Member m_bWrapperRunning (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:49: warning: Member lfpData_ (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:50: warning: Member deviceStatus_ (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:51: warning: Member freq (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:52: warning: Member channels[128] (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:53: warning: Member lfpGains[128] (variable) of class PlexonPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/plexonplugin/plexonplugin.h:54: warning: Member spikeGains[128] (variable) of class PlexonPlugin is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/PlotViewWidget.h:29: warning: Member newTab() (slot) of class PlotViewWidget is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/PlotViewWidget.h:30: warning: Member mouseDoubleClickEvent(QMouseEvent *e) override (slot) of class PlotViewWidget is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/PlotViewWidget.h:33: warning: Member openInNewTab(QWidget *pWidget) (signal) of class PlotViewWidget is not documented.
@@ -665,25 +749,51 @@ C:/Projects/Picto/source/proxyserver/protocol/ProxyLoadExpResponseHandler.h:14: 
 C:/Projects/Picto/source/common/protocol/LoadExpResponseHandler.h:24: warning: Member LoadExpResponseHandler(QSharedPointer< ComponentStatusManager > statusManager) (function) of class Picto::LoadExpResponseHandler is not documented.
 C:/Projects/Picto/source/common/protocol/LoadExpResponseHandler.h:26: warning: Member method() (function) of class Picto::LoadExpResponseHandler is not documented.
 C:/Projects/Picto/source/proxyserver/protocol/ProxyLoadExpResponseHandler.h:17: warning: Member processResponse(QString directive) (function) of class ProxyLoadExpResponseHandler is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:73: warning: Member currState_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:85: warning: Member stateTrigger_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:99: warning: Member connectionStatus_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:99: warning: Member sessionStatus_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:99: warning: Member runStatus_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:100: warning: Member connectionStatusLabel_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:100: warning: Member sessionStatusLabel_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:100: warning: Member runStatusLabel_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:101: warning: Member pluginCombo_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:104: warning: Member layout_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:105: warning: Member lineEditNameLabel_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:106: warning: Member lineEditName_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:107: warning: Member systemNumber_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:108: warning: Member systemNumLabel_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:112: warning: Member acqPlugin_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:113: warning: Member acqPluginList_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:115: warning: Member stateUpdateTimer_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:117: warning: Member updatingState_ (variable) of class ProxyMainWindow is not documented.
-C:/Projects/Picto/source/proxyserver/proxymainwindow.h:121: warning: Member port_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:153: warning: Member alignSysTimes() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:155: warning: Member browsePictoFiles() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:156: warning: Member browseMdaFiles() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:157: warning: Member browserhdFiles() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:158: warning: Member browseSaveFolder() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:159: warning: Member convertToMDA() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:160: warning: Member alignNeuralData() (slot) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:125: warning: Member pluginUI(bool first) (function) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:126: warning: Member createIntanComboBox(const QString &text) (function) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:74: warning: Member currState_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:86: warning: Member stateTrigger_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:100: warning: Member connectionStatus_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:100: warning: Member sessionStatus_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:100: warning: Member runStatus_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:101: warning: Member connectionStatusLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:101: warning: Member sessionStatusLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:101: warning: Member runStatusLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:102: warning: Member pluginCombo_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:105: warning: Member layout_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:106: warning: Member lineEditNameLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:107: warning: Member lineEditName_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:108: warning: Member systemNumber_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:109: warning: Member systemNumLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:113: warning: Member acqPlugin_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:114: warning: Member acqPluginList_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:116: warning: Member stateUpdateTimer_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:118: warning: Member updatingState_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:122: warning: Member port_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:128: warning: Member directoryComboBoxsql_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:129: warning: Member sqlfileLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:130: warning: Member sqlfileButton_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:131: warning: Member rhdfileLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:132: warning: Member rhdfileButton_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:133: warning: Member directoryComboBoxrhd_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:134: warning: Member convertOutputLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:135: warning: Member convertOutputButton_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:136: warning: Member directoryComboBoxconvert_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:137: warning: Member mdafileLabel_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:138: warning: Member mdafileButton_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:139: warning: Member directoryComboBoxmda_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:140: warning: Member alignButton_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:141: warning: Member convertToMda_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:142: warning: Member alignNeuralData_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:143: warning: Member convert_ (variable) of class ProxyMainWindow is not documented.
+C:/Projects/Picto/source/proxyserver/proxymainwindow.h:144: warning: Member align_ (variable) of class ProxyMainWindow is not documented.
 C:/Projects/Picto/source/proxyserver/protocol/ProxyNewSessionResponseHandler.h:17: warning: Member ProxyNewSessionResponseHandler(QSharedPointer< ComponentStatusManager > statusManager, QSharedPointer< Picto::CommandChannel > dataCommandChannel) (function) of class ProxyNewSessionResponseHandler is not documented.
 C:/Projects/Picto/source/common/protocol/NewSessionResponseHandler.h:24: warning: Member method() (function) of class Picto::NewSessionResponseHandler is not documented.
 C:/Projects/Picto/source/proxyserver/protocol/ProxyNewSessionResponseHandler.h:21: warning: Member dataCommandChannel_ (variable) of class ProxyNewSessionResponseHandler is not documented.
@@ -700,13 +810,15 @@ C:/Projects/Picto/source/common/network/ComponentStatusManager.h:64: warning: Me
 C:/Projects/Picto/source/proxyserver/network/ProxyStatusManager.h:37: warning: Member name_ (variable) of class ProxyStatusManager is not documented.
 C:/Projects/Picto/source/proxyserver/network/ProxyStatusManager.h:38: warning: Member commandChannel_ (variable) of class ProxyStatusManager is not documented.
 C:/Projects/Picto/source/proxyserver/network/ProxyStatusManager.h:39: warning: Member acqPlugin_ (variable) of class ProxyStatusManager is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:23: warning: Member data[1] (variable) of class qt_meta_stringdata_IntanPlugin_t is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/GeneratedFiles/Debug/moc_intanplugin.cpp:24: warning: Member stringdata0[12] (variable) of class qt_meta_stringdata_IntanPlugin_t is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:75: warning: Member openInNewTab(QWidget *pWidget) (slot) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:76: warning: Member closeTab(int index) (slot) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:78: warning: Member alignPlot(int) (slot) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:79: warning: Member eventAdded(int) (slot) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:80: warning: Member scriptContAdded(int) (slot) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/viewer.h:36: warning: Member Viewer(QWidget *parent=0) (function) of class Viewer is not documented.
-C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:300: warning: Member dataViewOrganizer_ (variable) of class RemoteViewer is not documented.
+C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:302: warning: Member dataViewOrganizer_ (variable) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/viewer.h:69: warning: Member designRoot_ (variable) of class Viewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:114: warning: Member ViewerState (enumeration) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:129: warning: Member ViewerTrigger (enumeration) of class RemoteViewer is not documented.
@@ -789,7 +901,8 @@ C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:286: warning: M
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:287: warning: Member enablePlots_ (variable) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:288: warning: Member leftPane (variable) of class RemoteViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:289: warning: Member currentTaskConfig_ (variable) of class RemoteViewer is not documented.
-C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.cpp:2399: warning: Found unknown command `\design'
+C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:291: warning: Member bgColor_ (variable) of class RemoteViewer is not documented.
+C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.cpp:2401: warning: Found unknown command `\design'
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:151: warning: Member name (variable) of class RemoteViewer::ComponentInstance is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:152: warning: Member status (variable) of class RemoteViewer::ComponentInstance is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/remoteviewer.h:153: warning: Member address (variable) of class RemoteViewer::ComponentInstance is not documented.
@@ -800,14 +913,14 @@ C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:71: warning: Me
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:72: warning: Member rewarded(int quantity) (slot) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:74: warning: Member openInNewTab(QWidget *pWidget) (slot) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:75: warning: Member closeTab(int index) (slot) of class ReplayViewer is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:53: warning: Member ReplayViewer(QWidget *parent=0) (function) of class ReplayViewer is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:53: warning: Member ReplayViewer(QColor bgColor, QWidget *parent=0) (function) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/viewer.h:36: warning: Member Viewer(QWidget *parent=0) (function) of class Viewer is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:202: warning: Member dataViewOrganizer_ (variable) of class ReplayViewer is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:203: warning: Member dataViewOrganizer_ (variable) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/viewer.h:69: warning: Member designRoot_ (variable) of class Viewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:157: warning: Member Status (enumeration) of class ReplayViewer is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:194: warning: Member taskChanged(QString newTask) (slot) of class ReplayViewer is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:195: warning: Member selectedChannelChanged() (slot) of class ReplayViewer is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:196: warning: Member selectedUnitChanged() (slot) of class ReplayViewer is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:195: warning: Member taskChanged(QString newTask) (slot) of class ReplayViewer is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:196: warning: Member selectedChannelChanged() (slot) of class ReplayViewer is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:197: warning: Member selectedUnitChanged() (slot) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:78: warning: Member updateNeuralUI() (function) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:94: warning: Member activateSelectedAnalyses() (function) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:97: warning: Member playbackController_ (variable) of class ReplayViewer is not documented.
@@ -867,6 +980,7 @@ C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:167: warning: M
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:168: warning: Member activatePlots_ (variable) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:169: warning: Member enablePlots_ (variable) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:170: warning: Member viewLayout_ (variable) of class ReplayViewer is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:172: warning: Member bgCol_ (variable) of class ReplayViewer is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:87: warning: Member PlayRunInfo(QString filePath, int runIndex) (function) of class ReplayViewer::PlayRunInfo is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:90: warning: Member operator==(const PlayRunInfo &rhs) (function) of class ReplayViewer::PlayRunInfo is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/ReplayViewer.h:91: warning: Member operator!=(const PlayRunInfo &rhs) (function) of class ReplayViewer::PlayRunInfo is not documented.
@@ -1024,6 +1138,19 @@ C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/simplelfpsource.h:26: 
 C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/simplemarksource.h:23: warning: Member currEventCode (variable) of class SimpleMarkSource is not documented.
 C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/simplespikesource.h:26: warning: Member channel_ (variable) of class SimpleSpikeSource is not documented.
 C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/simplespikesource.h:27: warning: Member unit_ (variable) of class SimpleSpikeSource is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:11: warning: Member SmartDataStream(QFile *) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:12: warning: Member writeInt32(qint32 data) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:13: warning: Member writeInt16(qint16 data) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:14: warning: Member writeUint16(quint16 data) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:15: warning: Member writeArray(QByteArray array) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:16: warning: Member writeDouble(double data) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:17: warning: Member flush() (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:18: warning: Member pos() (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:19: warning: Member seek(qint64 location) (function) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:20: warning: Member outStream (variable) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:23: warning: Member buffer[size] (variable) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:24: warning: Member outFile (variable) of class SmartDataStream is not documented.
+C:/Projects/Picto/source/proxyplugins/RHD2000Control/smartdatastream.h:25: warning: Member bufferIndex (variable) of class SmartDataStream is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/SpeedWidget.h:36: warning: Member speedSlider_ (variable) of class SpeedWidget is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/SpeedWidget.h:37: warning: Member speedIndicator_ (variable) of class SpeedWidget is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/SpeedWidget.h:38: warning: Member ticksPerResBelow1_ (variable) of class SpeedWidget is not documented.
@@ -1131,81 +1258,83 @@ C:/Projects/Picto/source/workstation/RemoteViewer/TaskRunViewer.h:60: warning: M
 C:/Projects/Picto/source/workstation/RemoteViewer/TaskRunViewer.h:61: warning: Member editing_ (variable) of class TaskRunViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/TaskRunViewer.h:62: warning: Member latestIsRunning_ (variable) of class TaskRunViewer is not documented.
 C:/Projects/Picto/source/workstation/RemoteViewer/TaskRunViewer.h:63: warning: Member editingEnabled_ (variable) of class TaskRunViewer is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:69: warning: Member tdtTank (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:70: warning: Member sampleRate (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:71: warning: Member samplePeriod (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:72: warning: Member lastEventTimestamp_ (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:73: warning: Member lastSpikeTimestamp_ (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:74: warning: Member lastLFPTimestamp_ (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:79: warning: Member szServerName (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:80: warning: Member szTankName (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:81: warning: Member szBlockName (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:89: warning: Member lfpData_ (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:91: warning: Member deviceStatus_ (variable) of class TdtPlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:58: warning: Member code (variable) of class TdtPlugin::EventDetails is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:59: warning: Member timeStamp (variable) of class TdtPlugin::EventDetails is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:86: warning: Member currTime (variable) of class TdtPlugin::LFPData is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:87: warning: Member lfpPackage (variable) of class TdtPlugin::LFPData is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:46: warning: Member sampleWaveform (variable) of class TdtPlugin::SpikeDetails is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:47: warning: Member chanNum (variable) of class TdtPlugin::SpikeDetails is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:48: warning: Member unitNum (variable) of class TdtPlugin::SpikeDetails is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:49: warning: Member timeStamp (variable) of class TdtPlugin::SpikeDetails is not documented.
-C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:50: warning: Member resolution (variable) of class TdtPlugin::SpikeDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:40: warning: Member alignSysTimes(QString rhdFile, QString saveFolder, QString sqlFile, QString mdaFile, bool convert=true) (function) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:70: warning: Member tdtTank (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:71: warning: Member sampleRate (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:72: warning: Member samplePeriod (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:73: warning: Member lastEventTimestamp_ (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:74: warning: Member lastSpikeTimestamp_ (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:75: warning: Member lastLFPTimestamp_ (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:80: warning: Member szServerName (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:81: warning: Member szTankName (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:82: warning: Member szBlockName (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:90: warning: Member lfpData_ (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:92: warning: Member deviceStatus_ (variable) of class TdtPlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:59: warning: Member code (variable) of class TdtPlugin::EventDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:60: warning: Member timeStamp (variable) of class TdtPlugin::EventDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:87: warning: Member currTime (variable) of class TdtPlugin::LFPData is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:88: warning: Member lfpPackage (variable) of class TdtPlugin::LFPData is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:47: warning: Member sampleWaveform (variable) of class TdtPlugin::SpikeDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:48: warning: Member chanNum (variable) of class TdtPlugin::SpikeDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:49: warning: Member unitNum (variable) of class TdtPlugin::SpikeDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:50: warning: Member timeStamp (variable) of class TdtPlugin::SpikeDetails is not documented.
+C:/Projects/Picto/source/proxyplugins/tdtplugin/tdtplugin.h:51: warning: Member resolution (variable) of class TdtPlugin::SpikeDetails is not documented.
 C:/Projects/Picto/source/workstation/TestViewer/TestPlaybackController.h:40: warning: Member experiment_ (variable) of class TestPlaybackController is not documented.
 C:/Projects/Picto/source/workstation/TestViewer/TestPlaybackController.h:41: warning: Member taskName_ (variable) of class TestPlaybackController is not documented.
 C:/Projects/Picto/source/workstation/TestViewer/TestPlaybackController.h:42: warning: Member running_ (variable) of class TestPlaybackController is not documented.
 C:/Projects/Picto/source/workstation/TestViewer/TestPlaybackController.h:43: warning: Member paused_ (variable) of class TestPlaybackController is not documented.
 C:/Projects/Picto/source/workstation/TestViewer/TestPlaybackController.h:44: warning: Member stopping_ (variable) of class TestPlaybackController is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:85: warning: Member spikeAdded(double time, int channel, int unit, QVariantList waveform) (slot) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:86: warning: Member rewarded(int quantity) (slot) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:73: warning: Member TestViewer(QWidget *parent=0) (function) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:85: warning: Member spikeAdded(double time, int channel, int unit, QVariantList waveform) (slot) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:86: warning: Member rewarded(int quantity) (slot) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:73: warning: Member TestViewer(QColor bgColor, QWidget *parent=0) (function) of class TestViewer is not documented.
 C:/Projects/Picto/source/workstation/viewer.h:36: warning: Member Viewer(QWidget *parent=0) (function) of class Viewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:123: warning: Member Status (enumeration) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:166: warning: Member selectedChannelChanged(int channel) (slot) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:167: warning: Member selectedUnitChanged(int unit) (slot) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:93: warning: Member updateNeuralUI() (function) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:96: warning: Member renderingTarget_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:97: warning: Member pixmapVisualTarget_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:98: warning: Member engine_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:99: warning: Member experiment_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:100: warning: Member testController_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:101: warning: Member outSigControllers_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:105: warning: Member propertyFrame_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:106: warning: Member analysisSelector_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:107: warning: Member outputSignalsWidgets_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:109: warning: Member playAction_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:110: warning: Member pauseAction_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:111: warning: Member stopAction_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:112: warning: Member loadPropsAction_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:114: warning: Member testToolbar_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:116: warning: Member taskListBox_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:117: warning: Member userType_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:118: warning: Member outputWidgetHolder_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:122: warning: Member deiniting_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:124: warning: Member status_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:126: warning: Member liveFrameReader_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:127: warning: Member liveLfpReader_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:128: warning: Member liveRewardReader_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:129: warning: Member liveSpikeReader_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:130: warning: Member liveRunNotesReader_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:131: warning: Member signalReaders_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:133: warning: Member channelBox_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:134: warning: Member unitBox_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:135: warning: Member currentTaskConfig_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:136: warning: Member ChannelsUnits_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:137: warning: Member noCallBack_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:138: warning: Member selectedChannel_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:139: warning: Member selectedUnit_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:140: warning: Member NeuralTick_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:141: warning: Member toggleRecord_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:142: warning: Member recordTime_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:143: warning: Member restartRecord_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:144: warning: Member saveRecording_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:145: warning: Member recordModeOn_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:146: warning: Member isRunning_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:148: warning: Member alignElements_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:149: warning: Member designRootForData_ (variable) of class TestViewer is not documented.
-C:/Projects/Picto/source/workstation/TestViewer/testviewer.h:150: warning: Member taskTabIndex_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:123: warning: Member Status (enumeration) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:167: warning: Member selectedChannelChanged(int channel) (slot) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:168: warning: Member selectedUnitChanged(int unit) (slot) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:93: warning: Member updateNeuralUI() (function) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:96: warning: Member renderingTarget_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:97: warning: Member pixmapVisualTarget_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:98: warning: Member engine_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:99: warning: Member experiment_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:100: warning: Member testController_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:101: warning: Member outSigControllers_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:105: warning: Member propertyFrame_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:106: warning: Member analysisSelector_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:107: warning: Member outputSignalsWidgets_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:109: warning: Member playAction_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:110: warning: Member pauseAction_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:111: warning: Member stopAction_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:112: warning: Member loadPropsAction_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:114: warning: Member testToolbar_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:116: warning: Member taskListBox_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:117: warning: Member userType_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:118: warning: Member outputWidgetHolder_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:122: warning: Member deiniting_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:124: warning: Member status_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:126: warning: Member liveFrameReader_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:127: warning: Member liveLfpReader_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:128: warning: Member liveRewardReader_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:129: warning: Member liveSpikeReader_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:130: warning: Member liveRunNotesReader_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:131: warning: Member signalReaders_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:133: warning: Member channelBox_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:134: warning: Member unitBox_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:135: warning: Member currentTaskConfig_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:136: warning: Member ChannelsUnits_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:137: warning: Member noCallBack_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:138: warning: Member selectedChannel_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:139: warning: Member selectedUnit_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:140: warning: Member NeuralTick_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:141: warning: Member toggleRecord_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:142: warning: Member recordTime_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:143: warning: Member restartRecord_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:144: warning: Member saveRecording_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:145: warning: Member recordModeOn_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:146: warning: Member isRunning_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:148: warning: Member alignElements_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:149: warning: Member designRootForData_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:150: warning: Member taskTabIndex_ (variable) of class TestViewer is not documented.
+C:/Projects/Picto/source/workstation/TestViewer/TestViewer.h:152: warning: Member bgCol_ (variable) of class TestViewer is not documented.
 C:/Projects/Picto/source/workstation/viewer.h:69: warning: Member designRoot_ (variable) of class Viewer is not documented.
 C:/Projects/Picto/source/embedded/frontpanel/TextEditMode.h:38: warning: Member directorIf_ (variable) of class TextEditMode is not documented.
 C:/Projects/Picto/source/embedded/frontpanel/TextEditMode.h:39: warning: Member currText_ (variable) of class TextEditMode is not documented.
@@ -1318,14 +1447,15 @@ C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:212: warnin
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:213: warning: Member recoverSettings_ (variable) of class ViewSelectionFrame is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:214: warning: Member plotSettings_ (variable) of class ViewSelectionFrame is not documented.
 C:/Projects/Picto/source/workstation/DataViewer/ViewSelectionFrame.h:215: warning: Member currentTask_ (variable) of class ViewSelectionFrame is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:50: warning: Member status_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:52: warning: Member lastEvent_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:52: warning: Member lastSpike_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:52: warning: Member lastMark_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:53: warning: Member dataList_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:54: warning: Member sources_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:55: warning: Member latestEvents_ (variable) of class VirtualDevicePlugin is not documented.
-C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:56: warning: Member timeStamper_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:47: warning: Member alignSysTimes(QString rhdFile, QString saveFolder, QString sqlFile, QString mdaFile, bool convert=true) (function) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:51: warning: Member status_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:53: warning: Member lastEvent_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:53: warning: Member lastSpike_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:53: warning: Member lastMark_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:54: warning: Member dataList_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:55: warning: Member sources_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:56: warning: Member latestEvents_ (variable) of class VirtualDevicePlugin is not documented.
+C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h:57: warning: Member timeStamper_ (variable) of class VirtualDevicePlugin is not documented.
 C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualeventsource.h:15: warning: Member EventType (enumeration) of class VirtualEvent is not documented.
 C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualeventsource.h:22: warning: Member LessThan(const QSharedPointer< VirtualEvent > e1, const QSharedPointer< VirtualEvent > e2) (function) of class VirtualEvent is not documented.
 C:/Projects/Picto/source/proxyplugins/virtualdeviceplugin/virtualeventsource.h:16: warning: Member type_ (variable) of class VirtualEvent is not documented.
@@ -1877,6 +2007,7 @@ C:/Projects/Picto/source/director/compositor/D3DVisualTarget.h:60: warning: Memb
 C:/Projects/Picto/source/director/compositor/D3DVisualTarget.h:74: warning: Member textureList_ (variable) of class Picto::D3DVisualTarget is not documented.
 C:/Projects/Picto/source/director/compositor/D3DVisualTarget.h:75: warning: Member positionList_ (variable) of class Picto::D3DVisualTarget is not documented.
 C:/Projects/Picto/source/director/compositor/D3DVisualTarget.h:76: warning: Member renderSuccess_ (variable) of class Picto::D3DVisualTarget is not documented.
+C:/Projects/Picto/source/director/compositor/D3DVisualTarget.h:79: warning: Member BgCol_ (variable) of class Picto::D3DVisualTarget is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTarget.h:133: warning: Member bWindowed_ (variable) of class Picto::VisualTarget is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTarget.h:134: warning: Member width_ (variable) of class Picto::VisualTarget is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTarget.h:135: warning: Member height_ (variable) of class Picto::VisualTarget is not documented.
@@ -2567,6 +2698,7 @@ C:/Projects/Picto/source/common/playback/TransitionState.h:66: warning: Member P
 C:/Projects/Picto/source/common/playback/TransitionState.h:67: warning: Member index_ (variable) of class Picto::PlaybackTransData is not documented.
 C:/Projects/Picto/source/common/playback/TransitionState.h:68: warning: Member transId_ (variable) of class Picto::PlaybackTransData is not documented.
 C:/Projects/Picto/source/common/property/Property.h:53: warning: Member getAttributes() (function) of class Picto::Property is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:53: warning: Member setDimensions(int w, int h) (slot) of class Picto::PolygonGraphic is not documented.
 C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:33: warning: Member getOutline() (function) of class Picto::PolygonGraphic is not documented.
 C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:68: warning: Member deepReinitScripting(bool enableDebugging) (function) of class Picto::ScriptableContainer is not documented.
 C:/Projects/Picto/source/common/statemachine/Scriptable.h:63: warning: Member setScriptParam(bool scriptCondParam) (function) of class Picto::Scriptable is not documented.
@@ -2574,8 +2706,8 @@ C:/Projects/Picto/source/common/statemachine/Scriptable.h:64: warning: Member ge
 C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:29: warning: Member type (variable) of class Picto::PolygonGraphic is not documented.
 C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:98: warning: Member scriptableContainerCustomInitialization() (function) of class Picto::ScriptableContainer is not documented.
 C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:101: warning: Member deepDeinitScripting() (function) of class Picto::ScriptableContainer is not documented.
-C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:49: warning: Member posOffset_ (variable) of class Picto::PolygonGraphic is not documented.
-C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:50: warning: Member listNames_ (variable) of class Picto::PolygonGraphic is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:61: warning: Member posOffset_ (variable) of class Picto::PolygonGraphic is not documented.
+C:/Projects/Picto/source/common/stimuli/PolygonGraphic.h:62: warning: Member listNames_ (variable) of class Picto::PolygonGraphic is not documented.
 C:/Projects/Picto/source/common/statemachine/Scriptable.h:71: warning: Member scriptParam_ (variable) of class Picto::Scriptable is not documented.
 C:/Projects/Picto/source/common/portdefs.h:48: warning: Member appName_ (variable) of class Picto::PortNums is not documented.
 C:/Projects/Picto/source/common/portdefs.h:49: warning: Member systemNumber_ (variable) of class Picto::PortNums is not documented.
@@ -2918,16 +3050,18 @@ C:/Projects/Picto/source/common/operator/OperatorPlotHandler.h:47: warning: Memb
 C:/Projects/Picto/source/common/operator/OperatorPlotHandler.h:48: warning: Member m_tmpTitle (variable) of class Picto::OperatorPlotHandler is not documented.
 C:/Projects/Picto/source/common/operator/OperatorPlotHandler.h:49: warning: Member index (variable) of class Picto::OperatorPlotHandler is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:47: warning: Member updateFrameTime(double) (slot) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:29: warning: Member RecordingVisualTargetHost(QColor bgColor) (function) of class Picto::RecordingVisualTargetHost is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:38: warning: Member rewarded(int quantity) (function) of class Picto::RecordingVisualTargetHost is not documented.
 C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:39: warning: Member spikeAdded(double spikeTime) (function) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:61: warning: Member VisualTargetHost(QColor bgColor=2) (function) of class Picto::VisualTargetHost is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:64: warning: Member resizeEvent(QResizeEvent *event) (function) of class Picto::VisualTargetHost is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:68: warning: Member viewportPointToTargetPoint(const QPoint point) const  (function) of class Picto::VisualTargetHost is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:58: warning: Member encoder_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:59: warning: Member recording_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:60: warning: Member recordingInitialized_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:61: warning: Member currFrameMs_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:62: warning: Member frameTimer_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
-C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:63: warning: Member videoFile_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:57: warning: Member encoder_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:58: warning: Member recording_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:59: warning: Member recordingInitialized_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:60: warning: Member currFrameMs_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:61: warning: Member frameTimer_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
+C:/Projects/Picto/source/workstation/ReplayViewer/RecordingVisualTargetHost.h:62: warning: Member videoFile_ (variable) of class Picto::RecordingVisualTargetHost is not documented.
 C:/Projects/Picto/source/common/controlelements/ControlTarget.h:27: warning: Member ControlTarget(QPoint position=QPoint(), QColor color=Qt::green) (function) of class Picto::ControlTarget is not documented.
 C:/Projects/Picto/source/common/statemachine/ScriptableContainer.h:68: warning: Member deepReinitScripting(bool enableDebugging) (function) of class Picto::ScriptableContainer is not documented.
 C:/Projects/Picto/source/common/statemachine/Scriptable.h:63: warning: Member setScriptParam(bool scriptCondParam) (function) of class Picto::Scriptable is not documented.
@@ -3665,9 +3799,11 @@ C:/Projects/Picto/source/common/compositor/VisualTarget.h:135: warning: Member h
 C:/Projects/Picto/source/common/compositor/VisualTarget.h:136: warning: Member zoom_ (variable) of class Picto::VisualTarget is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTarget.h:137: warning: Member stamper_ (variable) of class Picto::VisualTarget is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTarget.h:138: warning: Member lastFrameTime_ (variable) of class Picto::VisualTarget is not documented.
+C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:61: warning: Member VisualTargetHost(QColor bgColor=2) (function) of class Picto::VisualTargetHost is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:64: warning: Member resizeEvent(QResizeEvent *event) (function) of class Picto::VisualTargetHost is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:68: warning: Member viewportPointToTargetPoint(const QPoint point) const  (function) of class Picto::VisualTargetHost is not documented.
 C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:78: warning: Member target_ (variable) of class Picto::VisualTargetHost is not documented.
+C:/Projects/Picto/source/common/compositor/VisualTargetHost.h:80: warning: Member BgCol_ (variable) of class Picto::VisualTargetHost is not documented.
 C:/Projects/Picto/source/common/stimuli/MultiPlatformSound.cpp:94: warning: Member descriptor (variable) of class Picto::WAVEHeader is not documented.
 C:/Projects/Picto/source/common/stimuli/MultiPlatformSound.cpp:95: warning: Member audioFormat (variable) of class Picto::WAVEHeader is not documented.
 C:/Projects/Picto/source/common/stimuli/MultiPlatformSound.cpp:96: warning: Member numChannels (variable) of class Picto::WAVEHeader is not documented.

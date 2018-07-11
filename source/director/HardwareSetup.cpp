@@ -82,7 +82,7 @@ bool HardwareSetup::isSetup()
  *	when input is from the eye tracker.
  *	\details Returns false if the RenderingTarget can not be set up properly.
  */
-bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical)
+bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, QColor bgColor, bool timingCritical)
 {
 	QSharedPointer<Picto::PCMAuralTarget> pcmAuralTarget(new Picto::PCMAuralTarget());
 	QSharedPointer<Picto::VisualTarget> visualTarget;
@@ -99,7 +99,7 @@ bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, boo
 #ifndef WIN32
 		return false;
 #else
-		visualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget(timingCritical));
+		visualTarget = QSharedPointer<Picto::D3DVisualTarget>(new Picto::D3DVisualTarget(timingCritical, bgColor));
 		visualTarget->show();
 #endif
 	}

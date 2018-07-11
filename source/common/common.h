@@ -105,6 +105,7 @@
  */
 #define DESIGNSYNTAXVERSION "0.0.2"
 
+// Lee Lab: 800x600, Nandy lab: Resolution: 1400x1050
 #define RESOLUTIONH 800
 #define RESOLUTIONV 600
 

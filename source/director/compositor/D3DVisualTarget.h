@@ -25,7 +25,7 @@ namespace Picto {
 class D3DVisualTarget : public VisualTarget
 {
 public:
-	D3DVisualTarget(bool timingCritical);
+	D3DVisualTarget(bool timingCritical, QColor bgColor);
 	virtual ~D3DVisualTarget();
 
 	QSharedPointer<CompositingSurface> generateCompositingSurface();
@@ -76,6 +76,7 @@ private:
 	bool renderSuccess_;
 
 
+	QColor BgCol_;
 };
 
 }; //namespace Picto

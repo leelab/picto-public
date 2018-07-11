@@ -59,6 +59,7 @@ var searchData=
   ['insertvalues',['insertValues',['../class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b',1,'Picto::SignalChannel']]],
   ['insidetarget',['insideTarget',['../class_picto_1_1_choice_controller.html#abc60b934e42a663fa0b28fdaec4c0bc3',1,'Picto::ChoiceController::insideTarget()'],['../class_picto_1_1_fixation_controller.html#a0ebe21a198d59940533fb7e11155b1f2',1,'Picto::FixationController::insideTarget()'],['../class_picto_1_1_target_controller.html#a756937c65b69e7fe8e994e25e7df68be',1,'Picto::TargetController::insideTarget()']]],
   ['instance',['Instance',['../class_connection_manager.html#aa4061f5b6a3cb842f3ecce80d776db0d',1,'ConnectionManager']]],
+  ['intanplugin',['IntanPlugin',['../class_intan_plugin.html#a327d4d3ebcb37b05fa2e210d3e50c8f2',1,'IntanPlugin']]],
   ['ipaddresschanged',['ipAddressChanged',['../class_control_panel_interface.html#acd712ae5b62e9d32d269ada35f4bf026',1,'ControlPanelInterface']]],
   ['ipwaschanged',['ipWasChanged',['../class_control_panel_interface.html#a1a7c6571f407622786488f1895fac6ef',1,'ControlPanelInterface::ipWasChanged()'],['../class_f_p_interface.html#ada309d75eefe2043318d0d3c203b0cfd',1,'FPInterface::ipWasChanged()']]],
   ['isactive',['isActive',['../class_picto_1_1_control_target.html#afb2d65410f9e72412abd7eb7840b6887',1,'Picto::ControlTarget']]],

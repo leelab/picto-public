@@ -10,6 +10,7 @@
 #include "../../proxyserver/NeuralDataAcqInterface.h"
 #include "../../common/timing/Timestamper.h"
 #include "VirtualEventSource.h"
+#include "QProgressBar.h"
 
 #define MAX_MAP_EVENTS_PER_READ 5000
 
@@ -44,6 +45,7 @@ public:
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 	bool acqDataAfterNow();
+	void alignSysTimes(QString rhdFile, QString saveFolder, QProgressBar* bar, QString sqlFile, QString mdaFile, bool convert = true){};
 
 private:
 	void updateData();

@@ -33,11 +33,12 @@ bool MediaMuxer::createFile(QString fileName, unsigned width, unsigned height, u
 	Bitrate = bitrate;
 	FPS = fps;
 
-	if (!isSizeValid())
-	{
-		printf("Invalid size\n");
-		return false;
-	}
+	//remove this test as the resolution can now be 1400 x 1050
+		//if (!isSizeValid())
+		//{
+		//	printf("Invalid size\n");
+		//	return false;
+		//}
 
 	/* Allocate the output media context */
 	pOutputFormat_ = ffmpeg::av_guess_format(NULL, fileName.toStdString().c_str(), NULL);

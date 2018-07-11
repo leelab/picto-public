@@ -15,11 +15,12 @@
 #endif
 
 #include "../common/memleakdetect.h"
-
+#include "../common/common.h"
 
 #define DEFAULT_FILE ":/BuiltInExperiments/EyeCalibration.xml"
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QColor backgroundCol):
+bgCol_(backgroundCol)
 {
 	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
 	currViewer_ = NULL;
@@ -198,7 +199,7 @@ void MainWindow::createViewers()
 	initViewerAction_ = viewerAction;
 
 	//Test Viewer
-	viewer = new TestViewer(this);
+	viewer = new TestViewer(bgCol_,this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Test experiment"), this);
@@ -211,7 +212,7 @@ void MainWindow::createViewers()
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//remote viewer
-	viewer = new RemoteViewer(this);
+	viewer = new RemoteViewer(bgCol_,this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Run remote experiment"), this);
@@ -224,7 +225,7 @@ void MainWindow::createViewers()
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//Replay viewer
-	viewer = new ReplayViewer(this);
+	viewer = new ReplayViewer(bgCol_,this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Replay experiment"), this);

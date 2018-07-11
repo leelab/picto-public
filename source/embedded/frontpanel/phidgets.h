@@ -4,25 +4,9 @@
 #include <QTimer>
 #include <QMutex>
 
-#include "phidget21.h"
+
 #include "FrontPanelInfo.h"
 
-//These functions are used to interface with the Phidgets API
-int __stdcall TextLCDAttachHandler(CPhidgetHandle hTextLCD, void * phidgetsObj);
-int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObj);
-int __stdcall TextLCDErrorHandler(CPhidgetHandle hTextLCD, void * phidgetsObj, int ErrorCode, const char * Description);
-int __stdcall InterfaceKitAttachHandler(CPhidgetHandle hIntKit, void * phidgetsObj);
-int __stdcall InterfaceKitDetachHandler(CPhidgetHandle hIntKit, void * phidgetsObj);
-int __stdcall InterfaceKitErrorHandler(CPhidgetHandle hIntKit, void * phidgetsObj, int ErrorCode, const char * Description);
-int __stdcall InterfaceKitInputChangeHandler(CPhidgetInterfaceKitHandle hIntKit, void * phidgetsObj, int index, int state);
-int __stdcall EncoderAttachHandler(CPhidgetHandle hEncoder, void * phidgetsObj);
-int __stdcall EncoderDetachHandler(CPhidgetHandle hEncoder, void * phidgetsObj);
-int __stdcall EncoderErrorHandler(CPhidgetHandle hEncoder, void * phidgetsObj, int ErrorCode, const char * Description);
-int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle hEncoder, void * phidgetsObj, int index, int state);
-int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle hEncoder, void * phidgetsObj, int index, int time, int relativePosition);
-//int __stdcall ManagerAttachHandler(CPhidgetHandle phid, void * phidgetsObj);
-//int __stdcall ManagerDetachHandler(CPhidgetHandle phid, void * phidgetsObj);
-//int __stdcall ManagerErrorHandler(CPhidgetManagerHandle hManager, void * phidgetsObj, int Code, const char * Description);
 
 /*! \brief Provides an interface to the Phidgets devices used by the FrontPanel Application
  * \details The front panel deals with two different Phidgets devices: a 2-line LCD (1203)
@@ -70,10 +54,7 @@ public:
 	QString LCDRow1;
 	QString LCDRow2;
 
-	CPhidgetTextLCDHandle hTextLCD;
-	CPhidgetInterfaceKitHandle hIntKit;
-	//CPhidgetManagerHandle hManager;
-	CPhidgetEncoderHandle hEncoder;
+
 
 	//rotaryencoder stuff
 	int lastRot;

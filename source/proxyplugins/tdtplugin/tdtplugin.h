@@ -9,6 +9,7 @@
 //#include "../../proxyserver/interfaces.h"	// Joey - 12/27/10 This file no longer exists, replaced with the following
 #include "../../proxyserver/NeuralDataAcqInterface.h"
 #import "TTankX.ocx"
+#include "QProgressBar.h"
 
 /*! \brief A plugin allowing the proxy server to interface with a TDT system
  *
@@ -37,6 +38,7 @@ public:
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 	bool acqDataAfterNow();
+	void alignSysTimes(QString rhdFile, QString saveFolder, QProgressBar* bar, QString sqlFile, QString mdaFile, bool convert = true){};
 
 private:
 

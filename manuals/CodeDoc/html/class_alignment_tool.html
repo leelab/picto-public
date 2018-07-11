@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Calculates the alignment coefficients to move the neural timebase into the behavioral timebase.  
  <a href="class_alignment_tool.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="alignmenttool_8h_source.html">alignmenttool.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="common_2storage_2_alignment_tool_8h_source.html">AlignmentTool.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -142,6 +142,36 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memitem:a2c7eadcedb53d5e7f282168c8da3d457"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457">updateCoefficients</a> (double bAlignTimestamp, double nAlignTimestamp)</td></tr>
 <tr class="memdesc:a2c7eadcedb53d5e7f282168c8da3d457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the coefficients when a new set of matching timestamps is found.  <a href="#a2c7eadcedb53d5e7f282168c8da3d457">More...</a><br /></td></tr>
 <tr class="separator:a2c7eadcedb53d5e7f282168c8da3d457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad29f55cfe853cdce46f0bc1ccc5df709"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad29f55cfe853cdce46f0bc1ccc5df709"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resetValues</b> ()</td></tr>
+<tr class="separator:ad29f55cfe853cdce46f0bc1ccc5df709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9caea7d9dbaf480b6545df6634c6e10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9caea7d9dbaf480b6545df6634c6e10"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>convertToBehavioralTimebase</b> (double neuralTime)</td></tr>
+<tr class="separator:ae9caea7d9dbaf480b6545df6634c6e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3896af2cf346ba9d090896be7bb5feb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3896af2cf346ba9d090896be7bb5feb"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>convertToNeuralTimebase</b> (double behavioralTime)</td></tr>
+<tr class="separator:ae3896af2cf346ba9d090896be7bb5feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43752b711ae350128598c28026b4c698"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43752b711ae350128598c28026b4c698"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>convertSamplePeriodToBehavioralTimebase</b> (double neuralSamplePeriod)</td></tr>
+<tr class="separator:a43752b711ae350128598c28026b4c698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae34b218ef3e8558d03d679251a935b00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae34b218ef3e8558d03d679251a935b00"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>convertSamplePeriodToNeuralTimebase</b> (double behavioralSamplePeriod)</td></tr>
+<tr class="separator:ae34b218ef3e8558d03d679251a935b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbe9b7c8ff096353a292a0da819b3d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fbe9b7c8ff096353a292a0da819b3d4"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getJitter</b> (double bAlignTimestamp, double nAlignTimestamp)</td></tr>
+<tr class="separator:a7fbe9b7c8ff096353a292a0da819b3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd817b37d22c620c71897b1aff2f7d6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd817b37d22c620c71897b1aff2f7d6a"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getCorrelationCoefficient</b> ()</td></tr>
+<tr class="separator:abd817b37d22c620c71897b1aff2f7d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a347b17cf64237bfcabbef4d3127980da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a347b17cf64237bfcabbef4d3127980da"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getNeuralOffsetTime</b> ()</td></tr>
+<tr class="separator:a347b17cf64237bfcabbef4d3127980da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34d5ba3dbada7d66573d725377298f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad34d5ba3dbada7d66573d725377298f2"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getNeuralTemporalFactor</b> ()</td></tr>
+<tr class="separator:ad34d5ba3dbada7d66573d725377298f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c7eadcedb53d5e7f282168c8da3d457"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c7eadcedb53d5e7f282168c8da3d457"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateCoefficients</b> (double bAlignTimestamp, double nAlignTimestamp)</td></tr>
+<tr class="separator:a2c7eadcedb53d5e7f282168c8da3d457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -169,9 +199,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>n_</b></td></tr>
 <tr class="memitem:a238b12e34828b94f5420a5f7a40bec03"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a238b12e34828b94f5420a5f7a40bec03"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>trials_</b></td></tr>
 <tr class="separator:a238b12e34828b94f5420a5f7a40bec03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ed965b8cd26d2852bfc7b65846f5912"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ed965b8cd26d2852bfc7b65846f5912"></a>
+<tr class="memitem:a5d912b3e3f4349aa7c62483b67be8173"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d912b3e3f4349aa7c62483b67be8173"></a>
 QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>alignmentMutex_</b></td></tr>
-<tr class="separator:a4ed965b8cd26d2852bfc7b65846f5912"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a5d912b3e3f4349aa7c62483b67be8173"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Calculates the alignment coefficients to move the neural timebase into the behavioral timebase. </p>
@@ -180,7 +210,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>The tool assumes a linear alignment such that BehavTime = A + B*NeuralTime. These A and B values can be access from <a class="el" href="class_alignment_tool.html#a347b17cf64237bfcabbef4d3127980da" title="Returns the Offset of the neural time from the behavioral time (ie. When is behavioral time zero with...">getNeuralOffsetTime()</a> and <a class="el" href="class_alignment_tool.html#ad34d5ba3dbada7d66573d725377298f2" title="Returns the neural temporal factor (ie. How much faster does behavioral time increase than neural tim...">getNeuralTemporalFactor()</a>. Alternatively, convenience functions <a class="el" href="class_alignment_tool.html#ae9caea7d9dbaf480b6545df6634c6e10" title="Converts the passed in time from neural to behavioral time using the current best fit parameters...">convertToBehavioralTimebase()</a> and <a class="el" href="class_alignment_tool.html#a43752b711ae350128598c28026b4c698" title="Converts the passed in time span from neural to behavioral time using the current best fit parameters...">convertSamplePeriodToBehavioralTimebase()</a> are provided as are their counterparts for converting the timestamps in the opposite direction. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="alignmenttool_8h_source.html#l00031">31</a> of file <a class="el" href="alignmenttool_8h_source.html">alignmenttool.h</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8h_source.html#l00031">31</a> of file <a class="el" href="common_2storage_2_alignment_tool_8h_source.html">AlignmentTool.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a43752b711ae350128598c28026b4c698"></a>
 <div class="memitem">
@@ -199,7 +229,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>Converts the passed in time span from neural to behavioral time using the current best fit parameters. </p>
 <p>This is like <a class="el" href="class_alignment_tool.html#ae9caea7d9dbaf480b6545df6634c6e10" title="Converts the passed in time from neural to behavioral time using the current best fit parameters...">convertToBehavioralTimebase()</a> except that the coeff_.A offset is not used. </p>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00056">56</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00055">55</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,7 +250,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>Converts the passed in time span from behavioral to neural time using the current best fit parameters. </p>
 <p>This is like <a class="el" href="class_alignment_tool.html#ae3896af2cf346ba9d090896be7bb5feb" title="Converts the passed in time from behavioral to neural time using the current best fit parameters...">convertToNeuralTimebase()</a> except that the coeff_.A offset is not used. </p>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00065">65</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00064">64</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -240,7 +270,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>Returns the correlation coefficient based on the last call to one of the alignment functions. </p>
 <p>The correlation coefficient is a measure of the quality of our least sqaures timing alignment. The closer to one our correlation coefficient is, the better the alignment. </p>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00086">86</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00085">85</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +301,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>Returns the jitter between a particular behavioral and neural timestamp (in behavioral time). </p>
 <p>In a perfect system, after alignment, behavioral and neural timestamps would be exactly the same. The jitter is the offset of these times after alignment. It results from the fact that the system is not perfect. The event code transmission from <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to Proxy is not instantaneous. Timestamping on event receipt/creation is not instantaneous, etc. </p>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00077">77</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00076">76</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +321,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>Returns the Offset of the neural time from the behavioral time (ie. When is behavioral time zero with respect to neural time zero). </p>
 <p>This is A of BehavTime = A + B*NeuralTime. </p>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00095">95</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00094">94</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -311,7 +341,7 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>Returns the neural temporal factor (ie. How much faster does behavioral time increase than neural time). </p>
 <p>This is B of BehavTime = A + B*NeuralTime. </p>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00104">104</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00103">103</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -344,13 +374,13 @@ QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom
 <p>The math is based on: <a href="http://mathworld.wolfram.com/LeastSquaresFitting.html">http://mathworld.wolfram.com/LeastSquaresFitting.html</a></p>
 <dl class="section note"><dt>Note</dt><dd>The neural timebase is the x-axis, while the behavioral timebase is the y-axis </dd></dl>
 
-<p>Definition at line <a class="el" href="alignmenttool_8cpp_source.html#l00120">120</a> of file <a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html#l00119">119</a> of file <a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>source/server/datacollection/<a class="el" href="alignmenttool_8h_source.html">alignmenttool.h</a></li>
-<li>source/server/datacollection/<a class="el" href="alignmenttool_8cpp_source.html">alignmenttool.cpp</a></li>
+<li>source/common/storage/<a class="el" href="common_2storage_2_alignment_tool_8h_source.html">AlignmentTool.h</a></li>
+<li>source/common/storage/<a class="el" href="common_2storage_2_alignment_tool_8cpp_source.html">AlignmentTool.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
