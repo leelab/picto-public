@@ -4,7 +4,6 @@ var searchData=
   ['mainwindow',['MainWindow',['../class_main_window.html',1,'']]],
   ['mapproperty',['MapProperty',['../class_picto_1_1_map_property.html',1,'Picto']]],
   ['mediamuxer',['MediaMuxer',['../class_picto_1_1_media_muxer.html',1,'Picto']]],
-  ['mediamuxer',['MediaMuxer',['../class_media_muxer.html',1,'']]],
   ['menu',['Menu',['../class_menu.html',1,'']]],
   ['menuitem',['MenuItem',['../struct_menu_mode_1_1_menu_item.html',1,'MenuMode']]],
   ['menumode',['MenuMode',['../class_menu_mode.html',1,'']]],

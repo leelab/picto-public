@@ -21,7 +21,6 @@ var searchData=
   ['mastertransitionactivated',['masterTransitionActivated',['../class_picto_1_1_slave_experiment_driver.html#a9f8f714f1cc830684c96076db3370cfc',1,'Picto::SlaveExperimentDriver::masterTransitionActivated(int transId)'],['../class_picto_1_1_slave_experiment_driver.html#a6525f56b9632d671dd51e12b5dce2aa4',1,'Picto::SlaveExperimentDriver::masterTransitionActivated(qulonglong dataId, int transId, bool remoteRunSignal)']]],
   ['matchcasechanged',['matchCaseChanged',['../class_designer.html#af2f2fd596ee880e69a7c04106eb553f2',1,'Designer']]],
   ['maxfortime',['maxForTime',['../struct_picto_1_1_playback_index.html#a87e6a7f297deaada4698add28d39476e',1,'Picto::PlaybackIndex']]],
-  ['mediamuxer',['MediaMuxer',['../class_media_muxer.html#a04323d17caca731772d2e210c2897a02',1,'MediaMuxer']]],
   ['menu',['Menu',['../class_menu.html#aa515edd7f33010c5f9c42a693c79dcc6',1,'Menu']]],
   ['menumode',['MenuMode',['../class_menu_mode.html#ade6be821ba40792588697e58edfeff07',1,'MenuMode']]],
   ['messagetimedout',['messageTimedOut',['../class_display_mode.html#a02502cdbade1da8ed6761a70778a632e',1,'DisplayMode']]],

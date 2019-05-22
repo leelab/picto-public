@@ -464,14 +464,8 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("First pass implementation of user-generated plots.");
-
-	releaseNoteList.append("Added scaling to the task viewer.");
-	releaseNoteList.append("Added cusomizable views in Remote Viewer, Test Viewer, and Replay Viewer.");
-	releaseNoteList.append("Added the ability to run analysis scripts in Remote Views.");
-	releaseNoteList.append("Modified how users navigate between and add tasks to experiments.");
-
-	releaseNoteList.append("Fixed a PictoServer crash.");
+	releaseNoteList.append("Clean up version - correct version number and release notes and build instructions.");
+	releaseNoteList.append("The first mikeyale commit at https://github.com/leelab/picto should build this version.");
 
 	//Format release notes:
 	QString releaseNotes;

@@ -8,6 +8,7 @@ CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
+INCLUDEPATH += $$(PICTO_TREE)/3rdparty/matlab
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Definitions

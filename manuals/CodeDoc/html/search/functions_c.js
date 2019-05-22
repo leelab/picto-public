@@ -44,6 +44,6 @@ var searchData=
   ['loadrun',['loadRun',['../class_picto_1_1_file_session_loader.html#a303ad7f65d6cced38432128826fedd0c',1,'Picto::FileSessionLoader::loadRun()'],['../class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200',1,'Picto::PlaybackStateUpdater::loadRun()']]],
   ['loadrundata',['loadRunData',['../class_picto_1_1_file_session_loader.html#a7f02445db069cb6c8b1fb5110426cbd3',1,'Picto::FileSessionLoader']]],
   ['loadscene',['loadScene',['../class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b',1,'Designer']]],
-  ['loadsession',['loadSession',['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013',1,'ReplayViewer::loadSession()'],['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()']]],
+  ['loadsession',['LoadSession',['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()'],['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013',1,'ReplayViewer::loadSession()']]],
   ['loadwidget',['loadWidget',['../class_picto_1_1_analysis_output.html#a8dfcc745ea219323befdb49fcb7892e0',1,'Picto::AnalysisOutput']]]
 ];

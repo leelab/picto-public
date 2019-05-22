@@ -10,27 +10,27 @@
 
 \subsection get_install_binary Get and Install Binary Distributions
 
-Just about everything you need to create an old version of the development environment (apart from the actual Picto source) is available in \\cog\\it\\Software\\Picto\\Developmentenvironment if you're on the Leelab network.  To build the latest and greatest version based on newer versions of the various libraries underlying Picto, you will need to use the links throughout this document to download locations for each required software package.
+Just about everything you need to create an old version of the development environment (apart from the actual Picto source) is available in \\ganglia\\it\\Software\\Picto\\DevelopmentEnvironment if you're on the Leelab network.  To build the latest and greatest version based on newer versions of the various libraries underlying Picto, you will need to use the links throughout this document to download locations for each required software package.
 
  -# Install Visual Studio 2013.
 
  -# Install the latest version of Tortoise Git.  This is currently available at https://code.google.com/p/tortoisegit/.
 
- -# Install Qt 5.5.1 for Windows 32-bit (VS 2013, 804 MB). This is currently available at https://www.qt.io/download-open-source/#section-2.  When asked, specify that Qt 5.5.1 be installed at c:\\Qt\\Qt5.5.1. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting).  The 32-bit package is required for the Plexon library wrapper.
+ -# Install Qt 5.5.1 for Windows 32-bit (VS 2013, 804 MB). This is currently available via http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-windows-x86-msvc2013-5.5.1.exe.  When asked, specify that Qt 5.5.1 be installed at c:\\Qt\\Qt5.5.1. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting).  The 32-bit package is required for the Plexon library wrapper.
 
- -# Install Qt 5.5.1 for Windows 64-bit (VS 2013, 823 MB). This is currently available at https://www.qt.io/download-open-source/#section-2.  When asked, specify that Qt 5.5.1 be installed at c:\\Qt64\\Qt5.5.1. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting).  The 64-bit package is required for Picto itself.
+ -# Install Qt 5.5.1 for Windows 64-bit (VS 2013, 823 MB). This is currently available at http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-windows-x86-msvc2013_64-5.5.1.exe.  When asked, specify that Qt 5.5.1 be installed at c:\\Qt64\\Qt5.5.1. When you reach the "Select Components" window, use the "Select All" button to make sure that all components are selected (this is not the default setting).  The 64-bit package is required for Picto itself.
 
- -# Install the Ni-Daq 9.1 API.  The Picto director uses a National Instruments card and the Director needs to link to this card's libraries.  The Ni-Daq 9.1 installer is currently available at: http://joule.ni.com/nidu/cds/view/p/id/1614/lang/en.  Even as of this writing, this is not the newest version.  You are welcome to (encouraged) to install the newest version of the API; however, be warned that this may require some upgrade of the Picto code if their have been changes in the Ni-Daq API.  This installation takes a while.  Something like an hour.
+ -# Install the Ni-Daq 18.6 API.  The Picto director uses a National Instruments card and the Director needs to link to this card's libraries.  The Ni-Daq 9.1 installer is currently available at: http://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html.  Even as of this writing, this is not the newest version.  You are welcome to (encouraged) to install the newest version of the API; however, be warned that this may require some upgrade of the Picto code if their have been changes in the Ni-Daq API. Note that this should be done after Visual Studio 2013 is installed, to ensure Visual Studio has its include paths set correctly.
 
  -# Install the Phidgets libraries.  These are the libraries used by the Director to control the Pictobox's LCD display and input dial.
 
-  -# Get the Phidgets library zip.  It is available at: http://www.phidgets.com/docs/OS_-_Windows#Quick_Downloads under the name "Phidget21 Libraries" as of this writing.  
+  -# Get the Phidgets library zip.  It is available at: https://www.phidgets.com/downloads/phidget21/libraries/windows/Phidget21-windevel.zip as of this writing.
 
   -# Copy the top level directory inside the zip file to c:\\ and change its name to "phidgets"
 
- -# Install DirectX.  The current version of the PictoDirector uses DirectX to speed up its frame rate.  This means that the current director only works on windows.  Until we work out a better platform independent way to do this, you will only be able to build the Director project in the Picto solution correctly if you install the DirectX SDK first.  As of this writing, the latest version was available from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=6812.  Download it and install it.
+ -# Install DirectX.  The current version of the PictoDirector uses DirectX to speed up its frame rate.  This means that the current director only works on windows.  Until we work out a better platform independent way to do this, you will only be able to build the Director project in the Picto solution correctly if you install the DirectX SDK first.  As of this writing, the latest version was available from https://www.microsoft.com/en-us/download/confirmation.aspx?id=6812 and was named DXSDK_Jun10.exe.  Download it and install it.
 
- -# Install Perl.  We use ActivePerl (currently at version 5.16.2.1602) which you can find at http://www.activestate.com/activeperl.  The ActivePerl website is also linked to from the Perl website http://www.perl.org/get.html.  After installation, make sure that the perl.exe is in your path.
+ -# Install Perl.  We use ActivePerl (currently at version 5.23.3.2603) which you can find at http://www.activestate.com/activeperl.  After installation, make sure that the perl.exe is in your path.
 
  -# Install 7-Zip (http://www.7-zip.org/) or some other application that knows how to open .gz and .tar files.
 
@@ -38,23 +38,23 @@ Just about everything you need to create an old version of the development envir
 
 \subsection get_openssl Get OpenSSL
 
- -# Since there is not an official dependable link for OpenSSL binary distributions, we build OpenSSL from source.  Get the latest version of the OpenSSL source from http://www.openssl.org/source/.  The most up to date version as of this writing was openssl-1.0.1c.
+ -# Since there is not an official dependable link for OpenSSL binary distributions, we build OpenSSL from source.  Get the latest version of the OpenSSL source from http://www.openssl.org/source/.  The most up to date version as of this writing was openssl-1.1.1b.
 
- -# Decompress the zipped tarballed OpenSSL source and copy the top level directory (in our case "openssl-1.0.1c") to c:\\ .
+ -# Decompress the zipped tarballed OpenSSL source and copy the top level directory (in our case "openssl-1.1.1b") to c:\\ .
 
- -# Rename the "openssl-Version" directory that you just copied to "openssl".
+ -# Rename the "openssl-?.?.??" directory that you just copied to "openssl".
 
 \subsection get_qwt Get Qwt
 
- At the time of this writing, Qwt 6.1.2 was the latest version and it offered support for Qt 5.  It is important to remember that QWT is updated after Qt such that it is possible that the latest stable version may not support the latest version of Qt.  Make sure to check for this when you are selecting Qt and Qwt versions.  Information on the latest version of Qwt is available at http://qwt.sourceforge.net/index.html.
+ At the time of this writing, Qwt 6.1.4 was the latest version and it offered support for Qt 5.  It is important to remember that QWT is updated after Qt such that it is possible that the latest stable version may not support the latest version of Qt.  Make sure to check for this when you are selecting Qt and Qwt versions.  Information on the latest version of Qwt is available at http://qwt.sourceforge.net/index.html.
 
- -# Download qwt-6.1.2 (or the latest available version)
+ -# Download qwt-6.1.4 (or the latest available version)
 
-  -# Go to http://sourceforge.net/projects/qwt/files/qwt/ and drill down in the directory tree of the latest version to the level where a zipped archive of the code is available.  At the time of this writing, this was qwt-6.1.2.zip available at http://sourceforge.net/projects/qwt/files/qwt/6.1.2/.
+  -# At the time of this writing, this was at https://sourceforge.net/projects/qwt/files/qwt/6.1.4/qwt-6.1.4.zip/download.
 
   -# Download the zip archive and extract it.
 
- -# In the downloaded qwt-# .#.# folder, drill down to the top level containing lots of directories (src, doc, etc) and files (qwt.pro, README, etc).  In our case this was in: (Download Location)\\qwt-6.1.2\\qwt-6.1.2.
+ -# In the downloaded qwt-# .#.# folder, drill down to the top level containing lots of directories (src, doc, etc) and files (qwt.pro, README, etc).  In our case this was in: (Download Location)\\qwt-6.1.4\\qwt-6.1.4.
 
  -# Create a c:\\qwt directory, and copy all of the contents of the folder found in the last step to that folder.  
 
@@ -62,21 +62,6 @@ Just about everything you need to create an old version of the development envir
 
  -# Create directories to form the path c:\\Projects\\Picto.
 
- -# You have two options for getting the Picto source.  Use option A in a normal scenario and option B in a scenario where you have no direct access to an existing Picto source tree.
-
-  -# Option A
-   -# Copy everything including the hiddin .git reporitory folder from the c:\\Projects\\Picto directory of an existing Picto development environment.
-
-   -# When the directory is finished being copied, right click on the c:\\Projects\\Picto directory and select the "Git Sync..." option that was installed with TortoiseGit.
-   -# In the dialog that opens, if the "Remote URL:" field is blank (ie. doesn't say 'origin'), use the URL of the Picto repository "https://github.com/leelab/picto.git".
-
-   -# Press the "Pull" button.
-
-   -# An "Authentication" dialog will come up.  Enter the Github Username and Password that we assumed you have at the beginning of this document and press OK.
-
-   -# Once the Git Pull is done, you'll have access to all of the latest and greatest Picto code in your local copy of the Git repository, but your actual source tree will not have changed. You'll probably want to get rid of any local source changes that were copied from the machine where you got your Picto source.  To do this, right click the Picto directory and select "TortoiseGit">"Revert...", then check "Select / deselect all", then "OK".
-
-  -# Option B
    -# Right click on c:\\Projects and use the "Git Clone..." option that was installed with TortoiseGit to get the Picto source.
 
    -# For "URL:" use "https://github.com/leelab/picto.git"
@@ -85,7 +70,7 @@ Just about everything you need to create an old version of the development envir
 
    -# An "Authentication" dialog will come up.  Enter the Github Username and Password that we assumed you have at the beginning of this document and press OK.
 
-   -# The Picto source will begin downloading.  The download will depend on your internet connection.  In our case with a fairly good connection, this took around 10 minutes.  When the download is complete, you will have a fully set up source tree with local git repository in "c:\projects\Picto".
+   -# The Picto source will begin downloading.  The download will depend on your internet connection.  When the download is complete, you will have a fully set up source tree with local git repository in "c:\projects\Picto".
 
 \subsection get_prop_browser Get Qt Property Browser
 
@@ -153,7 +138,7 @@ The QtPropertyBrowser library is included with the Qt 5.5.1 installation in sour
 
 \subsection build_picto Build Picto
 
-While the foundation for Picto was built with multiplatform deployment in mind (except for the Director due to DirectX), we have only ever built Picto for Windows x86 and x64.  To do this we first use qmake to create a visual studio solution where developement takes place. We can then build Picto either from that solution or from the command line.
+While the foundation for Picto was built with multiplatform deployment in mind (except for the Director due to DirectX), we have only ever built Picto for Windows x86 and x64.  To do this we first use qmake to create a visual studio solution where developement takes place. We then build Picto from that solution.
 
  -# In a Visual Studio 2013 x64 Native Tools Command Prompt type the following:
 
@@ -167,7 +152,7 @@ While the foundation for Picto was built with multiplatform deployment in mind (
 
  -# You should now have a Picto.sln file in the c:\\Projects\\Picto directory.
 
-  -# To build from the command line, run "nmake all". Otherwise, open and build the c:\\Projects\\Picto\\Picto.sln solution that was just created and build it from within visual studio.
+  -# Open the c:\\Projects\\Picto\\Picto.sln solution that was just created, choose "Release" and "x64" and build it from within visual studio.
 
 
 
@@ -204,13 +189,20 @@ While Picto is now built as an x64 application, the Plexon library is exclusivel
 
   -# You should now have a PlexonWrapper.sln file in the c:\\Projects\\Picto directory.
 
-  -# To build from the command line, run "nmake all". Otherwise, open and build the c:\\Projects\\Picto\\Picto.sln solution that was just created and build it from within visual studio.
+  -# Open and build the c:\\Projects\\Picto\\Picto.sln solution, that was just created, choose "Release", and build it from within visual studio.
 
 
 \subsection install_qt_plugin Install Qt Plugin for Visual Studio
 
-Qt has a number of data types that are difficult to debug using a clean Visual Studio installation.  When debugging an application using Qt5, for example, QString's actual text values cannot be viewed.  To fix this and other similar issues, install the "Visual Studio Add-in 1.2.2 for Qt5" (or newer version if available) which can be found as of this writing at http://qt-project.org/downloads#qt-other.
+Qt has a number of data types that are difficult to debug using a clean Visual Studio installation.  When debugging an application using Qt5, for example, QString's actual text values cannot be viewed.  To fix this and other similar issues, install the "QT Visual Studio Tools 2.3.2" (or newer version if available) which can be found as of this writing at https://download.qt.io/official_releases/vsaddin/.
 
+
+\subsection documentation Documentation
+
+Much of the Picto documentation is generated by the doxygen tool from comments in the Picto code. The tools\\win.common\\GenerateBuildFiles.cmd step in building Picto uses doxygen to create .html files in manuals\\CodeDoc\\html.
+ - The starting point of this generated documentation is found in <a href="file:///c:/Projects/picto/manuals/CodeDoc/html/index.html">file:///c:/Projects/picto/manuals/CodeDoc/html/index.html</a>.  That file is generated from source\\documentation\\developersguide\\mainpage.h, and this page of that documentation is generated from source\\documentation\\developersguide\\build_environment_preparation.h.
+ - This circularity should be mitigated by manually updating https://github.com/leelab/picto/wiki/BuildingDevEnvironment after each change to this source\\documentation\\developersguide\\build_environment_preparation.h file.
+ - There is other documentation included in the git repository under manuals\\; it can be modified and then checked back into git.
 
 \subsection problems Problems?
 
