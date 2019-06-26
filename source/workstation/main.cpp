@@ -100,7 +100,33 @@ int main(int argc, char *argv[])
 	Picto::InitializeLib(&app,localeLanguageCode);
 	Picto::InitializePorts(Picto::Names->workstationAppName);
 
-	MainWindow mainWin;
+	//If there is a command of -bgColor use it to figure out the version of phidgets api to call
+	int bgColRArgIdx = app.arguments().indexOf("-R");
+	int bgColR = 0;
+	if (bgColRArgIdx > 0)
+	{
+		bgColR = app.arguments()[bgColRArgIdx + 1].toInt();
+	}
+
+	//If there is a command of -bgColor use it to figure out the version of phidgets api to call
+	int bgColGArgIdx = app.arguments().indexOf("-G");
+	int bgColG = 0;
+	if (bgColGArgIdx > 0)
+	{
+		bgColG = app.arguments()[bgColGArgIdx + 1].toInt();
+	}
+
+	//If there is a command of -bgColor use it to figure out the version of phidgets api to call
+	int bgColBArgIdx = app.arguments().indexOf("-B");
+	int bgColB = 0;
+	if (bgColBArgIdx > 0)
+	{
+		bgColB = app.arguments()[bgColBArgIdx + 1].toInt();
+	}
+
+	QColor bgColor(bgColR, bgColG, bgColB, 255);
+
+	MainWindow mainWin(bgColor);
 	UpdateDownloader::getInstance()->setRootWidget(&mainWin);
 	UpdateDownloader::getInstance()->enableUpdateWarning(true);
 	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());

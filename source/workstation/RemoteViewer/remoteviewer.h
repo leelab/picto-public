@@ -63,7 +63,7 @@ class RemoteViewer : public Viewer
 {
 	Q_OBJECT
 public:
-	RemoteViewer(QWidget *parent=0);
+	RemoteViewer(QColor bgColor, QWidget *parent = 0);
 	virtual ~RemoteViewer();
 
 	QString type() { return "Remote"; };
@@ -287,6 +287,8 @@ private:
 	QCheckBox* enablePlots_;
 	QVBoxLayout *leftPane;
 	QSharedPointer<TaskConfig> currentTaskConfig_;
+
+	QColor bgColor_;
 
 private slots:
 	void notifyAnalysisSelection(const QString&, bool, bool);

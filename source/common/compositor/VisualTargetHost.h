@@ -58,7 +58,7 @@ class VisualTargetHost : public QWidget
 {
 	Q_OBJECT
 public:
-	VisualTargetHost();
+	VisualTargetHost(QColor bgColor=2);
 	virtual ~VisualTargetHost(){};
 
 	virtual void resizeEvent(QResizeEvent *event);
@@ -76,6 +76,8 @@ protected:
 	
 private:
 	QSharedPointer<VisualTarget> target_;
+
+	QColor BgCol_;
 private slots:
 	void presented(double frameTime);
 };

@@ -1,22 +1,33 @@
-#include "MediaMuxer.h"
-#include "../memleakdetect.h"
-
+/*
+*/
 #include <QPainter>
+#include "MediaMuxer.h"
+#include "ffmpeg.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 #define N 8000
 
-namespace Picto {
+/******************************************************************************
+*******************************************************************************
+* MediaMuxer   MediaMuxer   MediaMuxer   MediaMuxer   MediaMuxer
+*******************************************************************************
+******************************************************************************/
 
+
+/******************************************************************************
+* PUBLIC   PUBLIC   PUBLIC   PUBLIC   PUBLIC   PUBLIC   PUBLIC   PUBLIC   PUBLIC
+******************************************************************************/
+
+/**
+gop: maximal interval in frames between keyframes
+**/
 MediaMuxer::MediaMuxer()
 {
 	initVars();
 	initCodec();
 
-	lastSpikePts_ = -1;
-	firstSpike_ = 0;
-	firstPts_ = 0;
+	lastSpikePts_ = 0;
 }
 MediaMuxer::~MediaMuxer()
 {
@@ -29,16 +40,15 @@ bool MediaMuxer::createFile(QString fileName, unsigned width, unsigned height, u
 
 	Width = width;
 	Height = height;
-	Gop = gop; //maximal interval in frames between keyframes
+	Gop = gop;
 	Bitrate = bitrate;
 	FPS = fps;
 
-	//remove this test as the resolution can now be 1400 x 1050
-		//if (!isSizeValid())
-		//{
-		//	printf("Invalid size\n");
-		//	return false;
-		//}
+	if (!isSizeValid())
+	{
+		printf("Invalid size\n");
+		return false;
+	}
 
 	/* Allocate the output media context */
 	pOutputFormat_ = ffmpeg::av_guess_format(NULL, fileName.toStdString().c_str(), NULL);
@@ -58,25 +68,48 @@ bool MediaMuxer::createFile(QString fileName, unsigned width, unsigned height, u
 	_snprintf_s(pOutputFormatCtx_->filename, sizeof(pOutputFormatCtx_->filename), "%s", fileName.toStdString().c_str());
 
 	// Add the video stream
+
+	/* Add the audio and video streams using the default format codecs and initialize the codecs. */
+	/* allocate the output media context */
 	addVideoStream(fileName);
 
-	// Add the audio stream using the default format codec
 	ffmpeg::AVOutputFormat *fmt = pOutputFormatCtx_->oformat;
 	if (fmt->audio_codec)
 		addAudioStream(fileName, fmt->audio_codec);
 
-	//initialize parameters
 	pAudioStream_->time_base.den = FPS;
 	pAudioStream_->time_base.num = 1;
 	pVideoStream_->time_base.den = FPS;
 	pVideoStream_->time_base.num = 1;
 
+
+	//If we were using a file, erase it
+	if (rewardFile_)
+		rewardFile_->remove();
+	if (rewardFileStream_)
+		rewardFileStream_.clear();
+	//create spikes output file
+	QString filename = "C:/Projects/Picto/output/bin/TemporaryFiles/ExpVideos/rewardData.txt";
+	//QFile file(filename);
+	rewardFile_ = QSharedPointer<QFile>(new QFile(filename));
+	if (rewardFile_->open(QIODevice::ReadWrite))
+	{
+		rewardFileStream_ = QSharedPointer<QTextStream>(new QTextStream(rewardFile_.data()));
+		QString header = "Start here,";
+		(*rewardFileStream_) << QString(header);
+		(*rewardFileStream_).flush();
+	}
+
 	ok = true;
-	return true;	
+	return true;
+
+	
+
 }
 
 void MediaMuxer::addAudioStream(QString fileName, ffmpeg::CodecID codec_id)
 {
+
 	// Add the audio stream
 	ffmpeg::AVCodec *encoder = avcodec_find_encoder(codec_id);
 	pAudioStream_ = ffmpeg::av_new_stream(pOutputFormatCtx_, 0);
@@ -134,11 +167,14 @@ void MediaMuxer::addAudioStream(QString fileName, ffmpeg::CodecID codec_id)
 	}
 
 	av_write_header(pOutputFormatCtx_);
+
+
 }
 
 void MediaMuxer::addVideoStream(QString fileName)
 {
 	// Add the video stream
+
 	pVideoStream_ = ffmpeg::av_new_stream(pOutputFormatCtx_, 0);
 	if (!pVideoStream_)
 	{
@@ -160,10 +196,16 @@ void MediaMuxer::addVideoStream(QString fileName)
 
 	avcodec_thread_init(pVideoCodecCtx_, 10);
 
+	//if (c->codec_id == CODEC_ID_MPEG2VIDEO)
+	//{
+	//c->max_b_frames = 2;  // just for testing, we also add B frames
+	//}
+
 	// some formats want stream headers to be separate
 	if (pOutputFormatCtx_->oformat->flags & AVFMT_GLOBALHEADER)
 		pVideoCodecCtx_->flags |= CODEC_FLAG_GLOBAL_HEADER;
-	
+
+
 	if (av_set_parameters(pOutputFormatCtx_, NULL) < 0)
 	{
 		printf("Invalid output format parameters\n");
@@ -227,8 +269,10 @@ bool MediaMuxer::close()
 		// close_video
 		ffmpeg::avcodec_close(pVideoStream_->codec);
 	
+
 	freeFrame();
 	freeOutputBuf();
+
 
 	/* free the streams */
 	for (int i = 0; i < pOutputFormatCtx_->nb_streams; i++)
@@ -245,8 +289,14 @@ bool MediaMuxer::close()
 
 	initVars();
 
+	if (!rewardFile_.isNull() && rewardFile_->isOpen())
+	{
+		rewardFile_->close();
+	}
+
 	return true;
 }
+
 
 /**
 \brief Encode one frame
@@ -370,28 +420,39 @@ int MediaMuxer::encodeImage_p(const QImage &img, bool custompts, unsigned pts)
 int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 {	
 	printf("encodeAudioFrame: %d\n", pts);
-	
-	if (firstSpike_ == 0)
-	{
-		firstSpike_ = spikeTime;
-		firstPts_ = pts;
-	}
 
 	pAudioCodecCtx_->coded_frame->pts = pts;  // Set the time stamp
 
 	unsigned currentSpikePts = (unsigned)pts; //ms: in theory *1000/FPS but here FPS=1000 (fps)
 
+	double PtsD = (double)(currentSpikePts);
+
+	if (rewardFileStream_ && reward)
+	{
+		QString timeStr = "R_" + QString::number(PtsD) + ",";
+		(*rewardFileStream_) << QString(timeStr);
+		(*rewardFileStream_).flush();
+	}
+
+
 	// simple sound encoding	
+	// N * 0.005 * 16 = 3528
 	double Fs = 8000.; //8 samples per ms - sound is 1ms
-	uint8_t samples[5 * N * 8] = { 0 }; // large buffer
-	//int n;                // buffer index
+	uint8_t samples[5 * N * 8] = { 0 }; // large buffer for 5 sec in case time between spikes fired is more than 1sec... //has to do with 16bits/sample encoding or utf_8 (8bits per sample)
+	int n;                // buffer index
 	
-	double duration = 1.0; //sound duration in ms
-	double silenceDuration = 50; //ms
+	double duration = 1.0; //ms
+	double silenceDuration = 50; //ms - not detectable until at least 10ms
 	double amplitude = 100.; //amplitude	
 	
+	if (lastSpikePts_ == 0)
+	{
+		lastSpikePts_ = currentSpikePts;
+	}
+
+
 	int num_silent_samples = 0;
-	
+
 	// add silence
 	double tmp = (double)(currentSpikePts - lastSpikePts_);
 	if (tmp > 0)
@@ -407,25 +468,28 @@ int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 			{
 				samples[x] = 0.0;
 			}
+
 		}
 	}
 	
 	if (reward) //1 ms
 	{
 		duration = 1.;
-		amplitude = 90.;
-		double freq = 2000.;
+		amplitude = 90;
+		double freq = 250;
 
 		// add sound
 		int num_samples = round(duration * (Fs / 1000.0));
 		num_samples = 2 * num_samples;
 
 		for (int x = num_silent_samples; x < num_silent_samples + num_samples; ++x)
+		//for (int x = 0; x < num_samples; ++x)
 		{
 			samples[x] = amplitude * sin(2 * M_PI * freq * (x / Fs));
 		}
 
 		audio_outbuf_size = 1 * (num_silent_samples + num_samples);
+		//audio_outbuf_size = 1 * (num_samples);
 		
 	}
 	else //1ms
@@ -439,10 +503,9 @@ int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 			samples[x] = amplitude;
 		}
 		//set buffer
-		audio_outbuf_size = 1 * (num_silent_samples + num_samples); 
-	}
+		audio_outbuf_size = 1 * (num_silent_samples + num_samples);  //(nb of samples * 16bits per sample/8bits per samples(utf8)?
 	
-
+	}
 	lastSpikePts_ = currentSpikePts;
 
 	audio_outbuf = new uint8_t[audio_outbuf_size];
@@ -450,8 +513,8 @@ int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 	if (audio_outbuf == 0)
 		return false;
 	
-	//int frame_size = pAudioCodecCtx_->frame_size;
 	int  out_size = ffmpeg::avcodec_encode_audio(pAudioCodecCtx_, audio_outbuf, audio_outbuf_size, (const short*)samples);
+
 	pAudioCodecCtx_->coded_frame->pts = pts;  // Set the time stamp
 
 	if (out_size>0)
@@ -472,14 +535,17 @@ int MediaMuxer::encodeAudioFrame(unsigned pts, double spikeTime, bool reward)
 
 		pkt.size = out_size;
 		//pkt.duration = 100;
-		//pkt.dts = pkt.pts;
+		pkt.dts = pkt.pts;
 
 		int ret = av_interleaved_write_frame(pOutputFormatCtx_, &pkt);
-		if (ret < 0)
+		if (ret<0)
 			return -1;
-	
 		av_free_packet(&pkt);
 	}
+
+	//end simple sound encoding
+
+
 	return pkt.size;
 }
 
@@ -525,7 +591,7 @@ Allocate memory for the compressed bitstream
 **/
 bool MediaMuxer::initOutputBuf()
 {
-	outbuf_size = getWidth()*getHeight() * 3;      
+	outbuf_size = getWidth()*getHeight() * 3;        // Some extremely generous memory allocation for the encoded frame.
 	outbuf = new uint8_t[outbuf_size];
 	if (outbuf == 0)
 		return false;
@@ -706,5 +772,4 @@ bool MediaMuxer::convertImage_sws(const QImage &img)
 
 	return true;
 }
-}; //namespace Picto
 

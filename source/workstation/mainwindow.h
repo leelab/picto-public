@@ -43,7 +43,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow();
+	MainWindow(QColor);
 	virtual ~MainWindow() {};
 
 protected:
@@ -134,4 +134,6 @@ private:
 	bool isModified_;
 	QString currFile_;
 	QStringList recentFiles_;
+
+	QColor bgCol_;
 };

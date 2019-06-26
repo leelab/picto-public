@@ -13,7 +13,10 @@ MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/main.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/engineconnections.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/engineconnections.cpp
-HEADERS += $$(PHIDGETSDIR)/phidget21.h
+HEADERS += $$(PHIDGETSDIR)/phidgets21/phidget21.h
+HEADERS += $$(PHIDGETSDIR)/phidgets22/phidget22.h
+HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/legacyphidgets.h
+SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/legacyphidgets.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/phidgets.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/FrontPanelInfo.h
@@ -69,14 +72,18 @@ MOC_DIR = $$(PICTO_TREE)/intermediates/moc/embedded/frontpanel
 # Libraries
 
 contains(MACHINE_TYPE,X86) {
-	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/x86
+	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/phidgets21/x86
+	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/phidgets22/x86
 }
 contains(MACHINE_TYPE,X64) {
-	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/x64
+	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/phidgets21/x64
+	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/phidgets22/x64
 }
 
 wince*:LIBS += phidget21.lib
 win32:!wince*:LIBS += phidget21.lib
+wince*:LIBS += phidget22.lib
+win32:!wince*:LIBS += phidget22.lib
 
 build_pass:CONFIG(debug, debug|release) {
 win32:QMAKE_LIBDIR += $$(PICTO_TREE)/intermediates/lib/debug

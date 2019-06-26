@@ -32,6 +32,7 @@ addSubdirs(source/embedded)
 
 addSubdirs(source/proxyplugins/plexonplugin)
 addSubdirs(source/proxyplugins/tdtplugin)
+addSubdirs(source/proxyplugins/RHD2000Control)
 addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
 #SUBDIRS = source/common

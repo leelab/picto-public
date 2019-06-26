@@ -12,8 +12,8 @@ using namespace Picto;
 #define FPS 60
 #define VIDEOTYPE "avi"	//QtFFMpegWrapper supported types should be (but in testing, not so sure): *.avi *.asf *.mpg *.wmv
 
-RecordingVisualTargetHost::RecordingVisualTargetHost()
-	: VisualTargetHost()
+RecordingVisualTargetHost::RecordingVisualTargetHost(QColor bgColor)
+	: VisualTargetHost(bgColor)
 {
 	recording_ = false;
 	recordingInitialized_ = false;
@@ -131,6 +131,10 @@ void RecordingVisualTargetHost::paintEvent(QPaintEvent* e)
 }
 void RecordingVisualTargetHost::rewarded(int quantity)
 {
+//Leave if recording mode is disabled
+	if (!recording_)
+		return;
+
 	if (encoder_)
 	{
 		//Update the recording time
@@ -147,6 +151,10 @@ void RecordingVisualTargetHost::rewarded(int quantity)
 }
 void RecordingVisualTargetHost::spikeAdded(double spikeTime)
 {
+//Leave if recording mode is disabled
+	if (!recording_)
+		return;
+
 	if (encoder_)
 	{
 		//Update the recording time

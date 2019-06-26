@@ -26,7 +26,7 @@ class RecordingVisualTargetHost : public VisualTargetHost
 {
 	Q_OBJECT
 public:
-	RecordingVisualTargetHost();
+	RecordingVisualTargetHost(QColor bgColor);
 	~RecordingVisualTargetHost();
 
 		bool isRecording();
@@ -48,7 +48,6 @@ public:
 		
 	protected:
 		virtual void paintEvent(QPaintEvent *e);
-
 
 	private:
 		bool initializeRecording();

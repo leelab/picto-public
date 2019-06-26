@@ -70,7 +70,7 @@ class TestViewer : public Viewer
 {
 	Q_OBJECT
 public:
-	TestViewer(QWidget *parent=0);
+	TestViewer(QColor bgColor, QWidget *parent = 0);
 	virtual ~TestViewer(){};
 	QString type() { return "Test"; };
 
@@ -149,6 +149,7 @@ private:
 	QSharedPointer<DesignRoot> designRootForData_;
 	int taskTabIndex_;
 
+	QColor bgCol_;
 private slots:
 	void playTriggered();
 	void running();
