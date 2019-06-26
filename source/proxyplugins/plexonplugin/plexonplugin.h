@@ -13,6 +13,7 @@ class QProcess;
 QT_END_NAMESPACE
 
 #include "../../proxyserver/NeuralDataAcqInterface.h"
+#include "QProgressBar.h"
 
 #define MAX_MAP_EVENTS_PER_READ 5000
 
@@ -44,6 +45,7 @@ public:
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 	bool acqDataAfterNow();
+	void alignSysTimes(QString rhdFile, QString saveFolder, QProgressBar* bar, QString sqlFile, QString mdaFile, bool convert = true){};
 private:
 	QVector<QSharedPointer<Picto::LFPDataUnitPackage>> lfpData_;
 	NeuralDataAcqInterface::deviceStatus deviceStatus_; 

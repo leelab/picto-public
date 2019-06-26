@@ -35,12 +35,12 @@
 
 #include "../../common/storage/NeuralDataUnit.h"
 
-TestViewer::TestViewer(QWidget *parent) :
+TestViewer::TestViewer(QColor bgColor,QWidget *parent) :
 	Viewer(parent),
 	status_(Stopped),
 	isRunning_(false),
 	NeuralTick_("audio/tick.wav"),
-	selectedChannel_(0), selectedUnit_(0), noCallBack_(false)
+	selectedChannel_(0), selectedUnit_(0), noCallBack_(false), bgCol_(bgColor)
 {
 	setupEngine();
 	setupUi();
@@ -175,7 +175,7 @@ void TestViewer::setupEngine()
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
-	visualTargetHost_ = new Picto::RecordingVisualTargetHost();
+	visualTargetHost_ = new Picto::RecordingVisualTargetHost(bgCol_);
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
 	connect(visualTargetHost_, SIGNAL(clickDetected(QPoint)), this, SLOT(operatorClickDetected(QPoint)));
 	connect(visualTargetHost_, SIGNAL(updateRecordingTime(double)), this, SLOT(setRecordTime(double)));

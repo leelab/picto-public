@@ -99,14 +99,15 @@
  *	for researchers to build and run their own experiments fully within the Picto system without
  *	help from a Picto software developer.
  */
-#define PICTOVERSION "2.6.9"
+#define PICTOVERSION "2.7.2"  // This is the cleanup version corresponding to the last version Vered released to the Nandy lab.
 /*! \brief This is the current version of the Picto design syntax.  It is saved along with every Picto design
  *	so that it will be clear on deserialization whether some syntax needs to be upgraded and how.
  */
 #define DESIGNSYNTAXVERSION "0.0.2"
 
-#define RESOLUTIONH 800
-#define RESOLUTIONV 600
+// Lee Lab: 800x600, Nandy lab: Resolution: 1400x1050
+#define RESOLUTIONH 1400
+#define RESOLUTIONV 1050
 
 #ifdef _DEBUG 
 	//Uncomment this to enable memory leak detection

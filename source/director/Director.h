@@ -37,7 +37,9 @@ public:
 		int xDiamChannel = -1,
 		int yDiamChannel = -1,
 		int posSampPer = 2,
-		int diamSampPer = 4);
+		int diamSampPer = 4,
+		QColor bgCol = 2,
+		int legacyPhidgets=1);
 	virtual ~Director();
 protected:
 	virtual QString name();
@@ -65,6 +67,8 @@ private:
 	int posSampPer_;
 	int diamSampPer_;
 	bool useFrontPanel_;
+	QColor bgCol_;
+	int legacyPhidgets_;
 private slots:
 	void changeName(QString name);
 	void changeRewardDuration(int controller, int duration);

@@ -1,3 +1,8 @@
+/*! \file mainwindow.cpp
+ * \brief Main Workstation Window including releaase notes
+ *	\author Michael Scudder, Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2019
+ */
 #include "mainwindow.h"
 #include "../common/globals.h"
 
@@ -15,11 +20,12 @@
 #endif
 
 #include "../common/memleakdetect.h"
-
+#include "../common/common.h"
 
 #define DEFAULT_FILE ":/BuiltInExperiments/EyeCalibration.xml"
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QColor backgroundCol):
+bgCol_(backgroundCol)
 {
 	designRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
 	currViewer_ = NULL;
@@ -198,7 +204,7 @@ void MainWindow::createViewers()
 	initViewerAction_ = viewerAction;
 
 	//Test Viewer
-	viewer = new TestViewer(this);
+	viewer = new TestViewer(bgCol_,this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Test experiment"), this);
@@ -211,7 +217,7 @@ void MainWindow::createViewers()
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//remote viewer
-	viewer = new RemoteViewer(this);
+	viewer = new RemoteViewer(bgCol_,this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Run remote experiment"), this);
@@ -224,7 +230,7 @@ void MainWindow::createViewers()
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
 	//Replay viewer
-	viewer = new ReplayViewer(this);
+	viewer = new ReplayViewer(bgCol_,this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
 	viewerAction = new QAction(tr("&Replay experiment"), this);
@@ -464,8 +470,22 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Clean up version - correct version number and release notes and build instructions.");
-	releaseNoteList.append("The first mikeyale commit at https://github.com/leelab/picto should build this version.");
+	releaseNoteList.append("Clean up version corresponding to the the last version Vered released to the Nandy lab.");
+	releaseNoteList.append("Mike updated the version number (to 2.7.2) and the release notes and the build instructions.");
+
+	releaseNoteList.append("Vered's changes compared to the cleanup version 2.6.9:");
+	releaseNoteList.append("");
+	releaseNoteList.append("For a full list see all the github commits by vzafrany");
+	releaseNoteList.append("");
+	releaseNoteList.append("In brief:");
+	releaseNoteList.append("");
+	releaseNoteList.append("Intan Plugin");
+	releaseNoteList.append("Background color and size, and new Phidgets, for Nandy Lab");
+	releaseNoteList.append("New Stimuli");
+	releaseNoteList.append("Matlab random functions");
+	releaseNoteList.append("Plotting improvements");
+	releaseNoteList.append("Audio and Video outputs");
+	releaseNoteList.append("Bug fixes");
 
 	//Format release notes:
 	QString releaseNotes;

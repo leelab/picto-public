@@ -6,6 +6,7 @@
 #include "../common/storage/NeuralDataUnit.h"
 #include "../common/storage/AlignmentDataUnit.h"
 #include "../common/storage/LFPDataUnitPackage.h"
+#include <QProgressBar>
 
 /*! \brief Interface used for all proxy server plugins
  *
@@ -62,6 +63,8 @@ public:
 	 *	data before this point was successfully thrown out, false otherwise.
 	 */
 	virtual bool acqDataAfterNow() = 0;
+
+	virtual void alignSysTimes(QString rhdFile, QString saveFolder, QProgressBar* bar, QString sqlFile, QString mdaFile, bool convert=true) = 0;
 };
 
 QT_BEGIN_NAMESPACE

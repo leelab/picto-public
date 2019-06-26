@@ -121,7 +121,14 @@ int main(int argc, char *argv[])
 		Picto::portNums->setSystemNumber(app.applicationFilePath(),app.arguments(),systemNumber.toInt(),false);
 	}
 
-	
+	//legacyPhidgets (version 21, picto boxes built before 2018) vs new phidgets (version 22, 2018 and later)
+	int legPhidgets = 1;
+	int legArgIdx = app.arguments().indexOf("-legacyPhidgets");
+	if (legArgIdx > 0)
+	{
+		legPhidgets = (app.arguments()[legArgIdx + 1]).toInt();
+	}
+
 	//If there is a command argument of "-pixmap", we should use a pixmpa rendering
 	//otherwise use d3d.
 	HardwareSetup::VisualTargetType visTarget = HardwareSetup::D3D;
@@ -202,6 +209,31 @@ int main(int argc, char *argv[])
 		diamPer = args[diamPerArgIdx+1].toInt();
 	}
 
+	//If there is a command of -bgColor use it to figure out the version of phidgets api to call
+	int bgColRArgIdx = app.arguments().indexOf("-R");
+	int bgColR = 0;
+	if (bgColRArgIdx > 0)
+	{
+		bgColR = app.arguments()[bgColRArgIdx + 1].toInt();
+	}
+
+	//If there is a command of -bgColor use it to figure out the version of phidgets api to call
+	int bgColGArgIdx = app.arguments().indexOf("-G");
+	int bgColG = 0;
+	if (bgColGArgIdx > 0)
+	{
+		bgColG = app.arguments()[bgColGArgIdx + 1].toInt();
+	}
+
+	//If there is a command of -bgColor use it to figure out the version of phidgets api to call
+	int bgColBArgIdx = app.arguments().indexOf("-B");
+	int bgColB = 0;
+	if (bgColBArgIdx > 0)
+	{
+		bgColB = app.arguments()[bgColBArgIdx + 1].toInt();
+	}
+	QColor bgColor(bgColR, bgColG, bgColB ,255);
+
 	//If there is a command argument of "-legacy", we should use 
 	//LegacySystemXPRewardController and LegacySystenXPEventCodeGenerator
 	//otherwise use NullReward.
@@ -238,7 +270,7 @@ int main(int argc, char *argv[])
 	//Setup autoupdate system
 	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());
 
-	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,outSigCont,eventGen,xChan,yChan,xDiamChan,yDiamChan,posPer,diamPer));
+	QSharedPointer<Director> director(new Director(newName, sigChan, visTarget, rewCont, outSigCont, eventGen, xChan, yChan, xDiamChan, yDiamChan, posPer, diamPer, bgColor, legPhidgets));
 	director->activate();
 	Picto::CloseLib();
 	return EXIT_SUCCESS;

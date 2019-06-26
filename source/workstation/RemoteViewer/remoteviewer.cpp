@@ -25,6 +25,7 @@
 
 #include "remoteviewer.h"
 
+#include "../common/common.h"
 #include "../common/globals.h"
 #include "../../common/compositor/RenderingTarget.h"
 #include "../../common/compositor/PCMAuralTarget.h"
@@ -86,7 +87,7 @@ using namespace Picto;
  *	\details Sets up the RemoteViewer UI. Initializes variables.  Gets the workstation ID from the Workstation's .config
  *	file.
  */
-RemoteViewer::RemoteViewer(QWidget *parent)
+RemoteViewer::RemoteViewer(QColor bgColor, QWidget *parent)
 	: Viewer(parent),
 	serverChannel_(0),
 	activeExperiment_(0),
@@ -99,7 +100,8 @@ RemoteViewer::RemoteViewer(QWidget *parent)
 	numImportedAnalyses_(0),
 	lastExpHash_(0),
 	outputWidgetHolder_(nullptr),
-	activatePlots_(false)
+	activatePlots_(false),
+	bgColor_(bgColor)
 {
 	setupServerChannel();
 	setupEngine();
@@ -931,7 +933,7 @@ void RemoteViewer::setupEngine()
 
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which gives us memory exceptions.
-	visualTargetHost_ = new Picto::VisualTargetHost();
+	visualTargetHost_ = new Picto::VisualTargetHost(bgColor_);
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
 	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
 

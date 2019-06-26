@@ -22,13 +22,19 @@ Just about everything you need to create an old version of the development envir
 
  -# Install the Ni-Daq 18.6 API.  The Picto director uses a National Instruments card and the Director needs to link to this card's libraries.  The Ni-Daq 9.1 installer is currently available at: http://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html.  Even as of this writing, this is not the newest version.  You are welcome to (encouraged) to install the newest version of the API; however, be warned that this may require some upgrade of the Picto code if their have been changes in the Ni-Daq API. Note that this should be done after Visual Studio 2013 is installed, to ensure Visual Studio has its include paths set correctly.
 
- -# Install the Phidgets libraries.  These are the libraries used by the Director to control the Pictobox's LCD display and input dial.
+ -# Install the Phidgets libraries.  These are the libraries used by the Director to control the Pictobox's LCD display and input dial. There are two of these libraries, for two different generations of Phidget devices.  In order to have one build environment work for both older and newer Picto builds, the older libraries is duplicated in two different places.
 
-  -# Get the Phidgets library zip.  It is available at: https://www.phidgets.com/downloads/phidget21/libraries/windows/Phidget21-windevel.zip as of this writing.
+  -# Get the Phidgets21 library zip.  It is available at: https://www.phidgets.com/downloads/phidget21/libraries/windows/Phidget21-windevel.zip as of this writing.
 
   -# Copy the top level directory inside the zip file to c:\\ and change its name to "phidgets"
 
- -# Install DirectX.  The current version of the PictoDirector uses DirectX to speed up its frame rate.  This means that the current director only works on windows.  Until we work out a better platform independent way to do this, you will only be able to build the Director project in the Picto solution correctly if you install the DirectX SDK first.  As of this writing, the latest version was available from https://www.microsoft.com/en-us/download/confirmation.aspx?id=6812 and was named DXSDK_Jun10.exe.  Download it and install it.
+  -# Make another copy of the top level directory inside the zip file to c:\\phidgets and change its name to "phidgets21"
+
+  -# Get the Phidgets22 library zip.  It is available at: https://www.phidgets.com/downloads/phidget22/libraries/windows/Phidget22-windevel.zip as of this writing.
+
+  -# Copy the top level directory inside the zip file to c:\\phidgets and change its name to "phidgets22"
+
+  -# Install DirectX.  The current version of the PictoDirector uses DirectX to speed up its frame rate.  This means that the current director only works on windows.  Until we work out a better platform independent way to do this, you will only be able to build the Director project in the Picto solution correctly if you install the DirectX SDK first.  As of this writing, the latest version was available from https://www.microsoft.com/en-us/download/confirmation.aspx?id=6812 and was named DXSDK_Jun10.exe.  Download it and install it.
 
  -# Install Perl.  We use ActivePerl (currently at version 5.23.3.2603) which you can find at http://www.activestate.com/activeperl.  After installation, make sure that the perl.exe is in your path.
 

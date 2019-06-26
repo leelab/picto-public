@@ -1,14 +1,17 @@
 
 #include <QRect>
 
+#include "../common/common.h"
 #include "VisualTargetHost.h"
 #include "../memleakdetect.h"
 namespace Picto {
 
-VisualTargetHost::VisualTargetHost()
+VisualTargetHost::VisualTargetHost(QColor bgColor):
+BgCol_(bgColor)
 {
     QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::black);
+	pal.setColor(QPalette::Window, BgCol_);
+	pal.setColor(QPalette::Background, BgCol_);
     setPalette(pal);
 
 	setAutoFillBackground(true);

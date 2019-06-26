@@ -8,7 +8,7 @@
 #include <tchar.h>
 #include "../../common/memleakdetect.h"
 
-
+#include "../../common/common.h"
 namespace Picto {
 
 
@@ -18,13 +18,15 @@ namespace Picto {
  *	\note Currently the D3DVisualTarget is always created with 800x600 resolution and in general Picto
  *	assumes that everything is going to be 800x600.  This is something that we should consider working on.
  */
-D3DVisualTarget::D3DVisualTarget(bool timingCritical) :
+D3DVisualTarget::D3DVisualTarget(bool timingCritical, QColor bgColor) :
 VisualTarget(false, RESOLUTIONH, RESOLUTIONV)
 {
 	//zero all of the pointers
 	pD3D_ = 0;  
 	pD3dDevice_ = 0;
 	pVertexBuffer_ = 0;
+
+	BgCol_ = bgColor;
 
 	//HWND hWnd;
 
@@ -43,11 +45,11 @@ VisualTarget(false, RESOLUTIONH, RESOLUTIONV)
 	hWnd_ = (HWND)winId();
 	setAttribute(Qt::WA_PaintOnScreen,true);
 
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::black);
-    setPalette(pal);
+ 	QPalette pal = palette();
+	pal.setColor(QPalette::Window, BgCol_);
+	setPalette(pal);
 
-
+	
 	//----------------------------------
 	//Set up Direct3D 
 	//----------------------------------
@@ -364,7 +366,7 @@ void D3DVisualTarget::present()
 	renderSuccess_ = true;
 
 	//clear the back buffer
-    pD3dDevice_->Clear( 0, NULL, D3DCLEAR_TARGET,0, 0.0f, 0 );
+	pD3dDevice_->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(255, BgCol_.red(), BgCol_.green(), BgCol_.blue()), 0.0f, 0);
 
 }
 
