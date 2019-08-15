@@ -8,6 +8,7 @@ CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
+INCLUDEPATH += $$(PICTO_TREE)/3rdparty/matlab
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Definitions
@@ -588,6 +589,8 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/DigitalOutput.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/DigitalOutput.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/AnalogInput.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/AnalogInput.cpp
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/TextFactoryGraphic.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/TextFactoryGraphic.cpp
 
 
 HEADERS += $$(PICTO_TREE)/source/common/storage/DataStore.h
@@ -657,6 +660,8 @@ HEADERS += $$(PICTO_TREE)/source/common/storage/RewardUnit.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/RewardUnit.cpp
 HEADERS += $$(PICTO_TREE)/source/common/storage/DirectorData.h
 SOURCES += $$(PICTO_TREE)/source/common/storage/DirectorData.cpp
+HEADERS += $$(PICTO_TREE)/source/common/storage/AlignmentTool.h
+SOURCES += $$(PICTO_TREE)/source/common/storage/AlignmentTool.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/task/Task.h
 SOURCES += $$(PICTO_TREE)/source/common/task/Task.cpp

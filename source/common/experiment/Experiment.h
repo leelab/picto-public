@@ -40,8 +40,8 @@ namespace Picto {
  *	takes effect on the Experiment's position signal.  This is necessary since the Experiment never leaves scope.  If
  *	these Properties functioned like all other Properties, changes to their initValues would never actually take effect.
  *	\sa SignalChannel, Engine::PictoEngine, Task
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay, Mike Scudder
+ *	\date 2009-2019
  */
 
 #if defined WIN32 || defined WINCE
@@ -163,7 +163,7 @@ private:
 	 *	\sa xySignalShear
 	 */
 	void setXYSignalShear(double value) { propertyContainer_->setPropertyValue("XYSignalShear",value); };
-	/*! \brief Sets the input signal's xySignalShear.
+	/*! \brief Gets the input signal's xySignalShear.
 	 *	\sa xySignalShear
 	 */	
 	double getXYSignalShear(){return propertyContainer_->getPropertyValue("XYSignalShear").toDouble(); };

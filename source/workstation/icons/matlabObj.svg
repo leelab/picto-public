@@ -1,0 +1,74 @@
+<svg width="325" height="160" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient xlink:href="#linearGradient10073" id="linearGradient10214" x1="-0.28052" y1="-0.55278" x2="1.28045" y2="1.50382"/>
+    <linearGradient id="linearGradient10073">
+      <stop offset="0" id="stop10075" stop-color="#0044aa"/>
+      <stop offset="1" id="stop10077" stop-opacity="0" stop-color="#0044aa"/>
+    </linearGradient>
+    <linearGradient xlink:href="#linearGradient10073" id="linearGradient10216" x1="-0.28049" y1="-0.55278" x2="1.28048" y2="1.50382"/>
+    <linearGradient id="svg_2">
+      <stop stop-color="#ff0000" stop-opacity="0.99609" offset="0"/>
+      <stop stop-color="#640000" stop-opacity="0.99609" offset="1"/>
+    </linearGradient>
+    <linearGradient y2="1" x2="1" id="svg_3">
+      <stop offset="0" stop-opacity="0.99609" stop-color="#0000ff"/>
+      <stop offset="1" stop-opacity="0.99609" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient y2="1" x2="1" id="svg_4">
+      <stop offset="0" stop-opacity="0.99609" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#NaNNaNNaN"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_5">
+      <stop offset="0" stop-opacity="0.99609" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#NaNNaNNaN"/>
+    </linearGradient>
+    <linearGradient id="svg_6">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient y2="1" x2="1" y1="0" x1="0" id="svg_7">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient y2="0.52344" x2="0.4245" y1="0" x1="0" id="svg_8">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient id="svg_9">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_12">
+      <stop offset="0" stop-opacity="0.99609" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#NaNNaNNaN"/>
+    </linearGradient>
+    <linearGradient y1="0" x1="0" y2="1" x2="1" id="svg_13">
+      <stop offset="0" stop-opacity="0.99609" stop-color="#0000ff"/>
+      <stop stop-opacity="0.99609" offset="1" stop-color="#000064"/>
+    </linearGradient>
+    <linearGradient id="svg_10" x2="1" y2="1">
+      <stop stop-color="#0000ff" stop-opacity="0.99609" offset="0"/>
+      <stop stop-color="#000064" stop-opacity="0.99609" offset="1"/>
+    </linearGradient>
+    <linearGradient id="svg_14">
+      <stop stop-color="#0000ff" stop-opacity="0.99609" offset="0"/>
+      <stop stop-color="#000064" stop-opacity="0.99609" offset="1"/>
+    </linearGradient>
+    <linearGradient id="svg_15" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0000ff" stop-opacity="0.99609" offset="0"/>
+      <stop stop-color="#000064" stop-opacity="0.99609" offset="1"/>
+    </linearGradient>
+    <linearGradient id="svg_16" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0000ff" stop-opacity="0.99609" offset="0"/>
+      <stop stop-color="#000064" stop-opacity="0.99609" offset="1"/>
+    </linearGradient>
+    <pattern height="100" width="100" y="0" x="0" patternUnits="userSpaceOnUse" id="gridpattern">
+      <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAB80lEQVR4Xu3cwW3CQBCFYVMGHeRMg4guIoqJRAOc6SBtZMiBKLBrj2RLXi8fkk8MOBrv7D/vzYbdMAxfcV3imnrtI+B7KijeF1dOUiovu/jsMa5TItGHiLmKe8nAonnxQOorbNFEx21S3+eBeCCPDKRWTHZl9RKnQlSIChlrjFSIClEhKuR/BppuJu5b1mdc54Tg+4iYm7iXDCyaFwzBEAzBkI0xhLlYXrKrwB9DMARDMARDDLIKVZBiEoY0yBBKvfxQFlXgcYvU96mQBiuEDqFDfjOQgty7xdmybFmEIWFIGBKGhGEnTQKoNwh1Sp1Sp0NqhWnLanDLYp2wTmxZtqy/DDTtoWEIhvCyeFm8LF7WHC+LUqfUtb3aXm3vWC+hQlSIClEhTxlIOQSUOqVOqVPqlDqlTqknT5dHolKn0NeKA3VQB3VQB3VQnwN1p06cOmEuMheZi8xF5mIHv7ztF+XqhbyKoqfUKXVKnVKn1Cl1St0/fVZ3wtQwPz4trpBCXZYuS5ely9pYl+X0e3nJUuqVUn4r+IM6qIM6qG8M6mbqZupm6mbqZupm6mbqZurFKlhF4cZf0sV9CUPCkDAkDAlDM3Uz9U5GwqAO6qAO6qAO6nOgbqZups5+Z7+z39nv7PdO7HczdTN1UAd1UAd1UO8A6j9v/erTAXXLZQAAAABJRU5ErkJggg==" height="100" width="100" y="0" x="0"/>
+    </pattern>
+  </defs>
+  <metadata>image/svg+xmlOpen Clip Art Libraryvector x2011-07-26T19:16:26http://openclipart.org/detail/152029/vector-x-by-gblas.ivangblas.ivanalgebraaxiscalculusclip artclipartformulamathematicsplotplottingvectorxy</metadata>
+  <g>
+    <title>Layer 1</title>
+    <text fill="url(#svg_16)" stroke="#0000ff" stroke-width="0" x="157.50003" y="130.63635" id="svg_11" font-size="140" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" font-weight="normal">Text</text>
+  </g>
+</svg>

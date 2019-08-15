@@ -1,6 +1,7 @@
+
 TEMPLATE = lib
-TARGET = ProxyPluginVirtualDevice
-QT = core gui widgets xml
+TARGET = ProxyPluginintan
+QT = core gui sql widgets xml
 CONFIG += qt warn_on debug_and_release
 CONFIG += plugin
 CONFIG -= flat
@@ -13,37 +14,34 @@ INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Input
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualeventsource.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualeventsource.h
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simpleeventsource.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simpleeventsource.h
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplespikesource.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplespikesource.h
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplelfpsource.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplelfpsource.h
-SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplemarksource.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/simplemarksource.h
-
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/intanplugin.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/intanplugin.h
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/mdaio.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/mdaio.h
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/smartdatastream.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/smartdatastream.h
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/usagetracking.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/usagetracking.h
+SOURCES += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/intanalignmenttool.cpp
+HEADERS += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/intanalignmenttool.h
 
 include($$(PICTO_TREE)/source/common/common.pri)
 
 # Resources
-RESOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.qrc
+RESOURCES += $$(PICTO_TREE)/source/proxyplugins/RHD2000Control/RHD2000.qrc
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/debug/plugins
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/virtualdeviceplugins/debug
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/RHD2000s/debug
 }
 build_pass:CONFIG(release, debug|release) {
   DESTDIR = $$(PICTO_TREE)/output/bin/release/plugins
-  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/virtualdeviceplugins/release
+  OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/RHD2000s/release
 }
-RCC_DIR = $$(PICTO_TREE)/intermediates/resources/virtualdeviceplugins
-UI_DIR = $$(PICTO_TREE)/intermediates/ui/virtualdeviceplugins
-MOC_DIR = $$(PICTO_TREE)/intermediates/moc/virtualdeviceplugins
+RCC_DIR = $$(PICTO_TREE)/intermediates/resources/RHD2000s
+UI_DIR = $$(PICTO_TREE)/intermediates/ui/RHD2000s
+MOC_DIR = $$(PICTO_TREE)/intermediates/moc/RHD2000s
 
 
 

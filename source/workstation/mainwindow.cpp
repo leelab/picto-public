@@ -1,3 +1,8 @@
+/*! \file mainwindow.cpp
+ * \brief Main Workstation Window including releaase notes
+ *	\author Michael Scudder, Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2019
+ */
 #include "mainwindow.h"
 #include "../common/globals.h"
 
@@ -465,14 +470,21 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("First pass implementation of user-generated plots.");
+	releaseNoteList.append("Clean up version corresponding to the the last version Vered released to the Nandy lab,");
+	releaseNoteList.append("but with the resolution set to 800x600 for the Seo lab.");
+	releaseNoteList.append("Mike updated the version number (to 2.7.2) and the release notes and the build instructions.");
 
-	releaseNoteList.append("Added scaling to the task viewer.");
-	releaseNoteList.append("Added cusomizable views in Remote Viewer, Test Viewer, and Replay Viewer.");
-	releaseNoteList.append("Added the ability to run analysis scripts in Remote Views.");
-	releaseNoteList.append("Modified how users navigate between and add tasks to experiments.");
-
-	releaseNoteList.append("Fixed a PictoServer crash.");
+	releaseNoteList.append("Vered's changes compared to the cleanup version 2.6.9, in brief:");
+	releaseNoteList.append("");
+	releaseNoteList.append("Intan Plugin");
+	releaseNoteList.append("Background color and size, and new Phidgets");
+	releaseNoteList.append("New Stimuli");
+	releaseNoteList.append("Matlab random functions");
+	releaseNoteList.append("Plotting improvements");
+	releaseNoteList.append("Audio and Video outputs");
+	releaseNoteList.append("Bug fixes");
+	releaseNoteList.append("");
+	releaseNoteList.append("For a full list see all the github commits by vzafrany");
 
 	//Format release notes:
 	QString releaseNotes;
