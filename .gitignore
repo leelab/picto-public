@@ -8,6 +8,7 @@
 /*.suo
 /*.pro.user
 /DocBuildErr.txt
+/source/manuals/CodeDoc/html/*.html
 /source/common/Makefile*
 /source/common/libPicto.vcxproj*
 /source/common/*.pro.user
