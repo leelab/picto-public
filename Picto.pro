@@ -31,6 +31,7 @@ addSubdirs(source/workstation)
 addSubdirs(source/embedded)
 
 addSubdirs(source/proxyplugins/plexonplugin)
+addSubdirs(source/proxyplugins/omniplexplugin)
 addSubdirs(source/proxyplugins/tdtplugin)
 addSubdirs(source/proxyplugins/RHD2000Control)
 addSubdirs(source/proxyplugins/virtualdeviceplugin)
@@ -49,6 +50,7 @@ addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
 #proxy server plugins
 #win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
+#win32:!wince*:  SUBDIRS += source/proxyplugins/omniplexplugin
 #win32:!wince*:  SUBDIRS += source/proxyplugins/virtualdeviceplugin
 
 #We can't build the TDT plugin unless we have the TDT SDK installed.
@@ -70,7 +72,9 @@ addSubdirs(source/proxyplugins/virtualdeviceplugin)
 #developersguide.depends = common
 #embedded.depends = common
 #plexonplugin.depends = proxyserver
+#omniplexplugin.depends = proxyserver
 #virtualdeviceplugin.depends = proxyserver
+#RHD2000Control.depends = proxyserver
 #tdtplugin.depends = proxyserver
 
 # Deployment

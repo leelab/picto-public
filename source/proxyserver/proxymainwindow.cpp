@@ -235,10 +235,13 @@ void ProxyMainWindow::createComboBox()
 	nameFilters << "*.dll"; //WARNING, this is platform dependant!!
 	foreach (QString fileName, pluginsDir.entryList(nameFilters,QDir::Files)) 
 	{
-		qDebug(pluginsDir.absoluteFilePath(fileName).toLatin1());
 		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
 		QObject *plugin = loader.instance();
-		//QString error = loader.errorString();
+		if (!plugin)
+		{
+			QString error = loader.errorString();
+			qDebug(QString("Problem loading %1: %2").arg(pluginsDir.absoluteFilePath(fileName)).arg(error).toLatin1());
+		}
 		if (plugin) 
 		{
 			NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(plugin);
@@ -246,6 +249,10 @@ void ProxyMainWindow::createComboBox()
 			{
 				pluginCombo_->addItem(iNDAcq->device());
 				acqPluginList_<<plugin;
+			}
+			else
+			{
+				qDebug(QString("Could not cast %1 to NeuralDataAcqInterface").arg(pluginsDir.absoluteFilePath(fileName)).toLatin1());
 			}
 		}
 

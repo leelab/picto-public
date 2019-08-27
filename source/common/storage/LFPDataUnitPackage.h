@@ -20,15 +20,15 @@ namespace Picto {
  *	that the function can include lfp timing that is aligned to the behavioral timestream.
  *	The correlation coefficient for the least squares fitting of the timestamp alignment 
  *	can be stored here as well.
- *	\note Originally, we wanted to right LFP data on a row by row basis with one row for 
+ *	\note Originally, we wanted to write LFP data on a row by row basis with one row for 
  *	each timestamp and columns for each channel, but with the current Sqlite database 
  *	this simply takes way too long.  We ran a benchmark test and found that
  *	each character stored in a new row takes an additional ~20us, whereas
  *	each character stored in the same row takes an additional ~20ns.
  *	Big difference.  For this reason, we are storing lfp data in ~500ms chunks
  *	indexed by timestamp and channel.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Mike Scudder, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2019
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API LFPDataUnitPackage : public DataUnit

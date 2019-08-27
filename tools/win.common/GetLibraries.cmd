@@ -18,6 +18,9 @@ pushd %PICTO_TREE%
   ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\release\wrapper PlexClient.dll /NFL /NDL /NJH /NJS
   ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\debug\wrapper PlexClient.dll /NFL /NDL /NJH /NJS
   
+  ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\release\wrapper OPXClient.dll /NFL /NDL /NJH /NJS
+  ROBOCOPY %PICTO_TREE%\3rdparty\bin %PICTO_TREE%\output\bin\debug\wrapper OPXClient.dll /NFL /NDL /NJH /NJS
+
   ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\release\wrapper qwindows.dll /NFL /NDL /NJH /NJS
   ROBOCOPY %QTDIR%\plugins\platforms %PICTO_TREE%\output\bin\debug\wrapper qwindowsd.dll /NFL /NDL /NJH /NJS
 )
@@ -48,8 +51,10 @@ pushd %PICTO_TREE%
   
   ROBOCOPY %QTDIR%\plugins\audio %PICTO_TREE%\output\bin\debug\audio qtaudio_windowsd.dll qtaudio_windowsd.pdb /NFL /NDL /NJH /NJS
   
+  ROBOCOPY %QTDIR%\3rdparty\bin %PICTO_TREE%\output\bin\release OPXClient.dll /NFL /NDL /NJH /NJS
   
-  
+  ROBOCOPY %QTDIR%\3rdparty\bin %PICTO_TREE%\output\bin\debug OPXClient.dll /NFL /NDL /NJH /NJS
+    
   echo Getting Qwt Libraries
   ROBOCOPY %QWTDIR%\lib %PICTO_TREE%\output\bin\release *.dll /NFL /NDL /NJH /NJS
   ROBOCOPY %QWTDIR%\lib %PICTO_TREE%\output\bin\debug *d.dll /NFL /NDL /NJH /NJS
