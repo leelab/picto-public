@@ -3,6 +3,7 @@ CONFIG -= flat
 CONFIG += ordered 
 CONFIG += c++11
 
+# 2019-10-03 Mike Scudder - This has not been tested on an x86 build and likely would fail.  It works for an x64 build.
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # addSubdirs(subdirs,deps): Adds directories to the project that depend on
