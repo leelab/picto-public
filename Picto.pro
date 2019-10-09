@@ -34,25 +34,8 @@ addSubdirs(source/embedded)
 addSubdirs(source/proxyplugins/plexonplugin)
 addSubdirs(source/proxyplugins/omniplexplugin)
 addSubdirs(source/proxyplugins/tdtplugin)
-addSubdirs(source/proxyplugins/RHD2000Control)
 addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
-#SUBDIRS = source/common
-#SUBDIRS += source/director
-#!wince* {
-#  SUBDIRS += source/server
-#  SUBDIRS += source/proxyserver
-#  SUBDIRS += source/config
-#  SUBDIRS += source/workstation
-#}
-#win* {
-#  SUBDIRS += source/embedded
-#}
-
-#proxy server plugins
-#win32:!wince*:  SUBDIRS += source/proxyplugins/plexonplugin
-#win32:!wince*:  SUBDIRS += source/proxyplugins/omniplexplugin
-#win32:!wince*:  SUBDIRS += source/proxyplugins/virtualdeviceplugin
 
 #We can't build the TDT plugin unless we have the TDT SDK installed.
 #The TDT software has a hard time running under 64-bit Vista, so I always
@@ -75,7 +58,6 @@ addSubdirs(source/proxyplugins/virtualdeviceplugin)
 #plexonplugin.depends = proxyserver
 #omniplexplugin.depends = proxyserver
 #virtualdeviceplugin.depends = proxyserver
-#RHD2000Control.depends = proxyserver
 #tdtplugin.depends = proxyserver
 
 # Deployment
@@ -101,13 +83,9 @@ IMAGEFORMATPLUGINS_DEBUG.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qti
 IMAGEFORMATPLUGINS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/imageformats
 INSTALLS += IMAGEFORMATPLUGINS_DEBUG
 
-!wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$(PROPBROWSDIR)/bin/release/QtPropertyBrowser.dll
-wince*:QTSOLUTIONS_PROPERTYBROWSER.files += $$(PROPBROWSDIR)/bin/release/QtPropertyBrowser.dll
 QTSOLUTIONS_PROPERTYBROWSER.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += QTSOLUTIONS_PROPERTYBROWSER
 
-!wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$(PROPBROWSDIR)/bin/debug/QtPropertyBrowserd.dll
-wince*:QTSOLUTIONS_PROPERTYBROWSER_DEBUG.files += $$(PROPBROWSDIR)/bin/debug/QtPropertyBrowserd.dll
 QTSOLUTIONS_PROPERTYBROWSER_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += QTSOLUTIONS_PROPERTYBROWSER_DEBUG
 
@@ -133,33 +111,12 @@ QTLIBS_DEBUG.files += $$[QT_INSTALL_PREFIX]/lib/Qt5Widgetsd.dll
 QTLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += QTLIBS_DEBUG
 
-!wince* {
-SSLLIBS.files += $$(OPENSSLDIR)/out32dll/ssleay32.dll
-SSLLIBS.files += $$(OPENSSLDIR)/out32dll/libeay32.dll
-}
 SSLLIBS.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += SSLLIBS
 
-!wince* {
-SSLLIBS_DEBUG.files += $$(OPENSSLDIR)/out32dll/ssleay32.dll
-SSLLIBS_DEBUG.files += $$(OPENSSLDIR)/out32dll/libeay32.dll
-}
 SSLLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += SSLLIBS_DEBUG
 
-!wince* {
-    contains(MACHINE_TYPE,X86) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" "$$(PICTO_TREE)/output/bin/release/Microsoft.VC90.CRT"
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/release/imageformats/Microsoft.VC90.CRT
-    }
-    contains(MACHINE_TYPE,X64) {
-    CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/release/Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/release/imageformats/Microsoft.VC90.CRT
-    }
-}
-wince* {
-    CRUNTIMEPRIVATEASSEMBLY.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??.dll\" $$(PICTO_TREE)/output/bin/release
-}
 CRUNTIMEPRIVATEASSEMBLY.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY
 CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS.path = $$(PICTO_TREE)/output/bin/release/imageformats
@@ -175,23 +132,6 @@ INSTALLS += CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS
 
 #Also, OpenSSL requires the non-debug c runtime, so we copy that here as well
 
-!wince* {
-    contains(MACHINE_TYPE,X86) {
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/x86/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.DebugCRT
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/x86/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/imageformats/Microsoft.VC90.DebugCRT
-    }
-    contains(MACHINE_TYPE,X64) {
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/amd64/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.DebugCRT
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG_RELEASE_CRT.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/amd64/Microsoft.VC90.CRT\" $$(PICTO_TREE)/output/bin/debug/Microsoft.VC90.CRT
-    CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/Debug_NonRedist/amd64/Microsoft.VC90.DebugCRT\" $$(PICTO_TREE)/output/bin/debug/imageformats/Microsoft.VC90.DebugCRT
-    }
-}
-wince* {
-	# !!! WARNING !!!
-	# I set this up without looking at an actual CE dev environment.  This path may be incorrect.
-    CRUNTIMEPRIVATEASSEMBLY_DEBUG.extra = copy \"$$(DevEnvDir)/../../VC/ce/dll/x86/msvcr??d.dll\" $$(PICTO_TREE)/output/bin/release
-}
 CRUNTIMEPRIVATEASSEMBLY_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += CRUNTIMEPRIVATEASSEMBLY_DEBUG
 CRUNTIMEPRIVATEASSEMBLY_IMAGEFORMATS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug/imageformats

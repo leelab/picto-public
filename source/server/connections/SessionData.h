@@ -26,8 +26,8 @@
  *	a StoredSessionData SessionData class, we have even been able to simplify our SQL file interface by hiding
  *	it all inside that class and writing to SQL by simply copying data from a CachedSessionData object
  *	to a StoredSessionData object.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Mike Scudder, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2019
  */
 class SessionData
 {
@@ -59,7 +59,7 @@ protected:
 	 *	class.
 	 */
 	virtual QList<QVariantList> readData(int dataType,QVariant condition,bool cut=false) = 0;
-	//Should rease all data from the descendant, bringing it to the state that it was in when it was newly
+	//Should erase all data from the descendant, bringing it to the state that it was in when it was newly
 	//constructed.
 	virtual void eraseEverything() = 0;
 

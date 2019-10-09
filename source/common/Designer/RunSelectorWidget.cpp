@@ -109,7 +109,7 @@ void RunSelectorWidget::clear()
 }
 
 /*! \brief Returns a list of the index of all selected runs from the session at the input filepath.
- *	\details The returned indeces are the indeces of the runs within their session (ie. indexed in order).
+ *	\details The returned indices are the indices of the runs within their session (ie. indexed in order).
  */
 QList<int> RunSelectorWidget::getSelectedRuns(QString filePath)
 {

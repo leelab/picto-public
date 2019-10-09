@@ -16,10 +16,12 @@
 OmniPlexPlugin::OmniPlexPlugin()
 {
 	initialized_ = false;
+	foundOmniPlex_ = false;
 	OmniPlexBuffer_ = NULL;
 	int error = OPX_InitClient();
 	if (error == 0)
 	{
+		foundOmniPlex_ = true;
 		deviceStatus_ = started;
 		qDebug(QString("Created OmniPlex client").toLatin1());
 	}
@@ -33,6 +35,7 @@ OmniPlexPlugin::OmniPlexPlugin()
 OmniPlexPlugin::~OmniPlexPlugin()
 {
 	OPX_CloseClient();
+	foundOmniPlex_ = false;
 }
 
 QString OmniPlexPlugin::device() const
@@ -45,7 +48,8 @@ void OmniPlexPlugin::deviceSelected()
 {
 }
 
-// See the Plexon OmniPlex native API example client FullClient.cpp for examples followed in using the OPX_ calls.
+// There is a mix of 0 based and 1 based indexing used in this code.  See the Plexon OmniPlex
+// native API example client FullClient.cpp for examples followed in using the OPX_ calls.
 // 
 NeuralDataAcqInterface::deviceStatus OmniPlexPlugin::startDevice()
 {
@@ -53,13 +57,26 @@ NeuralDataAcqInterface::deviceStatus OmniPlexPlugin::startDevice()
 	int error = -1;
 	OPX_GlobalParams OPXGlobals;
 
-	error = OPX_GetGlobalParameters(&OPXGlobals);
-	Q_ASSERT(error == 0);
-	if (OPXGlobals.OPXSystemType != OPXSYSTEM_DIGIAMP)
+	if (!foundOmniPlex_)
 	{
-		qDebug(QString("This is not an OmniPlex MiniDigi system! (type == %1)").arg(OPXGlobals.OPXSystemType).toLatin1());  // Warning only
+		error = OPX_InitClient();
+		if (error != 0)
+		{
+			qDebug(QString("OmniPlex InitClient error %1").arg(error).toLatin1());
+			return deviceStatus_;
+		}
 	}
-	deviceStatus_ = started;
+	foundOmniPlex_ = true;
+	qDebug(QString("Initialized OmniPlex client from startDevice").toLatin1());
+	error = OPX_GetGlobalParameters(&OPXGlobals);
+	if (error != 0)
+	{
+		deviceStatus_ = started;
+		if (OPXGlobals.OPXSystemType != OPXSYSTEM_DIGIAMP)
+		{
+			qDebug(QString("This is not an OmniPlex MiniDigi system! (type == %1)").arg(OPXGlobals.OPXSystemType).toLatin1());  // Warning only
+		}
+	}
 	return deviceStatus_;
 }
 
@@ -71,6 +88,11 @@ NeuralDataAcqInterface::deviceStatus OmniPlexPlugin::stopDevice()
 
 NeuralDataAcqInterface::deviceStatus OmniPlexPlugin::getDeviceStatus()
 {
+	if (!foundOmniPlex_)
+	{
+		deviceStatus_ = notStarted;
+		return deviceStatus_;
+	}
 	int status = OPX_GetOPXSystemStatus();
 	if(deviceStatus_ > notStarted && OmniPlexBuffer_ != NULL)
 	{
@@ -157,7 +179,6 @@ QList<QSharedPointer<Picto::DataUnit>> OmniPlexPlugin::dumpData()
 					// we might in the future accommodate individual channel rates and gains, but I doubt it.
 					double voltageScaler; // ignored
 					error = OPX_GetSourceChanInfoByNumber(spikeSource_, c, channelName, &rate, &voltageScaler, &SpikeEnables_[c]);
-//					qDebug(QString("Spike voltageScaler[%1]=%2").arg(c).arg(voltageScaler).toLatin1());
 					Q_ASSERT(error == 0);
 					Q_ASSERT(fabs(voltageScaler - SpikeScaleByToGetVolts_) < 1e-6);
 				}
@@ -177,7 +198,6 @@ QList<QSharedPointer<Picto::DataUnit>> OmniPlexPlugin::dumpData()
 					// we might in the future accommodate individual channel rates and gains, but I doubt it.
 					double voltageScaler; // ignored
 					error = OPX_GetSourceChanInfoByNumber(spikeSource_, c, channelName, &rate, &voltageScaler, &LFPEnables_[c]);
-//					qDebug(QString("LFP voltageScaler[%1]=%2").arg(c).arg(voltageScaler).toLatin1());
 					Q_ASSERT(error == 0);
 					Q_ASSERT(fabs(voltageScaler - LFPScaleByToGetVolts_) < 1e-6);
 				}
@@ -192,6 +212,7 @@ QList<QSharedPointer<Picto::DataUnit>> OmniPlexPlugin::dumpData()
 				qDebug(QString("Excluding source %1").arg(s).toLatin1());
 				error = OPX_ExcludeSourceByNumber(s);
 				Q_ASSERT(error == 0);
+				(void)error;
 			}
 		}
 		OmniPlexBuffer_ = (OPX_DataBlock*)malloc(sizeof(OPX_DataBlock)*MAX_OMNIPLEX_DATA_BLOCKS_PER_READ);
@@ -201,6 +222,7 @@ QList<QSharedPointer<Picto::DataUnit>> OmniPlexPlugin::dumpData()
 	int32_t blocksRead = MAX_OMNIPLEX_DATA_BLOCKS_PER_READ;
 	int error = OPX_GetNewData(&blocksRead, OmniPlexBuffer_);
 	Q_ASSERT(error == 0);
+	(void)error;
 	if (blocksRead == MAX_OMNIPLEX_DATA_BLOCKS_PER_READ)
 	{
 		qDebug(QString("OmniPlex data acquisition saturated").toLatin1());  // Warning

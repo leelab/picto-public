@@ -40,29 +40,33 @@ QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QS
 	QString dataTypeIndex = command->getTarget().split(':').value(1);
 	QString dataType = command->getTarget().split(':').value(0,"");
 
-	QByteArray xmlContent;
+	QByteArray content;
 	if(dataType.compare("CurrentState",Qt::CaseInsensitive) == 0)
 	{
 		//Picto::Timestamper tStamper;
 		//double startVal = tStamper.stampMs();
-		xmlContent = QString("<Data>").append(sessionInfo->selectStateVariables(dataTypeIndex)).append("</Data>").toLatin1();
+		content = QString("<Data>").append(sessionInfo->selectStateVariables(dataTypeIndex)).append("</Data>").toLatin1();
 		//qDebug(QString("Select at %1ms took: %2ms").arg(tStamper.stampMs()).arg(tStamper.stampMs()-startVal).toLatin1());
 	}
 	else if(dataType.compare("LatestNeural",Qt::CaseInsensitive) == 0)
 	{
-		xmlContent = QString("<Data>").append(sessionInfo->selectLatestNeuralData(dataTypeIndex)).append("</Data>").toLatin1();
+		content = QString("<Data>").append(sessionInfo->selectLatestNeuralData(dataTypeIndex)).append("</Data>").toLatin1();
 	} 
 	else if(dataType.compare("SessionData",Qt::CaseInsensitive) == 0)
 	{
-		xmlContent = QString("<Data>").append(sessionInfo->selectSessionDataPackage()).append("</Data>").toLatin1();
+		content = QString("<Data>").append(sessionInfo->selectSessionDataPackage()).append("</Data>").toLatin1();
 	} 
+	else if (dataType.compare("SessionDBPath", Qt::CaseInsensitive) == 0)
+	{
+		content = sessionInfo->dataBaseFilePath().toLatin1();
+	}
 	else
 	{
 		notFoundResponse->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 		return notFoundResponse;
 	}
 
-	response->setContent(xmlContent);
+	response->setContent(content);
 	response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
 
 	return response;

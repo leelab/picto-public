@@ -470,7 +470,7 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Version incorporating the OmniPlex plugin.");
+	releaseNoteList.append("Version incorporating the OmniPlex plugin and removing the Intan plugin.");
 
 	//Format release notes:
 	QString releaseNotes;
