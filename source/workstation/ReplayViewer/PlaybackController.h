@@ -70,7 +70,7 @@ public:
 	 */
 	enum Status 
 	{
-		None,			//!< The PlaybackController starts in this state and immedidately transitions to Idle.		
+		None,			//!< The PlaybackController starts in this state and immediately transitions to Idle.		
 		Idle,			//!< The state where the PlaybackController is ready for a session file to be loaded
 		PreLoading,		//!< In this state, a Session file is preloaded and its high level data is emitted in the sessionPreloaded() signal.
 		Stopped,		//!< THis is much like the Idle state, except that when we're in the Stopped state, there may be a loaded or preloaded Session file.

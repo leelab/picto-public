@@ -35,8 +35,8 @@ QT_END_NAMESPACE
  *
  *	It would probably be cleaner to separate out the logical state machine code from the simple UI code
  *	and that would be a good refactoring project for someone who has the time to do so.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
+ *	\author Mike Scudder, Vered Zafrany, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2019
  */
 class ProxyMainWindow : public QMainWindow, public ComponentInterface
 {
@@ -89,6 +89,7 @@ private:
 	void createStatusLights();
 	void createComboBox();
 	void createLineEdits();
+	void createSessionDBNameLabels();
 	void createLayout();
 
 	void readSettings();
@@ -109,6 +110,9 @@ private:
 	QSpinBox *systemNumber_;
 	QLabel *systemNumLabel_;
 
+	QLabel *sessionDBFileLabel_;
+	QLabel *sessionDBFileName_;
+
 	//QTimer *activityTimer_;
 
 	QObject *acqPlugin_;
@@ -122,42 +126,10 @@ private:
 
 	int port_;
 
-	//Intan
-	void pluginUI(bool first);
-	QComboBox *createIntanComboBox(const QString &text);
-
-	QComboBox *directoryComboBoxsql_;
-	QLabel *sqlfileLabel_;
-	QPushButton *sqlfileButton_;
-	QLabel *rhdfileLabel_;
-	QPushButton *rhdfileButton_;
-	QComboBox *directoryComboBoxrhd_;
-	QLabel *convertOutputLabel_;
-	QPushButton *convertOutputButton_;
-	QComboBox *directoryComboBoxconvert_;
-	QLabel *mdafileLabel_;
-	QPushButton *mdafileButton_;
-	QComboBox *directoryComboBoxmda_;
-	QPushButton* alignButton_;
-	QCheckBox* convertToMda_;
-	QCheckBox* alignNeuralData_;
-	bool convert_;
-	bool align_;
-	QProgressBar * progressBar_;
-
 private slots:
 	void pluginIndexChanged(int index);
 	void systemNumberChanged(int index);
 	void writeSettings();
 
-	//Intan
-	void alignSysTimes();
-
-	void browsePictoFiles();
-	void browseMdaFiles();
-	void browserhdFiles();
-	void browseSaveFolder();	
-	void convertToMDA();
-	void alignNeuralData();
 };
 #endif

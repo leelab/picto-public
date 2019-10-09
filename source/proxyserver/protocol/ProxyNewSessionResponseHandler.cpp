@@ -52,6 +52,28 @@ bool ProxyNewSessionResponseHandler::processResponse(QString directive)
 					QCoreApplication::processEvents();
 					continue;
 				}
+				// request the path to the SQLITE database file on the server so it can be displayed and
+				// used to set the base file name for a data acquisition system's wide band data storage
+				//Collect the data from the server
+				QString commandStr = QString("GETDATA SessionDBPath: PICTO/1.0");
+				QSharedPointer<Picto::ProtocolCommand> command(new Picto::ProtocolCommand(commandStr));
+				QSharedPointer<Picto::ProtocolResponse> response;
+				dataCommandChannel_->sendRegisteredCommand(command);
+				QString commandID = command->getFieldValue("Command-ID");
+				do
+				{
+					QCoreApplication::processEvents();
+					if (!dataCommandChannel_->waitForResponse(1000))
+					{
+						break;
+					}
+					response = dataCommandChannel_->getResponse();
+				} while (!response || response->getFieldValue("Command-ID") != commandID);
+				if (response->getResponseCode() == Picto::ProtocolResponseType::OK)
+				{
+					statusManager_.toStrongRef()->setUserInfo(response->getContent());
+					qDebug() << "Session DB path:: " << response->getContent();
+				}
 				firstTime = false;
 			}
 

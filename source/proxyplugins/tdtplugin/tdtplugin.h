@@ -38,7 +38,6 @@ public:
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 	bool acqDataAfterNow();
-	void alignSysTimes(QString rhdFile, QString saveFolder, QProgressBar* bar, QString sqlFile, QString mdaFile, bool convert = true){};
 
 private:
 

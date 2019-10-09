@@ -46,7 +46,6 @@ public:
 	float samplingRate();
 	QList<QSharedPointer<Picto::DataUnit>> dumpData();
 	bool acqDataAfterNow();
-	void alignSysTimes(QString rhdFile, QString saveFolder, QProgressBar* bar, QString sqlFile, QString mdaFile, bool convert = true){};
 private:
 	NeuralDataAcqInterface::deviceStatus deviceStatus_;
 	int32_t spikeSource_;
@@ -63,6 +62,7 @@ private:
 	// These can be set specifically per channel
 	int32_t *LFPEnables_;
 	int32_t *SpikeEnables_;
+	bool foundOmniPlex_;
 	// data buffers
 	bool initialized_;
 	OPX_DataBlock *OmniPlexBuffer_;

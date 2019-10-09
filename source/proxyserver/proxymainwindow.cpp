@@ -26,6 +26,7 @@ ProxyMainWindow::ProxyMainWindow()
 	createStatusLights();
 	createLineEdits();
 	createComboBox();
+	createSessionDBNameLabels();
 	createLayout();
 
 	readSettings();
@@ -302,7 +303,15 @@ void ProxyMainWindow::createLineEdits()
 	systemNumLabel_->setBuddy(systemNumber_);
 	connect(systemNumber_,SIGNAL(valueChanged(int)),this,SLOT(systemNumberChanged(int)));
 }
-
+/*! \brief Creates a label for displaying the Session DB Name corresponding to the file
+ *  the sqlite file the session currently active stores its experiment data into.
+ */
+void ProxyMainWindow::createSessionDBNameLabels()
+{
+	sessionDBFileLabel_ = new QLabel(tr("Session DB:"));
+	sessionDBFileName_ = new QLabel();
+	sessionDBFileName_->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+}
 /*! \brief Sets up the UI layout for this widget.*/
 void ProxyMainWindow::createLayout()
 {
@@ -335,11 +344,12 @@ void ProxyMainWindow::createLayout()
 	HLayout->addWidget(runStatusLabel_);
 	layout_->addLayout(HLayout);
 
-	layout_->addWidget(pluginCombo_);
-	//layout_->addWidget(startStopClientButton_);
-	//layout_->addWidget(quitButton_);
+	HLayout = new QHBoxLayout();
+	HLayout->addWidget(sessionDBFileLabel_);
+	HLayout->addWidget(sessionDBFileName_);
+	layout_->addLayout(HLayout);
 
-	pluginUI(true);
+	layout_->addWidget(pluginCombo_);
 }
 
 /*****************************************************
@@ -370,7 +380,6 @@ void ProxyMainWindow::readSettings()
 	else
 		pluginCombo_->setCurrentIndex(pluginCombo_->findText(plugin));
 
-	pluginUI(false);
 }
 
 /*! \brief Returns the current Proxy name.  If no name has been set, an automatic one is
@@ -569,13 +578,21 @@ void ProxyMainWindow::endState()
  */
 void ProxyMainWindow::enterState()
 {
-	switch(currState_)
+	QString sessionDBName_ = QString();
+	if (statusManager_)
+	{
+		sessionDBName_ = statusManager_.staticCast<ProxyStatusManager>()->getSessionDBName();
+	}
+
+	switch (currState_)
 	{
 	case WaitForConnect:
 		lineEditName_->setEnabled(true);
 		systemNumber_->setEnabled(true);
 		runStatus_->turnRed();
 		sessionStatus_->turnRed();
+		sessionDBFileName_->setText("");
+		sessionDBFileName_->update();
 		pluginCombo_->setEnabled(true);
 		qDebug("Entering WaitForConnect");
 		break;
@@ -584,6 +601,8 @@ void ProxyMainWindow::enterState()
 		systemNumber_->setEnabled(true);
 		runStatus_->turnRed();
 		sessionStatus_->turnRed();
+		sessionDBFileName_->setText("");
+		sessionDBFileName_->update();
 		pluginCombo_->setEnabled(true);
 		qDebug("Entering WaitForSession");
 		break;
@@ -592,6 +611,8 @@ void ProxyMainWindow::enterState()
 		systemNumber_->setEnabled(false);
 		runStatus_->turnRed();
 		sessionStatus_->turnGreen();
+		sessionDBFileName_->setText(sessionDBName_);
+		sessionDBFileName_->update();
 		pluginCombo_->setEnabled(true);
 		qDebug("Entering WaitForDevice");
 		break;
@@ -600,6 +621,8 @@ void ProxyMainWindow::enterState()
 		systemNumber_->setEnabled(false);
 		runStatus_->turnGreen();
 		sessionStatus_->turnGreen();
+		sessionDBFileName_->setText(sessionDBName_);
+		sessionDBFileName_->update();
 		pluginCombo_->setEnabled(false);
 		qDebug("Entering Running");
 		break;
@@ -611,7 +634,6 @@ void ProxyMainWindow::enterState()
  */
 void ProxyMainWindow::pluginIndexChanged(int)
 {
-	pluginUI(false);
 	writeSettings();
 }
 
@@ -624,7 +646,7 @@ void ProxyMainWindow::systemNumberChanged(int index)
 	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),index,true);
 }
 
-/*! \brief Stores applicaiont settings to disk
+/*! \brief Stores application settings to disk
  *
  *	Settings for the workstation app are stored between sessions.
  *	The QSettings object does this for us in a platform independent
@@ -641,317 +663,4 @@ void ProxyMainWindow::writeSettings()
 
 	settings.setValue("proxyName",lineEditName_->text());
 	settings.setValue("plugin",pluginCombo_->itemText(pluginCombo_->currentIndex()));
-}
-void ProxyMainWindow::alignSysTimes()
-{
-	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
-	if (!iNDAcq)
-		return;
-
-	if (progressBar_)
-	{
-		progressBar_->setVisible(true);		
-		progressBar_->setValue(0);
-	}
-
-	QString rhdFileName = directoryComboBoxrhd_->currentText();
-	if (convert_)
-	{
-		QString saveFolderName = directoryComboBoxconvert_->currentText();
-		iNDAcq->alignSysTimes(rhdFileName, saveFolderName, progressBar_, "", "", true);
-
-		if (progressBar_) progressBar_->setVisible(false);
-		QMessageBox::information(
-			this,
-			tr("Intan Plugin"),
-			tr("Conversion Completed"));
-
-	}
-	else
-	{
-		QString sqlFileName = directoryComboBoxsql_->currentText();
-		QString mdaFileName = directoryComboBoxmda_->currentText();
-
-		iNDAcq->alignSysTimes(rhdFileName, "", progressBar_, sqlFileName, mdaFileName, false);
-
-		if (progressBar_) progressBar_->setVisible(false);
-		QMessageBox::information(
-			this,
-			tr("Intan Plugin"),
-			tr("Alignment Completed"));
-
-	}
-}
-void ProxyMainWindow::pluginUI(bool first)
-{
-	bool toHide = true;
-
-	if (first)
-	{
-		// 2 options for Intan: align or convert
-		convertToMda_ = new QCheckBox("Convert Rhd to Mda");
-		connect(convertToMda_, SIGNAL(clicked()), SLOT(convertToMDA()));
-		layout_->addWidget(convertToMda_);
-
-		alignNeuralData_ = new QCheckBox("Align Neural Data");
-		connect(alignNeuralData_, SIGNAL(clicked()), SLOT(alignNeuralData()));
-		layout_->addWidget(alignNeuralData_);
-
-		//Picto sql file for behavioral timestamps
-		sqlfileLabel_ = new QLabel("Behavioral Data");
-		sqlfileButton_ = new QPushButton("Browse");
-		connect(sqlfileButton_, SIGNAL(clicked()), SLOT(browsePictoFiles()));
-		directoryComboBoxsql_ = createIntanComboBox(QDir::currentPath());
-
-		QHBoxLayout *layoutSqlFile_ = new QHBoxLayout();
-		layoutSqlFile_->addWidget(sqlfileLabel_);
-		layoutSqlFile_->addWidget(sqlfileButton_);
-		layoutSqlFile_->addWidget(directoryComboBoxsql_);
-
-		layout_->addLayout(layoutSqlFile_);
-
-		//Intan rhd file for neural data
-		rhdfileLabel_ = new QLabel("Neural Data");
-		rhdfileButton_ = new QPushButton("Browse");
-		connect(rhdfileButton_, SIGNAL(clicked()), SLOT(browserhdFiles()));
-		directoryComboBoxrhd_ = createIntanComboBox(QDir::currentPath());
-		QHBoxLayout* layoutrhdFile = new QHBoxLayout();
-		layoutrhdFile->addWidget(rhdfileLabel_);
-		layoutrhdFile->addWidget(rhdfileButton_);
-		layoutrhdFile->addWidget(directoryComboBoxrhd_);
-
-		layout_->addLayout(layoutrhdFile);
-
-		//folder for conversion to mda output
-		convertOutputLabel_ = new QLabel("Saved Output");
-		convertOutputButton_ = new QPushButton("Browse");
-		connect(convertOutputButton_, SIGNAL(clicked()), SLOT(browseSaveFolder()));
-		directoryComboBoxconvert_ = createIntanComboBox(QDir::currentPath());
-		QHBoxLayout* layoutconvertFolder = new QHBoxLayout();
-		layoutconvertFolder->addWidget(convertOutputLabel_);
-		layoutconvertFolder->addWidget(convertOutputButton_);
-		layoutconvertFolder->addWidget(directoryComboBoxconvert_);
-
-		layout_->addLayout(layoutconvertFolder);
-
-		//Mountain Sort mda file for neural data
-		mdafileLabel_ = new QLabel("Sorted Data");
-		mdafileButton_ = new QPushButton("Browse");
-		connect(mdafileButton_, SIGNAL(clicked()), SLOT(browseMdaFiles()));
-		directoryComboBoxmda_ = createIntanComboBox(QDir::currentPath());
-		QHBoxLayout* layoutmdaFile = new QHBoxLayout();
-		layoutmdaFile->addWidget(mdafileLabel_);
-		layoutmdaFile->addWidget(mdafileButton_);
-		layoutmdaFile->addWidget(directoryComboBoxmda_);
-
-		layout_->addLayout(layoutmdaFile);
-
-		alignButton_ = new QPushButton("Proceed");
-		connect(alignButton_, SIGNAL(clicked()), SLOT(alignSysTimes()));
-
-		layout_->addWidget(alignButton_);
-				
-		progressBar_ = new QProgressBar();
-		progressBar_->setMaximum(100);
-		progressBar_->setMinimum(0);
-		progressBar_->setValue(0);
-		progressBar_->setVisible(false);
-		QHBoxLayout *progressLayout = new QHBoxLayout();		
-		layout_->addWidget(progressBar_);
-	}
-
-	if (pluginCombo_->currentText() == "Intan")
-	{
-		toHide = false;
-		if ((convertToMda_ && !convertToMda_->isChecked()) || (alignNeuralData_ && !alignNeuralData_->isChecked()))
-		{
-			if (sqlfileLabel_) sqlfileLabel_->hide();
-			if (sqlfileButton_) sqlfileButton_->hide();
-			if (directoryComboBoxsql_) directoryComboBoxsql_->hide();
-			if (mdafileLabel_) mdafileLabel_->hide();
-			if (mdafileButton_) mdafileButton_->hide();
-			if (directoryComboBoxmda_) directoryComboBoxmda_->hide();
-			if (rhdfileLabel_) rhdfileLabel_->hide();
-			if (rhdfileButton_) rhdfileButton_->hide();
-			if (directoryComboBoxrhd_) directoryComboBoxrhd_->hide();
-			if (convertOutputLabel_) convertOutputLabel_->hide();
-			if (convertOutputButton_) convertOutputButton_->hide();
-			if (directoryComboBoxconvert_) directoryComboBoxconvert_->hide();
-			if (alignButton_) alignButton_->hide();
-		}
-	}
-
-
-	if (toHide)
-	{
-		//hide all for now
-		if (sqlfileLabel_) sqlfileLabel_->hide();
-		if (sqlfileButton_) sqlfileButton_->hide();
-		if (directoryComboBoxsql_) directoryComboBoxsql_->hide();
-		if (mdafileLabel_) mdafileLabel_->hide();
-		if (mdafileButton_) mdafileButton_->hide();
-		if (directoryComboBoxmda_) directoryComboBoxmda_->hide();
-		if (rhdfileLabel_) rhdfileLabel_->hide();
-		if (rhdfileButton_) rhdfileButton_->hide();
-		if (directoryComboBoxrhd_) directoryComboBoxrhd_->hide();
-		if (convertOutputLabel_) convertOutputLabel_->hide();
-		if (convertOutputButton_) convertOutputButton_->hide();
-		if (directoryComboBoxconvert_) directoryComboBoxconvert_->hide();
-		if (alignButton_) alignButton_->hide();
-		if (convertToMda_) convertToMda_->hide();
-		if (alignNeuralData_) alignNeuralData_->hide();
-	}
-	else
-	{
-		if (convertToMda_) convertToMda_->show();
-		if (alignNeuralData_) alignNeuralData_->show();
-	}
-
-	if (alignNeuralData_)
-		alignNeuralData_->setCheckState(Qt::Unchecked);
-	if (convertToMda_)
-		convertToMda_->setCheckState(Qt::Unchecked);
-
-}
-void ProxyMainWindow::convertToMDA()
-{
-	if (convertToMda_ && convertToMda_->isChecked())
-	{
-		if (alignNeuralData_)
-			alignNeuralData_->setCheckState(Qt::Unchecked);
-
-		if (sqlfileLabel_) sqlfileLabel_->hide();
-		if (sqlfileButton_) sqlfileButton_->hide();
-		if (directoryComboBoxsql_) directoryComboBoxsql_->hide();
-		if (mdafileLabel_) mdafileLabel_->hide();
-		if (mdafileButton_) mdafileButton_->hide();
-		if (directoryComboBoxmda_) directoryComboBoxmda_->hide();
-		if (rhdfileLabel_) rhdfileLabel_->show();
-		if (rhdfileButton_) rhdfileButton_->show();
-		if (directoryComboBoxrhd_) directoryComboBoxrhd_->show();
-		if (convertOutputLabel_) convertOutputLabel_->show();
-		if (convertOutputButton_) convertOutputButton_->show();
-		if (directoryComboBoxconvert_) directoryComboBoxconvert_->show();
-		if (alignButton_) alignButton_->show();
-
-		convert_ = true;
-		align_ = false;
-	}
-	else
-	{
-		convert_ = false;
-
-		if (alignNeuralData_ && !alignNeuralData_->isChecked())
-		{
-			if (sqlfileLabel_) sqlfileLabel_->hide();
-			if (sqlfileButton_) sqlfileButton_->hide();
-			if (directoryComboBoxsql_) directoryComboBoxsql_->hide();
-			if (mdafileLabel_) mdafileLabel_->hide();
-			if (mdafileButton_) mdafileButton_->hide();
-			if (directoryComboBoxmda_) directoryComboBoxmda_->hide();
-		}
-		if (rhdfileLabel_) rhdfileLabel_->hide();
-		if (rhdfileButton_) rhdfileButton_->hide();
-		if (directoryComboBoxrhd_) directoryComboBoxrhd_->hide();
-		if (convertOutputLabel_) convertOutputLabel_->hide();
-		if (convertOutputButton_) convertOutputButton_->hide();
-		if (directoryComboBoxconvert_) directoryComboBoxconvert_->hide();
-		if (alignButton_) alignButton_->hide();
-	}
-
-
-}
-void ProxyMainWindow::alignNeuralData()
-{
-	if (alignNeuralData_ && alignNeuralData_->isChecked())
-	{
-		if (convertToMda_)
-			convertToMda_->setCheckState(Qt::Unchecked);
-
-		convert_ = false;
-		align_ = true;
-
-		if (sqlfileLabel_) sqlfileLabel_->show();
-		if (sqlfileButton_) sqlfileButton_->show();
-		if (directoryComboBoxsql_) directoryComboBoxsql_->show();
-		if (mdafileLabel_) mdafileLabel_->show();
-		if (mdafileButton_) mdafileButton_->show();
-		if (directoryComboBoxmda_) directoryComboBoxmda_->show();
-		if (rhdfileLabel_) rhdfileLabel_->show();
-		if (rhdfileButton_) rhdfileButton_->show();
-		if (directoryComboBoxrhd_) directoryComboBoxrhd_->show();
-		if (convertOutputLabel_) convertOutputLabel_->hide();
-		if (convertOutputButton_) convertOutputButton_->hide();
-		if (directoryComboBoxconvert_) directoryComboBoxconvert_->hide();
-		if (alignButton_) alignButton_->show();
-	}
-	else
-	{
-		align_ = false;
-
-		if (sqlfileLabel_) sqlfileLabel_->hide();
-		if (sqlfileButton_) sqlfileButton_->hide();
-		if (directoryComboBoxsql_) directoryComboBoxsql_->hide();
-		if (mdafileLabel_) mdafileLabel_->hide();
-		if (mdafileButton_) mdafileButton_->hide();
-		if (directoryComboBoxmda_) directoryComboBoxmda_->hide();
-
-		if (convertToMda_ && !convertToMda_->isChecked())
-		{
-			if (rhdfileLabel_) rhdfileLabel_->hide();
-			if (rhdfileButton_) rhdfileButton_->hide();
-			if (directoryComboBoxrhd_) directoryComboBoxrhd_->hide();
-			if (convertOutputLabel_) convertOutputLabel_->hide();
-			if (convertOutputButton_) convertOutputButton_->hide();
-			if (directoryComboBoxconvert_) directoryComboBoxconvert_->hide();
-			if (alignButton_) alignButton_->hide();
-		}
-	}
-}
-void ProxyMainWindow::browsePictoFiles()
-{
-	QString directory = QFileDialog::getOpenFileName(this, tr("Find Files"), QDir::currentPath(), tr("SQL (*.sqlite)"));
-
-	if (!directory.isEmpty()) {
-		if (directoryComboBoxsql_->findText(directory) == -1)
-			directoryComboBoxsql_->addItem(directory);
-		directoryComboBoxsql_->setCurrentIndex(directoryComboBoxsql_->findText(directory));
-	}
-}
-void ProxyMainWindow::browseMdaFiles()
-{
-	QString directory = QFileDialog::getOpenFileName(this, tr("Find Files"), QDir::currentPath(), tr("MDA (*.mda)"));
-
-	if (!directory.isEmpty()) {
-		if (directoryComboBoxmda_->findText(directory) == -1)
-			directoryComboBoxmda_->addItem(directory);
-		directoryComboBoxmda_->setCurrentIndex(directoryComboBoxmda_->findText(directory));
-	}
-}
-void ProxyMainWindow::browserhdFiles()
-{
-	QString directory = QFileDialog::getOpenFileName(this, tr("Find Files"), QDir::currentPath(), tr("RHD (*.rhd)"));
-
-	if (!directory.isEmpty()) {
-		if (directoryComboBoxrhd_->findText(directory) == -1)
-			directoryComboBoxrhd_->addItem(directory);
-		directoryComboBoxrhd_->setCurrentIndex(directoryComboBoxrhd_->findText(directory));
-	}
-}
-void ProxyMainWindow::browseSaveFolder()
-{
-	QString directory = QFileDialog::getExistingDirectory(this, tr("Select Output Folder"), QDir::currentPath());
-
-	if (!directory.isEmpty()) {
-		if (directoryComboBoxconvert_->findText(directory) == -1)
-			directoryComboBoxconvert_->addItem(directory);
-		directoryComboBoxconvert_->setCurrentIndex(directoryComboBoxconvert_->findText(directory));
-	}
-}
-QComboBox *ProxyMainWindow::createIntanComboBox(const QString &text)
-{
-	QComboBox *comboBox = new QComboBox;
-	comboBox->setEditable(true);
-	comboBox->addItem(text);
-	return comboBox;
 }
