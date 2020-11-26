@@ -81,6 +81,8 @@ HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlTargetResult.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlTargetResult.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlElement.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlElement.cpp
+HEADERS += $$(PICTO_TREE)/source/common/controlelements/TargetFactory.h
+SOURCES += $$(PICTO_TREE)/source/common/controlelements/TargetFactory.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/design/DesignRoot.h
 SOURCES += $$(PICTO_TREE)/source/common/design/DesignRoot.cpp
@@ -553,6 +555,8 @@ HEADERS += $$(PICTO_TREE)/source/common/stimuli/CursorGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/CursorGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/EllipseGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/EllipseGraphic.cpp
+HEADERS += $$(PICTO_TREE)/source/common/stimuli/FractalGraphic.h
+SOURCES += $$(PICTO_TREE)/source/common/stimuli/FractalGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/CircleGraphic.h
 SOURCES += $$(PICTO_TREE)/source/common/stimuli/CircleGraphic.cpp
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/TriangleGraphic.h
