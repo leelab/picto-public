@@ -59,6 +59,10 @@ contains(MACHINE_TYPE,X64) {
 }
 LIBS += "Strmiids.lib"
 
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/SerialPort.hpp
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/SerialPort.cpp
+HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoCompRewardController.h
+SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoCompRewardController.cpp
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.cpp
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPRewardController.h

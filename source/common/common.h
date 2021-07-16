@@ -99,7 +99,7 @@
  *	for researchers to build and run their own experiments fully within the Picto system without
  *	help from a Picto software developer.
  */
-#define PICTOVERSION "2.7.4"  // This version incorportes the OmniPlex plugin and removes the Intan plugin
+#define PICTOVERSION "2.7.5"  // This version adds support for the new Pictocomputer setup which separates the pictobox into a PC, Reward Box, and Breakout Board
 /*! \brief This is the current version of the Picto design syntax.  It is saved along with every Picto design
  *	so that it will be clear on deserialization whether some syntax needs to be upgraded and how.
  */

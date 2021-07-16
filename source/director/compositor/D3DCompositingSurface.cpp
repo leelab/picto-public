@@ -38,7 +38,7 @@ D3DCompositingSurface::~D3DCompositingSurface()
  *	D3DVisualTarget which draws it on a quad.
  */
 void D3DCompositingSurface::convertImage(QImage image)
-{	
+{
 	HRESULT hr;
 
 	//Figure out the dimensions of the texture.
@@ -46,43 +46,43 @@ void D3DCompositingSurface::convertImage(QImage image)
 	int texWidth = 1;
 	int texHeight = 1;
 
-	while(texWidth < image.width())
+	while (texWidth < image.width())
 		texWidth *= 2;
-	while(texHeight < image.height())
+	while (texHeight < image.height())
 		texHeight *= 2;
 
 	//If we don't have a valid texture, or is the incorrect size, 
 	//we will need to generate a new texture interface
 	bool generateNewTexture = false;
-	if(!texture_)
+	if (!texture_)
 	{
 		generateNewTexture = true;
 	}
 	else
 	{
-		 D3DSURFACE_DESC texDesc;
-		 texture_->GetLevelDesc(0,&texDesc);
-		 if(texDesc.Height != texHeight)
-			 generateNewTexture = true;
-		 else if(texDesc.Width != texWidth)
-			 generateNewTexture = true;
+		D3DSURFACE_DESC texDesc;
+		texture_->GetLevelDesc(0, &texDesc);
+		if (texDesc.Height != texHeight)
+			generateNewTexture = true;
+		else if (texDesc.Width != texWidth)
+			generateNewTexture = true;
 	}
 
-	if(generateNewTexture)
+	if (generateNewTexture)
 	{
-		if(texture_)
+		if (texture_)
 			texture_->Release();
 
 		// Determine if the device can create textures in video memory
 		// by testing the device caps bits.
 		D3DCAPS9 caps;
 		hr = pD3dDevice_->GetDeviceCaps(&caps);
-		if(hr)
+		if (hr)
 			d3dFail("D3DCompositingSurface: GetDeviceCaps FAILED");
 
 		//Create a texture with dimensions large enough for the image
-		hr = pD3dDevice_->CreateTexture(texWidth,texHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&texture_, NULL);
-		if(hr)
+		hr = pD3dDevice_->CreateTexture(texWidth, texHeight, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &texture_, NULL);
+		if (hr)
 			d3dFail("D3DCompositingSurface: CreateTexture FAILED");
 	}
 
@@ -92,48 +92,59 @@ void D3DCompositingSurface::convertImage(QImage image)
 	imageHeight_ = image.height();
 
 	//if needed, convert the image format
-	if(image.format() != QImage::Format_ARGB32)
+	if (image.format() != QImage::Format_ARGB32)
 		image = image.convertToFormat(QImage::Format_ARGB32);
 
-	
+
 	//lock the entire texture
 	D3DLOCKED_RECT lockedRect;
-	hr = texture_->LockRect(0,&lockedRect,0,0);
-	if(hr)
+	hr = texture_->LockRect(0, &lockedRect, 0, 0);
+	if (hr)
 		d3dFail("D3DCompositingSurface: texture_->LockRect FAILED");
 
 	DWORD *pTexel;
 	pTexel = (DWORD*)lockedRect.pBits;
 
 	//clear the existing texture
-	memset(pTexel,0,texHeight*lockedRect.Pitch);
+	memset(pTexel, 0, texHeight*lockedRect.Pitch);
 
 
 	//NOTE: The following code assumes that the pitch is a multiple of 4
 	//so far this has always been true.  If there are rendering problems, 
 	//this may be a cause...
-	Q_ASSERT_X(lockedRect.Pitch%4 == 0, "D3DCompositingSurface::convertImage", "pitch not a multiple of 4");
+	Q_ASSERT_X(lockedRect.Pitch % 4 == 0, "D3DCompositingSurface::convertImage", "pitch not a multiple of 4");
 
 	//be sure to use a const pointer since we won't be modifying the image data and want to avoid an expensive and unnecessary deep copy
 	const uchar * imageData = image.bits();
-	const unsigned int * imageDataUint32 = (const unsigned int *) imageData;
+	const unsigned int * imageDataUint32 = (const unsigned int *)imageData;
 
-	unsigned int upperBound = (unsigned int) pTexel + image.height() * lockedRect.Pitch;
-	unsigned int incrementAmount = lockedRect.Pitch;
-	unsigned int widthBound = image.width();
+	unsigned int upperBound = image.height();
+	unsigned int incrementAmount = lockedRect.Pitch / sizeof(int);
+	unsigned int widthBound = image.bytesPerLine();
+	unsigned int widthStride = image.width();
 
-	unsigned int rowDataPointer, columnDataOffset;
-	
+	for (unsigned int i = 0; i < upperBound; i++)
+	{
+		memcpy(pTexel, imageDataUint32, widthBound);
+		pTexel += incrementAmount;
+		imageDataUint32 += widthStride;
+	}
+
+	//Kristian - The code below results in a crash when it runs on Windows 10 PCs, so I replaced it with the code above. Fucntionally, it 
+	//should work just fine, but it seems that either Visual Studio or Windows 10 doesn't like it when you dereference pointers like that.
+	//Memcpy should be faster anyway.
+	/*unsigned int rowDataPointer, columnDataOffset;
+
 	for(rowDataPointer=(unsigned int) pTexel;rowDataPointer<upperBound; rowDataPointer+=incrementAmount)
 	{
-		for(columnDataOffset=0; columnDataOffset < widthBound; columnDataOffset++)
-		{
-			*((unsigned int *) (rowDataPointer+columnDataOffset*sizeof(int))) = *imageDataUint32++;
-		}
-
+	for(columnDataOffset=0; columnDataOffset < widthBound; columnDataOffset++)
+	{
+	*((unsigned int *) (rowDataPointer+columnDataOffset*sizeof(int))) = *imageDataUint32++;
 	}
-	texture_->UnlockRect(0);
 
+	}*/
+
+	texture_->UnlockRect(0);
 }
 
 QString D3DCompositingSurface::getTypeName()

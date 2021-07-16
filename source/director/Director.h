@@ -14,14 +14,14 @@
 #include "../common/storage/directordata.h"
 
 /*! \brief Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the
- *	Picto server and sends timing alignment events to a Neural data acquisition system.
- *	\details This class implements a ComponentInterface to setup a DirectorStatusManager, a Picto::Engine::PictoEngine and
- *	a CommandChannel that work together to run Experiments that come in from the PictoServer.  When running on a Pictobox it 
- *	also starts an instance of the EmbeddedFrontPanel process which functions as a simple control panel for things like 
- *	supplying rewards and displaying feedback to the Experiment operator.
- *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2015
- */
+*	Picto server and sends timing alignment events to a Neural data acquisition system.
+*	\details This class implements a ComponentInterface to setup a DirectorStatusManager, a Picto::Engine::PictoEngine and
+*	a CommandChannel that work together to run Experiments that come in from the PictoServer.  When running on a Pictobox it
+*	also starts an instance of the EmbeddedFrontPanel process which functions as a simple control panel for things like
+*	supplying rewards and displaying feedback to the Experiment operator.
+*	\author Kristian Osborne, Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+*	\date 2009-2021
+*/
 class Director : public QObject, public ComponentInterface
 {
 	Q_OBJECT
@@ -39,13 +39,14 @@ public:
 		int posSampPer = 2,
 		int diamSampPer = 4,
 		QColor bgCol = 2,
-		int legacyPhidgets=1);
+		int legacyPhidgets = 1,
+		bool frontPanel = true);
 	virtual ~Director();
 protected:
 	virtual QString name();
 	virtual int openDevice();
 	virtual int closeDevice();
-	
+
 private:
 	QString name_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
@@ -69,7 +70,7 @@ private:
 	bool useFrontPanel_;
 	QColor bgCol_;
 	int legacyPhidgets_;
-private slots:
+	private slots:
 	void changeName(QString name);
 	void changeRewardDuration(int controller, int duration);
 	void changeFlushDuration(int controller, int duration);
