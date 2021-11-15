@@ -61,7 +61,6 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("TriangleElement", ":/icons/triangle.svg", 50, 75);
 		addIconDefinition("PolygonElement", ":/icons/polygon.svg", 50, 75);
 		addIconDefinition("EllipseElement", ":/icons/ellipse.svg", 50, 75);
-		addIconDefinition("FractalElement", ":/icons/polygon.svg", 50, 75);
 		addIconDefinition("ImageElement", ":/icons/image.svg", 50, 75);
 		addIconDefinition("DiamondElement", ":/icons/diamond.svg", 50, 75);
 		addIconDefinition("TokenTrayElement", ":/icons/tokentray.svg", 50, 75);

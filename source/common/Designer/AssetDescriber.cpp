@@ -732,35 +732,6 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("setDimensions(w,h)", "Sets the width and height of this graphic in a single function call.");
 	curr->addSFunc("setRotationAngle(a)", "Sets the rotation angle.");
 
-	curr = addDescription("FractalGraphic");
-	curr->setOverview("This element is used to create a fractal graphic on screen.  The center of the graphic will lie at the set 'Position'.");
-	curr->addProp("Position", "The x,y position of this graphic.  x goes from 0 to 800 and y goes from 0 to 600 where (0,0) is the top left corner of the screen.");
-	curr->addProp("Layer", "The z-layer of this graphic in the scene.  Graphics with higher layer will appear on top of graphics with lower layer.");
-	curr->addProp("Visible", "Defines whether this graphic is visible to either the operator, user or both depending on whether 'OperatorView' and/or 'SubjectView' are true.");
-	curr->addProp("OperatorView", "When 'Visible' is true, defines whether this graphic is visible to the operator.");
-	curr->addProp("SubjectView", "When 'Visible' is true, defines whether this graphic is visible to the user.");
-	curr->addProp("Size", "Sets the size of this graphic. If left (0,0) the fractal will remain its natural size.");
-	curr->addSProp("layer", "Used to set or get the current layer of this graphic.  Graphics with higher layer will appear on top of graphics with lower layer.");
-	curr->addSProp("visible", "Used to set or get the current visibility of this graphic to the operator and user as a group.");
-	curr->addSProp("operatorView", "Used to set or get the current visibility of this graphic to the operator.");
-	curr->addSProp("subjectView", "Used to set or get the current visibility of this graphic to the user.");
-	curr->addSProp("x", "Used to set or get the x position of this graphic where 0 is the left side of the screen and 800 is the right side.");
-	curr->addSProp("y", "Used to set or get the y position of this graphic where 0 is the top of the screen and 600 is the bottom.");
-	curr->addSProp("superposition", "Sets/gets the number of superpositions in the fractal");
-	curr->addSProp("edges", "Sets the number of edges in the fractal at all superpositions or gets the default value. You must redraw afterwards for the changes to go into effect.");
-	curr->addSProp("depth", "Sets/gets the depth of recursion in the fractal at all superpositions or gets the default value. You must redraw afterwards for the changes to go into effect.");
-	curr->addSProp("edgeSize", "Sets/gets the size of the edges in the fractal at all superpositions or gets the default value. You must redraw afterwards for the changes to go into effect.");
-	curr->addSProp("ga", "Sets/gets the ga variable in the fractal at all superpositions or gets the default value. You must redraw afterwards for the changes to go into effect.");
-	curr->addSFunc("setColor(i,r,g,b) or setColor(i,r,g,b,a)", "Sets the color of the superposition at index i. If you do not set the colors, they will be random.");
-	curr->addSFunc("recolor()", "Generates new random colors for the fractal.");
-	curr->addSFunc("redraw()", "Redraws the fractal. Should be used after you change any variables like superposition, depth, etc.");
-	curr->addSFunc("setDimensions(w,h)", "Sets the width and height of the fractal.");
-	curr->addSFunc("setPos(x,y)", "A convenience function to set both the x and y components of position at once.  Inputs are (x,y) and range from 0-800 and 0-600 respectively.");
-	curr->addSFunc("setEdgeSize(i,e)", "Sets the edge size of the fractal at superposition i. You must redraw afterwards for the changes to go into effect.");
-	curr->addSFunc("setNumEdges(i,n)", "Sets the number of edges of the fractal at superposition i. You must redraw afterwards for the changes to go into effect.");
-	curr->addSFunc("setDepth(i,d)", "Sets the depth of recursion of the fractal at superposition i. You must redraw afterwards for the changes to go into effect.");
-	curr->addSFunc("setGA(i,ga)", "Sets the GA variable of the fractal at superposition i. You must redraw afterwards for the changes to go into effect.");
-
 	curr = addDescription("GridGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
 	curr->setOverview("This element is used to create an grid graphic on screen.  The center of the graphic will lie at the set 'Position' and the number of rows and columns can be set.");

@@ -18,7 +18,6 @@
 #include "../stimuli/LabelFactoryGraphic.h"
 #include "../stimuli/CircleGraphic.h"
 #include "../stimuli/EllipseGraphic.h"
-#include "../stimuli/FractalGraphic.h"
 #include "../stimuli/TriangleGraphic.h"
 #include "../stimuli/PolygonGraphic.h"
 #include "../stimuli/ImageGraphic.h"
@@ -62,8 +61,6 @@ scriptFunctionFactory_(new AssetFactory(0, -1))
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(CircleGraphic::Create))));
 	visualElementFactory_->addAssetType(EllipseGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(EllipseGraphic::Create))));
-	visualElementFactory_->addAssetType(FractalGraphic::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(FractalGraphic::Create))));
 	visualElementFactory_->addAssetType(TriangleGraphic::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(TriangleGraphic::Create))));
 	visualElementFactory_->addAssetType(PolygonGraphic::type,
